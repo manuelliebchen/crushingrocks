@@ -6,10 +6,15 @@ package Game.Logic;
  *
  */
 public class Coin {
-	
 	Vector position;
 	float radius;
 	float value;
+	
+	public Coin(Coin copy){
+		this.position = new Vector(copy.position);
+		this.radius = copy.radius;
+		this.value = copy.value;
+	}
 	
 	public Coin(Vector position){
 		this.position = position;
