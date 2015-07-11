@@ -14,7 +14,6 @@ import com.sun.javafx.property.adapter.PropertyDescriptor.Listener;
 /**
  * simple singleton input manager
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
- *
  */
 public class InputManager implements KeyListener, MouseListener, MouseMotionListener {
 	/**
