@@ -1,6 +1,7 @@
 package Client.Rendering;
 
 import javafx.scene.image.Image;
+import org.apache.log4j.Logger;
 
 /**
  * Created by Claudius Grimm (claudius@acagamics.de)
@@ -21,10 +22,14 @@ public class AnimatedImage {
     public AnimatedImage(String pathToImage, String animImageName, int numFrames) {
 
         frames = new Image[numFrames];
-        String imgPath = pathToImage + "/" + animImageName;
+
+        String fileName = animImageName.substring(0, animImageName.lastIndexOf("."));
+        String fileExt = animImageName.substring(animImageName.lastIndexOf(".") + 1);
+
+        String imgPath = pathToImage + fileName;
 
         for (int i = 0; i < numFrames; i++) {
-            String framePath = imgPath + i;
+            String framePath = imgPath + i + "." + fileExt;
             frames[i] = new Image(framePath, false);
         }
 
