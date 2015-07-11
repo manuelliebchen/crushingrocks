@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import Client.Main;
 import Game.Controller.*;
 
@@ -44,6 +43,7 @@ public final class PlayerControllerLoader {
 	
 	/**
 	 * Returns a list of all extern controllers that have been loaded (not necessarily instantiated!).
+	 * @return List of class names.
 	 */
 	public List<String> getLoadedExternControllerClassNames() {
 		return externControllerClassNames;
@@ -52,6 +52,7 @@ public final class PlayerControllerLoader {
 	/**
 	 * Returns a list of the display names (@see{IPlayerController}.getName()) of all extern controllers that 
 	 * have been loaded (not necessarily instantiated!).
+	 * @return List of display names. 
 	 */
 	public List<String> getLoadedExternControllerDisplayNames() {
 		return externControllerDisplayNames;
@@ -113,7 +114,7 @@ public final class PlayerControllerLoader {
 	
 	/**
 	 * Tries to create a PlayerController from extern class file.
-	 * @returns Working IPlayerController class or null if something went wrong.
+	 * @return Working IPlayerController class or null if something went wrong.
 	 */
 	private IPlayerController createControllerFromFile(String filename) {
 		File classFile = new File(filename);
@@ -160,6 +161,7 @@ public final class PlayerControllerLoader {
 	/**
 	 * Instantiates an intern PlayerController from class name.
 	 * @param name 	Full package name of the class.
+	 * @return New instance of player controller or null if something went wrong.
 	 */
 	public IPlayerController instantiateInternController(String name) {
 		assert(name != null);
@@ -181,6 +183,7 @@ public final class PlayerControllerLoader {
 	
 	/**
 	 * Instantiates an already loaded extern player controller.
+	 * @return New instance of player controller or null if something went wrong.
 	 */
 	public IPlayerController instantiateLoadedExternController(String className) {
 		Class<?> controllerClass;
