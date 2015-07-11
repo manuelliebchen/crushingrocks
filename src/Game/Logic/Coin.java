@@ -18,7 +18,7 @@ public class Coin {
 	}
 
 	/**
-	 * Get the position of the coin.
+	 * Get the position of this coin.
 	 * @return position
 	 */
 	public Vector getPosition() {
@@ -26,7 +26,7 @@ public class Coin {
 	}
 
 	/**
-	 * Get the radius of the coin.
+	 * Get the radius of this coin.
 	 * @return radius
 	 */
 	public float getRadius() {
@@ -34,7 +34,7 @@ public class Coin {
 	}
 
 	/**
-	 * Get the value of the coin.
+	 * Get the value of this coin.
 	 * @return value
 	 */
 	public float getValue() {
