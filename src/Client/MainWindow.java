@@ -6,11 +6,20 @@ import Client.GUI.States.MainMenu;
 import Client.GUI.States.StateManager;
 import Client.GUI.States.Interfaces.GameState;
 import Game.GameConstants;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TimelineBuilder;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
@@ -19,14 +28,13 @@ import javafx.stage.Stage;
 public class MainWindow extends Application {
 	
 	private StateManager manager;
-	private Stage stage;
+	private Stage rootStage;
 
 	/**
 	 * Setting up new Window and load default GameState
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {	
-		stage = new Stage();
 		stage.setResizable(false);
 		stage.getIcons().add(new Image(ClientConstants.SCREEN_ICON));
 		stage.setTitle(ClientConstants.SCREEN_TITLE);
@@ -35,28 +43,28 @@ public class MainWindow extends Application {
 		
 		this.manager.push(MainMenu.create(this.manager));
 		
-		stage.setScene(manager.peek());
+		stage.setScene(new Scene(new GridPane(), 100, 100));
 		stage.show();
 		
-		GameApp.get().setWindow(this);
+		// GameApp.get().setWindow(this);
 		
-		this.stage = stage;
+		this.rootStage = stage;
+		
+		KeyFrame frame = new KeyFrame(Duration.millis(GameConstants.MINIMUM_TIME_PER_FRAME_MS), new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Duration time = ((KeyFrame)event.getSource()).getTime();
+				
+				manager.update((float)time.toMillis());
+				manager.draw((float)time.toMillis());
+				
+				rootStage.setScene(manager.peek());
+			}
+		});
+		
+		Timeline line = new Timeline(frame);
+		line.setCycleCount(Animation.INDEFINITE);
+		line.play();
 	}
-	
-	public void update(float elapsedTime) {
-		this.manager.update(elapsedTime);
-	}
-	
-	public void draw(float elapsedTime) {
-		this.manager.draw(elapsedTime);
-	}
-	
-	/**
-	 * Create new Window
-	 * @param args Arguments passed to GameApp
-	 */
-	public static void createNewWindow() {
-		MainWindow.launch(new String[0]);
-	}
-	
 }

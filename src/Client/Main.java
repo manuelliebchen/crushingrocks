@@ -1,5 +1,7 @@
 package Client;
 
+import javafx.application.Application;
+
 import org.apache.log4j.Logger;
 
 import Client.GUI.States.StateManager;
@@ -18,8 +20,7 @@ public class Main {
 			LOG.info("Debug mode enabled!");
 		}
 		
-		GameApp game = GameApp.get();
-		game.run();
+		Application.launch(MainWindow.class);
 	}
 
 }
