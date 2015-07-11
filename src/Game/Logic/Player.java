@@ -36,14 +36,14 @@ public class Player {
 	}
 
 	/**
-	 * Change the score of the player.
+	 * Change the score of this player.
 	 */
 	public void addScore(float scoreBonus){
 		score += scoreBonus;
 	}
 	
 	/**
-	 * Get the score of the player.
+	 * Get the score of this player.
 	 * @return score
 	 */
 	public float getScore() {
@@ -51,7 +51,7 @@ public class Player {
 	}
 	
 	/**
-	 * Get the radius of the player.
+	 * Get the radius of this player.
 	 * @return radius
 	 */
 	public float getRadius() {
@@ -59,8 +59,8 @@ public class Player {
 	}
 
 	/**
-	 * Get the radius of the player.
-	 * @return radius
+	 * Get the position of this player.
+	 * @return position
 	 */
 	public Vector getPosition(){
 		return position;

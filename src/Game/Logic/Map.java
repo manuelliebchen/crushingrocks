@@ -25,15 +25,15 @@ public class Map {
 	}
 	
 	/**
-	 * Get all coins in the map.
-	 * @return coins in the map
+	 * Get all coins in this map.
+	 * @return coins in this map
 	 */
 	public ArrayList<Coin> getCoins() {
 		return coins;
 	}
 
 	/**
-	 * Get the mapRadius.
+	 * Get the mapRadius of this Map.
 	 * @return mapRadius
 	 */
 	public float getRadius(){
