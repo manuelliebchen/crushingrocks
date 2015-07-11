@@ -3,7 +3,7 @@ package Client.GUI.States;
 import java.util.ArrayList;
 
 import Client.GUI.States.Interfaces.IDraw;
-import Client.GUI.States.Interfaces.IGameState;
+import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IGameStateManager;
 import Client.GUI.States.Interfaces.IUpdate;
 
@@ -15,7 +15,7 @@ public final class StateManager implements IGameStateManager {
 	/**
 	 * Stores all current game states from layer
 	 */
-	ArrayList<IGameState> currentStates = new ArrayList<IGameState>();
+	ArrayList<GameState> currentStates = new ArrayList<GameState>();
 	/**
 	 * Stores all drawables from current game states
 	 */
@@ -29,7 +29,7 @@ public final class StateManager implements IGameStateManager {
 	 * The first and initial state. It's necessary if there is no state left.
 	 * @see pop() 
 	 */
-	IGameState initialState;
+	GameState initialState;
 	
 	/**
 	 * StateManager controlls state handling
@@ -37,10 +37,9 @@ public final class StateManager implements IGameStateManager {
 	 * 
 	 * @param state sets the initial game state
 	 */
-	public StateManager(IGameState state)
+	public StateManager()
 	{
-		initialState = state;
-		push(state);
+		initialState = null;
 	}
 	
 	
@@ -50,7 +49,7 @@ public final class StateManager implements IGameStateManager {
 	 * If there is only one state left, the initial state will add to currentStates.
 	 */
 	@Override
-	public IGameState pop() {
+	public GameState pop() {
 		
 		updateables.remove(currentStates.get(currentStates.size()-1));
 		drawables.remove(currentStates.get(currentStates.size()-1));
@@ -59,7 +58,7 @@ public final class StateManager implements IGameStateManager {
 		
 		if(currentStates.size()==1)
 		{
-			IGameState lastState = currentStates.get(0);
+			GameState lastState = currentStates.get(0);
 			currentStates.remove(currentStates.size()-1);
 			
 			push(initialState);
@@ -78,7 +77,7 @@ public final class StateManager implements IGameStateManager {
 	 * Returns the current state on top.
 	 */
 	@Override
-	public IGameState peek() {
+	public GameState peek() {
 		return currentStates.get(currentStates.size()-1);
 	}
 
@@ -88,7 +87,7 @@ public final class StateManager implements IGameStateManager {
 	 * @param state -> new game state
 	 */
 	@Override
-	public void push(IGameState state) {
+	public void push(GameState state) {
 		
 
 		
@@ -96,6 +95,7 @@ public final class StateManager implements IGameStateManager {
 			currentStates.get(currentStates.size()-1).obscuring();
 		
 		state.entered();
+		
 		currentStates.add(state);
 		
 		if(state instanceof IUpdate)
@@ -114,7 +114,7 @@ public final class StateManager implements IGameStateManager {
 	 * @param state -> new game state
 	 */
 	@Override
-	public void switchCurrentState(IGameState state) {
+	public void switchCurrentState(GameState state) {
 		currentStates.get(currentStates.size()-1).leaving();
 		pop();
 		push(state);
@@ -126,7 +126,7 @@ public final class StateManager implements IGameStateManager {
 	 * @param state -> new game state
 	 */
 	@Override
-	public void resetWith(IGameState state) {
+	public void resetWith(GameState state) {
 		
 		for(int i = currentStates.size()-1; i>=0; i--)
 		{
@@ -166,8 +166,5 @@ public final class StateManager implements IGameStateManager {
 			updateables.get(i).update(elapsedTime);
 		}
 	}
-
-
-
 
 }
