@@ -7,10 +7,10 @@ package Client.GUI.States.Interfaces;
  */
 public interface IGameStateManager extends IDraw, IUpdate{
 
-	public IGameState pop();
-    public IGameState peek();
-    public void push(IGameState state);
-    public void switchCurrentState(IGameState state);
-    public void resetWith(IGameState state);
+	public GameState pop();
+    public GameState peek();
+    public void push(GameState state);
+    public void switchCurrentState(GameState state);
+    public void resetWith(GameState state);
 
 }
