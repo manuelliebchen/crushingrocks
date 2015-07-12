@@ -86,8 +86,8 @@ public class MainWindow extends Application {
 				canvas.getGraphicsContext2D().clearRect(0, 0, ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT);
 				
 				// Update and draw states
-				manager.update((float)time.toMillis());
-				manager.draw(canvas.getGraphicsContext2D(), (float)time.toMillis());
+				manager.update((float)time.toSeconds());
+				manager.draw(canvas.getGraphicsContext2D(), (float)time.toSeconds());
 			}
 		});
 		

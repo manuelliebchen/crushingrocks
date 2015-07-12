@@ -1,0 +1,330 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AcaProgWett Dokumentation</title>
+</head>
+<body>
+    <h1>AcaProgWett Dokumentation</h1>
+
+
+    <ul style="list-style-type: none;">
+        <li>
+            <h2>Inhalt</h2>
+            <ul>
+                <li>
+                    Benutzer
+                    <ul>
+                        <li>Hochladen von Bots</li>
+                        <li>Anschauen, Runterladen und löschen von Bots</li>
+                        <li>Zusätzliche Profil / Registrierungs Einstellungen</li>
+                    </ul>
+                </li>
+                <li>
+                    Administrator
+                    <ul>
+                        <li>Runterladen einer User-Liste (*.cvs)</li>
+                        <li>
+                            Konfigurationen:
+                            <ul>
+                                <li>Widget auf der Startseite</li>
+                                <li>Der Upload</li>
+                                <li>Version und Neuigkeiten</li>
+                                <li>Ausgaben auf Benutzerebene</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Erläuterungen zu der Programmierung
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h2>Benutzer</h2>
+            <ul style="list-style-type: none;">
+                <li>
+                    <h3>Hochladen von Bots</h3>
+                    <p>
+                        Über den Menüpunkt "Bots" - "Upload" kann ein angemeldeter User neue Bots hochladen.
+                        Dafür wählt der User eine Datei aus und probiert diese hochzuladen.
+                        Danach bekommt er Feedback, ob die Datei z.B. zu groß war, das falsche Dateiformat hatte oder dass der Upload erfolgreich war.
+                    </p>
+                </li>
+                <li>
+                    <h3>Anschauen, Runterladen und löschen von Bots</h3>
+                    <p>
+                        Über den Menüpunkt "Bots" - "Bots" kann ein angemeldeter User seine hochgeladenen Bots verwalten.
+                        Er bekommt die Möglichkeit seinen eigenen Bots wieder runterzuladen oder vom Server zu löschen.
+                        Sollte er keinen Bot hochgeladen haben, bekommt er eine entsprechende Meldung angezeigt.
+                    </p>
+                </li>
+                <li>
+                    <h3>Zusätzliche Profil / Registrierungs Einstellungen</h3>
+                    <p>
+                        Um die User besser zuordnen zu können, wird bei der Registrierung die Eingabe des Vor- und Nachnamen erzwungen.
+                        Darüber hinaus wird die Eigenschaft "Matrikelnummer" hinzugefügt, die auch eine PFlichteingabe bei der Registrierung ist.
+                        Die Eingaben lassen sich dann über "Benutzer" - "Dein Profil" wieder ändern.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h2>Administrator</h2>
+            <ul style="list-style-type: none;">
+                <li>
+                    <h3>Runterladen einer User-Liste (*.cvs)</h3>
+                    <p>
+                        Um für die Auswertung nicht alle User manuell aus dem System kopieren zu müssen, gibt es die Möglichkeit eine .cvs Datei herunterzuladen.
+                        Dies kann über den Eintrag "Benutzer" - "Liste herunterladen" erfolgen.
+                        Die Liste enthält Benutzer-, Vor-, Nachname, Email Adresse und Matrikelnummer.
+                    </p>
+                </li>
+                <li>
+                    <h3>Konfigurationen</h3>
+                    <p>
+                        Über "Einstellungen" - "ProgWett" können verschiedene Dinge vom Plugin wie folgt konfiguriert werden:
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>Widget auf der Startseite</h4>
+                            <p>
+                                Das Widget auf der Startseite ist eine Möglichkeit dem Benutzer direkt mit der Anmeldung Neuigkeiten oder andere Informationen zu geben.
+                                Es lässt sich Ein und Aus schalten und der anzuzeigende Text einstellen.
+                                Für den Text wird hierbei zwischen "mit hochgeladenen Bots" und "ohne hochgeladenen Bot" unterschieden.
+                                Über den Platzhalter <code>%c</code> kann auf die aktuelle Botzahl des Benutzers zugegriffen werden.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>Der Upload</h4>
+                            <p>
+                                Die Einstellungen des Uploads ermöglichen das (de)aktivieren des Upload-Menüs und das konfigurieren der Rahmenbedinungen.
+                                So kann man die erlaubten Datentypen angeben. Beim Upload wird auf diese Überprüft und andere Typen werden abgelehnt.
+                                Darüber hinaus kann man eine maximale Anzahl an Bots angeben. Sobald ein User soviele Bots hochgeladen hat, muss er erst einen Bot löschen, bevor er einen neuen hochladen kann.
+                                Als letztes lässt sich die maximale Größe der einzelnen Dateien in Bytes angeben. Größere Dateien werden abgelehnt.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>Version und Neuigkeiten</h4>
+                            <p>
+                                Wenn das Programm über das Internet die aktuelle Version oder Neuigkeiten abfragt, können hier die Werte dazu eingestellt werden.
+                                Version sollte hierbei der im aktuellen Programm angegebenen Konstanten entsprechen, damit das Programm ggf. eine Update Aufforderung stellen kann.
+                                Und Neuigkeiten ist eine Liste von kurzen News, die im Programm angezeigt werden können. Einzelne Einträge werden hierbei mit Zeilenumbruch getrennt.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>Ausgaben auf Benutzerebene</h4>
+                            <p>
+                                In diesem Abschnitt können verschiedene Hinweise / Fehlermeldungen eingestellt werden, die dem Benutzer angezeigt werden.
+                                Dabei sind je nach Ausgabe auch verschiedene Platzhalter verfügbar, die dann durch aktuelle Werte ersetzt werden.
+                                Ein Beispiel dafür ist <code>%c</code> bei "Maximale Anzahl" mit der man in der Fehlermeldung, dass man bereits genug Bots hochgeladen hat, die Anzahl hochgeladenen Bots des Users ausgeben kann.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h2>Erläuterungen zu der Programmierung</h2>
+            <ul style="list-style-type: none;">
+                <li>
+                    <h3>index.php</h3>
+                    <p>
+                        In den ersten Zeilen stehen die Informationen für Wordpress, wie z.B. Name und Author.
+                        Danach werden über "require" die anderen Dateien des Plugins eingebunden, damit sie mit ausgeführt werden.
+                        Über "add_action" werden dann die drei darauf folgenden Funktionen aufgerufen.
+                        Wichtig hierbei: Der erste Parameter gibt die Art der Funktion an, also in welchem Wordpress scope diese aufgerufen wird.
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>apw_remove_dashboard_meta()</h4>
+                            <p>
+                                Mit dieser Funktion werden Widgets von der Startseite entfernt, da die meisten davon unwichtig für den User sind.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_register_widget()</h4>
+                            <p>
+                                In dieser Funktion wird das eigene Widget auf die Startseite gepinnt.
+                                Vorausgesetzt, das Widget ist in den Settings aktiviert (die If-Abfrage).
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>bots.php</h3>
+                    <p>
+                        Diese Datei beinhaltet die Funktionen, zur Ansicht der Bots und für das Widget.
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>apw_bots()</h4>
+                            <p>
+                                Mit dieser Funktion werden alle Bots vom User ermittelt und Ausgegeben.
+                                Außerdem findet hier das löschen der Bots statt.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_bots_folder_all()</h4>
+                            <p>
+                                Liefert den Pfad zum Order, wo alle User-Bots liegen.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_bots_folder()</h4>
+                            <p>
+                                Liefert den Pfad zum Order, wo die Bots vom aktuellen User liegen.
+                                Sollte der Ordner noch nicht existieren, wird dieser direkt erstellt.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_bots_widget()</h4>
+                            <p>
+                                Zählt die Bots des aktuellen Users und zeigt dann den in den Einstellungen angegebenen Text an.
+                                Ggf. wird der Platzhalter durch die Anzahl der Bots ersetzt.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>bots_upload.php</h3>
+                    <p>
+                        Hier sind alle Dateien, die mit dem Upload von Bots zu tun haben.
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>apw_bots_get_uploads()</h4>
+                            <p>
+                                Erstellt eine Liste aller Bots, die vom aktuellen User hochgeladen wurden.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_bots_is_allowed_upload()</h4>
+                            <p>
+                                Ermittelt, ob die angegebene Datei dem erlaubten Datentypen entspricht.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_bots_upload()</h4>
+                            <p>
+                                Zeigt das Formulat für den Upload der Bots und zeigt ggf. Hinweise und Fehlermeldungen.
+                                Außerdem wird hier das hochladen der Bots gemacht.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>settings.php</h3>
+                    <p>
+                        Hier wird die Seite für die Einstellungen erstellt.
+                        Das "add_action" am Anfang ruft hierfür die Funktion apw_settings_init() auf.
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>apw_settings_init()</h4>
+                            <p>
+                                Im ersten Teil werden die jeweiligen Abschnitte und die dazugehörigen Felder erstellt.
+                                Zum Beispiel ist der erste Abschnitt für das Widget und die drei Felder danach stellen die jeweiligen Einstellungen dar.
+                                Am Ende der Funktion werden dann die eben definierten Einstellungen noch durch register_setting in die Datenbank eingefügt.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_settings()</h4>
+                            <p>
+                                Zeigt automatisch alle in der apw_settings_init() angegebenen Abschnitte und Felder an.
+                                Außerdem wird hier der Submit-Button definiert, der automatisch alle Felder ausliest und in die Datenbank packt.
+                            </p>
+                        </li>
+                        <li>
+                            <h4><i>Die Restlichen</i></h4>
+                            <p>
+                                Die Restlichen Funktionen wurden in der apw_settings_init() von den einzelnen Abschnitten und Feldern referenziert.
+                                Sie dienen dazu, dass ein entsprechender Text und Eingabeelemente angezeigt werden.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>user.php</h3>
+                    <p>
+                        Hier werden die Pflichtfelder bei der Registrierung und das Matrikelnummer Feld im Profil angegeben.
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>apw_show_matrikel()</h4>
+                            <p>
+                                Zeigt im Profil die Matrikelnummer mit an.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_save_matrikel()</h4>
+                            <p>
+                                Erstellt die zusätzliche User Information in der Datenbank für die Matrikelnummer und speichert die aktuelle Nummer.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_register_form()</h4>
+                            <p>
+                                Ergänzt das Formular für die Registrierung um Eingabefenster für Vor- und Nachname, sowie Matrikelnummer.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_register_errors()</h4>
+                            <p>
+                                Überprüft, ob die bei der Registrierung angegebenen Daten valide sind und gibt ggf. Fehlermeldungen aus.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_register_user()</h4>
+                            <p>
+                                Speichert die zusätzlichen Felder bei der Registrierung beim neuen User.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>download.php</h3>
+                    <p>
+                        Hier werden die die Bots und die Benutzerliste zum Herunterladen erstellt und ausgegeben.
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>apw_download_user()</h4>
+                            <p>
+                                Liest die, auf dem Server liegende Bot-Datei Byte weise aus und gibt sie als downloadbare Datei aus.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_download_bot()</h4>
+                            <p>
+                                Liest alle User im Wordpress aus, formertiert sie zu einer cvs Tabelle und gibt sie als downloadbare Datei aus.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>version_news.php</h3>
+                    <p>
+                        Hier werden die Einstellungen von Version und Neuigkeiten ausgegeben.
+                    </p>
+                    <ul>
+                        <li>
+                            <h4>apw_version()</h4>
+                            <p>
+                                Gibt die gespeicherte Versionsnummer im Plain-Text aus.
+                                Da vom Wordpress noch "Müll" vorangestellt wird, beginnen die Daten erst in der zweiten Zeile.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>apw_news()</h4>
+                            <p>
+                                Gibt die gespeicherten Neuigkeiten zeilenweise im Plain-Text aus.
+                                Da vom Wordpress noch "Müll" vorangestellt wird, beginnen die Daten erst in der zweiten Zeile.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
