@@ -1,77 +1,57 @@
 package Client.GUI.States;
 
 import Client.ClientConstants;
-import Client.MainWindow;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import Client.Web.News;
+import Client.Web.Version;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
+/**
+ * @author Max Klockmann (max@acagamics.de)
+ *
+ */
 public class MainMenu extends GameState implements IDraw {	
-	
-	private GridPane root;
-	private Button btnTest;
-	
-	public static MainMenu create(StateManager manager) {
-		return new MainMenu(new GridPane(), ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT, manager);
-	}
-	
-	private MainMenu(GridPane root, float width, float height, StateManager manager) {
-		super(root, width, height, manager);	
-		
-		this.root = root;
-		this.root.setBackground(new Background(new BackgroundFill(Paint.valueOf(Color.RED.toString()), new CornerRadii(0), new Insets(0))));	
-		
-		this.btnTest = new Button("Klick mich!");
-		this.root.getChildren().add(this.btnTest);
-		this.btnTest.setOnAction(new EventHandler<ActionEvent>() {
-			 
-            @Override
-            public void handle(ActionEvent event) {
-                MainMenu menu = (MainMenu) ((Button) event.getSource()).getScene();
-            	menu.manager.push(Credits.create(menu.manager));
-            }
-        });
+	/**
+	 * Creating new MainMenu.
+	 * @param manager The StateManager of the current Window
+	 * @param pane The Gui Layout pane of the current Window. Used for Buttons
+	 */
+	public MainMenu(StateManager manager) {
+		super(manager);
 	}
 
 	@Override
-	public void draw(float elapsedTime) {
-		// TODO Auto-generated method stub
+	public void draw(GraphicsContext graphics, float elapsedTime) {
+		if (!isTop)
+			return;
 		
-	}
-
-	@Override
-	public void entered() {
-		// TODO Auto-generated method stub
+		// draw background color
+		graphics.setFill(Color.RED);
+		graphics.fillRect(0, 0, ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT);
 		
-	}
-
-	@Override
-	public void leaving() {
-		// TODO Auto-generated method stub
+		// draw oval in the middle
+		graphics.setFill(Color.CORNFLOWERBLUE);
+		graphics.fillOval((ClientConstants.SCREEN_WIDTH - 50) / 2, (ClientConstants.SCREEN_HEIGHT - 50) / 2, 50, 50);
 		
+		// write version
+		if (Version.isChecked()) {
+			String versionText = "version: " + ClientConstants.VERSION;
+			if (Version.isUpToDate()) {
+				versionText += " - up to date!";
+				graphics.setFill(Color.WHITE);
+			} else {
+				versionText += " - out of date!";
+				graphics.setFill(Color.BLUE);
+			}
+			graphics.fillText(versionText, 10, 10);
+		}
+		
+		// write news
+		if (News.hasNews()) {
+			String versionText = "news: " + News.getNews();
+			graphics.fillText(versionText, 10, 40);
+		}
 	}
-
-	@Override
-	public void obscuring() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void revealed() {
-		// TODO Auto-generated method stub
-	}
-	
 }

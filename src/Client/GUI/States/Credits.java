@@ -1,77 +1,39 @@
 package Client.GUI.States;
 
 import Client.ClientConstants;
-import Client.MainWindow;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import Client.Rendering.ImageManager;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-public class Credits extends GameState implements IDraw {	
-	
-	private GridPane root;
-	private Button btnTest;
-	
-	public static Credits create(StateManager manager) {
-		return new Credits(new GridPane(), ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT, manager);
-	}
-	
-	private Credits(GridPane root, float width, float height, StateManager manager) {
-		super(root, width, height, manager);	
-		
-		this.root = root;
-		this.root.setBackground(new Background(new BackgroundFill(Paint.valueOf(Color.CORNFLOWERBLUE.toString()), new CornerRadii(0), new Insets(0))));	
-		
-		this.btnTest = new Button("Klick mich!");
-		this.root.getChildren().add(this.btnTest);
-		this.btnTest.setOnAction(new EventHandler<ActionEvent>() {
-			 
-            @Override
-            public void handle(ActionEvent event) {
-            	Credits menu = (Credits) ((Button) event.getSource()).getScene();
-            	menu.manager.pop();
-            }
-        });
+/**
+ * @author Max Klockmann (max@acagamics.de)
+ *
+ */
+public class Credits extends GameState implements IDraw {
+	/**
+	 * Creating new Credits State.
+	 * @param manager The StateManager of the current Window
+	 * @param pane The Gui Layout pane of the current Window. Used for Buttons
+	 */
+	public Credits(StateManager manager) {
+		super(manager);
 	}
 
 	@Override
-	public void draw(float elapsedTime) {
-		// TODO Auto-generated method stub
+	public void draw(GraphicsContext graphics, float elapsedTime) {
+		if (!isTop)
+			return;
 		
-	}
-
-	@Override
-	public void entered() {
-		// TODO Auto-generated method stub
+		// draw background image
+		graphics.drawImage(ImageManager.getInstance().loadImage("backgrounds/credits.png"), 0, 0, ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT);
 		
+		// draw text
+		graphics.setFill(Color.WHITE);
+		graphics.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 36));
+		graphics.fillText("Credits", 60, 30);
 	}
-
-	@Override
-	public void leaving() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void obscuring() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void revealed() {
-		// TODO Auto-generated method stub
-	}
-	
 }

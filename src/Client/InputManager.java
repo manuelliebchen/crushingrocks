@@ -9,8 +9,6 @@ import java.awt.event.MouseMotionListener;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sun.javafx.property.adapter.PropertyDescriptor.Listener;
-
 /**
  * simple singleton input manager
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
