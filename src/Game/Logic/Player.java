@@ -1,6 +1,9 @@
 package Game.Logic;
 
+import Game.GameConstants;
 import Game.Controller.IPlayerController;
+import Game.Controller.MapInfo;
+import Game.Controller.PlayerInfo;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
@@ -8,13 +11,14 @@ import Game.Controller.IPlayerController;
  *
  */
 public class Player {
-	
-	Vector position;
-	float radius;
-	IPlayerController controller;
-	float score;
+	private Vector position;
+	private float radius;
+	private IPlayerController controller;
+	private float score;
+	private PlayerInfo controllerInfo = new PlayerInfo(this);
 	
 	public Player(IPlayerController controller){
+		this.controller = controller;
 		resetPosition();
 		radius = 1F;
 		score = 0F;
@@ -30,9 +34,29 @@ public class Player {
 	/**
 	 * TODO: add documentation (depends on PlayerController, which does not yet exist)
 	 */
-	public void update(){
-		//TODO: get instructions from playerController
-		//TODO: perform those actions
+	public void update(MapInfo mapInfo, Player[] allPlayers) {
+		// Create a list with enemy player infos.
+		PlayerInfo[] enemyInfos = new PlayerInfo[allPlayers.length-1];
+		for(int playerIndex=0, infoIndex=0; playerIndex<enemyInfos.length; ++playerIndex) {
+			if(allPlayers[playerIndex] != this) {
+				enemyInfos[infoIndex] = allPlayers[playerIndex].controllerInfo;
+				++infoIndex;
+			}
+		}
+		
+		// Think.
+		// TODO: Add timer!
+		Vector direction = controller.think(mapInfo, controllerInfo, enemyInfos);
+		
+
+		
+		// Limit maximal speed.
+		float speed = direction.length();
+		if(speed > 1.0f)
+			direction = direction.div(speed);
+		
+		// Move.
+		position = position.add(direction.mult(GameConstants.MAX_PLAYER_SPEED));
 	}
 
 	/**

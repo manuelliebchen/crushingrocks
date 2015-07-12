@@ -7,7 +7,6 @@ import Client.GUI.States.StateManager;
 import Client.Rendering.Drawing.ImageManager;
 import Client.Web.News;
 import Client.Web.Version;
-import Game.GameConstants;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -54,18 +53,22 @@ public class MainWindow extends Application {
 		pane.getChildren().add(canvas);
 		pane.autosize();
 		
+		
 		// Add canvas to new scene and set scene as window content
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
 		stage.setScene(scene);
 		
+		InputManager.init(scene);
+		
 		// Create StateManager and set MainMenu as start state
 		this.manager = new StateManager();		
 		this.manager.push(new MainMenu(this.manager));
+
 		
 		// Setting up gameLoop
 		
 		// Create one frame
-		KeyFrame frame = new KeyFrame(Duration.millis(GameConstants.MINIMUM_TIME_PER_FRAME_MS), new EventHandler<ActionEvent>() {
+		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS), new EventHandler<ActionEvent>() {
 
 			/**
 			 * This Method is called ones each frame
@@ -76,6 +79,7 @@ public class MainWindow extends Application {
 				Duration time = ((KeyFrame)event.getSource()).getTime();
 				
 				// Update InputManager
+				
 				InputManager.get().updateTables();
 
 				// Clear screen
