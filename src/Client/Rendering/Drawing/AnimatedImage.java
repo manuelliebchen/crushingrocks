@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
  */
 public final class AnimatedImage {
 
-    private int frameCount = 0;
     private Image[] frames;
 
     /**
@@ -18,7 +17,7 @@ public final class AnimatedImage {
      */
     public AnimatedImage(String pathToImages, String... animImageNames ) {
 
-        frameCount = animImageNames.length;
+        int frameCount = animImageNames.length;
         frames = new Image[frameCount];
 
         for (int i = 0; i < frameCount; i++) {
@@ -33,7 +32,7 @@ public final class AnimatedImage {
      * @return The image at the given frame number.
      */
     public Image draw(int frame) {
-        int currFrame = Math.max(0, Math.min(frameCount - 1, frame));
+        int currFrame = Math.max(0, Math.min(frames.length - 1, frame));
         return frames[currFrame];
     }
 }
