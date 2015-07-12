@@ -69,7 +69,7 @@ public class CliArguments {
 		
 		// enable debug mode
 		if (this.debug) {
-			LOG.setLevel(Level.DEBUG);
+			LOG.getParent().setLevel(Level.ALL);
 		}
 	}
 }

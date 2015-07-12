@@ -101,6 +101,8 @@ public class News {
 		
 		String inputLine;
 		try {
+			// delete first Line (garbage from wordpress)
+			in.readLine();
 			news = new ArrayList<>();
 			while ((inputLine = in.readLine()) != null) {
 				news.add(inputLine);
