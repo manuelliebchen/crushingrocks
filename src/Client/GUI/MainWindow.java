@@ -2,6 +2,7 @@ package Client.GUI;
 
 import Client.ClientConstants;
 import Client.InputManager;
+import Client.InputManager.InputKeyListener;
 import Client.GUI.States.MainMenu;
 import Client.GUI.States.StateManager;
 import Client.Rendering.Drawing.ImageManager;
@@ -16,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.InputEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -54,13 +56,17 @@ public class MainWindow extends Application {
 		pane.getChildren().add(canvas);
 		pane.autosize();
 		
+		
 		// Add canvas to new scene and set scene as window content
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
 		stage.setScene(scene);
 		
+		InputManager.init(scene);
+		
 		// Create StateManager and set MainMenu as start state
 		this.manager = new StateManager();		
 		this.manager.push(new MainMenu(this.manager));
+
 		
 		// Setting up gameLoop
 		
@@ -76,6 +82,7 @@ public class MainWindow extends Application {
 				Duration time = ((KeyFrame)event.getSource()).getTime();
 				
 				// Update InputManager
+				
 				InputManager.get().updateTables();
 
 				// Clear screen
