@@ -4,7 +4,7 @@ import Client.ClientConstants;
 import Client.InputManager;
 import Client.GUI.States.MainMenu;
 import Client.GUI.States.StateManager;
-import Client.Rendering.ImageManager;
+import Client.Rendering.Drawing.ImageManager;
 import Client.Web.News;
 import Client.Web.Version;
 import Game.GameConstants;

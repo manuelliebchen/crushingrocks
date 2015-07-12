@@ -3,7 +3,7 @@ package Client.GUI.States;
 import Client.ClientConstants;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
-import Client.Rendering.ImageManager;
+import Client.Rendering.Drawing.ImageManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,7 +17,6 @@ public class Credits extends GameState implements IDraw {
 	/**
 	 * Creating new Credits State.
 	 * @param manager The StateManager of the current Window
-	 * @param pane The Gui Layout pane of the current Window. Used for Buttons
 	 */
 	public Credits(StateManager manager) {
 		super(manager);

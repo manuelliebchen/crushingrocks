@@ -1,4 +1,4 @@
-package Client.Rendering;
+package Client.Rendering.Drawing;
 
 import javafx.scene.image.Image;
 
@@ -52,25 +52,23 @@ public final class ImageManager {
 
     /**
      * Loads an animated image from the given path.
-     * Animations are stored as images with the same name and appended numbers from 0 to frame count - 1.
-     * E.g. Jump0.png, Jump1.png, ..., Jump5.png for a frame count of 5.
-     * @param pathToImage Path to the directory where the images are located, as seen from the Assets package.
-     * @param imgName Name of the animation images without the frame number
-     * @param numFrames Number of frames the animation consists of.
+     * Images should be handed as strings containing the frame names.
+     * E.g. loadAnimatedImage("path/to/", "jump1.png", "jump2.png", ..., "jumpn.png");
+     * @param pathToImages Path to the directory where the images are located, as seen from the Assets package.
+     * @param imgNames Name of the frame images as string.
      * @return Animated image.
      */
-    public AnimatedImage loadAnimatedImage(String pathToImage, String imgName, int numFrames) {
-        assert pathToImage != null;
-        assert imgName != null;
-        assert numFrames > 1;
+    public AnimatedImage loadAnimatedImage(String pathToImages, String... imgNames) {
+        assert pathToImages != null;
+        assert imgNames != null;
 
-        String assetPath = "Assets/" + pathToImage;
+        String assetPath = "Assets/" + pathToImages;
 
-        if (animImageCache.containsKey(imgName)) {
-            return animImageCache.get(imgName);
+        if (animImageCache.containsKey(imgNames[0])) {
+            return animImageCache.get(imgNames[0]);
         } else {
-            AnimatedImage animg = new AnimatedImage(assetPath, imgName, numFrames);
-            animImageCache.put(imgName, animg);
+            AnimatedImage animg = new AnimatedImage(assetPath, imgNames);
+            animImageCache.put(imgNames[0], animg);
             return animg;
         }
     }
