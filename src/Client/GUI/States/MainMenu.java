@@ -1,18 +1,28 @@
 package Client.GUI.States;
 
 import Client.ClientConstants;
+import Client.GUI.Elements.Button;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
+import Client.GUI.States.Interfaces.IUpdate;
 import Client.Web.News;
 import Client.Web.Version;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
+ * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
  *
  */
-public class MainMenu extends GameState implements IDraw {	
+public class MainMenu extends GameState implements IDraw, IUpdate {
+	
+	Button startGame;
+	Button showCredits;
+	Button sample;
+	Button endGame;
+	
 	/**
 	 * Creating new MainMenu.
 	 * @param manager The StateManager of the current Window
@@ -21,6 +31,7 @@ public class MainMenu extends GameState implements IDraw {
 	public MainMenu(StateManager manager) {
 		super(manager);
 	}
+
 
 	@Override
 	public void draw(GraphicsContext graphics, float elapsedTime) {
@@ -53,5 +64,64 @@ public class MainMenu extends GameState implements IDraw {
 			String versionText = "news: " + News.getNews();
 			graphics.fillText(versionText, 10, 40);
 		}
+		
+		//draw buttons
+		startGame.draw(graphics);
+		showCredits.draw(graphics);
+		sample.draw(graphics);
+		endGame.draw(graphics);
 	}
+	
+	@Override
+	public void entered() {
+		super.entered();
+		
+		
+		//generate testbuttons
+		startGame = new Button(new Point2D(100,100),new Point2D(150,50),"Start Game");
+		showCredits = new Button(new Point2D(100,200),new Point2D(150,50),"Show Credits");
+		sample = new Button(new Point2D(100,300),new Point2D(150,50),"sample");
+		sample.setEnabled(false);
+		endGame = new Button(new Point2D(100,400),new Point2D(150,50),"Exit Game");
+		
+	}
+	
+	//Optional
+	@Override
+    public void leaving() {
+    	super.leaving();
+    }
+	//Optional
+	@Override
+    public void obscuring() {
+    	super.obscuring();
+    }
+	//Optional
+	@Override
+    public void revealed() {
+    	super.revealed();
+    }
+
+
+	@Override
+	public void update(float elapsedTime) {
+		if (!isTop)
+			return;
+		
+		
+		//Tests if buttons are pressed
+		if(startGame.isPressed()){
+		//TODO start game here!
+		}
+		else if(showCredits.isPressed()){
+			manager.push(new Credits(manager));
+		}
+		else if(sample.isPressed()){
+		// Do some crazy stuff if the button is enabled.
+		}
+		else if(endGame.isPressed()){
+			System.exit(0);
+		}
+	}
+	
 }
