@@ -50,4 +50,10 @@ public final class ClientConstants {
 	 * Value = {@value #SCREEN_HEIGHT} 
 	 */
 	public static final int SCREEN_HEIGHT = 600;
+	/**
+	 * The time per frame in milliseconds
+	 * <p>
+	 * Value = {@value #MINIMUM_TIME_PER_FRAME_MS}
+	 */
+	public static final long MINIMUM_TIME_PER_FRAME_MS = 16;
 }

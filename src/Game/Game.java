@@ -77,7 +77,7 @@ public class Game {
 		for(Player player : players){
 			
 			// update players
-			player.update();
+			player.update(map.getPlayerControllerInfo(), players);
 			
 			// check if player falls of the map
 			if (player.getPosition().lengthSqr() > map.getRadius() * map.getRadius())

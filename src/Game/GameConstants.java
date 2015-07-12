@@ -2,15 +2,14 @@ package Game;
 
 /**
  * Class for various game relevant constants.
- * @author Max Klockmann (max@acagamics.de)
+ * @author Andreas Reich (andreas@acagamics.de)
  *
  */
 public final class GameConstants {
-	// TODO insert constants
 	/**
-	 * The time per frame in milliseconds
+	 * Maximal per step moving speed of the player.
 	 * <p>
-	 * Value = {@value #MINIMUM_TIME_PER_FRAME_MS}
+	 * Value = {@value #MAX_PLAYER_SPEED} 
 	 */
-	public static final long MINIMUM_TIME_PER_FRAME_MS = 16;
+	public static final float MAX_PLAYER_SPEED = 1.0f; 
 }

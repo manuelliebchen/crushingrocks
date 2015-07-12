@@ -2,13 +2,11 @@ package Client.GUI;
 
 import Client.ClientConstants;
 import Client.InputManager;
-import Client.InputManager.InputKeyListener;
 import Client.GUI.States.MainMenu;
 import Client.GUI.States.StateManager;
 import Client.Rendering.Drawing.ImageManager;
 import Client.Web.News;
 import Client.Web.Version;
-import Game.GameConstants;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.InputEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -71,7 +68,7 @@ public class MainWindow extends Application {
 		// Setting up gameLoop
 		
 		// Create one frame
-		KeyFrame frame = new KeyFrame(Duration.millis(GameConstants.MINIMUM_TIME_PER_FRAME_MS), new EventHandler<ActionEvent>() {
+		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS), new EventHandler<ActionEvent>() {
 
 			/**
 			 * This Method is called ones each frame

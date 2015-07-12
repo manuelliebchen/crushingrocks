@@ -2,6 +2,8 @@ package Game.Logic;
 
 import java.util.ArrayList;
 
+import Game.Controller.MapInfo;
+
 /**
  * A map has a certain size and contains items like coins.
  * @author Jan-Cord Gerken (jancord@acagamics.de)
@@ -11,6 +13,7 @@ public class Map {
 	
 	float radius;
 	ArrayList<Coin> coins;
+	MapInfo playerControllerInfo = new MapInfo(this);
 	
 	public Map(){
 		radius = 100F;
@@ -38,5 +41,13 @@ public class Map {
 	 */
 	public float getRadius(){
 		return radius;
+	}
+	
+	/**
+	 * Gets the map-info object which provides informations to player-controller.
+	 * @return map info object.
+	 */
+	public MapInfo getPlayerControllerInfo(){
+		return playerControllerInfo;
 	}
 }
