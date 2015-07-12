@@ -1,6 +1,8 @@
 package Client.Rendering.Drawing;
 
+import Client.ClientConstants;
 import javafx.scene.image.Image;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +12,13 @@ import java.util.Map;
  */
 public final class ImageManager {
 
+    private static final Logger LOG = Logger.getLogger(ImageManager.class);
+
     private static final ImageManager INSTANCE = new ImageManager();
 
     private ImageManager() {
         if (INSTANCE != null) {
-            throw new IllegalStateException("Already instantiated");
+            LOG.error("Already instantiated");
         }
     }
 
@@ -37,7 +41,7 @@ public final class ImageManager {
     public Image loadImage(String imagePath) {
         assert imagePath != null;
 
-        String assetPath = "Assets/" + imagePath;
+        String assetPath = ClientConstants.ASSET_ROOT + imagePath;
 
         if (imageCache.containsKey(imagePath)) {
             return imageCache.get(imagePath);
@@ -62,7 +66,7 @@ public final class ImageManager {
         assert pathToImages != null;
         assert imgNames != null;
 
-        String assetPath = "Assets/" + pathToImages;
+        String assetPath = ClientConstants.ASSET_ROOT + pathToImages;
 
         if (animImageCache.containsKey(imgNames[0])) {
             return animImageCache.get(imgNames[0]);
@@ -73,4 +77,27 @@ public final class ImageManager {
         }
     }
 
+    /**
+     * Loads an animated image from the given path.
+     * Images should be handed as strings containing the frame names.
+     * E.g. loadAnimatedImage("path/to/", "jump1.png", "jump2.png", ..., "jumpn.png");
+     * @param pathToImages Path to the directory where the images are located, as seen from the Assets package.
+     * @param imgNames Name of the frame images as string.
+     * @return Animated image.
+     */
+    public AnimatedImage loadAnimatedImage(float animationDuration, String pathToImages, String... imgNames) {
+        assert pathToImages != null;
+        assert imgNames != null;
+        assert animationDuration > 0.0f;
+
+        String assetPath = ClientConstants.ASSET_ROOT + pathToImages;
+
+        if (animImageCache.containsKey(imgNames[0])) {
+            return animImageCache.get(imgNames[0]);
+        } else {
+            AnimatedImage animg = new AnimatedImage(animationDuration, assetPath, imgNames);
+            animImageCache.put(imgNames[0], animg);
+            return animg;
+        }
+    }
 }

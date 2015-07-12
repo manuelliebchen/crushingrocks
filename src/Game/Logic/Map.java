@@ -2,6 +2,7 @@ package Game.Logic;
 
 import java.util.ArrayList;
 
+import Client.ClientConstants;
 import Game.Controller.MapInfo;
 
 /**
@@ -16,13 +17,12 @@ public class Map {
 	MapInfo playerControllerInfo = new MapInfo(this);
 	
 	public Map(){
-		radius = 100F;
-		coins = new ArrayList<Coin>();
+		radius = ClientConstants.MAP_SIZE;
+		coins = new ArrayList<>();
 		float stepSize = 0.1F;
 		for(float t = 0; t < Math.PI * 4; t += stepSize){
 			Vector pos = new Vector((float)Math.sin(t), (float)Math.cos(t));
 			pos = pos.mult(radius / 2F + t / (float)Math.PI / 4F * (radius / 2F));
-			
 			coins.add(new Coin(pos));
 		}
 	}

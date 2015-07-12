@@ -63,7 +63,7 @@ public class Game {
 	 * Note that the players may already be dead.
 	 * @return Player count.
 	 */
-	public int getNumPlayers(int index) {
+	public int getNumPlayers() {
 		return players.length;
 	}
 	

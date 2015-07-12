@@ -31,13 +31,19 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #SCREEN_TITLE} 
 	 */
-	public static final String SCREEN_TITLE = "Ein Herz für Spiele";
+	public static final String SCREEN_TITLE = "Epic ProgWett Game!";
 	/**
 	 * The icon of the window.
 	 * <p>
 	 * Value = {@value #SCREEN_ICON} 
 	 */
 	public static final String SCREEN_ICON = "/Assets/icon.png";
+	/**
+	 * The asset manager root folder, all assets are relative to this path.
+	 * <p>
+	 * Value = {@value #ASSET_ROOT}
+	 */
+	public static final String ASSET_ROOT = "Assets/";
 	/**
 	 * The window width.
 	 * <p>
@@ -56,4 +62,18 @@ public final class ClientConstants {
 	 * Value = {@value #MINIMUM_TIME_PER_FRAME_MS}
 	 */
 	public static final long MINIMUM_TIME_PER_FRAME_MS = 16;
+
+	/**
+	 * Size of the in game map.
+	 * <p>
+	 * Value = {@value #MAP_SIZE}
+	 */
+	public static final float MAP_SIZE = 80f;
+
+	/**
+	 * Time of a simulation step in seconds.
+	 * <p>
+	 * Value = {@value #SIMULATION_STEP_INTERVAL}
+	 */
+	public static final int SIMULATION_STEP_INTERVAL = 16 / 1000;
 }

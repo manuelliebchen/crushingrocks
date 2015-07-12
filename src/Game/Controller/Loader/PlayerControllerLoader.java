@@ -63,7 +63,7 @@ public final class PlayerControllerLoader {
 	 * Attention: Does not parse the directory recursively!
 	 * @param directoryFilename Directory where to look for player controller class files.
 	 */
-	public void AddExternControllersFromDirectory(String directoryFilename) {
+	public void loadControllerFromDirectory(String directoryFilename) {
 		File folder = new File(directoryFilename);
 		File[] listOfFiles = folder.listFiles();
 		if(listOfFiles != null) {
