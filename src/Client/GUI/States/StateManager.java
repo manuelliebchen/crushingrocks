@@ -2,6 +2,7 @@ package Client.GUI.States;
 
 import java.util.ArrayList;
 
+import javafx.scene.canvas.GraphicsContext;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IGameStateManager;
@@ -9,6 +10,8 @@ import Client.GUI.States.Interfaces.IUpdate;
 
 /**
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
+ * @author Max Klockmann (max@acagamics.de)
+ * 
  */
 public final class StateManager implements IGameStateManager {
 
@@ -145,11 +148,11 @@ public final class StateManager implements IGameStateManager {
 	 * @param elapsedTime elapsed time since last call
 	 */
 	@Override
-	public void draw(float elapsedTime) {
+	public void draw(GraphicsContext graphics, float elapsedTime) {
 		
 		for(int i =0; i<drawables.size(); i++)
 		{
-			drawables.get(i).draw(elapsedTime);
+			drawables.get(i).draw(graphics, elapsedTime);
 		}
 	}
 

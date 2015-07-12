@@ -1,25 +1,32 @@
 package Client.GUI.States.Interfaces;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import Client.GUI.States.StateManager;
 
 /**
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
+ * @author Max Klockmann (max@acagamics.de)
+ *
  */
-public abstract class GameState extends Scene {
+public abstract class GameState {
 	
-	public GameState(Parent root, double width, double height, StateManager manager) {
-		super(root, width, height);
-		
+	public GameState(StateManager manager) {		
 		this.manager = manager;
 	}
 	
 	protected StateManager manager;
+	protected boolean isTop;
 
-	public abstract void entered();
-    public abstract void leaving();
-    public abstract void obscuring();
-    public abstract void revealed();
+	public void entered() {
+		isTop = true;
+	}
+    public void leaving() {
+    	isTop = false;
+    }
+    public void obscuring() {
+    	isTop = false;
+    }
+    public void revealed() {
+    	isTop = true;
+    }
     
 }
