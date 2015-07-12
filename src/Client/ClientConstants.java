@@ -17,13 +17,15 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #NEWS_URL}
 	 */
-	public static final String NEWS_URL = "http://wettbewerb.acagamics.de/14-15/news.txt";
+	// TODO change "localhost:12686" to real domain
+	public static final String NEWS_URL = "http://localhost:12686/wp-admin/admin-ajax.php?action=news";
 	/**
 	 * The url to the current version.
 	 * <p>
 	 * Value = {@value #VERSION_URL}
 	 */
-	public static final String VERSION_URL = "http://wettbewerb.acagamics.cs.ovgu.de/version.txt";
+	// TODO change "localhost:12686" to real domain
+	public static final String VERSION_URL = "http://localhost:12686/wp-admin/admin-ajax.php?action=version";
 	/**
 	 * The title of the window.
 	 * <p>

@@ -84,6 +84,8 @@ public class Version {
 		StringBuilder response = new StringBuilder();
 		String inputLine;
 		try {
+			// delete first Line (garbage from wordpress)
+			in.readLine();
 			while ((inputLine = in.readLine()) != null) 
 				response.append(inputLine);
 		} catch (IOException e) {
