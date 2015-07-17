@@ -64,13 +64,6 @@ public final class ClientConstants {
 	public static final long MINIMUM_TIME_PER_FRAME_MS = 16;
 
 	/**
-	 * Size of the in game map.
-	 * <p>
-	 * Value = {@value #MAP_SIZE}
-	 */
-	public static final float MAP_SIZE = 80f;
-
-	/**
 	 * Time of a simulation step in seconds.
 	 * <p>
 	 * Value = {@value #SIMULATION_STEP_INTERVAL}

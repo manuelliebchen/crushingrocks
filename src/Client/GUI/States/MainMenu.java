@@ -111,7 +111,7 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 		
 		//Tests if buttons are pressed
 		if(startGame.isPressed()){
-		//TODO start game here!
+			manager.push(new InGame(manager));
 		}
 		else if(showCredits.isPressed()){
 			manager.push(new Credits(manager));

@@ -11,5 +11,11 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #MAX_PLAYER_SPEED} 
 	 */
-	public static final float MAX_PLAYER_SPEED = 1.0f; 
+	public static final float MAX_PLAYER_SPEED = 1.0f;
+	/**
+	 * Radius of the in game map.
+	 * <p>
+	 * Value = {@value #MAP_RADIUS}
+	 */
+	public static final float MAP_RADIUS = 80f;
 }

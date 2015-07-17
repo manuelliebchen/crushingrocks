@@ -1,5 +1,6 @@
 package Client.Rendering;
 
+import Game.GameConstants;
 import Client.ClientConstants;
 import Game.Logic.Vector;
 
@@ -18,7 +19,7 @@ public final class RenderingUtils {
         Point2D midPoint = new Point2D(ClientConstants.SCREEN_WIDTH / 2, ClientConstants.SCREEN_HEIGHT / 2);
 
         // normalize
-        Vector pos = position.mult(1 / ClientConstants.MAP_SIZE, 1 / ClientConstants.MAP_SIZE);
+        Vector pos = position.mult(1 / GameConstants.MAP_RADIUS, 1 / GameConstants.MAP_RADIUS);
 
         // scale to Window-Size
         pos = pos.mult(Math.min(ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT) / 2,
@@ -37,8 +38,8 @@ public final class RenderingUtils {
                 (float) (pos.getY() - (ClientConstants.SCREEN_HEIGHT / 2)));
 
         // scale to ingame-size
-        ingamePos = ingamePos.mult((ClientConstants.MAP_SIZE * 2) / ClientConstants.SCREEN_WIDTH,
-                (ClientConstants.MAP_SIZE * 2) / ClientConstants.SCREEN_HEIGHT);
+        ingamePos = ingamePos.mult((GameConstants.MAP_RADIUS * 2) / ClientConstants.SCREEN_WIDTH,
+                (GameConstants.MAP_RADIUS * 2) / ClientConstants.SCREEN_HEIGHT);
 
         ingamePos.y = ingamePos.y * -1;
         return ingamePos;

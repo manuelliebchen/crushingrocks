@@ -7,6 +7,9 @@ import Client.GUI.States.Interfaces.IUpdate;
 import Client.Rendering.Rendering.MapRendering;
 import Client.Rendering.Rendering.PlayerRendering;
 import Game.Controller.IPlayerController;
+import Game.Controller.BuiltIn.HumanBot;
+import Game.Controller.BuiltIn.HumanMouseBot;
+import Game.Controller.BuiltIn.SampleBot;
 import Game.Controller.Loader.PlayerControllerLoader;
 import Game.Game;
 import javafx.scene.canvas.GraphicsContext;
@@ -34,8 +37,9 @@ public final class InGame extends GameState implements IDraw, IUpdate {
         playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
 
         ArrayList<IPlayerController> playerControllers = new ArrayList<>();
-        playerControllers.add(playerLoader.instantiateLoadedExternController("Game.Controller.BuiltIn.SampleBot"));
-        playerControllers.add(playerLoader.instantiateInternController("Game.Controller.BuiltIn.SampleBot"));
+        playerControllers.add(playerLoader.instantiateLoadedExternController(SampleBot.class.getName()));
+        playerControllers.add(playerLoader.instantiateInternController(HumanMouseBot.class.getName()));
+        playerControllers.add(playerLoader.instantiateInternController(HumanBot.class.getName()));
 
         game = new Game(playerControllers);
 

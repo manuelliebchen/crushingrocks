@@ -2,7 +2,7 @@ package Game.Logic;
 
 import java.util.ArrayList;
 
-import Client.ClientConstants;
+import Game.GameConstants;
 import Game.Controller.MapInfo;
 
 /**
@@ -17,7 +17,7 @@ public class Map {
 	MapInfo playerControllerInfo = new MapInfo(this);
 	
 	public Map(){
-		radius = ClientConstants.MAP_SIZE;
+		radius = GameConstants.MAP_RADIUS;
 		coins = new ArrayList<>();
 		float stepSize = 0.1F;
 		for(float t = 0; t < Math.PI * 4; t += stepSize){
