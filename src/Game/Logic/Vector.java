@@ -212,7 +212,7 @@ public final class Vector {
 	 * @return if vectors have same values
 	 */
 	public boolean equals(Vector other) {
-		return (x == other.x || y == other.y);
+		return (x == other.x && y == other.y);
 	}
 	
 	/**
