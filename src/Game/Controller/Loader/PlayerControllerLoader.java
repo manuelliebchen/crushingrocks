@@ -67,49 +67,55 @@ public final class PlayerControllerLoader {
 		File folder = new File(directoryFilename);
 		File[] listOfFiles = folder.listFiles();
 		if(listOfFiles != null) {
-	    	for (int i = 0; i < listOfFiles.length; i++) {
-	    		String filename = listOfFiles[i].getAbsolutePath();
-	    		if (listOfFiles[i].isFile() && filename.endsWith(".class")) {
-	    			File classFile = new File(filename);
-	    			if(!classFile.exists())
-	    				continue;
-	    			
-	    			// add url
-	    			try {
-	    				URL url = new URL("file:"+ File.separator + (new File("").getAbsolutePath()));
-	    				fileClassLoader.addURL(url);
-	    			} catch (MalformedURLException e) {
-	    				e.printStackTrace();
-	    				continue;
-	    			}
-	    			
-	    			// load subclasses
-	    			if(filename.contains("$")) {
-		    			try {		    				
-		    				fileClassLoader.createClass(classFile);
-		    			} catch (IOException e) {
-		    				e.printStackTrace();
-		    				continue;
-		    			}
-		    		// Load player controller
-	    			} else {
-	    				// Instantiate the controller
-	    				IPlayerController controller = createControllerFromFile(filename);
-		    			if(controller != null) {
-		    				// output
-		    				String name = controller.getName();
-		    				if(name == null) {
-		    					LOG.warn("The name (getName) for player controller " + controller.getClass().getName() + " is null!");
-		    					name = "null";
-		    				}
-		    				
-		    				externControllerDisplayNames.add(name);
-		    				externControllerClassNames.add(controller.getClass().getName());
-		    			}
-	    			}
-	    		}
-	    	}
-	    }
+			for (int i = 0; i < listOfFiles.length; i++) {
+				String filename = listOfFiles[i].getAbsolutePath();
+				if (listOfFiles[i].isFile() && filename.endsWith(".class")) {
+					File classFile = new File(filename);
+					if(!classFile.exists())
+						continue;
+					// add url
+					try {
+						URL url = new URL("file:"+ File.separator + (new File("").getAbsolutePath()));
+						fileClassLoader.addURL(url);
+					} catch (MalformedURLException e) {
+						e.printStackTrace();
+						continue;
+					}
+				}
+			}
+			for (int i = 0; i < listOfFiles.length; i++) {
+				String filename = listOfFiles[i].getAbsolutePath();
+				if (listOfFiles[i].isFile() && filename.endsWith(".class")) {
+					File classFile = new File(filename);
+					if(!classFile.exists())
+						continue;
+					// load subclasses
+					if(filename.contains("$")) {
+						try {
+							fileClassLoader.createClass(classFile);
+						} catch (IOException e) {
+							e.printStackTrace();
+							continue;
+						}
+					// Load player controller
+					} else {
+						// Instantiate the controller
+						IPlayerController controller = createControllerFromFile(filename);
+						if(controller != null) {
+							// output
+							String name = controller.getName();
+							if(name == null) {
+								LOG.warn("The name (getName) for player controller " + controller.getClass().getName() + " is null!");
+								name = "null";
+							}
+							
+							externControllerDisplayNames.add(name);
+							externControllerClassNames.add(controller.getClass().getName());
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	/**
