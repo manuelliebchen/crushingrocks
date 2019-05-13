@@ -21,8 +21,8 @@ public final class Vector {
 		return new Vector(0F, 1F);
 	}
 	
-	public float x = 0;
-	public float y = 0;
+	private float x = 0;
+	private float y = 0;
 	
 	public Vector() {
 	}
