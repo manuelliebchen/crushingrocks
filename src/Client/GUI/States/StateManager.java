@@ -54,8 +54,11 @@ public final class StateManager implements IGameStateManager {
 	@Override
 	public GameState pop() {
 		
-		updateables.remove(currentStates.get(currentStates.size()-1));
-		drawables.remove(currentStates.get(currentStates.size()-1));
+		GameState top = peek();
+		if (top instanceof IUpdate)
+			updateables.remove(currentStates.get(currentStates.size()-1));
+		if (top instanceof IDraw)
+			drawables.remove(currentStates.get(currentStates.size()-1));
 		
 		currentStates.get(currentStates.size()-1).leaving();
 		
