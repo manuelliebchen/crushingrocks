@@ -41,7 +41,7 @@ public final class RenderingUtils {
         ingamePos = ingamePos.mult((GameConstants.MAP_RADIUS * 2) / ClientConstants.SCREEN_WIDTH,
                 (GameConstants.MAP_RADIUS * 2) / ClientConstants.SCREEN_HEIGHT);
 
-        ingamePos.y = ingamePos.y * -1;
+        ingamePos = ingamePos.mult(1, -1);
         return ingamePos;
     }
 
