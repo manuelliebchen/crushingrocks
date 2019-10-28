@@ -1,8 +1,9 @@
 package Client.Rendering.Drawing;
 
-import Client.ClientConstants;
 import javafx.scene.image.Image;
 import org.apache.log4j.Logger;
+
+import Client.ClientConstants;
 
 import java.util.HashMap;
 import java.util.Map;

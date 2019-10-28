@@ -105,9 +105,9 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 
 	@Override
 	public void update(float elapsedTime) {
-		if (!isTop)
+		if (!isTop) {
 			return;
-		
+		}
 		
 		//Tests if buttons are pressed
 		if(startGame.isPressed()){

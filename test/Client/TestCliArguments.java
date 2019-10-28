@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import com.beust.jcommander.ParameterException;
 
+import Client.CliArguments;
+
 public class TestCliArguments {
 
 	@Test

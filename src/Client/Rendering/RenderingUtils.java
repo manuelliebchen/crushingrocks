@@ -1,9 +1,8 @@
 package Client.Rendering;
 
-import Game.GameConstants;
 import Client.ClientConstants;
+import Game.GameConstants;
 import Game.Logic.Vector;
-
 import javafx.geometry.Point2D;
 
 /**
@@ -41,7 +40,7 @@ public final class RenderingUtils {
         ingamePos = ingamePos.mult((GameConstants.MAP_RADIUS * 2) / ClientConstants.SCREEN_WIDTH,
                 (GameConstants.MAP_RADIUS * 2) / ClientConstants.SCREEN_HEIGHT);
 
-        ingamePos.y = ingamePos.y * -1;
+        ingamePos = new Vector(ingamePos.getX(), -ingamePos.getY());
         return ingamePos;
     }
 
