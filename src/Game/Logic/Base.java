@@ -1,7 +1,5 @@
 package Game.Logic;
 
-import Game.GameConstants;
-
 /**
  * Coins can be collected by Players for increasing their score.
  * @author Manuel Liebchen
@@ -12,16 +10,20 @@ public class Base {
 	Player owner;
 	int hp;
 	
-	public Base(Base copy){
+	Base(Base copy){
 		this.position = new Vector(copy.position);
 		this.owner = copy.owner;
-		hp = GameConstants.INITAL_BASE_HP;
+		hp = GameConstants.INITIAL_BASE_HP;
 	}
 	
-	public Base(Player owner, Vector position){
+	Base(Player owner, Vector position){
 		this.owner = owner;
 		this.position = position;
-		hp = GameConstants.INITAL_BASE_HP;
+		hp = GameConstants.INITIAL_BASE_HP;
+	}
+	
+	public Player getOwner() {
+		return owner;
 	}
 
 	/**
@@ -29,7 +31,7 @@ public class Base {
 	 * @return position
 	 */
 	public Vector getPosition() {
-		return position;
+		return position.copy();
 	}
 	
 	/**

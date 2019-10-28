@@ -1,18 +1,15 @@
-package Game;
+package Game.Logic;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import Game.Controller.IPlayerController;
-import Game.Logic.Coin;
-import Game.Logic.Map;
-import Game.Logic.Player;
 
 /**
  * MainClass for the GameSide. EntrancePoint for communication with ClientSide.
  * @author Jan-Cord Gerken (jancord@acagamics.de)
  * @author Andreas Reich (andreas@acagamics.de)
+ * @author Manuel Liebchen
  * 
  */
 public class Game {
@@ -33,7 +30,7 @@ public class Game {
 		players = new Player[playerController.size()];
 		for(int i=0; i<playerController.size(); ++i) {
 			assert(playerController.get(i) != null);
-			players[i] = new Player(playerController.get(i));
+			players[i] = new Player(playerController.get(i), GameConstants.PLAYER_COLORS[i]);
 		}
 		
 		this.random = new Random();

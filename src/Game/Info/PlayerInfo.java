@@ -1,7 +1,9 @@
-package Game.Controller;
+package Game.Info;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import Game.Logic.Player;
-import Game.Logic.Vector;
 
 /**
  * Info object for player controllers.
@@ -20,6 +22,10 @@ public final class PlayerInfo {
 	 * @return This players BaseInfo.
 	 */
 	public BaseInfo getBaseInfo() {
-		return new BaseInfo(player);
+		return new BaseInfo(player.getBase());
+	}
+	
+	public List<UnitInfo> getUnitInfos() {
+		return new ArrayList<>();
 	}
 }

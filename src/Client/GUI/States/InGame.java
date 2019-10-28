@@ -1,6 +1,7 @@
 package Client.GUI.States;
 
-import Client.ClientConstants;
+import java.util.ArrayList;
+
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
@@ -10,10 +11,8 @@ import Game.Controller.IPlayerController;
 import Game.Controller.BuiltIn.HumanBot;
 import Game.Controller.BuiltIn.SampleBot;
 import Game.Controller.Loader.PlayerControllerLoader;
-import Game.Game;
+import Game.Logic.Game;
 import javafx.scene.canvas.GraphicsContext;
-
-import java.util.ArrayList;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)

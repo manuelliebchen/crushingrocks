@@ -2,11 +2,11 @@ package Client.GUI.States;
 
 import java.util.ArrayList;
 
-import javafx.scene.canvas.GraphicsContext;
-import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.GameState;
+import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IGameStateManager;
 import Client.GUI.States.Interfaces.IUpdate;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)

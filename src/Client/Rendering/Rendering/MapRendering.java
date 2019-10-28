@@ -1,17 +1,14 @@
 package Client.Rendering.Rendering;
 
-import Client.Rendering.Drawing.AnimatedImage;
-import Client.Rendering.Drawing.ImageManager;
+import java.util.ArrayList;
 
 import Client.Rendering.RenderingUtils;
+import Client.Rendering.Drawing.ImageManager;
 import Game.Logic.Base;
-import Game.Logic.Coin;
 import Game.Logic.Map;
 import Game.Logic.Mine;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)

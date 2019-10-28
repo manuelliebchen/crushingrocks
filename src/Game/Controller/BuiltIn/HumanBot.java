@@ -1,15 +1,17 @@
 package Game.Controller.BuiltIn;
 
-import javafx.scene.input.KeyCode;
-import Client.ClientConstants;
+import java.util.List;
+
 import Client.InputManager;
 import Client.InputManager.InputKeyListener;
 import Client.InputManager.KeyEventType;
-import Game.GameConstants;
 import Game.Controller.IPlayerController;
-import Game.Controller.MapInfo;
-import Game.Controller.PlayerInfo;
+import Game.Info.MapInfo;
+import Game.Info.PlayerInfo;
+import Game.Logic.Unit;
 import Game.Logic.Vector;
+import Game.Logic.GameConstants.UNIT_TYPE;
+import javafx.scene.input.KeyCode;
 
 /**
  * Simplistic Human Keyboard Bot
@@ -40,8 +42,9 @@ public class HumanBot implements IPlayerController, InputKeyListener {
 	}
 	
 	@Override
-	public Vector think(MapInfo mapInfo, PlayerInfo ownPlayerInfo, PlayerInfo[] enemyPlayerInfo) {
-		return getDirection();
+	public UNIT_TYPE think(MapInfo mapInfo, List<Unit> ownUnits, PlayerInfo enemyPlayerInfo) {
+//		return getDirection();
+		return UNIT_TYPE.RED;
 	}
 
 	@Override

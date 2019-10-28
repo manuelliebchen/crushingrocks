@@ -3,10 +3,10 @@ package Game.Logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import Game.GameConstants;
 import Game.Controller.IPlayerController;
-import Game.Controller.MapInfo;
-import Game.Controller.PlayerInfo;
+import Game.Info.MapInfo;
+import Game.Info.PlayerInfo;
+import Game.Logic.GameConstants.UNIT_TYPE;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
@@ -15,7 +15,7 @@ import Game.Controller.PlayerInfo;
  */
 public class Player {
 	private IPlayerController controller;
-	private int score;
+	private int creditPoints;
 	private PlayerInfo controllerInfo = new PlayerInfo(this);
 	
 	private Color color;
@@ -23,58 +23,62 @@ public class Player {
 	private Base base;
 	private List<Unit> units = new ArrayList<>(16);
 	
-	public Player(IPlayerController controller){
+	Player(IPlayerController controller, Color color){
 		this.controller = controller;
+		this.color = color;
 		reset();
 	}
 	
 	/**
 	 * Reset the Player.
 	 */
-	public void reset(){
+	void reset(){
 		units = new ArrayList<>(16);
-		score = 0;
+		creditPoints = 0;
 	}
 	
 	/**
 	 * TODO: add documentation (depends on PlayerController, which does not yet exist)
 	 */
-	public void update(MapInfo mapInfo, Player[] allPlayers) {
+	void update(MapInfo mapInfo, Player[] allPlayers) {
 		// Create a list with enemy player infos.
-		PlayerInfo[] enemyInfos = new PlayerInfo[allPlayers.length-1];
-		for(int playerIndex=0, infoIndex=0; playerIndex<enemyInfos.length; ++playerIndex) {
-			if(allPlayers[playerIndex] != this) {
-				enemyInfos[infoIndex] = allPlayers[playerIndex].controllerInfo;
-				++infoIndex;
-			}
+		PlayerInfo enemyInfos;
+		if(allPlayers[0] == this) {
+			enemyInfos = new PlayerInfo(allPlayers[1]);
+		} else {
+			enemyInfos = new PlayerInfo(allPlayers[0]);
 		}
 		
 		// Think.
 		// TODO: Add timer!
-		Vector direction = controller.think(mapInfo, controllerInfo, enemyInfos);
+		UNIT_TYPE ut = controller.think(mapInfo, units, enemyInfos);
 		
-
+		for(Unit unit : units) {
+			unit.updatePosition();
+		}
 		
-		// Limit maximal speed.
-		float speed = direction.length();
-		if(speed > 1.0f)
-			direction = direction.div(speed);
+		if(ut != null && creditPoints >= GameConstants.UNIT_FEE) {
+			units.add(new Unit(ut, this, base.getPosition()));
+		}
+	}
 
+	public PlayerInfo getPlayerInfo() {
+		return controllerInfo;
 	}
 
 	/**
 	 * Change the score of this player.
 	 */
-	public void addScore(float scoreBonus){
-		score += scoreBonus;
+	void addScore(float scoreBonus){
+		creditPoints += scoreBonus;
 	}
 	
 	/**
 	 * Get the score of this player.
 	 * @return score
 	 */
-	public float getScore() {
-		return score;
+	public float getCreditPoints() {
+		return creditPoints;
 	}
 	
 	/**
@@ -83,5 +87,9 @@ public class Player {
 	 */
 	public Base getBase() {
 		return base;
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 }

@@ -3,8 +3,7 @@ package Game.Logic;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Game.GameConstants;
-import Game.Controller.MapInfo;
+import Game.Info.MapInfo;
 
 /**
  * A map has a certain size and contains items like coins.
@@ -13,7 +12,6 @@ import Game.Controller.MapInfo;
  */
 public class Map {
 	
-	float radius;
 	ArrayList<Base> bases;
 	ArrayList<Mine> mines;
 	MapInfo playerControllerInfo = new MapInfo(this);
@@ -22,7 +20,6 @@ public class Map {
 	
 	public Map(Random random, Player[] player){
 		this.random = random;
-		radius = GameConstants.MAP_RADIUS;
 		
 		bases = new ArrayList<>(2);
 		bases.add(new Base(player[0], new Vector(-1, 0)));
@@ -52,14 +49,6 @@ public class Map {
 	 */
 	public ArrayList<Mine> getMines() {
 		return mines;
-	}
-
-	/**
-	 * Get the mapRadius of this Map.
-	 * @return mapRadius
-	 */
-	public float getRadius(){
-		return radius;
 	}
 	
 	/**

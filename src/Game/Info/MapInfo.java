@@ -1,4 +1,4 @@
-package Game.Controller;
+package Game.Info;
 
 import Game.Logic.Map;
 import Game.Logic.Mine;
@@ -13,14 +13,6 @@ public class MapInfo {
 	
 	public MapInfo(Map map) {
 		this.map = map;
-	}
-	
-	/**
-	 * Get the mapRadius.
-	 * @return mapRadius
-	 */
-	public float getRadius() {
-		return map.getRadius();
 	}
 	
 	/**

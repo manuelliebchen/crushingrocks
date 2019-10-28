@@ -218,10 +218,11 @@ public final class Vector {
 	/**
 	 * Normalize this vector. If this is a Zero-Vector, components will be set to NaN.
 	 */
-	public void normalize() {
+	public Vector normalize() {
 		float length = this.length();
 		x = x / length;
 		y = y / length;
+		return this;
 	}
 	
 	/**
