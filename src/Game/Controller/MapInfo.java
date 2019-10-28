@@ -1,7 +1,7 @@
 package Game.Controller;
 
-import Game.Logic.Coin;
 import Game.Logic.Map;
+import Game.Logic.Mine;
 
 /**
  * Map information for player controller.
@@ -24,23 +24,23 @@ public class MapInfo {
 	}
 	
 	/**
-	 * Get the number of coins that are currently on the map.
-	 * @return Coin count.
-	 * @see getCoin
+	 * Get the number of mines that are currently on the map.
+	 * @return Mine count.
+	 * @see getMine
 	 */
-	public int getNumCoins() {
-		return map.getCoins().size();
+	public int getNumMines() {
+		return map.getMines().size();
 	}
 	
 	/**
-	 * Returns a coin with the given index.
-	 * @param coinIndex Index of a coin, should be between zero and getNumCoins.
-	 * @return A coin or null if the index is invalid.
-	 * @see getNumCoins
+	 * Returns a mine with the given index.
+	 * @param mineIndex Index of a mine, should be between zero and getNumCoins.
+	 * @return A mine or null if the index is invalid.
+	 * @see getNumMines
 	 */
-	public Coin getCoin(int coinIndex) {
-		if(coinIndex < map.getCoins().size()) {
-			return new Coin(map.getCoins().get(coinIndex));
+	public Mine getMine(int mineIndex) {
+		if(mineIndex < map.getMines().size()) {
+			return new Mine(map.getMines().get(mineIndex));
 		} else {
 			return null;
 		}

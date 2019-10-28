@@ -4,8 +4,10 @@ import Client.Rendering.Drawing.AnimatedImage;
 import Client.Rendering.Drawing.ImageManager;
 
 import Client.Rendering.RenderingUtils;
+import Game.Logic.Base;
 import Game.Logic.Coin;
 import Game.Logic.Map;
+import Game.Logic.Mine;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -18,8 +20,8 @@ public final class MapRendering {
 
     Map gameMap;
 
-    ArrayList<Coin> coins;
-    ArrayList<AnimatedImage> coinImages =  new ArrayList<>();
+    ArrayList<Base> bases;
+    ArrayList<Mine> mines;
 
     /**
      * Used to render the game map.
@@ -27,14 +29,8 @@ public final class MapRendering {
      */
     public MapRendering(Map inGameMap) {
         gameMap = inGameMap;
-
-        coins = gameMap.getCoins();
-        for (int i = 0; i < coins.size(); i++) {
-            AnimatedImage coinImage = ImageManager.getInstance().loadAnimatedImage(1.0f, "coin/", "coin0.png", "coin1.png",
-                    "coin2.png", "coin3.png", "coin4.png", "coin5.png", "coin6.png");
-
-            coinImages.add(i, coinImage);
-        }
+        mines = gameMap.getMines();
+        bases = gameMap.getBases();
     }
 
     /**
@@ -42,9 +38,6 @@ public final class MapRendering {
      * @param timeSinceLastUpdate Time passed since last update in seconds.
      */
     public void update(float timeSinceLastUpdate) {
-        for (AnimatedImage coin : coinImages) {
-            coin.update(timeSinceLastUpdate);
-        }
     }
 
     /**
@@ -57,11 +50,16 @@ public final class MapRendering {
         Image img = ImageManager.getInstance().loadImage("bg.jpg");
         context.drawImage(img, 0, 0);
 
-        for (int i = 0; i < coins.size(); i++) {
-            Image coinImg = coinImages.get(i).draw();
+        Image minetexture = ImageManager.getInstance().loadImage("mine.png");
+        for (int i = 0; i < mines.size(); i++) {
+            context.drawImage(minetexture, RenderingUtils.toPixelCoordinates(mines.get(i).getPosition()).getX() - 40,
+                    RenderingUtils.toPixelCoordinates(mines.get(i).getPosition()).getY() - 30, 80, 60);
+        }
 
-            context.drawImage(coinImg, RenderingUtils.toPixelCoordinates(coins.get(i).getPosition()).getX() - 40,
-                    RenderingUtils.toPixelCoordinates(coins.get(i).getPosition()).getY() - 30, 80, 60);
+        Image baseTexture = ImageManager.getInstance().loadImage("base.png");
+        for (int i = 0; i < bases.size(); i++) {
+            context.drawImage(baseTexture, RenderingUtils.toPixelCoordinates(bases.get(i).getPosition()).getX() - 40,
+                    RenderingUtils.toPixelCoordinates(bases.get(i).getPosition()).getY() - 30, 80, 60);
         }
     }
 

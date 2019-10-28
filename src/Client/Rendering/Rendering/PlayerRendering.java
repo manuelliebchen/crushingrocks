@@ -38,8 +38,8 @@ public final class PlayerRendering {
      * @param timeSinceLastDraw Time passed since last draw in seconds.
      */
     public void draw(GraphicsContext context, float timeSinceLastDraw) {
-        context.drawImage(playerImg, RenderingUtils.toPixelCoordinates(player.getPosition()).getX() - 10,
-                RenderingUtils.toPixelCoordinates(player.getPosition()).getY() - 10, 20, 20);
+//        context.drawImage(playerImg, RenderingUtils.toPixelCoordinates(player.getPosition()).getX() - 10,
+//                RenderingUtils.toPixelCoordinates(player.getPosition()).getY() - 10, 20, 20);
     }
 
 }

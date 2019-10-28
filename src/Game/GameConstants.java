@@ -17,5 +17,9 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #MAP_RADIUS}
 	 */
-	public static final float MAP_RADIUS = 80f;
+	public static final float MAP_RADIUS = 1f;
+	
+	public static final int NUMBER_OF_MINES = 6;
+	
+	public static final int INITAL_BASE_HP = 100;
 }

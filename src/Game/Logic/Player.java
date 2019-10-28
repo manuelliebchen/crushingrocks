@@ -1,5 +1,8 @@
 package Game.Logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Game.GameConstants;
 import Game.Controller.IPlayerController;
 import Game.Controller.MapInfo;
@@ -11,24 +14,26 @@ import Game.Controller.PlayerInfo;
  *
  */
 public class Player {
-	private Vector position;
-	private float radius;
 	private IPlayerController controller;
-	private float score;
+	private int score;
 	private PlayerInfo controllerInfo = new PlayerInfo(this);
+	
+	private Color color;
+	
+	private Base base;
+	private List<Unit> units = new ArrayList<>(16);
 	
 	public Player(IPlayerController controller){
 		this.controller = controller;
-		resetPosition();
-		radius = 1F;
-		score = 0F;
+		reset();
 	}
 	
 	/**
-	 * Places the Player back in its startPosition.
+	 * Reset the Player.
 	 */
-	public void resetPosition(){
-		position = Vector.ZERO();
+	public void reset(){
+		units = new ArrayList<>(16);
+		score = 0;
 	}
 	
 	/**
@@ -54,9 +59,7 @@ public class Player {
 		float speed = direction.length();
 		if(speed > 1.0f)
 			direction = direction.div(speed);
-		
-		// Move.
-		position = position.add(direction.mult(GameConstants.MAX_PLAYER_SPEED));
+
 	}
 
 	/**
@@ -75,18 +78,10 @@ public class Player {
 	}
 	
 	/**
-	 * Get the radius of this player.
-	 * @return radius
+	 * Get the Base of the Player.
+	 * @return Base of the Player
 	 */
-	public float getRadius() {
-		return radius;
-	}
-
-	/**
-	 * Get the position of this player.
-	 * @return position
-	 */
-	public Vector getPosition(){
-		return position;
+	public Base getBase() {
+		return base;
 	}
 }

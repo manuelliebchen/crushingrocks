@@ -16,18 +16,10 @@ public final class PlayerInfo {
 	}
 	
 	/**
-	 * Returns the current position of the player.
-	 * @return A player position.
+	 * Returns the BaseInfo of the player.
+	 * @return This players BaseInfo.
 	 */
-	public Vector getPosition() {
-		return new Vector(player.getPosition());
-	}
-	
-	/**
-	 * Get the radius of the player.
-	 * @return radius
-	 */
-	public float getRadius() {
-		return player.getRadius();
+	public BaseInfo getBaseInfo() {
+		return new BaseInfo(player);
 	}
 }

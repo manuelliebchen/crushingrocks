@@ -8,7 +8,6 @@ import Client.Rendering.Rendering.MapRendering;
 import Client.Rendering.Rendering.PlayerRendering;
 import Game.Controller.IPlayerController;
 import Game.Controller.BuiltIn.HumanBot;
-import Game.Controller.BuiltIn.HumanMouseBot;
 import Game.Controller.BuiltIn.SampleBot;
 import Game.Controller.Loader.PlayerControllerLoader;
 import Game.Game;
@@ -38,7 +37,6 @@ public final class InGame extends GameState implements IDraw, IUpdate {
 
         ArrayList<IPlayerController> playerControllers = new ArrayList<>();
         playerControllers.add(playerLoader.instantiateLoadedExternController(SampleBot.class.getName()));
-        playerControllers.add(playerLoader.instantiateInternController(HumanMouseBot.class.getName()));
         playerControllers.add(playerLoader.instantiateInternController(HumanBot.class.getName()));
 
         game = new Game(playerControllers);

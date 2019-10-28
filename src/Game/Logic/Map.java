@@ -1,6 +1,7 @@
 package Game.Logic;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Game.GameConstants;
 import Game.Controller.MapInfo;
@@ -13,26 +14,44 @@ import Game.Controller.MapInfo;
 public class Map {
 	
 	float radius;
-	ArrayList<Coin> coins;
+	ArrayList<Base> bases;
+	ArrayList<Mine> mines;
 	MapInfo playerControllerInfo = new MapInfo(this);
 	
-	public Map(){
+	Random random;
+	
+	public Map(Random random, Player[] player){
+		this.random = random;
 		radius = GameConstants.MAP_RADIUS;
-		coins = new ArrayList<>();
-		float stepSize = 0.1F;
-		for(float t = 0; t < Math.PI * 4; t += stepSize){
-			Vector pos = new Vector((float)Math.sin(t), (float)Math.cos(t));
-			pos = pos.mult(radius / 2F + t / (float)Math.PI / 4F * (radius / 2F));
-			coins.add(new Coin(pos));
+		
+		bases = new ArrayList<>(2);
+		bases.add(new Base(player[0], new Vector(-1, 0)));
+		bases.add(new Base(player[1], new Vector(1, 0)));
+		
+		mines = new ArrayList<>(GameConstants.NUMBER_OF_MINES);
+		for( int i = 0; i *2< GameConstants.NUMBER_OF_MINES; ++i) {
+			Vector pos = new Vector(random.nextFloat(), 2 * random.nextFloat() -1);
+			mines.add(new Mine(pos.copy()));
+			mines.add(new Mine(pos.mult(-1).copy()));
 		}
+		
+	}
+	
+
+	/**
+	 * Get all bases in this map.
+	 * @return bases in this map
+	 */
+	public ArrayList<Base> getBases() {
+		return bases;
 	}
 	
 	/**
-	 * Get all coins in this map.
-	 * @return coins in this map
+	 * Get all mines in this map.
+	 * @return mines in this map
 	 */
-	public ArrayList<Coin> getCoins() {
-		return coins;
+	public ArrayList<Mine> getMines() {
+		return mines;
 	}
 
 	/**

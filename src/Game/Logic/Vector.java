@@ -231,4 +231,11 @@ public final class Vector {
 	public Vector getNormalized() {
 		return this.div(this.length());
 	}
+	
+	/**
+	 * @return new Vector with same Values.
+	 */
+	public Vector copy() {
+		return new Vector(x,y);
+	}
 }

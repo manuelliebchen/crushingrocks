@@ -2,6 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Game.Controller.IPlayerController;
 import Game.Logic.Coin;
@@ -17,6 +18,7 @@ import Game.Logic.Player;
 public class Game {
 	private Map map;
 	private Player[] players;
+	private Random random;
 
 	/** When a player moves out of the map, he gets penaltyPoints. */
 	final float OUT_OF_WORLD_PENALTY = -100F;
@@ -34,7 +36,8 @@ public class Game {
 			players[i] = new Player(playerController.get(i));
 		}
 		
-		map = new Map();
+		this.random = new Random();
+		map = new Map(this.random, players);
 	}
 	
 	/**
@@ -52,10 +55,11 @@ public class Game {
 	 */
 	public Player getPlayer(int index) {
 		assert(index >= 0);
-		if(index < players.length)
+		if(index < players.length) {
 			return players[index];
-		else
-			return null;
+		} else { 
+			return null; 
+		}
 	}
 	
 	/**
@@ -71,37 +75,21 @@ public class Game {
 	 * Perform a single step in the gameLogic. Updates Players and Map.
 	 */
 	public void tick(){
-		
-		ArrayList<Coin> cachedCoinsToDelete = new ArrayList<Coin>();
-		
+				
 		for(Player player : players){
 			
 			// update players
 			player.update(map.getPlayerControllerInfo(), players);
 			
 			// check if player falls of the map
-			if (player.getPosition().lengthSqr() > map.getRadius() * map.getRadius())
-			{
-				// penalty-points
-				player.addScore(OUT_OF_WORLD_PENALTY);
-				
-				// reset player
-				player.resetPosition();
-			}
-			
-			// collect coins. Btw. if two players collect the coin at the same time, both get the points
-			// because coin is deleted later
-			for(Coin coin : map.getCoins()){
-				if(player.getPosition().distance(coin.getPosition()) < player.getRadius() + coin.getRadius()){
-					player.addScore(coin.getValue());
-					cachedCoinsToDelete.add(coin);
-				}
-			}
-		}
-		
-		// remove collected coins
-		for(Coin coin : cachedCoinsToDelete){
-			map.getCoins().remove(coin);
+//			if (player.getPosition().lengthSqr() > map.getRadius() * map.getRadius())
+//			{
+//				// penalty-points
+//				player.addScore(OUT_OF_WORLD_PENALTY);
+//				
+//				// reset player
+//				player.resetPosition();
+//			}
 		}
 	}
 }
