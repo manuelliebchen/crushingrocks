@@ -1,5 +1,6 @@
 package Game.Logic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ import Game.Controller.IPlayerController;
  */
 public class Game {
 	private Map map;
-	private Player[] players;
+	private List<Player> players;
 	private Random random;
 
 	/** When a player moves out of the map, he gets penaltyPoints. */
@@ -28,10 +29,10 @@ public class Game {
 	public Game(List<IPlayerController> playerController){
 		assert(playerController != null);
 
-		players = new Player[playerController.size()];
+		players = new ArrayList<>(playerController.size());
 		for(int i=0; i<playerController.size(); ++i) {
 			assert(playerController.get(i) != null);
-			players[i] = new Player(playerController.get(i), GameConstants.PLAYER_COLORS[i]);
+			players.add(new Player(playerController.get(i), GameConstants.PLAYER_COLORS[i]));
 		}
 		
 		this.random = new Random();
@@ -53,8 +54,8 @@ public class Game {
 	 */
 	public Player getPlayer(int index) {
 		assert(index >= 0);
-		if(index < players.length) {
-			return players[index];
+		if(index < players.size()) {
+			return players.get(index);
 		} else { 
 			return null; 
 		}
@@ -66,28 +67,18 @@ public class Game {
 	 * @return Player count.
 	 */
 	public int getNumPlayers() {
-		return players.length;
+		return players.size();
 	}
 	
 	/**
 	 * Perform a single step in the gameLogic. Updates Players and Map.
 	 */
 	public void tick(){
-				
 		for(Player player : players){
-			
-			// update players
 			player.update(map, players);
-			
-			// check if player falls of the map
-//			if (player.getPosition().lengthSqr() > map.getRadius() * map.getRadius())
-//			{
-//				// penalty-points
-//				player.addScore(OUT_OF_WORLD_PENALTY);
-//				
-//				// reset player
-//				player.resetPosition();
-//			}
+		}
+		for(Mine mine : map.getMines()) {
+			mine.update(players);
 		}
 	}
 }

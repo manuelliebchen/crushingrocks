@@ -1,7 +1,6 @@
 package Client.Rendering.Rendering;
 
 import Client.Rendering.Drawing.ImageManager;
-import Client.Rendering.RenderingUtils;
 import Game.Logic.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

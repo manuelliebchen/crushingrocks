@@ -1,5 +1,8 @@
 package Game.Logic;
 
+import java.util.List;
+
+import Constants.GameConstants;
 import Game.Types.Vector;
 
 /**
@@ -11,12 +14,12 @@ public class Mine {
 	Vector position;
 	Player currentOwner;
 	
-	public Mine(Mine copy){
+	Mine(Mine copy){
 		this.position = new Vector(copy.position);
 		this.currentOwner = copy.currentOwner;
 	}
 	
-	public Mine(Vector position){
+	Mine(Vector position){
 		this.position = position;
 	}
 
@@ -26,5 +29,29 @@ public class Mine {
 	 */
 	public Vector getPosition() {
 		return position.copy();
+	}
+
+	public Player getOwner() {
+		return currentOwner;
+	}
+
+	public void update(List<Player> players) {
+		//TODO:Implement transition function
+		int count = 0;
+		for(Unit unit : players.get(0).getUnits()) {
+			if(position.distance(unit.getPosition()) < GameConstants.MINE_RADIUS) {
+				++count;
+			}
+		}
+		for(Unit unit : players.get(1).getUnits()) {
+			if(position.distance(unit.getPosition()) < GameConstants.MINE_RADIUS) {
+				--count;
+			}
+		}
+		if(count > 0) {
+			currentOwner = players.get(0);
+		} else if (count < 0) {
+			currentOwner = players.get(1);
+		}
 	}
 }

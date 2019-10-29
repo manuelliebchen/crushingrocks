@@ -1,6 +1,7 @@
 package Constants;
 
 import Game.Types.Color;
+import Game.Types.Vector;
 
 /**
  * Class for various game relevant constants.
@@ -36,11 +37,25 @@ public final class GameConstants {
 	public static final int INITIAL_BASE_HP = 1000;
 
 	/**
+	 * Initial creadit points a player has.
+	 * <p>
+	 * Value = {@value #INITIAL_CREADIT_POINTS}
+	 */
+	public static final int INITIAL_CREADIT_POINTS = 35;
+
+	/**
 	 * Types of units.
 	 * <p>
 	 * Value = {@value #UNIT_TYPE}
 	 */
 	public enum UNIT_TYPE{ RED, GREEN, BLUE};
+
+	/**
+	 * Initial health points of a unit.
+	 * <p>
+	 * Value = {@value #INITIAL_UNIT_HP}
+	 */
+	public static int INITIAL_UNIT_HP = 100;
 
 	/**
 	 * Price of a unit.
@@ -54,8 +69,11 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #INITIAL_UNIT_HP}
 	 */
-	public static int INITIAL_UNIT_HP = 100;
+	public static int MAXIMUM_UNIT_AMOUNT = 16;
+	
+	public static int PER_MINE_INCOME = 1;
+	public static float MINE_RADIUS = 0.025f;
 	
 	public static Color[] PLAYER_COLORS = new Color[]{new Color(0.925f, 0.741f, 0.192f), new Color(0.153f, 0.404f, 0.596f)};
-	
+	public static Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0)};
 }

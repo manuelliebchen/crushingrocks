@@ -6,50 +6,37 @@ import java.util.Random;
 import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
+import Game.Logic.Mine;
 import Game.Logic.Player;
 import Game.Logic.Unit;
-import Game.Types.Vector;
 
 /**
  * Simplistic sample bot.
- * @author Andreas
+ * @author Manuel Liebchen
  *
  */
 public class SampleBot implements IPlayerController {
-	private final int NUM_STEPS_PER_DIR_UPDATE = 20;
 	
 	private Random rnd = new Random();
-	private Vector lastDir = getRandomDirection();
-	private Vector goalDir = getRandomDirection();
-	private int stepCountSinceDirUpdate = 0;
-	
-	Vector getRandomDirection() {
-		// Need to take square root to obtain equally distributed points within a unit circle
-		float radius = (float)Math.sqrt(rnd.nextFloat());
-		float angle = rnd.nextFloat() * (float)Math.PI * 2.0f;
-		return new Vector((float)Math.sin(angle) * radius, (float)Math.cos(angle) * radius);
-	}
 		
 	@Override
 	public String getName() {
-		return "1337 SampleBot";
+		return "Boty McBotface";
 	}
 
 	@Override
 	public String getAuthor() {
-		return "Andreas Reich";
+		return "Manuel Liebchen";
 	}
 	
 	@Override
-	public UNIT_TYPE think(Map mapInfo, List<Unit> ownUnits, Player enemyPlayerInfo) {
-//		++stepCountSinceDirUpdate;
-//		if(stepCountSinceDirUpdate >= NUM_STEPS_PER_DIR_UPDATE) {
-//			lastDir = goalDir;
-//			goalDir = getRandomDirection();
-//			stepCountSinceDirUpdate = 0;
-//		}
-//		
-//		return lastDir.lerp(goalDir, ((float)stepCountSinceDirUpdate) / NUM_STEPS_PER_DIR_UPDATE);
+	public UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
+		List<Mine> mines = mapInfo.getMines();
+		mines.removeIf( m -> m.getOwner() == ownPlayer);
+		for(Unit unit: ownPlayer.getUnits()) {
+			mines.sort((Mine m, Mine n) -> Math.round(m.getPosition().distanceSqr(unit.getPosition()) - n.getPosition().distanceSqr(unit.getPosition())));
+			unit.setOrder(mines.get(0).getPosition().sub(unit.getPosition()));
+		}
 		return UNIT_TYPE.RED;
 	}
 

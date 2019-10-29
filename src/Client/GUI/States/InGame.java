@@ -36,7 +36,7 @@ public final class InGame extends GameState implements IDraw, IUpdate {
 
         ArrayList<IPlayerController> playerControllers = new ArrayList<>();
         playerControllers.add(playerLoader.instantiateLoadedExternController(SampleBot.class.getName()));
-        playerControllers.add(playerLoader.instantiateInternController(HumanBot.class.getName()));
+        playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
 
         game = new Game(playerControllers);
 

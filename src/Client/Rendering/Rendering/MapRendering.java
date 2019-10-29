@@ -1,12 +1,14 @@
 package Client.Rendering.Rendering;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import Client.Rendering.RenderingUtils;
 import Client.Rendering.Drawing.ImageManager;
 import Game.Logic.Base;
 import Game.Logic.Map;
 import Game.Logic.Mine;
+import Game.Logic.Player;
+import Game.Logic.Unit;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -17,8 +19,9 @@ public final class MapRendering {
 
     Map gameMap;
 
-    ArrayList<Base> bases;
-    ArrayList<Mine> mines;
+    List<Base> bases;
+    List<Mine> mines;
+    List<Player> players;
 
     /**
      * Used to render the game map.
@@ -28,6 +31,7 @@ public final class MapRendering {
         gameMap = inGameMap;
         mines = gameMap.getMines();
         bases = gameMap.getBases();
+        players = gameMap.getPlayers();
     }
 
     /**
@@ -48,15 +52,23 @@ public final class MapRendering {
         context.drawImage(img, 0, 0);
 
         Image minetexture = ImageManager.getInstance().loadImage("mine.png");
-        for (int i = 0; i < mines.size(); i++) {
-            context.drawImage(minetexture, RenderingUtils.toPixelCoordinates(mines.get(i).getPosition()).getX() - 40,
-                    RenderingUtils.toPixelCoordinates(mines.get(i).getPosition()).getY() - 30, 80, 60);
+        for (Mine mine : mines) {
+            context.drawImage(minetexture, RenderingUtils.toPixelCoordinates(mine.getPosition()).getX() - 25,
+                    RenderingUtils.toPixelCoordinates(mine.getPosition()).getY() - 25, 50, 50);
         }
 
         Image baseTexture = ImageManager.getInstance().loadImage("base.png");
-        for (int i = 0; i < bases.size(); i++) {
-            context.drawImage(baseTexture, RenderingUtils.toPixelCoordinates(bases.get(i).getPosition()).getX() - 40,
-                    RenderingUtils.toPixelCoordinates(bases.get(i).getPosition()).getY() - 30, 80, 60);
+        for (Base base : bases) {
+            context.drawImage(baseTexture, RenderingUtils.toPixelCoordinates(base.getPosition()).getX() - 25,
+                    RenderingUtils.toPixelCoordinates(base.getPosition()).getY() - 25, 50, 50);
+        }
+
+        Image unitTexture = ImageManager.getInstance().loadImage("player.png");
+        for (Player player : players) {
+        	for(Unit unit : player.getUnits()) {
+        		context.drawImage(unitTexture, RenderingUtils.toPixelCoordinates(unit.getPosition()).getX() - 12,
+                    RenderingUtils.toPixelCoordinates(unit.getPosition()).getY() - 12, 25, 25);
+            }
         }
     }
 

@@ -20,52 +20,50 @@ public class Player {
 	private Color color;
 	
 	private Base base;
-	private List<Unit> units = new ArrayList<>(16);
+	private List<Unit> units;
 	
 	Player(IPlayerController controller, Color color){
 		this.controller = controller;
 		this.color = color;
-		reset();
-	}
-	
-	/**
-	 * Reset the Player.
-	 */
-	void reset(){
 		units = new ArrayList<>(16);
-		creditPoints = 0;
+		creditPoints = GameConstants.INITIAL_CREADIT_POINTS;
 	}
 	
-	/**
-	 * TODO: add documentation (depends on PlayerController, which does not yet exist)
-	 */
-	void update(Map mapInfo, Player[] allPlayers) {
+	void setBase(Base base) {
+		this.base = base;
+	}
+	
+	void update(Map mapInfo, List<Player> players) {
 		// Create a list with enemy player infos.
 		Player enemyInfos;
-		if(allPlayers[0] == this) {
-			enemyInfos = allPlayers[1];
+		if(players.get(0) == this) {
+			enemyInfos = players.get(1);
 		} else {
-			enemyInfos = allPlayers[0];
+			enemyInfos = players.get(0);
 		}
 		
 		// Think.
-		// TODO: Add timer!
-		UNIT_TYPE ut = controller.think(mapInfo, units, enemyInfos);
+		UNIT_TYPE ut = null;
+		try {
+			ut = controller.think(mapInfo, this, enemyInfos);
+		} catch (Exception e) {
+			System.err.println(controller.getName() + " throu an unhandelt exeption!");
+		}
 		
 		for(Unit unit : units) {
 			unit.updatePosition();
 		}
 		
-		if(ut != null && creditPoints >= GameConstants.UNIT_FEE) {
+		if(ut != null && creditPoints >= GameConstants.UNIT_FEE && units.size() <= GameConstants.MAXIMUM_UNIT_AMOUNT) {
 			units.add(new Unit(ut, this, base.getPosition()));
+			creditPoints -= GameConstants.UNIT_FEE;
 		}
-	}
-
-	/**
-	 * Change the score of this player.
-	 */
-	void addScore(float scoreBonus){
-		creditPoints += scoreBonus;
+		
+		for(Mine mine : mapInfo.getMines()) {
+			if(mine.getOwner() == this) {
+				creditPoints += GameConstants.PER_MINE_INCOME;
+			}
+		}
 	}
 	
 	/**
@@ -86,5 +84,9 @@ public class Player {
 	
 	public Color getColor() {
 		return color;
+	}
+
+	public List<Unit> getUnits() {
+		return units;
 	}
 }

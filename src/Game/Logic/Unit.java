@@ -42,10 +42,16 @@ public class Unit {
 	}
 	
 	Vector updatePosition() {
-		if(orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
-			orderedDirection.normalize().mult(GameConstants.MAX_UNIT_SPEED);
+		if(orderedDirection != null) { 
+			if(orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
+				orderedDirection = orderedDirection.normalize().mult(GameConstants.MAX_UNIT_SPEED);
+			}
+			position = position.add(orderedDirection);
+			orderedDirection = null;
+			if(position.length() > GameConstants.MAP_RADIUS) {
+				position = position.normalize().mult(GameConstants.MAP_RADIUS);
+			}
 		}
-		position = position.add(orderedDirection);
-		return position;
+		return position; 
 	}
 }
