@@ -1,4 +1,4 @@
-package Game.Logic;
+package Game.Types;
 
 public class Color {
 	private float red,green,blue;

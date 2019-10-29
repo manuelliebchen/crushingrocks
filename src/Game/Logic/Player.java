@@ -3,10 +3,10 @@ package Game.Logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import Constants.GameConstants;
+import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
-import Game.Info.MapInfo;
-import Game.Info.PlayerInfo;
-import Game.Logic.GameConstants.UNIT_TYPE;
+import Game.Types.Color;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
@@ -16,7 +16,6 @@ import Game.Logic.GameConstants.UNIT_TYPE;
 public class Player {
 	private IPlayerController controller;
 	private int creditPoints;
-	private PlayerInfo controllerInfo = new PlayerInfo(this);
 	
 	private Color color;
 	
@@ -40,13 +39,13 @@ public class Player {
 	/**
 	 * TODO: add documentation (depends on PlayerController, which does not yet exist)
 	 */
-	void update(MapInfo mapInfo, Player[] allPlayers) {
+	void update(Map mapInfo, Player[] allPlayers) {
 		// Create a list with enemy player infos.
-		PlayerInfo enemyInfos;
+		Player enemyInfos;
 		if(allPlayers[0] == this) {
-			enemyInfos = new PlayerInfo(allPlayers[1]);
+			enemyInfos = allPlayers[1];
 		} else {
-			enemyInfos = new PlayerInfo(allPlayers[0]);
+			enemyInfos = allPlayers[0];
 		}
 		
 		// Think.
@@ -60,10 +59,6 @@ public class Player {
 		if(ut != null && creditPoints >= GameConstants.UNIT_FEE) {
 			units.add(new Unit(ut, this, base.getPosition()));
 		}
-	}
-
-	public PlayerInfo getPlayerInfo() {
-		return controllerInfo;
 	}
 
 	/**

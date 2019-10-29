@@ -5,12 +5,12 @@ import java.util.List;
 import Client.InputManager;
 import Client.InputManager.InputKeyListener;
 import Client.InputManager.KeyEventType;
+import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
-import Game.Info.MapInfo;
-import Game.Info.PlayerInfo;
+import Game.Logic.Map;
+import Game.Logic.Player;
 import Game.Logic.Unit;
-import Game.Logic.Vector;
-import Game.Logic.GameConstants.UNIT_TYPE;
+import Game.Types.Vector;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -42,7 +42,7 @@ public class HumanBot implements IPlayerController, InputKeyListener {
 	}
 	
 	@Override
-	public UNIT_TYPE think(MapInfo mapInfo, List<Unit> ownUnits, PlayerInfo enemyPlayerInfo) {
+	public UNIT_TYPE think(Map mapInfo, List<Unit> ownUnits, Player enemyPlayerInfo) {
 //		return getDirection();
 		return UNIT_TYPE.RED;
 	}

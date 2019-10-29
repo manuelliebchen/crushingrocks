@@ -2,10 +2,10 @@ package Game.Controller;
 
 import java.util.List;
 
-import Game.Info.MapInfo;
-import Game.Info.PlayerInfo;
+import Constants.GameConstants.UNIT_TYPE;
+import Game.Logic.Map;
+import Game.Logic.Player;
 import Game.Logic.Unit;
-import Game.Logic.GameConstants.UNIT_TYPE;
 
 /**
  * Player controller interface from which all bots and human player controllers implement. 
@@ -31,5 +31,5 @@ public interface IPlayerController {
 	 * It is called in every update step of the game as long as the player is alive.
 	 * @return The direction and speed in which the should move. A zero vector means no movement.
 	 */
-	UNIT_TYPE think(MapInfo mapInfo, List<Unit> ownUnits, PlayerInfo enemyPlayerInfo);
+	UNIT_TYPE think(Map mapInfo, List<Unit> ownUnits, Player enemyPlayerInfo);
 }

@@ -3,12 +3,12 @@ package Game.Controller.BuiltIn;
 import java.util.List;
 import java.util.Random;
 
+import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
-import Game.Info.MapInfo;
-import Game.Info.PlayerInfo;
+import Game.Logic.Map;
+import Game.Logic.Player;
 import Game.Logic.Unit;
-import Game.Logic.Vector;
-import Game.Logic.GameConstants.UNIT_TYPE;
+import Game.Types.Vector;
 
 /**
  * Simplistic sample bot.
@@ -41,7 +41,7 @@ public class SampleBot implements IPlayerController {
 	}
 	
 	@Override
-	public UNIT_TYPE think(MapInfo mapInfo, List<Unit> ownUnits, PlayerInfo enemyPlayerInfo) {
+	public UNIT_TYPE think(Map mapInfo, List<Unit> ownUnits, Player enemyPlayerInfo) {
 //		++stepCountSinceDirUpdate;
 //		if(stepCountSinceDirUpdate >= NUM_STEPS_PER_DIR_UPDATE) {
 //			lastDir = goalDir;

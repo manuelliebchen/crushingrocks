@@ -1,5 +1,8 @@
 package Game.Logic;
 
+import Constants.GameConstants;
+import Game.Types.Vector;
+
 /**
  * Coins can be collected by Players for increasing their score.
  * @author Manuel Liebchen

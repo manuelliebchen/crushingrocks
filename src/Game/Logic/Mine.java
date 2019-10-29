@@ -1,5 +1,7 @@
 package Game.Logic;
 
+import Game.Types.Vector;
+
 /**
  * Coins can be collected by Players for increasing their score.
  * @author Manuel Liebchen
@@ -23,6 +25,6 @@ public class Mine {
 	 * @return position
 	 */
 	public Vector getPosition() {
-		return position;
+		return position.copy();
 	}
 }

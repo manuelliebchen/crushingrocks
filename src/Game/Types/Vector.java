@@ -1,4 +1,4 @@
-package Game.Logic;
+package Game.Types;
 
 /**
  * A class for defining a 2-dimensional vector. With different helpful 

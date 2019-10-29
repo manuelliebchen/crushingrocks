@@ -1,6 +1,8 @@
 package Game.Logic;
 
-import Game.Logic.GameConstants.UNIT_TYPE;
+import Constants.GameConstants;
+import Constants.GameConstants.UNIT_TYPE;
+import Game.Types.Vector;
 
 public class Unit {
 	

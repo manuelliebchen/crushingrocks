@@ -3,7 +3,8 @@ package Game.Logic;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Game.Info.MapInfo;
+import Constants.GameConstants;
+import Game.Types.Vector;
 
 /**
  * A map has a certain size and contains items like coins.
@@ -14,7 +15,6 @@ public class Map {
 	
 	ArrayList<Base> bases;
 	ArrayList<Mine> mines;
-	MapInfo playerControllerInfo = new MapInfo(this);
 	
 	Random random;
 	
@@ -49,13 +49,5 @@ public class Map {
 	 */
 	public ArrayList<Mine> getMines() {
 		return mines;
-	}
-	
-	/**
-	 * Gets the map-info object which provides informations to player-controller.
-	 * @return map info object.
-	 */
-	public MapInfo getPlayerControllerInfo(){
-		return playerControllerInfo;
 	}
 }

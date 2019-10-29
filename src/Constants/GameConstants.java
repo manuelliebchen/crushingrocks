@@ -1,4 +1,6 @@
-package Game.Logic;
+package Constants;
+
+import Game.Types.Color;
 
 /**
  * Class for various game relevant constants.

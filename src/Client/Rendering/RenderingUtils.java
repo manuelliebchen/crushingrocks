@@ -1,8 +1,8 @@
 package Client.Rendering;
 
 import Client.ClientConstants;
-import Game.Logic.GameConstants;
-import Game.Logic.Vector;
+import Constants.GameConstants;
+import Game.Types.Vector;
 import javafx.geometry.Point2D;
 
 /**

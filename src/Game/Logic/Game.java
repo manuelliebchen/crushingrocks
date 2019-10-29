@@ -3,6 +3,7 @@ package Game.Logic;
 import java.util.List;
 import java.util.Random;
 
+import Constants.GameConstants;
 import Game.Controller.IPlayerController;
 
 /**
@@ -76,7 +77,7 @@ public class Game {
 		for(Player player : players){
 			
 			// update players
-			player.update(map.getPlayerControllerInfo(), players);
+			player.update(map, players);
 			
 			// check if player falls of the map
 //			if (player.getPosition().lengthSqr() > map.getRadius() * map.getRadius())
