@@ -1,5 +1,7 @@
 package Game.Logic;
 
+import java.util.List;
+
 import Constants.GameConstants;
 import Game.Types.Vector;
 
@@ -36,5 +38,16 @@ public class Base {
 	 */
 	public int getHP() {
 		return hp;
+	}
+
+
+	void update(List<Unit> allUnits) {
+		int count = 0;
+		for(Unit unit : allUnits) {
+			if(position.distance(unit.getPosition()) < GameConstants.BASE_RADIUS && unit.getOwner() != owner) {
+				count++;
+			}
+		}
+		hp -= count * GameConstants.UNIT_BASE_ATTACK;
 	}
 }

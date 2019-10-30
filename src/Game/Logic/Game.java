@@ -72,22 +72,40 @@ public class Game {
 	 * Perform a single step in the gameLogic. Updates Players and Map.
 	 */
 	public void tick(){
+		// Update Player.
 		for(Player player : players){
 			player.update(map, players);
 		}
 
-		//Summon all Units.
+		// Summon all Units.
 		List<Unit> allUnits = new ArrayList<>(GameConstants.MAXIMUM_UNIT_AMOUNT);
 		for(Player player : players) {
 			allUnits.addAll(player.getUnits());	
 		}
+		
+		// Apply orders (move Units).
+		for(Unit unit : allUnits) {
+			unit.updatePosition(allUnits);
+		}
 
+		// Update Mines (ownership)
 		for(Mine mine : map.getMines()) {
 			mine.update(players, allUnits);
 		}
-		//Apply orders.
+
+		// Update Bases (Attack by Units)
+		for(Base base : map.getBases()) {
+			base.update(allUnits);
+		}
+
+		// Update Unit hp by attack.
 		for(Unit unit : allUnits) {
-			unit.updatePosition(allUnits);
+			for(Unit enemyUnit : allUnits) {
+				if(unit.getPosition().distance(enemyUnit.getPosition()) < GameConstants.UNIT_RADIUS && unit.getOwner() != enemyUnit.getOwner()) {
+					enemyUnit.attackBy(GameConstants.UNIT_BASE_ATTACK);
+					break;
+				}
+			}
 		}
 
 		//Remove Death Units

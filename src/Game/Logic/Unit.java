@@ -54,12 +54,10 @@ public class Unit {
 				position = position.normalize().mult(GameConstants.MAP_RADIUS);
 			}
 		}
-		for(Unit unit : enemyUnits) {
-			if(unit.getPosition().distance(position) < GameConstants.UNIT_RADIUS && owner != unit.getOwner()) {
-				unit.hp -= GameConstants.UNIT_BASE_ATTACK;
-				break;
-			}
-		}
 		return position; 
+	}
+
+	void attackBy(int damage) {
+		hp -= damage;
 	}
 }

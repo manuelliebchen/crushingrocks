@@ -36,7 +36,7 @@ public class Map {
 		for( int i = 0; i *2< GameConstants.NUMBER_OF_MINES; ++i) {
 			Vector pos;
 			do {
-				pos = new Vector(random.nextFloat(), 2 * random.nextFloat() -1);
+				pos = new Vector(this.random.nextFloat(), 2 * this.random.nextFloat() -1);
 			} while(pos.length() > 1);
 			mines.add(new Mine(pos.copy()));
 			mines.add(new Mine(pos.mult(-1).copy()));
