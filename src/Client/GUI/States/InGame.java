@@ -8,7 +8,6 @@ import Client.GUI.States.Interfaces.IUpdate;
 import Client.Rendering.Rendering.MapRendering;
 import Client.Rendering.Rendering.PlayerRendering;
 import Game.Controller.IPlayerController;
-import Game.Controller.BuiltIn.HumanBot;
 import Game.Controller.BuiltIn.SampleBot;
 import Game.Controller.Loader.PlayerControllerLoader;
 import Game.Logic.Game;

@@ -15,12 +15,10 @@ import Game.Controller.IPlayerController;
  * 
  */
 public class Game {
-	private Map map;
 	private List<Player> players;
-	private Random random;
+	private Map map;
 
-	/** When a player moves out of the map, he gets penaltyPoints. */
-	final float OUT_OF_WORLD_PENALTY = -100F;
+	private Random random;
 	
 	/**
 	 * Creates a new map with the given player controller and a map.
@@ -35,7 +33,7 @@ public class Game {
 			players.add(new Player(playerController.get(i), GameConstants.PLAYER_COLORS[i]));
 		}
 		
-		this.random = new Random();
+		this.random = new Random(42);
 		map = new Map(this.random, players);
 	}
 	
@@ -77,8 +75,22 @@ public class Game {
 		for(Player player : players){
 			player.update(map, players);
 		}
-		for(Mine mine : map.getMines()) {
-			mine.update(players);
+
+		//Summon all Units.
+		List<Unit> allUnits = new ArrayList<>(GameConstants.MAXIMUM_UNIT_AMOUNT);
+		for(Player player : players) {
+			allUnits.addAll(player.getUnits());	
 		}
+
+		for(Mine mine : map.getMines()) {
+			mine.update(players, allUnits);
+		}
+		//Apply orders.
+		for(Unit unit : allUnits) {
+			unit.updatePosition(allUnits);
+		}
+
+		//Remove Death Units
+		allUnits.removeIf( u -> u.getHP() <= 0);
 	}
 }

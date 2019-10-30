@@ -1,18 +1,20 @@
 package Game.Logic;
 
+import java.util.List;
+
 import Constants.GameConstants;
 import Constants.GameConstants.UNIT_TYPE;
 import Game.Types.Vector;
 
 public class Unit {
 	
-	Vector position;
-	Player owner;
-	int hp;
+	private Vector position;
+	private Player owner;
+	private int hp;
 	
-	UNIT_TYPE type;
+	private UNIT_TYPE type;
 	
-	Vector orderedDirection;
+	private Vector orderedDirection;
 	
 	Unit(UNIT_TYPE ut, Player owner, Vector position){
 		this.type = ut;
@@ -41,7 +43,7 @@ public class Unit {
 		orderedDirection = direction;
 	}
 	
-	Vector updatePosition() {
+	Vector updatePosition(List<Unit> enemyUnits) {
 		if(orderedDirection != null) { 
 			if(orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
 				orderedDirection = orderedDirection.normalize().mult(GameConstants.MAX_UNIT_SPEED);
@@ -50,6 +52,12 @@ public class Unit {
 			orderedDirection = null;
 			if(position.length() > GameConstants.MAP_RADIUS) {
 				position = position.normalize().mult(GameConstants.MAP_RADIUS);
+			}
+		}
+		for(Unit unit : enemyUnits) {
+			if(unit.getPosition().distance(position) < GameConstants.UNIT_RADIUS && owner != unit.getOwner()) {
+				unit.hp -= GameConstants.UNIT_BASE_ATTACK;
+				break;
 			}
 		}
 		return position; 

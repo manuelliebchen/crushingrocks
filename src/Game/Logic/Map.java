@@ -14,13 +14,13 @@ import Game.Types.Vector;
  */
 public class Map {
 	
-	List<Base> bases;
-	List<Mine> mines;
-	List<Player> player;
+	private List<Base> bases;
+	private List<Mine> mines;
+	private List<Player> player;
 	
-	Random random;
+	private Random random;
 	
-	public Map(Random random, List<Player> player){
+	Map(Random random, List<Player> player){
 		this.random = random;
 		
 		bases = new ArrayList<>(2);
@@ -50,7 +50,7 @@ public class Map {
 	 * @return bases in this map
 	 */
 	public List<Base> getBases() {
-		return bases;
+		return new ArrayList<>(bases);
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class Map {
 	 * @return mines in this map
 	 */
 	public List<Mine> getMines() {
-		return mines;
+		return new ArrayList<>(mines);
 	}
 	
 	/**
@@ -66,6 +66,6 @@ public class Map {
 	 * @return players in this map
 	 */
 	public List<Player> getPlayers() {
-		return player;
+		return new ArrayList<>(player);
 	}
 }

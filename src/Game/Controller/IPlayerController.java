@@ -24,6 +24,12 @@ public interface IPlayerController {
 	String getAuthor();
 	
 	/**
+	 * Returns the  of the author of this player controller.
+	 * @return A name of a human being.
+	 */
+	int getMatrikelnummer();
+	
+	/**
 	 * This method contains the actual AI/controlling.
 	 * It is called in every update step of the game as long as the player is alive.
 	 * @return The direction and speed in which the should move. A zero vector means no movement.

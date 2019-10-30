@@ -9,15 +9,9 @@ import Game.Types.Vector;
  *
  */
 public class Base {
-	Vector position;
-	Player owner;
-	int hp;
-	
-	Base(Base copy){
-		this.position = new Vector(copy.position);
-		this.owner = copy.owner;
-		hp = GameConstants.INITIAL_BASE_HP;
-	}
+	private Vector position;
+	private Player owner;
+	private int hp;
 	
 	Base(Player owner, Vector position){
 		this.owner = owner;

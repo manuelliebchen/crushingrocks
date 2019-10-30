@@ -50,10 +50,6 @@ public class Player {
 			System.err.println(controller.getName() + " throu an unhandelt exeption!");
 		}
 		
-		for(Unit unit : units) {
-			unit.updatePosition();
-		}
-		
 		if(ut != null && creditPoints >= GameConstants.UNIT_FEE && units.size() <= GameConstants.MAXIMUM_UNIT_AMOUNT) {
 			units.add(new Unit(ut, this, base.getPosition()));
 			creditPoints -= GameConstants.UNIT_FEE;
@@ -83,10 +79,15 @@ public class Player {
 	}
 	
 	public Color getColor() {
-		return color;
+		return color.copy();
 	}
 
 	public List<Unit> getUnits() {
-		return units;
+		return new ArrayList<>(units);
+	}
+	
+	@Override
+	public int hashCode() {
+		return controller.getAuthor().hashCode() + controller.getName().hashCode() + controller.getMatrikelnummer();
 	}
 }

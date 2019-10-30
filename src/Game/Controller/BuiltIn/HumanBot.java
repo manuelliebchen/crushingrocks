@@ -1,7 +1,5 @@
 package Game.Controller.BuiltIn;
 
-import java.util.List;
-
 import Client.InputManager;
 import Client.InputManager.InputKeyListener;
 import Client.InputManager.KeyEventType;
@@ -9,7 +7,6 @@ import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
 import Game.Logic.Player;
-import Game.Logic.Unit;
 import Game.Types.Vector;
 import javafx.scene.input.KeyCode;
 
@@ -39,6 +36,11 @@ public class HumanBot implements IPlayerController, InputKeyListener {
 	@Override
 	public String getAuthor() {
 		return "Max Klockmann";
+	}
+
+	@Override
+	public int getMatrikelnummer() {
+		return -1;
 	}
 	
 	@Override

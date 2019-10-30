@@ -11,8 +11,8 @@ import Game.Types.Vector;
  *
  */
 public class Mine {
-	Vector position;
-	Player currentOwner;
+	private Vector position;
+	private Player currentOwner;
 	
 	Mine(Mine copy){
 		this.position = new Vector(copy.position);
@@ -31,27 +31,30 @@ public class Mine {
 		return position.copy();
 	}
 
+	/**
+	 * Owner of the Mine.
+	 * @return Player that owns this mine.
+	 */
 	public Player getOwner() {
 		return currentOwner;
 	}
 
-	public void update(List<Player> players) {
+	void update(List<Player> players, List<Unit> allUnits) {
 		//TODO:Implement transition function
-		int count = 0;
-		for(Unit unit : players.get(0).getUnits()) {
+		int[] count = new int[players.size()];
+		for(Unit unit : allUnits) {
 			if(position.distance(unit.getPosition()) < GameConstants.MINE_RADIUS) {
-				++count;
+				count[players.indexOf(unit.getOwner())]++;
 			}
 		}
-		for(Unit unit : players.get(1).getUnits()) {
-			if(position.distance(unit.getPosition()) < GameConstants.MINE_RADIUS) {
-				--count;
+		int maxIndex = 0;
+		for( int i = 0; i < count.length; ++i) {
+			if(count[i] > count[maxIndex]) {
+				maxIndex = i;
 			}
 		}
-		if(count > 0) {
-			currentOwner = players.get(0);
-		} else if (count < 0) {
-			currentOwner = players.get(1);
+		if(count[maxIndex] > 0) {
+			currentOwner = players.get(maxIndex);
 		}
 	}
 }
