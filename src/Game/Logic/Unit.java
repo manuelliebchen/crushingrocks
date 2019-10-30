@@ -4,6 +4,7 @@ import java.util.List;
 
 import Constants.GameConstants;
 import Constants.GameConstants.UNIT_TYPE;
+import Game.Controller.IPlayerController;
 import Game.Types.Vector;
 
 public class Unit {
@@ -39,8 +40,10 @@ public class Unit {
 		return type;
 	}
 	
-	public void setOrder(Vector direction) {
-		orderedDirection = direction;
+	public void setOrder(IPlayerController controller, Vector direction) {
+		if(controller == owner.getController()) {
+			orderedDirection = direction;
+		}
 	}
 	
 	Vector updatePosition(List<Unit> enemyUnits) {

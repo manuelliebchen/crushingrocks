@@ -97,6 +97,12 @@ public class Game {
 		for(Base base : map.getBases()) {
 			base.update(allUnits);
 		}
+		
+		for(Base base : map.getBases()) {
+			if( base.getHP() <= 0) {
+				System.out.println("Player " + base.getOwner().getController().getName() + " is defeated.");
+			}
+		}
 
 		// Update Unit hp by attack.
 		for(Unit unit : allUnits) {

@@ -90,4 +90,8 @@ public class Player {
 	public int hashCode() {
 		return controller.getAuthor().hashCode() + controller.getName().hashCode() + controller.getMatrikelnummer();
 	}
+
+	IPlayerController getController() {
+		return controller;
+	}
 }
