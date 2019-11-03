@@ -1,7 +1,7 @@
 package Constants;
 
-import Game.Types.Color;
 import Game.Types.Vector;
+import javafx.scene.paint.Color;
 
 /**
  * Class for various game relevant constants.
@@ -23,7 +23,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #MAXIMUM_UNIT_AMOUNT}
 	 */
-	public static int MAXIMUM_UNIT_AMOUNT = 8;
+	public static final int MAXIMUM_UNIT_AMOUNT = 8;
 
 	
 	// Health Points
@@ -40,14 +40,14 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #INITIAL_UNIT_HP}
 	 */
-	public static int INITIAL_UNIT_HP = 100;
+	public static final int INITIAL_UNIT_HP = 100;
 
 	/**
 	 * Base attack damage of an Unit.
 	 * <p>
 	 * Value = {@value #UNIT_BASE_ATTACK}
 	 */
-	public static int UNIT_BASE_ATTACK = 10;
+	public static final int UNIT_BASE_ATTACK = 10;
 
 	
 	// Creadit Points!
@@ -64,14 +64,14 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #UNIT_FEE}
 	 */
-	public static int UNIT_FEE = 20;
+	public static final int UNIT_FEE = 20;
 
 	/**
 	 * Income per owned mine per tick.
 	 * <p>
 	 * Value = {@value #PER_MINE_INCOME}
 	 */
-	public static int PER_MINE_INCOME = 1;
+	public static final int PER_MINE_INCOME = 1;
 	
 	
 	// Speed!
@@ -92,27 +92,35 @@ public final class GameConstants {
 	 * Value = {@value #MAP_RADIUS}
 	 */
 	public static final float MAP_RADIUS = 1f;
+	
+	/**
+	 * Tickes it takes to capture a mine;
+	 * <p>
+	 * Value = {@value #MINE_CAPTURING_TICKES}
+	 */
+
+	public static final float MINE_CAPTURING_TICKES = 10;
 
 	/**
 	 * Attack radius of the Base.
 	 * <p>
 	 * Value = {@value #BASE_RADIUS}
 	 */
-	public static float BASE_RADIUS = 0.05f;
+	public static final float BASE_RADIUS = 0.2f;
 
 	/**
 	 * Caput radius for mines.
 	 * <p>
 	 * Value = {@value #MINE_RADIUS}
 	 */
-	public static float MINE_RADIUS = 0.025f;
+	public static final float MINE_RADIUS = 0.1f;
 
 	/**
 	 * Radius a unit can attack.
 	 * <p>
 	 * Value = {@value #UNIT_RADIUS}
 	 */
-	public static float UNIT_RADIUS = 0.0125f;
+	public static final float UNIT_RADIUS = 0.05f;
 
 
 	/**
@@ -122,6 +130,6 @@ public final class GameConstants {
 	 */
 	public enum UNIT_TYPE{ RED, GREEN, BLUE};
 	
-	public static Color[] PLAYER_COLORS = new Color[]{new Color(0.925f, 0.741f, 0.192f), new Color(0.18f, 0.314f, 0.62f), new Color(0.467f, 0.824f, 0.173f), new Color(0.60f, 0.125f, 0.60f)};
-	public static Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0), new Vector(0,-1), new Vector(0,1)};
+	public static final Color[] PLAYER_COLORS = new Color[]{Color.color(0.925f, 0.741f, 0.192f), Color.color(0.18f, 0.314f, 0.62f), Color.color(0.467f, 0.824f, 0.173f), Color.color(0.60f, 0.125f, 0.60f)};
+	public static final Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0), new Vector(0,-1), new Vector(0,1)};
 }

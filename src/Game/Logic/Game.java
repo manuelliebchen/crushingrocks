@@ -33,7 +33,7 @@ public class Game {
 			players.add(new Player(playerController.get(i), GameConstants.PLAYER_COLORS[i], i));
 		}
 		
-		this.random = new Random(42);
+		this.random = new Random();
 		map = new Map(this.random, players);
 	}
 	
