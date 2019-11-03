@@ -12,15 +12,16 @@ import Game.Types.Vector;
  */
 public class Mine {
 	private Vector position;
-	private Player currentOwner;
+	private float[] ownership;
 	
 	Mine(Mine copy){
 		this.position = new Vector(copy.position);
-		this.currentOwner = copy.currentOwner;
+		this.ownership = copy.ownership;
 	}
 	
-	Mine(Vector position){
+	Mine(Vector position, int numberOfPlayer){
 		this.position = position;
+		ownership = new float[numberOfPlayer]; 
 	}
 
 	/**
@@ -35,26 +36,24 @@ public class Mine {
 	 * Owner of the Mine.
 	 * @return Player that owns this mine.
 	 */
-	public Player getOwner() {
-		return currentOwner;
+	public float[] getOwner() {
+		return ownership;
 	}
 
 	void update(List<Player> players, List<Unit> allUnits) {
 		//TODO:Implement transition function
-		int[] count = new int[players.size()];
+		float[] count = new float[players.size()];
 		for(Unit unit : allUnits) {
 			if(position.distance(unit.getPosition()) < GameConstants.MINE_RADIUS) {
-				count[players.indexOf(unit.getOwner())]++;
+				count[unit.getOwner().getPlayerID()]++;
 			}
 		}
-		int maxIndex = 0;
-		for( int i = 0; i < count.length; ++i) {
-			if(count[i] > count[maxIndex]) {
-				maxIndex = i;
-			}
+		float sum = 0;
+		for(int i = 0; i < count.length; ++i) {
+			sum += count[i];
 		}
-		if(count[maxIndex] > 0) {
-			currentOwner = players.get(maxIndex);
+		for(int i = 0; i < count.length; ++i) {
+			ownership[i] += ((count[i] / sum) - ownership[i]) / GameConstants.MINE_CAPTURING_TICKES;
 		}
 	}
 }

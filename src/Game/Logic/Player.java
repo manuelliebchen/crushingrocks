@@ -6,7 +6,7 @@ import java.util.List;
 import Constants.GameConstants;
 import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
-import Game.Types.Color;
+import javafx.scene.paint.Color;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
@@ -18,13 +18,15 @@ public class Player {
 	private int creditPoints;
 	
 	private Color color;
+	private int playerID;
 	
 	private Base base;
 	private List<Unit> units;
 	
-	Player(IPlayerController controller, Color color){
+	Player(IPlayerController controller, Color color, int playerID){
 		this.controller = controller;
 		this.color = color;
+		this.playerID = playerID;
 		units = new ArrayList<>(16);
 		creditPoints = GameConstants.INITIAL_CREADIT_POINTS;
 	}
@@ -56,10 +58,12 @@ public class Player {
 		}
 		
 		for(Mine mine : mapInfo.getMines()) {
-			if(mine.getOwner() == this) {
-				creditPoints += GameConstants.PER_MINE_INCOME;
-			}
+			creditPoints += mine.getOwner()[playerID] * GameConstants.PER_MINE_INCOME;
 		}
+	}
+	
+	public int getPlayerID() {
+		return playerID;
 	}
 	
 	/**
@@ -79,7 +83,7 @@ public class Player {
 	}
 	
 	public Color getColor() {
-		return color.copy();
+		return color;
 	}
 
 	public List<Unit> getUnits() {

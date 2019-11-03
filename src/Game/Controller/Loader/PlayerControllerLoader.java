@@ -180,7 +180,7 @@ public final class PlayerControllerLoader {
 		}
 		
 		try {
-			return (IPlayerController) controllerClass.newInstance();
+			return (IPlayerController) controllerClass.getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -201,7 +201,7 @@ public final class PlayerControllerLoader {
 		}
 
 		try {
-			return (IPlayerController) controllerClass.newInstance();
+			return (IPlayerController) controllerClass.getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

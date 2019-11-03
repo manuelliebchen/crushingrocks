@@ -38,8 +38,8 @@ public class Map {
 			do {
 				pos = new Vector(this.random.nextFloat(), 2 * this.random.nextFloat() -1);
 			} while(pos.length() > 1);
-			mines.add(new Mine(pos.copy()));
-			mines.add(new Mine(pos.mult(-1).copy()));
+			mines.add(new Mine(pos.copy(), player.size()));
+			mines.add(new Mine(pos.mult(-1).copy(), player.size()));
 		}
 		
 	}
