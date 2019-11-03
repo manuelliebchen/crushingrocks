@@ -64,9 +64,6 @@ public final class MapRendering {
      * @param timeSinceLastDraw Time passed since last draw in seconds.
      */
     public void draw(GraphicsContext context, float timeSinceLastDraw) {
-    	
-    	context.save();
-        
     	Canvas canvas = context.getCanvas();
     	context.setFill(Color.WHITE);
     	context.fillRect(0, 0, canvas.getWidth() , canvas.getHeight());
@@ -134,9 +131,6 @@ public final class MapRendering {
         		context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS, unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04, GameConstants.UNIT_RADIUS * 2 * unit.getHP() / GameConstants.INITIAL_UNIT_HP, 0.02);
             }
         }
-
-        
-        context.restore();
     }
 
 }

@@ -56,7 +56,7 @@ public final class InGame extends GameState implements IDraw, IUpdate {
         //    timeSinceLastGameUpdate -= ClientConstants.SIMULATION_STEP_INTERVAL;
         //}
         if(statistic != null) {
-        	manager.pop();
+        	manager.switchCurrentState(new GameStatisticScreen(manager, statistic));
         }
 
         mapRenderer.update(elapsedTime);
@@ -69,6 +69,8 @@ public final class InGame extends GameState implements IDraw, IUpdate {
      */
     @Override
     public void draw(GraphicsContext context, float elapsedTime) {
+    	context.save();
         mapRenderer.draw(context, elapsedTime);
+        context.restore();
     }
 }

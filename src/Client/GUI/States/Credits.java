@@ -1,6 +1,7 @@
 package Client.GUI.States;
 
 import Client.GUI.Elements.Button;
+import Client.GUI.Elements.Button.ButtonAlignment;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
@@ -26,6 +27,7 @@ public class Credits extends GameState implements IDraw, IUpdate {
 	 */
 	public Credits(StateManager manager) {
 		super(manager);
+		backbutton = new Button(new Point2D(200,100),new Point2D(150,50),"Back", ButtonAlignment.RIGHT, ButtonAlignment.DOWN);
 	}
 
 	@Override
@@ -43,18 +45,8 @@ public class Credits extends GameState implements IDraw, IUpdate {
 
 	@Override
 	public void update(float elapsedTime) {
-		// TODO Auto-generated method stub
-		
 		if(backbutton.isPressed()) {
 			manager.pop();
 		}
-		
-	}
-	
-	@Override
-	public void entered() {
-		//generate testbuttons
-		backbutton = new Button(new Point2D((double)ClientConstants.INITIAL_SCREEN_WIDTH-200,(double)ClientConstants.INITIAL_SCREEN_HEIGHT-100),new Point2D(150,50),"Back");
-		
 	}
 }
