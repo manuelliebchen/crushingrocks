@@ -7,9 +7,10 @@ import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
 import Client.Rendering.Rendering.MapRendering;
 import Game.Controller.IPlayerController;
+import Game.Controller.PlayerControllerLoader;
 import Game.Controller.BuiltIn.SampleBot;
-import Game.Controller.Loader.PlayerControllerLoader;
 import Game.Logic.Game;
+import Game.Logic.GameStatistic;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -51,9 +52,12 @@ public final class InGame extends GameState implements IDraw, IUpdate {
         // TODO: The loop freezes the game, possible endless loop.
         // This is needed to be sure that each game tick duration is always the same amount of time.
         //while (timeSinceLastGameUpdate > ClientConstants.SIMULATION_STEP_INTERVAL) {
-            game.tick();
+        GameStatistic statistic = game.tick();
         //    timeSinceLastGameUpdate -= ClientConstants.SIMULATION_STEP_INTERVAL;
         //}
+        if(statistic != null) {
+        	manager.pop();
+        }
 
         mapRenderer.update(elapsedTime);
     }

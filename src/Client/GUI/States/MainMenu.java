@@ -1,12 +1,12 @@
 package Client.GUI.States;
 
-import Client.ClientConstants;
 import Client.GUI.Elements.Button;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
 import Client.Web.News;
 import Client.Web.Version;
+import Constants.ClientConstants;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -37,11 +37,11 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 	public void draw(GraphicsContext graphics, float elapsedTime) {		
 		// draw background color
 		graphics.setFill(Color.RED);
-		graphics.fillRect(0, 0, ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT);
+		graphics.fillRect(0, 0, ClientConstants.INITIAL_SCREEN_WIDTH, ClientConstants.INITIAL_SCREEN_HEIGHT);
 		
 		// draw oval in the middle
 		graphics.setFill(Color.CORNFLOWERBLUE);
-		graphics.fillOval((ClientConstants.SCREEN_WIDTH - 50) / 2, (ClientConstants.SCREEN_HEIGHT - 50) / 2, 50, 50);
+		graphics.fillOval((ClientConstants.INITIAL_SCREEN_WIDTH - 50) / 2, (ClientConstants.INITIAL_SCREEN_HEIGHT - 50) / 2, 50, 50);
 		
 		// write version
 		if (Version.isChecked()) {

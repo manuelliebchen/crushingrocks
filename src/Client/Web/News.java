@@ -12,7 +12,7 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import Client.ClientConstants;
+import Constants.ClientConstants;
 
 /**
  * @author Max Klockmann (max@acagamics.de)

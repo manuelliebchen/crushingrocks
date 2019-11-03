@@ -1,4 +1,4 @@
-package Game.Controller.Loader;
+package Game.Controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import Client.Main;
-import Game.Controller.*;
 
 /**
  * Class for loading of extern/intern PlayerController.

@@ -2,6 +2,7 @@ package Game.Controller.BuiltIn;
 
 import java.util.List;
 
+import Constants.GameConstants;
 import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
@@ -35,26 +36,21 @@ public class SampleBot implements IPlayerController {
 	public UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		List<Mine> mines = mapInfo.getMines();
 		List<Unit> units = ownPlayer.getUnits();
-		if(units.size() >= 1) {
-			for( Unit unit : units.subList(0, 1)) {
-				unit.setOrder(this, ownPlayer.getBase().getPosition().sub(unit.getPosition()));
-			}
-		}
-		if(units.size() >= 2) {
-			for( Unit unit : units.subList(1, 2)) {
+		if(ownPlayer.getUnits().size() == GameConstants.MAXIMUM_UNIT_AMOUNT) {
+			for(Unit unit: units) {
 				unit.setOrder(this, enemyPlayerInfo.getBase().getPosition().sub(unit.getPosition()));
 			}
-		}
-		if(units.size() >= 3) {
-			mines.removeIf( m -> m.getOwner()[ownPlayer.getPlayerID()] > 0.5f);
+		} else {
+			mines.removeIf( m -> m.getOwnership(ownPlayer) >= 0.9f);
 			if(mines.isEmpty()) {
-				return null;
+				return UNIT_TYPE.RED;
 			}
-			for(Unit unit: units.subList(2,units.size())) {
-				mines.sort((Mine m, Mine n) -> Math.round(m.getPosition().distanceSqr(unit.getPosition()) - n.getPosition().distanceSqr(unit.getPosition())));
-				unit.setOrder(this, mines.get(0).getPosition().sub(unit.getPosition()));
+			for(Unit unit: units) {
+				mines.sort((Mine m, Mine n) -> Math.round(n.getPosition().distanceSqr(unit.getPosition()) - m.getPosition().distanceSqr(unit.getPosition())));
+				unit.setOrder(this, mines.get(mines.size() -1).getPosition().sub(unit.getPosition()));
 			}
 		}
+		
 		return UNIT_TYPE.RED;
 	}
 

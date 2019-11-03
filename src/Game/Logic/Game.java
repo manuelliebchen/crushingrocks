@@ -70,8 +70,9 @@ public class Game {
 	
 	/**
 	 * Perform a single step in the gameLogic. Updates Players and Map.
+	 * @return 
 	 */
-	public void tick(){
+	public GameStatistic tick(){
 		// Update Player.
 		for(Player player : players){
 			player.update(map, players);
@@ -98,9 +99,13 @@ public class Game {
 			base.update(allUnits);
 		}
 		
+		GameStatistic statistic = null;
 		for(Base base : map.getBases()) {
 			if( base.getHP() <= 0) {
 				System.out.println("Player " + base.getOwner().getController().getName() + " is defeated.");
+				if(statistic == null) {
+					statistic = new GameStatistic();
+				}
 			}
 		}
 
@@ -115,6 +120,10 @@ public class Game {
 		}
 
 		//Remove Death Units
-		allUnits.removeIf( u -> u.getHP() <= 0);
+		for(Player player : players) {
+			player.removeDeath();	
+		}
+		
+		return statistic;
 	}
 }

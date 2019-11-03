@@ -1,7 +1,7 @@
 /**
  * @(#)FileClassLoader.java	1.0 12/09/2008
  */
-package Game.Controller.Loader;
+package Game.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;

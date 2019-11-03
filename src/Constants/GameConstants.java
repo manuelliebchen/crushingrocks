@@ -47,7 +47,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #UNIT_BASE_ATTACK}
 	 */
-	public static final int UNIT_BASE_ATTACK = 10;
+	public static final int UNIT_BASE_ATTACK = 5;
 
 	
 	// Creadit Points!
@@ -57,21 +57,21 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #INITIAL_CREADIT_POINTS}
 	 */
-	public static final int INITIAL_CREADIT_POINTS = 70;
+	public static final int INITIAL_CREADIT_POINTS = 0;
 
 	/**
 	 * Price of a unit.
 	 * <p>
 	 * Value = {@value #UNIT_FEE}
 	 */
-	public static final int UNIT_FEE = 20;
+	public static final int UNIT_FEE = 2000;
 
 	/**
 	 * Income per owned mine per tick.
 	 * <p>
 	 * Value = {@value #PER_MINE_INCOME}
 	 */
-	public static final int PER_MINE_INCOME = 1;
+	public static final int PER_MINE_INCOME = 10;
 	
 	
 	// Speed!

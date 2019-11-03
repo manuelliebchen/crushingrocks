@@ -21,7 +21,10 @@ public class Mine {
 	
 	Mine(Vector position, int numberOfPlayer){
 		this.position = position;
-		ownership = new float[numberOfPlayer]; 
+		ownership = new float[numberOfPlayer];
+		for(int i = 0; i < numberOfPlayer; ++i) {
+			ownership[i] = 1 / (float) numberOfPlayer;
+		}
 	}
 
 	/**
@@ -31,12 +34,20 @@ public class Mine {
 	public Vector getPosition() {
 		return position.copy();
 	}
+	
+	/**
+	 * Owner of the Mine.
+	 * @return Player that owns this mine.
+	 */
+	public float getOwnership(Player player) {
+		return ownership[player.getPlayerID()];
+	}
 
 	/**
 	 * Owner of the Mine.
 	 * @return Player that owns this mine.
 	 */
-	public float[] getOwner() {
+	public float[] getOwnership() {
 		return ownership;
 	}
 
@@ -52,6 +63,10 @@ public class Mine {
 		for(int i = 0; i < count.length; ++i) {
 			sum += count[i];
 		}
+		if(sum == 0) {
+			return;
+		}
+		
 		for(int i = 0; i < count.length; ++i) {
 			ownership[i] += ((count[i] / sum) - ownership[i]) / GameConstants.MINE_CAPTURING_TICKES;
 		}

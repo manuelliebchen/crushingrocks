@@ -50,6 +50,10 @@ public class Player {
 			ut = controller.think(mapInfo, this, enemyInfos);
 		} catch (Exception e) {
 			System.err.println(controller.getName() + " throu an unhandelt exeption!");
+			System.err.println(e);
+			for(StackTraceElement t : e.getStackTrace()) {
+				System.err.println(t);
+			}
 		}
 		
 		if(ut != null && creditPoints >= GameConstants.UNIT_FEE && units.size() <= GameConstants.MAXIMUM_UNIT_AMOUNT) {
@@ -58,7 +62,7 @@ public class Player {
 		}
 		
 		for(Mine mine : mapInfo.getMines()) {
-			creditPoints += mine.getOwner()[playerID] * GameConstants.PER_MINE_INCOME;
+			creditPoints += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
 		}
 	}
 	
@@ -97,5 +101,9 @@ public class Player {
 
 	IPlayerController getController() {
 		return controller;
+	}
+
+	void removeDeath() {
+		units.removeIf( u -> u.getHP() <= 0);
 	}
 }

@@ -33,13 +33,13 @@ public class Map {
 		this.player.get(1).setBase(bases.get(1));
 		
 		mines = new ArrayList<>(GameConstants.NUMBER_OF_MINES);
-		for( int i = 0; i *2< GameConstants.NUMBER_OF_MINES; ++i) {
+		for( int i = 0; i < GameConstants.NUMBER_OF_MINES; ++i) {
 			Vector pos;
 			do {
-				pos = new Vector(this.random.nextFloat(), 2 * this.random.nextFloat() -1);
+				pos = new Vector(2 * this.random.nextFloat() -1, 2 * this.random.nextFloat() -1);
 			} while(pos.length() > 1);
 			mines.add(new Mine(pos.copy(), player.size()));
-			mines.add(new Mine(pos.mult(-1).copy(), player.size()));
+//			mines.add(new Mine(pos.mult(-1).copy(), player.size()));
 		}
 		
 	}
