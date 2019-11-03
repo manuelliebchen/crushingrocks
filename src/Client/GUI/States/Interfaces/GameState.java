@@ -14,19 +14,30 @@ public abstract class GameState {
 	}
 	
 	protected StateManager manager;
-	protected boolean isTop;
 
+    
+    /**
+     * Method witch is called when state is entered.
+     */
 	public void entered() {
-		isTop = true;
 	}
+    
+    /**
+     * Method witch is called when state is leaved.
+     */
     public void leaving() {
-    	isTop = false;
     }
+
+    /**
+     * Method witch is called when state is obscured.
+     */
     public void obscuring() {
-    	isTop = false;
     }
+    
+    /**
+     * Method witch is called when state is revealed.
+     */
     public void revealed() {
-    	isTop = true;
     }
     
 }

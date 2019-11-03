@@ -34,10 +34,7 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 
 
 	@Override
-	public void draw(GraphicsContext graphics, float elapsedTime) {
-		if (!isTop)
-			return;
-		
+	public void draw(GraphicsContext graphics, float elapsedTime) {		
 		// draw background color
 		graphics.setFill(Color.RED);
 		graphics.fillRect(0, 0, ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT);
@@ -105,9 +102,9 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 
 	@Override
 	public void update(float elapsedTime) {
-		if (!isTop) {
-			return;
-		}
+//		if (!isTop) {
+//			return;
+//		}
 		
 		//Tests if buttons are pressed
 		if(startGame.isPressed()){

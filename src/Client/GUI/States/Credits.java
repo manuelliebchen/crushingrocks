@@ -29,10 +29,7 @@ public class Credits extends GameState implements IDraw, IUpdate {
 	}
 
 	@Override
-	public void draw(GraphicsContext graphics, float elapsedTime) {
-		if (!isTop)
-			return;
-		
+	public void draw(GraphicsContext graphics, float elapsedTime) {		
 		// draw background image
 		graphics.drawImage(ImageManager.getInstance().loadImage("backgrounds/credits.png"), 0, 0, ClientConstants.SCREEN_WIDTH, ClientConstants.SCREEN_HEIGHT);
 		
@@ -48,15 +45,14 @@ public class Credits extends GameState implements IDraw, IUpdate {
 	public void update(float elapsedTime) {
 		// TODO Auto-generated method stub
 		
-		if(backbutton.isPressed())
+		if(backbutton.isPressed()) {
 			manager.pop();
+		}
 		
 	}
+	
 	@Override
 	public void entered() {
-		super.entered();
-		
-		
 		//generate testbuttons
 		backbutton = new Button(new Point2D((double)ClientConstants.SCREEN_WIDTH-200,(double)ClientConstants.SCREEN_HEIGHT-100),new Point2D(150,50),"Back");
 		

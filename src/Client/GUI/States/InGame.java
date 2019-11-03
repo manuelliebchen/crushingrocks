@@ -6,7 +6,6 @@ import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
 import Client.Rendering.Rendering.MapRendering;
-import Client.Rendering.Rendering.PlayerRendering;
 import Game.Controller.IPlayerController;
 import Game.Controller.BuiltIn.SampleBot;
 import Game.Controller.Loader.PlayerControllerLoader;
@@ -20,9 +19,8 @@ public final class InGame extends GameState implements IDraw, IUpdate {
 
     private Game game;
     private MapRendering mapRenderer;
-    private PlayerRendering[] playerRenderers;
 
-    private float timeSinceLastGameUpdate = 0;
+//    private float timeSinceLastGameUpdate = 0;
 
     public InGame(StateManager manager) {
         super(manager);
@@ -40,11 +38,6 @@ public final class InGame extends GameState implements IDraw, IUpdate {
         game = new Game(playerControllers);
 
         mapRenderer = new MapRendering(game.getMap());
-
-        playerRenderers = new PlayerRendering[game.getNumPlayers()];
-        for (int i = 0; i < playerRenderers.length; i++) {
-            playerRenderers[i] = new PlayerRendering(game.getPlayer(i));
-        }
     }
 
     /**
@@ -53,7 +46,7 @@ public final class InGame extends GameState implements IDraw, IUpdate {
      */
     @Override
     public void update(float elapsedTime) {
-        timeSinceLastGameUpdate += elapsedTime;
+//        timeSinceLastGameUpdate += elapsedTime;
 
         // TODO: The loop freezes the game, possible endless loop.
         // This is needed to be sure that each game tick duration is always the same amount of time.
@@ -63,11 +56,6 @@ public final class InGame extends GameState implements IDraw, IUpdate {
         //}
 
         mapRenderer.update(elapsedTime);
-
-        for (PlayerRendering playerRend : playerRenderers) {
-            playerRend.update(elapsedTime);
-        }
-
     }
 
     /**
@@ -78,9 +66,5 @@ public final class InGame extends GameState implements IDraw, IUpdate {
     @Override
     public void draw(GraphicsContext context, float elapsedTime) {
         mapRenderer.draw(context, elapsedTime);
-
-        for (PlayerRendering playerRend : playerRenderers) {
-            playerRend.draw(context, elapsedTime);
-        }
     }
 }
