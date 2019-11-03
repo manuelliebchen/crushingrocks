@@ -1,7 +1,6 @@
 package Constants;
 
 import Game.Types.Vector;
-import javafx.scene.paint.Color;
 
 /**
  * Class for various game relevant constants.
@@ -33,21 +32,21 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #INITIAL_BASE_HP}
 	 */
-	public static final int INITIAL_BASE_HP = 1000;
+	public static final int INITIAL_BASE_HP = 2048;
 
 	/**
 	 * Initial health points of a unit.
 	 * <p>
 	 * Value = {@value #INITIAL_UNIT_HP}
 	 */
-	public static final int INITIAL_UNIT_HP = 100;
+	public static final int INITIAL_UNIT_HP = 128;
 
 	/**
 	 * Base attack damage of an Unit.
 	 * <p>
 	 * Value = {@value #UNIT_BASE_ATTACK}
 	 */
-	public static final int UNIT_BASE_ATTACK = 5;
+	public static final int UNIT_BASE_ATTACK = 8;
 
 	
 	// Creadit Points!
@@ -64,14 +63,14 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #UNIT_FEE}
 	 */
-	public static final int UNIT_FEE = 2000;
+	public static final int UNIT_FEE = 2048;
 
 	/**
 	 * Income per owned mine per tick.
 	 * <p>
 	 * Value = {@value #PER_MINE_INCOME}
 	 */
-	public static final int PER_MINE_INCOME = 10;
+	public static final int PER_MINE_INCOME = 16;
 	
 	
 	// Speed!
@@ -130,6 +129,5 @@ public final class GameConstants {
 	 */
 	public enum UNIT_TYPE{ RED, GREEN, BLUE};
 	
-	public static final Color[] PLAYER_COLORS = new Color[]{Color.color(0.925f, 0.741f, 0.192f), Color.color(0.18f, 0.314f, 0.62f), Color.color(0.467f, 0.824f, 0.173f), Color.color(0.60f, 0.125f, 0.60f)};
 	public static final Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0), new Vector(0,-1), new Vector(0,1)};
 }

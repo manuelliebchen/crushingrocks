@@ -69,4 +69,7 @@ public final class ClientConstants {
 	 * Value = {@value #SIMULATION_STEP_INTERVAL}
 	 */
 	public static final int SIMULATION_STEP_INTERVAL = 16 / 1000;
+	
+
+	public enum Alignment { CENTER, LEFT, RIGHT, UP, DOWN}
 }

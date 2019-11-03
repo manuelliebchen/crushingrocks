@@ -7,7 +7,10 @@ import Client.GUI.States.Interfaces.IUpdate;
 import Client.Web.News;
 import Client.Web.Version;
 import Constants.ClientConstants;
+import Constants.ClientConstants.Alignment;
+import Constants.ColorConstants;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -17,32 +20,30 @@ import javafx.scene.paint.Color;
  *
  */
 public class MainMenu extends GameState implements IDraw, IUpdate {
-	
+
 	Button startGame;
 	Button showCredits;
 	Button sample;
 	Button endGame;
-	
+
 	/**
 	 * Creating new MainMenu.
+	 * 
 	 * @param manager The StateManager of the current Window
-	 * @param pane The Gui Layout pane of the current Window. Used for Buttons
+	 * @param pane    The Gui Layout pane of the current Window. Used for Buttons
 	 */
 	public MainMenu(StateManager manager) {
 		super(manager);
 	}
 
-
 	@Override
-	public void draw(GraphicsContext graphics, float elapsedTime) {		
-		// draw background color
-		graphics.setFill(Color.RED);
-		graphics.fillRect(0, 0, ClientConstants.INITIAL_SCREEN_WIDTH, ClientConstants.INITIAL_SCREEN_HEIGHT);
-		
-		// draw oval in the middle
-		graphics.setFill(Color.CORNFLOWERBLUE);
-		graphics.fillOval((ClientConstants.INITIAL_SCREEN_WIDTH - 50) / 2, (ClientConstants.INITIAL_SCREEN_HEIGHT - 50) / 2, 50, 50);
-		
+	public void draw(GraphicsContext graphics, float elapsedTime) {
+
+		Canvas canvas = graphics.getCanvas();
+
+		graphics.setFill(ColorConstants.BACKGROUND_COLOR);
+		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
 		// write version
 		if (Version.isChecked()) {
 			String versionText = "version: " + ClientConstants.VERSION;
@@ -55,70 +56,64 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 			}
 			graphics.fillText(versionText, 10, 10);
 		}
-		
+
 		// write news
 		if (News.hasNews()) {
 			String versionText = "news: " + News.getNews();
 			graphics.fillText(versionText, 10, 40);
 		}
-		
-		//draw buttons
+
+		// draw buttons
 		startGame.draw(graphics);
 		showCredits.draw(graphics);
 		sample.draw(graphics);
 		endGame.draw(graphics);
 	}
-	
+
 	@Override
 	public void entered() {
 		super.entered();
-		
-		
-		//generate testbuttons
-		startGame = new Button(new Point2D(100,100),new Point2D(150,50),"Start Game");
-		showCredits = new Button(new Point2D(100,200),new Point2D(150,50),"Show Credits");
-		sample = new Button(new Point2D(100,300),new Point2D(150,50),"sample");
+		startGame = new Button(new Point2D(100, 100), new Point2D(150, 50), "Start Game");
+		showCredits = new Button(new Point2D(100, 200), new Point2D(150, 50), "Show Credits");
+		sample = new Button(new Point2D(100, 300), new Point2D(150, 50), "sample");
 		sample.setEnabled(false);
-		endGame = new Button(new Point2D(100,400),new Point2D(150,50),"Exit Game");
-		
+		endGame = new Button(new Point2D(200, 125), new Point2D(150, 50), "Exit Game", Alignment.RIGHT, Alignment.DOWN);
 	}
-	
-	//Optional
-	@Override
-    public void leaving() {
-    	super.leaving();
-    }
-	//Optional
-	@Override
-    public void obscuring() {
-    	super.obscuring();
-    }
-	//Optional
-	@Override
-    public void revealed() {
-    	super.revealed();
-    }
 
+	// Optional
+	@Override
+	public void leaving() {
+		super.leaving();
+	}
+
+	// Optional
+	@Override
+	public void obscuring() {
+		super.obscuring();
+	}
+
+	// Optional
+	@Override
+	public void revealed() {
+		super.revealed();
+	}
 
 	@Override
 	public void update(float elapsedTime) {
 //		if (!isTop) {
 //			return;
 //		}
-		
-		//Tests if buttons are pressed
-		if(startGame.isPressed()){
+
+		// Tests if buttons are pressed
+		if (startGame.isPressed()) {
 			manager.push(new InGame(manager));
-		}
-		else if(showCredits.isPressed()){
+		} else if (showCredits.isPressed()) {
 			manager.push(new Credits(manager));
-		}
-		else if(sample.isPressed()){
-		// Do some crazy stuff if the button is enabled.
-		}
-		else if(endGame.isPressed()){
+		} else if (sample.isPressed()) {
+			// Do some crazy stuff if the button is enabled.
+		} else if (endGame.isPressed()) {
 			System.exit(0);
 		}
 	}
-	
+
 }

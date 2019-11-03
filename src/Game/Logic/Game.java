@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Constants.ColorConstants;
 import Constants.GameConstants;
 import Game.Controller.IPlayerController;
 
@@ -30,7 +31,7 @@ public class Game {
 		players = new ArrayList<>(playerController.size());
 		for(int i=0; i<playerController.size(); ++i) {
 			assert(playerController.get(i) != null);
-			players.add(new Player(playerController.get(i), GameConstants.PLAYER_COLORS[i], i));
+			players.add(new Player(playerController.get(i), ColorConstants.PLAYER_COLORS[i], i));
 		}
 		
 		this.random = new Random();
