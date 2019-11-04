@@ -1,6 +1,7 @@
 package Client.GUI.Elements;
 
 import Client.Rendering.Drawing.ImageManager;
+import Constants.ClientConstants.Alignment;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,18 +16,14 @@ import javafx.scene.text.FontWeight;
  */
 public final class TextBox {
 
-	public enum ButtonAlignment {
-		CENTER, LEFT, RIGHT, UP, DOWN
-	}
-
 	// Drawing status
 	private String buttonText;
 	private Color textColor;
 	private Point2D relativPosition;
 	private Point2D position;
 	private Font font = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 24);
-	private ButtonAlignment verticalAlignment = ButtonAlignment.LEFT;
-	private ButtonAlignment horizontalAlignment = ButtonAlignment.UP;
+	private Alignment verticalAlignment = Alignment.LEFT;
+	private Alignment horizontalAlignment = Alignment.UP;
 
 	/**
 	 * Default button constructor with default buttons images and text color
@@ -37,7 +34,7 @@ public final class TextBox {
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
 	public TextBox(Point2D relativPosition, String buttonText) {
-		this(relativPosition, buttonText, ButtonAlignment.LEFT, ButtonAlignment.UP);
+		this(relativPosition, buttonText, Alignment.LEFT, Alignment.UP);
 	}
 
 	/**
@@ -48,12 +45,10 @@ public final class TextBox {
 	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
-	public TextBox(Point2D relativPosition, String buttonText, ButtonAlignment verticalAlignment,
-			ButtonAlignment horizontalAlignment) {
+	public TextBox(Point2D relativPosition, String buttonText, Alignment verticalAlignment, Alignment horizontalAlignment) {
 		this(relativPosition, buttonText, ImageManager.getInstance().loadImage("buttons/defaultButtonUp.png"),
 				ImageManager.getInstance().loadImage("buttons/defaultButtonDown.png"),
-				ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png"), Color.BLACK,
-				verticalAlignment, horizontalAlignment);
+				ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png"), Color.BLACK, verticalAlignment, horizontalAlignment);
 	}
 
 	/**
@@ -72,8 +67,7 @@ public final class TextBox {
 	 * @param textColor       The text color of the button
 	 */
 	public TextBox(Point2D relativPosition, String buttonText, Image imageButtonUp, Image imageButtonDown,
-			Image imageInActive, Color textColor, ButtonAlignment verticalAlignment,
-			ButtonAlignment horizontalAlignment) {
+			Image imageInActive, Color textColor, Alignment verticalAlignment, Alignment horizontalAlignment) {
 		this.buttonText = buttonText;
 		this.relativPosition = relativPosition;
 		this.position = relativPosition;
@@ -125,19 +119,19 @@ public final class TextBox {
 		double drawingPositionX = 0;
 		double drawingPositionY = 0;
 
-		if (verticalAlignment == ButtonAlignment.LEFT) {
+		if (verticalAlignment == Alignment.LEFT) {
 			drawingPositionX = relativPosition.getX();
-		} else if (verticalAlignment == ButtonAlignment.CENTER) {
+		} else if (verticalAlignment == Alignment.CENTER) {
 			drawingPositionX = (relativPosition.getX() + canvas.getWidth()) / 2;
-		} else if (verticalAlignment == ButtonAlignment.RIGHT) {
+		} else if (verticalAlignment == Alignment.RIGHT) {
 			drawingPositionX = (canvas.getWidth() - relativPosition.getX());
 		}
 
-		if (horizontalAlignment == ButtonAlignment.UP) {
+		if (horizontalAlignment == Alignment.UP) {
 			drawingPositionY = relativPosition.getY();
-		} else if (horizontalAlignment == ButtonAlignment.CENTER) {
+		} else if (horizontalAlignment == Alignment.CENTER) {
 			drawingPositionY = (relativPosition.getY() + canvas.getHeight()) / 2;
-		} else if (horizontalAlignment == ButtonAlignment.DOWN) {
+		} else if (horizontalAlignment == Alignment.DOWN) {
 			drawingPositionY = (canvas.getHeight() - relativPosition.getY());
 		}
 

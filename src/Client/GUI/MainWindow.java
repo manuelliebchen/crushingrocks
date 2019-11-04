@@ -16,7 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.GridPane;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -39,9 +39,6 @@ public class MainWindow extends Application {
 		// Set window settings and show window
 		stage.getIcons().add(ImageManager.getInstance().loadImage("icon.png"));
 		stage.setTitle(ClientConstants.SCREEN_TITLE);
-		stage.setScene(
-				new Scene(new GridPane(), ClientConstants.INITIAL_SCREEN_WIDTH, ClientConstants.INITIAL_SCREEN_HEIGHT));
-		stage.show();
 
 		// Create Canvas and Layout(Pane) for window
 		Pane pane = new Pane();
@@ -53,15 +50,22 @@ public class MainWindow extends Application {
 		// Add canvas to new scene and set scene as window content
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
 		stage.setScene(scene);
+		stage.show();
 
+		
+		
 		InputManager.init(scene);
 
+		Timeline line = new Timeline();
 		// Create StateManager and set MainMenu as start state
-		StateManager manager = new StateManager();
+		StateManager manager = new StateManager(line);
 		manager.push(new MainMenu(manager));
 
 		// Setting up gameLoop
 
+
+		// Create frame loop
+		
 		// Create one frame
 		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS),
 				new EventHandler<ActionEvent>() {
@@ -78,15 +82,17 @@ public class MainWindow extends Application {
 
 						InputManager.get().updateTables();
 
+						GraphicsContext context = canvas.getGraphicsContext2D();
 						// Clear screen
-						canvas.getGraphicsContext2D().clearRect(0, 0, ClientConstants.INITIAL_SCREEN_WIDTH,
+						context.clearRect(0, 0, ClientConstants.INITIAL_SCREEN_WIDTH,
 								ClientConstants.INITIAL_SCREEN_HEIGHT);
 
 						// Update and draw states
 						manager.update((float) time.toSeconds());
-						manager.draw(canvas.getGraphicsContext2D(), (float) time.toSeconds());
+						manager.draw(context, (float) time.toSeconds());
 					}
-				});
+				}
+		);
 
 		ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
 			canvas.setWidth(stage.getWidth());
@@ -94,10 +100,15 @@ public class MainWindow extends Application {
 		};
 		stage.widthProperty().addListener(stageSizeListener);
 		stage.heightProperty().addListener(stageSizeListener);
-
-		// Create frame loop
-		Timeline line = new Timeline(frame);
+		
 		line.setCycleCount(Animation.INDEFINITE);
+		line.getKeyFrames().add(frame);
+		line.setOnFinished(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				stage.close();
+			}
+		});
 		line.play();
 	}
 }

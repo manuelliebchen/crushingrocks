@@ -1,6 +1,7 @@
 package Client.GUI.States;
 
 import Client.GUI.Elements.Button;
+import Client.GUI.Elements.TextBox;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
@@ -21,9 +22,9 @@ import javafx.scene.paint.Color;
  */
 public class MainMenu extends GameState implements IDraw, IUpdate {
 
+	TextBox title;
 	Button startGame;
 	Button showCredits;
-	Button sample;
 	Button endGame;
 
 	/**
@@ -66,18 +67,15 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 		// draw buttons
 		startGame.draw(graphics);
 		showCredits.draw(graphics);
-		sample.draw(graphics);
 		endGame.draw(graphics);
 	}
 
 	@Override
 	public void entered() {
 		super.entered();
-		startGame = new Button(new Point2D(100, 100), new Point2D(150, 50), "Start Game");
-		showCredits = new Button(new Point2D(100, 200), new Point2D(150, 50), "Show Credits");
-		sample = new Button(new Point2D(100, 300), new Point2D(150, 50), "sample");
-		sample.setEnabled(false);
-		endGame = new Button(new Point2D(200, 125), new Point2D(150, 50), "Exit Game", Alignment.RIGHT, Alignment.DOWN);
+		startGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game", Alignment.CENTER, Alignment.UP);
+		showCredits = new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits", Alignment.CENTER, Alignment.UP);
+		endGame = new Button(new Point2D(0, 125), new Point2D(200, 50), "Exit Game", Alignment.CENTER, Alignment.DOWN);
 	}
 
 	// Optional
@@ -109,10 +107,8 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 			manager.push(new InGame(manager));
 		} else if (showCredits.isPressed()) {
 			manager.push(new Credits(manager));
-		} else if (sample.isPressed()) {
-			// Do some crazy stuff if the button is enabled.
 		} else if (endGame.isPressed()) {
-			System.exit(0);
+			manager.pop();
 		}
 	}
 

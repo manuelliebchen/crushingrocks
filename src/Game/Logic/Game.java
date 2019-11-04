@@ -103,9 +103,8 @@ public class Game {
 		GameStatistic statistic = null;
 		for(Base base : map.getBases()) {
 			if( base.getHP() <= 0) {
-				System.out.println("Player " + base.getOwner().getController().getName() + " is defeated.");
 				if(statistic == null) {
-					statistic = new GameStatistic();
+					statistic = new GameStatistic(players);
 				}
 			}
 		}

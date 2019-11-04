@@ -74,28 +74,27 @@ public final class MapRendering {
         context.fillText(String.valueOf(players.get(0).getCreditPoints()), 10, 40);
         context.setTextAlign(TextAlignment.RIGHT);
         context.setFill(players.get(1).getColor());
-        context.fillText(String.valueOf(players.get(1).getCreditPoints()), canvas.getWidth() - 10, 40);
-    	
+        context.fillText(String.valueOf(players.get(1).getCreditPoints()), canvas.getWidth() - 10, 40); 
+        
         transformation = new Affine();
-        transformation.appendScale(canvas.getHeight() / (GameConstants.MAP_RADIUS * 2), canvas.getHeight() / (GameConstants.MAP_RADIUS * 2));
+        transformation.appendScale(canvas.getHeight() / (GameConstants.MAP_RADIUS * 2.2), canvas.getHeight() / (GameConstants.MAP_RADIUS * 2.2));
     	float ratio = (float) canvas.getWidth()/ (float) canvas.getHeight();
-        transformation.appendTranslation(GameConstants.MAP_RADIUS * ratio, GameConstants.MAP_RADIUS);
+        transformation.appendTranslation(GameConstants.MAP_RADIUS * ratio * 1.1, GameConstants.MAP_RADIUS * 1.1);
         
     	context.setTransform(transformation);
     	context.setLineWidth(0.01f);    	
     	
-//        Image img = ImageManager.getInstance().loadImage("bg.jpg");
-//        context.drawImage(img, -GameConstants.MAP_RADIUS * (ratio), -GameConstants.MAP_RADIUS, 2 * ratio, 2);
-
         Image minetexture = ImageManager.getInstance().loadImage("mine.png");
-    	context.setStroke(Color.BLACK);
         for (Mine mine : mines) {
         	float[] ownership = mine.getOwnership();
         	
             context.drawImage(minetexture, mine.getPosition().getX() - 0.1,
                     mine.getPosition().getY() - 0.1, 0.2, 0.2);
+            
+            context.setStroke(players.get(0).getColor().interpolate(players.get(1).getColor(), ownership[1]));
     		context.strokeOval(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
     				mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS);
+    		
     		context.setFill(players.get(1).getColor());
     		context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS, mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04, GameConstants.MINE_RADIUS * 2, 0.02);
     		context.setFill(players.get(0).getColor());

@@ -1,6 +1,7 @@
 package Client.GUI.States;
 
 import Client.GUI.Elements.Button;
+import Client.GUI.Elements.TextBox;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
@@ -16,11 +17,13 @@ import javafx.scene.text.FontWeight;
 
 public class GameStatisticScreen extends GameState implements IDraw, IUpdate {
 
+	TextBox textbox;
 	Button backbutton;
 
 	public GameStatisticScreen(StateManager manager, GameStatistic statistic) {
 		super(manager);
 		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", Alignment.RIGHT, Alignment.DOWN);
+		textbox = new TextBox(new Point2D(-200, 100), statistic.toString(), Alignment.CENTER, Alignment.UP);
 	}
 
 	@Override
@@ -44,6 +47,7 @@ public class GameStatisticScreen extends GameState implements IDraw, IUpdate {
 		graphics.fillText("GameStatistics", 60, 30);
 
 		backbutton.draw(graphics);
+		textbox.draw(graphics);
 	}
 
 }

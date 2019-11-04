@@ -5,6 +5,7 @@ import java.util.Stack;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDraw;
 import Client.GUI.States.Interfaces.IUpdate;
+import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -14,6 +15,8 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public final class StateManager implements IDraw, IUpdate {
 
+	Timeline timeline;
+	
 	/**
 	 * Stores all current game states from layer
 	 */
@@ -32,8 +35,9 @@ public final class StateManager implements IDraw, IUpdate {
 	 * 
 	 * @param state sets the initial game state
 	 */
-	public StateManager() {
+	public StateManager(Timeline line) {
 		initialState = null;
+		this.timeline = line;
 	}
 
 	/**
@@ -41,18 +45,16 @@ public final class StateManager implements IDraw, IUpdate {
 	 * 
 	 * If there is only one state left, the initial state will add to currentStates.
 	 */
-	public GameState pop() {
+	public void pop() {
 
 		GameState top = peek();
 		top.leaving();
 
 		currentStates.pop();
 		if (currentStates.empty()) {
-			push(initialState);
-			return top;
+			timeline.stop();
 		} else {
 			currentStates.peek().revealed();
-			return top;
 		}
 
 	}
@@ -70,12 +72,7 @@ public final class StateManager implements IDraw, IUpdate {
 	 * @param state -> new game state
 	 */
 	public void push(GameState state) {
-		if (!currentStates.empty()) {
-			currentStates.peek().obscuring();
-		}
-
 		state.entered();
-
 		currentStates.push(state);
 	}
 
@@ -87,7 +84,6 @@ public final class StateManager implements IDraw, IUpdate {
 	public void switchCurrentState(GameState state) {
 		pop();
 		push(state);
-
 	}
 
 	/**
@@ -100,7 +96,6 @@ public final class StateManager implements IDraw, IUpdate {
 			pop();
 		}
 		push(state);
-
 	}
 
 	/**

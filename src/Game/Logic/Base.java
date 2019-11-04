@@ -49,5 +49,6 @@ public class Base {
 			}
 		}
 		hp -= count * GameConstants.UNIT_BASE_ATTACK;
+		hp = Math.max(hp, 0);
 	}
 }

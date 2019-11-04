@@ -95,10 +95,10 @@ public final class GameConstants {
 	/**
 	 * Tickes it takes to capture a mine;
 	 * <p>
-	 * Value = {@value #MINE_CAPTURING_TICKES}
+	 * Value = {@value #MINE_CAPTURING_PER_TICKE}
 	 */
 
-	public static final float MINE_CAPTURING_TICKES = 10;
+	public static final float MINE_CAPTURING_PER_TICKE = 0.05f;
 
 	/**
 	 * Attack radius of the Base.
