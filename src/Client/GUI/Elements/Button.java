@@ -24,7 +24,7 @@ import javafx.scene.text.Text;
 public final class Button implements InputMouseListener, IDrawable {
 
 	// Button status
-	boolean isEnabled = false;
+	boolean isEnabled = true;
 
 	// Drawing status
 	private String buttonText;
@@ -223,7 +223,6 @@ public final class Button implements InputMouseListener, IDrawable {
 	public void mouseKeyEvent(MouseKeyEventType type, MouseButton code) {
 		if (type == MouseKeyEventType.MOUSE_RELEASED) {
 			if (code == MouseButton.PRIMARY) {
-				this.isEnabled = true;
 				mousePressed = false;
 			}
 		} else if (type == MouseKeyEventType.MOUSE_PRESSED) {

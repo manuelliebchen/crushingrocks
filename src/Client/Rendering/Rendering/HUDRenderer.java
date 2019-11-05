@@ -22,7 +22,7 @@ public class HUDRenderer implements IDrawable {
 				.setTextColor(game.getPlayer(0).getColor()).setVerticalAlignment(Alignment.LEFT)
 				.setHorizontalAlignment(Alignment.TOP));
 		drawables.add(new DynamicTextBox(new Point2D(10, 0), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
-				.setTextColor(game.getPlayer(0).getColor()).setVerticalAlignment(Alignment.RIGHT)
+				.setTextColor(game.getPlayer(1).getColor()).setVerticalAlignment(Alignment.RIGHT)
 				.setHorizontalAlignment(Alignment.TOP));
 	}
 

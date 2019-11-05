@@ -88,7 +88,7 @@ public class Game {
 	public GameStatistic tick(){
 		--frames_left;
 		if(frames_left <= 0) {
-			return new GameStatistic(players);
+			return new GameStatistic(new ArrayList<Player>(players));
 		}
 		
 		// Update Player.
@@ -121,7 +121,7 @@ public class Game {
 		for(Base base : map.getBases()) {
 			if( base.getHP() <= 0) {
 				if(statistic == null) {
-					statistic = new GameStatistic(players);
+					statistic = new GameStatistic(new ArrayList<Player>(players));
 				}
 			}
 		}

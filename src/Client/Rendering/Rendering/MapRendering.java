@@ -65,16 +65,6 @@ public final class MapRendering implements IDrawable {
 	 */
 	public void draw(GraphicsContext context) {
 		Canvas canvas = context.getCanvas();
-		context.setFill(Color.WHITE);
-		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-//		context.setFont(font);
-//		context.setTextAlign(TextAlignment.LEFT);
-//		context.setFill(players.get(0).getColor());
-//		context.fillText(String.valueOf(players.get(0).getCreditPoints()), 10, 40);
-//		context.setTextAlign(TextAlignment.RIGHT);
-//		context.setFill(players.get(1).getColor());
-//		context.fillText(String.valueOf(players.get(1).getCreditPoints()), canvas.getWidth() - 10, 40);
 
 		transformation = new Affine();
 		transformation.appendTranslation(canvas.getWidth() / 2, canvas.getHeight() / 2);
@@ -93,7 +83,9 @@ public final class MapRendering implements IDrawable {
 		for (Mine mine : mines) {
 			float[] ownership = mine.getOwnership();
 
-			context.drawImage(minetexture, mine.getPosition().getX() - 0.1, mine.getPosition().getY() - 0.1, 0.2, 0.2);
+			context.drawImage(minetexture, mine.getPosition().getX() - GameConstants.MINE_RADIUS,
+					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
+					2 * GameConstants.MINE_RADIUS);
 
 			context.setStroke(players.get(0).getColor().interpolate(players.get(1).getColor(), ownership[1]));
 			context.strokeOval(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
@@ -112,7 +104,9 @@ public final class MapRendering implements IDrawable {
 		Image baseTexture = ImageManager.getInstance().loadImage("base.png");
 		for (Base base : bases) {
 			context.setStroke(base.getOwner().getColor());
-			context.drawImage(baseTexture, base.getPosition().getX() - 0.2, base.getPosition().getY() - 0.2, 0.4, 0.4);
+			context.drawImage(baseTexture, base.getPosition().getX() - GameConstants.BASE_RADIUS,
+					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
+					2 * GameConstants.BASE_RADIUS);
 			context.strokeOval(base.getPosition().getX() - GameConstants.BASE_RADIUS,
 					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
 					2 * GameConstants.BASE_RADIUS);
@@ -130,8 +124,9 @@ public final class MapRendering implements IDrawable {
 		for (Player player : players) {
 			context.setStroke(player.getColor());
 			for (Unit unit : player.getUnits()) {
-				context.drawImage(unitTexture, unit.getPosition().getX() - 0.05, unit.getPosition().getY() - 0.05, 0.1,
-						0.1);
+				context.drawImage(unitTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
+						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
+						2 * GameConstants.UNIT_RADIUS);
 				context.strokeOval(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
 						2 * GameConstants.UNIT_RADIUS);

@@ -24,10 +24,14 @@ public class GameStatisticScreen extends GameState implements IDrawable, IUpdate
 	public GameStatisticScreen(StateManager manager, GameStatistic statistic) {
 		super(manager);
 		drawables = new ArrayList<>();
+		
 		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back").setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
-		drawables.add(new TextBox(new Point2D(100, 100), "GameStatistics").setVerticalAlignment(Alignment.LEFT).setHorizontalAlignment(Alignment.TOP));
-		drawables.add(new TextBox(new Point2D(0, 100), statistic.toString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
 		drawables.add(backbutton);
+		
+		drawables.add(new TextBox(new Point2D(100, 100), "GameStatistics").setVerticalAlignment(Alignment.LEFT).setHorizontalAlignment(Alignment.TOP));
+		drawables.add(new TextBox(new Point2D(-500, 100), statistic.getNameString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
+		drawables.add(new TextBox(new Point2D(100, 100), statistic.getBaseHPString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
+		drawables.add(new TextBox(new Point2D(500, 100), statistic.getScoreString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
 	}
 
 	@Override

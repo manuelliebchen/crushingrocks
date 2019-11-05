@@ -7,11 +7,13 @@ import Client.GUI.States.Interfaces.IDrawable;
 import Client.GUI.States.Interfaces.IUpdateable;
 import Client.Rendering.Rendering.HUDRenderer;
 import Client.Rendering.Rendering.MapRendering;
+import Constants.DesignConstants;
 import Game.Controller.IPlayerController;
 import Game.Controller.PlayerControllerLoader;
 import Game.Controller.BuiltIn.SampleBot;
 import Game.Logic.Game;
 import Game.Logic.GameStatistic;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -73,10 +75,15 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
      */
     @Override
     public void draw(GraphicsContext context) {
+		Canvas canvas = context.getCanvas();
+		context.setFill(DesignConstants.BACKGROUND_COLOR);
+		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
     	context.save();
         mapRenderer.draw(context);
         context.restore();
-    	context.save();
+    	
+        context.save();
         hudRenderer.draw(context);
         context.restore();
     }
