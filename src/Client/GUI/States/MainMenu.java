@@ -78,24 +78,6 @@ public class MainMenu extends GameState implements IDrawable, IUpdateable {
 		endGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", Alignment.CENTER, Alignment.BOTTOM);
 	}
 
-	// Optional
-	@Override
-	public void leaving() {
-		super.leaving();
-	}
-
-	// Optional
-	@Override
-	public void obscuring() {
-		super.obscuring();
-	}
-
-	// Optional
-	@Override
-	public void revealed() {
-		super.revealed();
-	}
-
 	@Override
 	public void update(float elapsedTime) {
 //		if (!isTop) {

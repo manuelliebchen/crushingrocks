@@ -45,7 +45,6 @@ public class HumanBot implements IPlayerController, InputKeyListener {
 	
 	@Override
 	public UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
-//		return getDirection();
 		return UNIT_TYPE.RED;
 	}
 

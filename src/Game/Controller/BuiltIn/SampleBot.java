@@ -43,7 +43,7 @@ public class SampleBot implements IPlayerController {
 			}
 		} else {
 			for(Unit unit: units) {
-				mines.sort((Mine m, Mine n) -> Math.round((n.getPosition().distanceSqr(unit.getPosition()) - m.getPosition().distanceSqr(unit.getPosition()) * 100)));
+				mines.sort((Mine m, Mine n) -> Math.round((n.getPosition().distanceSqr(unit.getPosition()) - m.getPosition().distanceSqr(unit.getPosition())) * 100));
 				unit.setOrder(this, mines.get(mines.size() -1).getPosition().sub(unit.getPosition()));
 			}
 		}

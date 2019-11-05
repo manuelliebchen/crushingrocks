@@ -5,8 +5,8 @@ import java.util.Stack;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.GUI.States.Interfaces.IUpdateable;
-import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
 
 /**
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
@@ -15,7 +15,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public final class StateManager implements IDrawable, IUpdateable {
 
-	Timeline timeline;
+	Stage stage;
 	
 	/**
 	 * Stores all current game states from layer
@@ -23,21 +23,12 @@ public final class StateManager implements IDrawable, IUpdateable {
 	Stack<GameState> currentStates = new Stack<GameState>();
 
 	/**
-	 * The first and initial state. It's necessary if there is no state left.
-	 * 
-	 * @see pop()
-	 */
-	GameState initialState;
-
-	/**
 	 * StateManager controlls state handling e.g. Add/remove/reverts states to a
 	 * layer based state handling
-	 * 
 	 * @param state sets the initial game state
 	 */
-	public StateManager(Timeline line) {
-		initialState = null;
-		this.timeline = line;
+	public StateManager(Stage stage) {
+		this.stage = stage;
 	}
 
 	/**
@@ -46,17 +37,13 @@ public final class StateManager implements IDrawable, IUpdateable {
 	 * If there is only one state left, the initial state will add to currentStates.
 	 */
 	public void pop() {
-
 		GameState top = peek();
 		top.leaving();
 
 		currentStates.pop();
 		if (currentStates.empty()) {
-			timeline.stop();
-		} else {
-			currentStates.peek().revealed();
+			stage.close();
 		}
-
 	}
 
 	/**
@@ -83,18 +70,6 @@ public final class StateManager implements IDrawable, IUpdateable {
 	 */
 	public void switchCurrentState(GameState state) {
 		pop();
-		push(state);
-	}
-
-	/**
-	 * Removes all active states and add a new one as base.
-	 * 
-	 * @param state -> new game state
-	 */
-	public void resetWith(GameState state) {
-		while(!currentStates.empty()) {
-			pop();
-		}
 		push(state);
 	}
 

@@ -27,17 +27,4 @@ public abstract class GameState {
      */
     public void leaving() {
     }
-
-    /**
-     * Method witch is called when state is obscured.
-     */
-    public void obscuring() {
-    }
-    
-    /**
-     * Method witch is called when state is revealed.
-     */
-    public void revealed() {
-    }
-    
 }

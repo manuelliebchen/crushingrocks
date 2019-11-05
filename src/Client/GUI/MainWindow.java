@@ -12,7 +12,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -55,7 +54,7 @@ public class MainWindow extends Application {
 		Timeline timeline = new Timeline();
 
 		// Create StateManager and set MainMenu as start state
-		StateManager manager = new StateManager(timeline);
+		StateManager manager = new StateManager(stage);
 		manager.push(new MainMenu(manager));
 		
 		// Create one frame
@@ -88,11 +87,6 @@ public class MainWindow extends Application {
 		
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
-		timeline.setOnFinished((ActionEvent event) -> {
-				stage.close();
-				System.err.println("Timeline has finished!");
-			}
-		);
 		timeline.play();
 		stage.show();
 	}
