@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import Constants.ColorConstants;
+import Constants.DesignConstants;
 import Constants.GameConstants;
 import Game.Controller.IPlayerController;
 
@@ -18,6 +18,7 @@ import Game.Controller.IPlayerController;
 public class Game {
 	private List<Player> players;
 	private Map map;
+	private int frames_left;
 
 	private Random random;
 	
@@ -31,11 +32,13 @@ public class Game {
 		players = new ArrayList<>(playerController.size());
 		for(int i=0; i<playerController.size(); ++i) {
 			assert(playerController.get(i) != null);
-			players.add(new Player(playerController.get(i), ColorConstants.PLAYER_COLORS[i], i));
+			players.add(new Player(playerController.get(i), DesignConstants.PLAYER_COLORS[i], i));
 		}
 		
 		this.random = new Random();
 		map = new Map(this.random, players);
+		
+		frames_left = GameConstants.INITIAL_FRAME_AMOUNT;
 	}
 	
 	/**
@@ -53,11 +56,12 @@ public class Game {
 	 */
 	public Player getPlayer(int index) {
 		assert(index >= 0);
-		if(index < players.size()) {
-			return players.get(index);
-		} else { 
-			return null; 
+		for(Player player : players) {
+			if(index == player.getPlayerID()) {
+				return player;
+			}
 		}
+		return null;
 	}
 	
 	/**
@@ -70,10 +74,23 @@ public class Game {
 	}
 	
 	/**
+	 * Returns the number of frames left.
+	 * @return Frame counter.
+	 */
+	public int getFramesLeft() {
+		return frames_left;
+	}
+	
+	/**
 	 * Perform a single step in the gameLogic. Updates Players and Map.
 	 * @return 
 	 */
 	public GameStatistic tick(){
+		--frames_left;
+		if(frames_left <= 0) {
+			return new GameStatistic(players);
+		}
+		
 		// Update Player.
 		for(Player player : players){
 			player.update(map, players);
@@ -99,7 +116,7 @@ public class Game {
 		for(Base base : map.getBases()) {
 			base.update(allUnits);
 		}
-		
+
 		GameStatistic statistic = null;
 		for(Base base : map.getBases()) {
 			if( base.getHP() <= 0) {

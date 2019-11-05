@@ -8,6 +8,13 @@ import Game.Types.Vector;
  */
 public final class GameConstants {
 	
+	/**
+	 * Initial health points of the base.
+	 * <p>
+	 * Value = {@value #INITIAL_BASE_HP}
+	 */
+	public static final int INITIAL_FRAME_AMOUNT = 5000;
+	
 	// Amounts!
 	
 	/**
@@ -32,21 +39,21 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #INITIAL_BASE_HP}
 	 */
-	public static final int INITIAL_BASE_HP = 2048;
+	public static final int INITIAL_BASE_HP = 5000;
 
 	/**
 	 * Initial health points of a unit.
 	 * <p>
 	 * Value = {@value #INITIAL_UNIT_HP}
 	 */
-	public static final int INITIAL_UNIT_HP = 128;
+	public static final int INITIAL_UNIT_HP = 100;
 
 	/**
 	 * Base attack damage of an Unit.
 	 * <p>
 	 * Value = {@value #UNIT_BASE_ATTACK}
 	 */
-	public static final int UNIT_BASE_ATTACK = 8;
+	public static final int UNIT_BASE_ATTACK = 10;
 
 	
 	// Creadit Points!
@@ -63,14 +70,14 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #UNIT_FEE}
 	 */
-	public static final int UNIT_FEE = 2048;
+	public static final int UNIT_FEE = 2000;
 
 	/**
 	 * Income per owned mine per tick.
 	 * <p>
 	 * Value = {@value #PER_MINE_INCOME}
 	 */
-	public static final int PER_MINE_INCOME = 16;
+	public static final int PER_MINE_INCOME = 10;
 	
 	
 	// Speed!

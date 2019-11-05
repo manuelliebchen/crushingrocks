@@ -1,5 +1,7 @@
 package Client.GUI.Elements;
 
+import java.util.function.Supplier;
+
 import Client.GUI.States.Interfaces.IDrawable;
 import Constants.DesignConstants;
 import Constants.DesignConstants.Alignment;
@@ -10,16 +12,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
- * @author Gerd Schmidt (gerd.schmidt@acagamics.de) Image buttons with customs
- *         images and text. Registers if a user pressed on it.
+ * Dynamic TextBox.
+ * 
+ * @author Manuel Liebchen
  */
-public final class TextBox implements IDrawable {
+public final class DynamicTextBox implements IDrawable {
 
 	// Drawing status
-	private String buttonText;
+	private Supplier<String> textSupplier;
 	private Color textColor;
 	private Point2D relativPosition;
-	private Point2D position;
 	private Point2D size;
 	private Alignment verticalAlignment = Alignment.LEFT;
 	private Alignment horizontalAlignment = Alignment.TOP;
@@ -32,8 +34,8 @@ public final class TextBox implements IDrawable {
 	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
-	public TextBox(Point2D relativPosition, String buttonText) {
-		this(relativPosition, buttonText, Alignment.LEFT, Alignment.TOP);
+	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier, Color textColor) {
+		this(relativPosition, textSupplier, textColor, Alignment.LEFT, Alignment.TOP);
 	}
 
 	/**
@@ -44,29 +46,27 @@ public final class TextBox implements IDrawable {
 	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
-	public TextBox(Point2D relativPosition, String buttonText, Alignment verticalAlignment, Alignment horizontalAlignment) {
-		this(relativPosition, buttonText, Color.BLACK, verticalAlignment, horizontalAlignment);
+	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier, Alignment verticalAlignment,
+			Alignment horizontalAlignment) {
+		this(relativPosition, textSupplier, DesignConstants.FOREGROUND_COLOR, verticalAlignment, horizontalAlignment);
 	}
 
 	/**
 	 * Complex Button constructor with default buttons and text color.
 	 * 
-	 * @param position        The position where the button will be drawn
-	 *                        (top-left).
-	 * @param size            The size of the button (e.g. image size).
-	 * @param buttonText      The Text, which will be displayed on the button.
-	 * @param textColor       The text color of the button
+	 * @param position   The position where the button will be drawn (top-left).
+	 * @param size       The size of the button (e.g. image size).
+	 * @param buttonText The Text, which will be displayed on the button.
+	 * @param textColor  The text color of the button
 	 */
-	public TextBox(Point2D relativPosition, String buttonText, Color textColor, Alignment verticalAlignment, Alignment horizontalAlignment) {
-		this.buttonText = buttonText;
+	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier, Color textColor,
+			Alignment verticalAlignment, Alignment horizontalAlignment) {
+		this.textSupplier = textSupplier;
 		this.relativPosition = relativPosition;
-		this.position = relativPosition;
 		this.textColor = textColor;
-		
+
 		this.verticalAlignment = verticalAlignment;
 		this.horizontalAlignment = horizontalAlignment;
-		
-		calcButtonTextProperties();
 	}
 
 	/**
@@ -76,20 +76,10 @@ public final class TextBox implements IDrawable {
 	 * @see changeText(String buttonText)
 	 */
 	private void calcButtonTextProperties() {
-		Text text = new Text(buttonText);
+		Text text = new Text(textSupplier.get());
 		text.setFont(DesignConstants.STANDART_FONT);
 
 		size = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
-	}
-
-	/**
-	 * Change text of button. Updates text properties
-	 * 
-	 * @see calcButtonTextProperties()
-	 * @param buttonText
-	 */
-	public void changeText(String buttonText) {
-		this.buttonText = buttonText;
 	}
 
 	/**
@@ -108,6 +98,7 @@ public final class TextBox implements IDrawable {
 	 * @param graphics
 	 */
 	public void draw(GraphicsContext graphics) {
+		calcButtonTextProperties();
 
 		Canvas canvas = graphics.getCanvas();
 
@@ -127,24 +118,11 @@ public final class TextBox implements IDrawable {
 		} else if (horizontalAlignment == Alignment.CENTER) {
 			drawingPositionY = (relativPosition.getY() + canvas.getHeight() - size.getY()) / 2;
 		} else if (horizontalAlignment == Alignment.BOTTOM) {
-			drawingPositionY = (canvas.getHeight() - relativPosition.getY() - size.getY());
+			drawingPositionY = canvas.getHeight() - relativPosition.getY() - size.getY();
 		}
-
-		position = new Point2D(drawingPositionX, drawingPositionY);
 
 		graphics.setFont(DesignConstants.STANDART_FONT);
 		graphics.setFill(textColor);
-		graphics.fillText(buttonText, position.getX(), position.getY());
-
+		graphics.fillText(textSupplier.get(), drawingPositionX, drawingPositionY);
 	}
-
-	/**
-	 * Get the position of the button
-	 * 
-	 * @return position
-	 */
-	public Point2D getPosition() {
-		return position;
-	}
-
 }

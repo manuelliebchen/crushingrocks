@@ -75,7 +75,7 @@ public class MainWindow extends Application {
 
 					// Update and draw states
 					manager.update((float) time.toSeconds());
-					manager.draw(context, (float) time.toSeconds());
+					manager.draw(context);
 				}
 		);
 

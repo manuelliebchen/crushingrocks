@@ -4,8 +4,9 @@ import Client.InputManager;
 import Client.InputManager.InputMouseListener;
 import Client.InputManager.MouseEventType;
 import Client.InputManager.MouseKeyEventType;
+import Client.GUI.States.Interfaces.IDrawable;
 import Client.Rendering.Drawing.ImageManager;
-import Constants.ClientConstants.Alignment;
+import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,7 +21,7 @@ import javafx.scene.text.Text;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de) Image buttons with customs
  *         images and text. Registers if a user pressed on it.
  */
-public final class Button implements InputMouseListener {
+public final class Button implements InputMouseListener, IDrawable {
 
 	// Button status
 	boolean isEnabled = false;
@@ -37,7 +38,7 @@ public final class Button implements InputMouseListener {
 	private Image imgInActive;
 	private Font font = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 24);
 	private Alignment verticalAlignment = Alignment.LEFT;
-	private Alignment horizontalAlignment = Alignment.UP;
+	private Alignment horizontalAlignment = Alignment.TOP;
 
 	// Mouse status
 	private boolean mousePressed = false;
@@ -51,7 +52,7 @@ public final class Button implements InputMouseListener {
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
 	public Button(Point2D relativPosition, Point2D size, String buttonText) {
-		this(relativPosition, size, buttonText, Alignment.LEFT, Alignment.UP);
+		this(relativPosition, size, buttonText, Alignment.LEFT, Alignment.TOP);
 	}
 
 	/**
@@ -201,11 +202,11 @@ public final class Button implements InputMouseListener {
 			drawingPositionX = (canvas.getWidth() - relativPosition.getX() - size.getX());
 		}
 
-		if (horizontalAlignment == Alignment.UP) {
+		if (horizontalAlignment == Alignment.TOP) {
 			drawingPositionY = relativPosition.getY();
 		} else if (horizontalAlignment == Alignment.CENTER) {
 			drawingPositionY = (relativPosition.getY() + canvas.getHeight() - size.getY()) / 2;
-		} else if (horizontalAlignment == Alignment.DOWN) {
+		} else if (horizontalAlignment == Alignment.BOTTOM) {
 			drawingPositionY = (canvas.getHeight() - relativPosition.getY() - size.getY());
 		}
 

@@ -3,8 +3,8 @@ package Client.GUI.States;
 import java.util.Stack;
 
 import Client.GUI.States.Interfaces.GameState;
-import Client.GUI.States.Interfaces.IDraw;
-import Client.GUI.States.Interfaces.IUpdate;
+import Client.GUI.States.Interfaces.IDrawable;
+import Client.GUI.States.Interfaces.IUpdateable;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -13,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Max Klockmann (max@acagamics.de)
  * 
  */
-public final class StateManager implements IDraw, IUpdate {
+public final class StateManager implements IDrawable, IUpdateable {
 
 	Timeline timeline;
 	
@@ -104,10 +104,10 @@ public final class StateManager implements IDraw, IUpdate {
 	 * @param elapsedTime elapsed time since last call
 	 */
 	@Override
-	public void draw(GraphicsContext graphics, float elapsedTime) {
+	public void draw(GraphicsContext graphics) {
 		for (int i = currentStates.size() -1; i >= 0; i--) {
-			if (currentStates.get(i) instanceof IDraw) {
-				((IDraw) currentStates.get(i)).draw(graphics, elapsedTime);
+			if (currentStates.get(i) instanceof IDrawable) {
+				((IDrawable) currentStates.get(i)).draw(graphics);
 				break;
 			}
 		}
@@ -121,8 +121,8 @@ public final class StateManager implements IDraw, IUpdate {
 	@Override
 	public void update(float elapsedTime) {
 		for (int i = currentStates.size() -1; i >= 0; i--) {
-			if (currentStates.get(i) instanceof IUpdate) {
-				((IUpdate) currentStates.get(i)).update(elapsedTime);
+			if (currentStates.get(i) instanceof IUpdateable) {
+				((IUpdateable) currentStates.get(i)).update(elapsedTime);
 				break;
 			}
 		}

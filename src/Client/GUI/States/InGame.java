@@ -3,8 +3,9 @@ package Client.GUI.States;
 import java.util.ArrayList;
 
 import Client.GUI.States.Interfaces.GameState;
-import Client.GUI.States.Interfaces.IDraw;
-import Client.GUI.States.Interfaces.IUpdate;
+import Client.GUI.States.Interfaces.IDrawable;
+import Client.GUI.States.Interfaces.IUpdateable;
+import Client.Rendering.Rendering.HUDRenderer;
 import Client.Rendering.Rendering.MapRendering;
 import Game.Controller.IPlayerController;
 import Game.Controller.PlayerControllerLoader;
@@ -15,11 +16,13 @@ import javafx.scene.canvas.GraphicsContext;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
+ * @author Manuel Liebchen
  */
-public final class InGame extends GameState implements IDraw, IUpdate {
+public final class InGame extends GameState implements IDrawable, IUpdateable {
 
     private Game game;
     private MapRendering mapRenderer;
+    private HUDRenderer hudRenderer;
 
 //    private float timeSinceLastGameUpdate = 0;
 
@@ -39,6 +42,7 @@ public final class InGame extends GameState implements IDraw, IUpdate {
         game = new Game(playerControllers);
 
         mapRenderer = new MapRendering(game.getMap());
+        hudRenderer = new HUDRenderer(game);
     }
 
     /**
@@ -68,9 +72,12 @@ public final class InGame extends GameState implements IDraw, IUpdate {
      * @param elapsedTime Time passed since last draw in seconds.
      */
     @Override
-    public void draw(GraphicsContext context, float elapsedTime) {
+    public void draw(GraphicsContext context) {
     	context.save();
-        mapRenderer.draw(context, elapsedTime);
+        mapRenderer.draw(context);
+        context.restore();
+    	context.save();
+        hudRenderer.draw(context);
         context.restore();
     }
 }

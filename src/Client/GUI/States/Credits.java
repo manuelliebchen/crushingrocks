@@ -3,21 +3,19 @@ package Client.GUI.States;
 import Client.GUI.Elements.Button;
 import Client.GUI.Elements.TextBox;
 import Client.GUI.States.Interfaces.GameState;
-import Client.GUI.States.Interfaces.IDraw;
-import Client.GUI.States.Interfaces.IUpdate;
-import Constants.ClientConstants.Alignment;
-import Constants.ColorConstants;
+import Client.GUI.States.Interfaces.IDrawable;
+import Client.GUI.States.Interfaces.IUpdateable;
+import Constants.DesignConstants;
+import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
  *
  */
-public class Credits extends GameState implements IDraw, IUpdate {
+public class Credits extends GameState implements IDrawable, IUpdateable {
 
 	Button backbutton;
 	TextBox text;
@@ -29,26 +27,17 @@ public class Credits extends GameState implements IDraw, IUpdate {
 	 */
 	public Credits(StateManager manager) {
 		super(manager);
-		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", Alignment.RIGHT, Alignment.DOWN);
-		text = new TextBox(new Point2D(200, 125), "Manuel Liebchen");
+		text = new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen");
+		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", Alignment.RIGHT, Alignment.BOTTOM);
 	}
 
 	@Override
-	public void draw(GraphicsContext graphics, float elapsedTime) {
+	public void draw(GraphicsContext graphics) {
 
 		Canvas canvas = graphics.getCanvas();
 		
-		graphics.setFill(ColorConstants.BACKGROUND_COLOR);
+		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
 		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-		// draw background image
-//		graphics.drawImage(ImageManager.getInstance().loadImage("backgrounds/credits.png"), 0, 0,
-//				ClientConstants.INITIAL_SCREEN_WIDTH, ClientConstants.INITIAL_SCREEN_HEIGHT);
-
-		// draw text
-		graphics.setFill(ColorConstants.FOREGROUND_COLOR);
-		graphics.setFont(Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 36));
-		graphics.fillText("Credits", 60, 30);
 
 		backbutton.draw(graphics);
 		text.draw(graphics);

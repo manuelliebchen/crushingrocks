@@ -3,13 +3,13 @@ package Client.GUI.States;
 import Client.GUI.Elements.Button;
 import Client.GUI.Elements.TextBox;
 import Client.GUI.States.Interfaces.GameState;
-import Client.GUI.States.Interfaces.IDraw;
-import Client.GUI.States.Interfaces.IUpdate;
+import Client.GUI.States.Interfaces.IDrawable;
+import Client.GUI.States.Interfaces.IUpdateable;
 import Client.Web.News;
 import Client.Web.Version;
 import Constants.ClientConstants;
-import Constants.ClientConstants.Alignment;
-import Constants.ColorConstants;
+import Constants.DesignConstants;
+import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
  *
  */
-public class MainMenu extends GameState implements IDraw, IUpdate {
+public class MainMenu extends GameState implements IDrawable, IUpdateable {
 
 	TextBox title;
 	Button startGame;
@@ -38,11 +38,11 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 	}
 
 	@Override
-	public void draw(GraphicsContext graphics, float elapsedTime) {
+	public void draw(GraphicsContext graphics) {
 
 		Canvas canvas = graphics.getCanvas();
 
-		graphics.setFill(ColorConstants.BACKGROUND_COLOR);
+		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
 		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		// write version
@@ -73,9 +73,9 @@ public class MainMenu extends GameState implements IDraw, IUpdate {
 	@Override
 	public void entered() {
 		super.entered();
-		startGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game", Alignment.CENTER, Alignment.UP);
-		showCredits = new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits", Alignment.CENTER, Alignment.UP);
-		endGame = new Button(new Point2D(0, 125), new Point2D(200, 50), "Exit Game", Alignment.CENTER, Alignment.DOWN);
+		startGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game", Alignment.CENTER, Alignment.TOP);
+		showCredits = new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits", Alignment.CENTER, Alignment.TOP);
+		endGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", Alignment.CENTER, Alignment.BOTTOM);
 	}
 
 	// Optional

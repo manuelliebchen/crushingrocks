@@ -8,12 +8,12 @@ import javafx.scene.canvas.GraphicsContext;
  * 
  * Simple drawing interface.
  */
-public interface IDraw {
+public interface IDrawable {
 
 	/**
 	 * This method is invoked in each step and draws the content on the window
 	 * @param graphics The GraphicsContext is used for drawing
 	 * @param elapsedTime The Elapsed Time since last draw call
 	 */
-	public void draw(GraphicsContext graphics, float elapsedTime);
+	public void draw(GraphicsContext graphics);
 }

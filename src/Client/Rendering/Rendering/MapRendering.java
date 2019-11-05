@@ -2,6 +2,7 @@ package Client.Rendering.Rendering;
 
 import java.util.List;
 
+import Client.GUI.States.Interfaces.IDrawable;
 import Client.Rendering.Drawing.ImageManager;
 import Constants.ClientConstants;
 import Constants.GameConstants;
@@ -14,24 +15,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Affine;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
  * @author Manuel Liebchen
  */
-public final class MapRendering {
+public final class MapRendering implements IDrawable {
 
 	private Map gameMap;
 
 	private List<Base> bases;
 	private List<Mine> mines;
 	private List<Player> players;
-
-	private Font font = Font.font(Font.getDefault().getFamily(), FontWeight.MEDIUM, 48);
 
 	private Affine transformation;
 
@@ -67,18 +63,18 @@ public final class MapRendering {
 	 * @param context           Context to draw on.
 	 * @param timeSinceLastDraw Time passed since last draw in seconds.
 	 */
-	public void draw(GraphicsContext context, float timeSinceLastDraw) {
+	public void draw(GraphicsContext context) {
 		Canvas canvas = context.getCanvas();
 		context.setFill(Color.WHITE);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-		context.setFont(font);
-		context.setTextAlign(TextAlignment.LEFT);
-		context.setFill(players.get(0).getColor());
-		context.fillText(String.valueOf(players.get(0).getCreditPoints()), 10, 40);
-		context.setTextAlign(TextAlignment.RIGHT);
-		context.setFill(players.get(1).getColor());
-		context.fillText(String.valueOf(players.get(1).getCreditPoints()), canvas.getWidth() - 10, 40);
+//		context.setFont(font);
+//		context.setTextAlign(TextAlignment.LEFT);
+//		context.setFill(players.get(0).getColor());
+//		context.fillText(String.valueOf(players.get(0).getCreditPoints()), 10, 40);
+//		context.setTextAlign(TextAlignment.RIGHT);
+//		context.setFill(players.get(1).getColor());
+//		context.fillText(String.valueOf(players.get(1).getCreditPoints()), canvas.getWidth() - 10, 40);
 
 		transformation = new Affine();
 		transformation.appendTranslation(canvas.getWidth() / 2, canvas.getHeight() / 2);
