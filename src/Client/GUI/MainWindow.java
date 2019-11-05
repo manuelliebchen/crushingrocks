@@ -13,7 +13,6 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -50,47 +49,33 @@ public class MainWindow extends Application {
 		// Add canvas to new scene and set scene as window content
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
 		stage.setScene(scene);
-		stage.show();
 
-		
-		
 		InputManager.init(scene);
 
-		Timeline line = new Timeline();
+		Timeline timeline = new Timeline();
+
 		// Create StateManager and set MainMenu as start state
-		StateManager manager = new StateManager(line);
+		StateManager manager = new StateManager(timeline);
 		manager.push(new MainMenu(manager));
-
-		// Setting up gameLoop
-
-
-		// Create frame loop
 		
 		// Create one frame
 		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS),
-				new EventHandler<ActionEvent>() {
+				(event) -> {
+					// Get elapsed time
+					Duration time = ((KeyFrame) event.getSource()).getTime();
 
-					/**
-					 * This Method is called ones each frame
-					 */
-					@Override
-					public void handle(ActionEvent event) {
-						// Get elapsed time
-						Duration time = ((KeyFrame) event.getSource()).getTime();
+					// Update InputManager
 
-						// Update InputManager
+					InputManager.get().updateTables();
 
-						InputManager.get().updateTables();
+					GraphicsContext context = canvas.getGraphicsContext2D();
+					// Clear screen
+					context.clearRect(0, 0, ClientConstants.INITIAL_SCREEN_WIDTH,
+							ClientConstants.INITIAL_SCREEN_HEIGHT);
 
-						GraphicsContext context = canvas.getGraphicsContext2D();
-						// Clear screen
-						context.clearRect(0, 0, ClientConstants.INITIAL_SCREEN_WIDTH,
-								ClientConstants.INITIAL_SCREEN_HEIGHT);
-
-						// Update and draw states
-						manager.update((float) time.toSeconds());
-						manager.draw(context, (float) time.toSeconds());
-					}
+					// Update and draw states
+					manager.update((float) time.toSeconds());
+					manager.draw(context, (float) time.toSeconds());
 				}
 		);
 
@@ -101,14 +86,14 @@ public class MainWindow extends Application {
 		stage.widthProperty().addListener(stageSizeListener);
 		stage.heightProperty().addListener(stageSizeListener);
 		
-		line.setCycleCount(Animation.INDEFINITE);
-		line.getKeyFrames().add(frame);
-		line.setOnFinished(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.getKeyFrames().add(frame);
+		timeline.setOnFinished((ActionEvent event) -> {
 				stage.close();
+				System.err.println("Timeline has finished!");
 			}
-		});
-		line.play();
+		);
+		timeline.play();
+		stage.show();
 	}
 }

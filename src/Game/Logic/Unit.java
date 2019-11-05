@@ -8,16 +8,16 @@ import Game.Controller.IPlayerController;
 import Game.Types.Vector;
 
 public class Unit {
-	
+
 	private Vector position;
 	private Player owner;
 	private int hp;
-	
+
 	private UNIT_TYPE type;
-	
+
 	private Vector orderedDirection;
-	
-	Unit(UNIT_TYPE ut, Player owner, Vector position){
+
+	Unit(UNIT_TYPE ut, Player owner, Vector position) {
 		this.type = ut;
 		this.owner = owner;
 		this.position = position;
@@ -27,7 +27,7 @@ public class Unit {
 	public Player getOwner() {
 		return owner;
 	}
-	
+
 	public Vector getPosition() {
 		return position.copy();
 	}
@@ -35,29 +35,28 @@ public class Unit {
 	public int getHP() {
 		return hp;
 	}
-	
+
 	public UNIT_TYPE getType() {
 		return type;
 	}
-	
+
 	public void setOrder(IPlayerController controller, Vector direction) {
-		if(controller == owner.getController()) {
+		if (controller == owner.getController()) {
 			orderedDirection = direction;
 		}
 	}
-	
+
 	Vector updatePosition(List<Unit> enemyUnits) {
-		if(orderedDirection != null) { 
-			if(orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
+		if (orderedDirection != null) {
+			if (orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
 				orderedDirection = orderedDirection.normalize().mult(GameConstants.MAX_UNIT_SPEED);
 			}
 			position = position.add(orderedDirection);
 			orderedDirection = null;
-			if(position.length() > GameConstants.MAP_RADIUS) {
-				position = position.normalize().mult(GameConstants.MAP_RADIUS);
-			}
+			position = new Vector(Math.min(1, Math.max(-1, position.getX())),
+					Math.min(1, Math.max(-1, position.getY())));
 		}
-		return position; 
+		return position;
 	}
 
 	void attackBy(int damage) {

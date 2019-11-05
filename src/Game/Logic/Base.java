@@ -6,33 +6,45 @@ import Constants.GameConstants;
 import Game.Types.Vector;
 
 /**
- * Coins can be collected by Players for increasing their score.
+ * A Class for the Base of a Player.
+ * 
  * @author Manuel Liebchen
- *
  */
 public class Base {
 	private Vector position;
 	private Player owner;
 	private int hp;
-	
-	Base(Player owner, Vector position){
+
+	/**
+	 * Constructor that takes the owner and the position.
+	 * 
+	 * @param owner
+	 * @param position
+	 */
+	Base(Player owner, Vector position) {
 		this.owner = owner;
 		this.position = position;
 		hp = GameConstants.INITIAL_BASE_HP;
 	}
-	
+
+	/**
+	 * Get the Owner of the Base.
+	 * 
+	 * @return A Player objekt of the owner.
+	 */
 	public Player getOwner() {
 		return owner;
 	}
 
 	/**
 	 * Get the position of this coin.
+	 * 
 	 * @return position
 	 */
 	public Vector getPosition() {
 		return position.copy();
 	}
-	
+
 	/**
 	 * @return HP of the Base
 	 */
@@ -40,14 +52,10 @@ public class Base {
 		return hp;
 	}
 
-
 	void update(List<Unit> allUnits) {
-		int count = 0;
-		for(Unit unit : allUnits) {
-			if(position.distance(unit.getPosition()) < GameConstants.BASE_RADIUS && unit.getOwner() != owner) {
-				count++;
-			}
-		}
+		int count = allUnits.stream().filter(
+				(u) -> position.distance(u.getPosition()) < GameConstants.BASE_RADIUS && u.getOwner() != owner)
+				.toArray().length;
 		hp -= count * GameConstants.UNIT_BASE_ATTACK;
 		hp = Math.max(hp, 0);
 	}

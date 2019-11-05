@@ -74,7 +74,7 @@ public class Player {
 	 * Get the score of this player.
 	 * @return score
 	 */
-	public float getCreditPoints() {
+	public int getCreditPoints() {
 		return creditPoints;
 	}
 	
