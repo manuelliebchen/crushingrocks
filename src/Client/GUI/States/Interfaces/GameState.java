@@ -14,7 +14,6 @@ public abstract class GameState {
 	}
 	
 	protected StateManager manager;
-
     
     /**
      * Method witch is called when state is entered.

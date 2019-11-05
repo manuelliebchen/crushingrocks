@@ -9,6 +9,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -20,11 +21,12 @@ public final class DynamicTextBox implements IDrawable {
 
 	// Drawing status
 	private Supplier<String> textSupplier;
-	private Color textColor;
+	private Color textColor = DesignConstants.FOREGROUND_COLOR;
 	private Point2D relativPosition;
 	private Point2D size;
 	private Alignment verticalAlignment = Alignment.LEFT;
 	private Alignment horizontalAlignment = Alignment.TOP;
+	private Font font = DesignConstants.STANDART_FONT;
 
 	/**
 	 * Default button constructor with default buttons images and text color
@@ -34,39 +36,10 @@ public final class DynamicTextBox implements IDrawable {
 	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
-	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier, Color textColor) {
-		this(relativPosition, textSupplier, textColor, Alignment.LEFT, Alignment.TOP);
-	}
-
-	/**
-	 * Default button constructor with default buttons images and text color
-	 * (black).
-	 * 
-	 * @param position   The position where the button will be drawn (top-left).
-	 * @param size       The size of the button (e.g. image size).
-	 * @param buttonText The Text, which will be displayed on the button.
-	 */
-	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier, Alignment verticalAlignment,
-			Alignment horizontalAlignment) {
-		this(relativPosition, textSupplier, DesignConstants.FOREGROUND_COLOR, verticalAlignment, horizontalAlignment);
-	}
-
-	/**
-	 * Complex Button constructor with default buttons and text color.
-	 * 
-	 * @param position   The position where the button will be drawn (top-left).
-	 * @param size       The size of the button (e.g. image size).
-	 * @param buttonText The Text, which will be displayed on the button.
-	 * @param textColor  The text color of the button
-	 */
-	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier, Color textColor,
-			Alignment verticalAlignment, Alignment horizontalAlignment) {
+	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier) {
 		this.textSupplier = textSupplier;
 		this.relativPosition = relativPosition;
-		this.textColor = textColor;
 
-		this.verticalAlignment = verticalAlignment;
-		this.horizontalAlignment = horizontalAlignment;
 	}
 
 	/**
@@ -75,11 +48,32 @@ public final class DynamicTextBox implements IDrawable {
 	 * @see changeFont(Font font)
 	 * @see changeText(String buttonText)
 	 */
-	private void calcButtonTextProperties() {
+	private void calcFontTextSize() {
 		Text text = new Text(textSupplier.get());
-		text.setFont(DesignConstants.STANDART_FONT);
+		text.setFont(font);
 
 		size = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
+	}
+	
+	public DynamicTextBox setVerticalAlignment(Alignment verticalAlignment) {
+		this.verticalAlignment = verticalAlignment;
+		return this;
+	}
+	
+	public DynamicTextBox setHorizontalAlignment(Alignment horizontalAlignment) {
+		this.horizontalAlignment = horizontalAlignment;
+		return this;
+	}
+	
+	public DynamicTextBox setTextColor(Color textColor) {
+		this.textColor = textColor;
+		return this;
+	}
+	
+	public DynamicTextBox setFont(Font font) {
+		this.font = font;
+		calcFontTextSize();
+		return this;
 	}
 
 	/**
@@ -98,7 +92,7 @@ public final class DynamicTextBox implements IDrawable {
 	 * @param graphics
 	 */
 	public void draw(GraphicsContext graphics) {
-		calcButtonTextProperties();
+		calcFontTextSize();
 
 		Canvas canvas = graphics.getCanvas();
 
@@ -121,7 +115,7 @@ public final class DynamicTextBox implements IDrawable {
 			drawingPositionY = canvas.getHeight() - relativPosition.getY() - size.getY();
 		}
 
-		graphics.setFont(DesignConstants.STANDART_FONT);
+		graphics.setFont(font);
 		graphics.setFill(textColor);
 		graphics.fillText(textSupplier.get(), drawingPositionX, drawingPositionY);
 	}

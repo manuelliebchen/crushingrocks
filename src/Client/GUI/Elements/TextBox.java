@@ -7,6 +7,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -17,10 +18,10 @@ public final class TextBox implements IDrawable {
 
 	// Drawing status
 	private String buttonText;
-	private Color textColor;
+	private Color textColor = DesignConstants.FOREGROUND_COLOR;
 	private Point2D relativPosition;
-	private Point2D position;
 	private Point2D size;
+	private Font font = DesignConstants.STANDART_FONT;
 	private Alignment verticalAlignment = Alignment.LEFT;
 	private Alignment horizontalAlignment = Alignment.TOP;
 
@@ -29,44 +30,34 @@ public final class TextBox implements IDrawable {
 	 * (black).
 	 * 
 	 * @param position   The position where the button will be drawn (top-left).
-	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
 	public TextBox(Point2D relativPosition, String buttonText) {
-		this(relativPosition, buttonText, Alignment.LEFT, Alignment.TOP);
-	}
-
-	/**
-	 * Default button constructor with default buttons images and text color
-	 * (black).
-	 * 
-	 * @param position   The position where the button will be drawn (top-left).
-	 * @param size       The size of the button (e.g. image size).
-	 * @param buttonText The Text, which will be displayed on the button.
-	 */
-	public TextBox(Point2D relativPosition, String buttonText, Alignment verticalAlignment, Alignment horizontalAlignment) {
-		this(relativPosition, buttonText, Color.BLACK, verticalAlignment, horizontalAlignment);
-	}
-
-	/**
-	 * Complex Button constructor with default buttons and text color.
-	 * 
-	 * @param position        The position where the button will be drawn
-	 *                        (top-left).
-	 * @param size            The size of the button (e.g. image size).
-	 * @param buttonText      The Text, which will be displayed on the button.
-	 * @param textColor       The text color of the button
-	 */
-	public TextBox(Point2D relativPosition, String buttonText, Color textColor, Alignment verticalAlignment, Alignment horizontalAlignment) {
 		this.buttonText = buttonText;
 		this.relativPosition = relativPosition;
-		this.position = relativPosition;
-		this.textColor = textColor;
 		
+		calcFontTextSize();
+	}
+	
+	public TextBox setVerticalAlignment(Alignment verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
+		return this;
+	}
+	
+	public TextBox setHorizontalAlignment(Alignment horizontalAlignment) {
 		this.horizontalAlignment = horizontalAlignment;
-		
-		calcButtonTextProperties();
+		return this;
+	}
+	
+	public TextBox setTextColor(Color textColor) {
+		this.textColor = textColor;
+		return this;
+	}
+	
+	public TextBox setFont(Font font) {
+		this.font = font;
+		calcFontTextSize();
+		return this;
 	}
 
 	/**
@@ -75,9 +66,9 @@ public final class TextBox implements IDrawable {
 	 * @see changeFont(Font font)
 	 * @see changeText(String buttonText)
 	 */
-	private void calcButtonTextProperties() {
+	private void calcFontTextSize() {
 		Text text = new Text(buttonText);
-		text.setFont(DesignConstants.STANDART_FONT);
+		text.setFont(font);
 
 		size = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
 	}
@@ -130,21 +121,9 @@ public final class TextBox implements IDrawable {
 			drawingPositionY = (canvas.getHeight() - relativPosition.getY() - size.getY());
 		}
 
-		position = new Point2D(drawingPositionX, drawingPositionY);
-
-		graphics.setFont(DesignConstants.STANDART_FONT);
+		graphics.setFont(font);
 		graphics.setFill(textColor);
-		graphics.fillText(buttonText, position.getX(), position.getY());
+		graphics.fillText(buttonText, drawingPositionX, drawingPositionY);
 
 	}
-
-	/**
-	 * Get the position of the button
-	 * 
-	 * @return position
-	 */
-	public Point2D getPosition() {
-		return position;
-	}
-
 }

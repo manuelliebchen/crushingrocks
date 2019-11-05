@@ -73,17 +73,13 @@ public class MainMenu extends GameState implements IDrawable, IUpdateable {
 	@Override
 	public void entered() {
 		super.entered();
-		startGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game", Alignment.CENTER, Alignment.TOP);
-		showCredits = new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits", Alignment.CENTER, Alignment.TOP);
-		endGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", Alignment.CENTER, Alignment.BOTTOM);
+		startGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game").setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP);
+		showCredits = new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits").setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP);
+		endGame = new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game").setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.BOTTOM);
 	}
 
 	@Override
 	public void update(float elapsedTime) {
-//		if (!isTop) {
-//			return;
-//		}
-
 		// Tests if buttons are pressed
 		if (startGame.isPressed()) {
 			manager.push(new InGame(manager));

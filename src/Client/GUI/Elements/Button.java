@@ -6,6 +6,7 @@ import Client.InputManager.MouseEventType;
 import Client.InputManager.MouseKeyEventType;
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.Rendering.Drawing.ImageManager;
+import Constants.DesignConstants;
 import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -14,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 /**
@@ -29,14 +29,14 @@ public final class Button implements InputMouseListener, IDrawable {
 	// Drawing status
 	private String buttonText;
 	private Point2D centeredPositioOffset;
-	private Color textColor;
+	private Color textColor = DesignConstants.FOREGROUND_COLOR;
 	private Point2D relativPosition;
 	private Point2D position;
 	private Point2D size;
-	private Image imgUp;
-	private Image imgDown;
-	private Image imgInActive;
-	private Font font = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 24);
+	private Image imgUp = ImageManager.getInstance().loadImage("buttons/defaultButtonUp.png");
+	private Image imgDown = ImageManager.getInstance().loadImage("buttons/defaultButtonDown.png");
+	private Image imgInActive = ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png");
+	private Font font = DesignConstants.STANDART_FONT;
 	private Alignment verticalAlignment = Alignment.LEFT;
 	private Alignment horizontalAlignment = Alignment.TOP;
 
@@ -52,55 +52,34 @@ public final class Button implements InputMouseListener, IDrawable {
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
 	public Button(Point2D relativPosition, Point2D size, String buttonText) {
-		this(relativPosition, size, buttonText, Alignment.LEFT, Alignment.TOP);
-	}
-
-	/**
-	 * Default button constructor with default buttons images and text color
-	 * (black).
-	 * 
-	 * @param position   The position where the button will be drawn (top-left).
-	 * @param size       The size of the button (e.g. image size).
-	 * @param buttonText The Text, which will be displayed on the button.
-	 */
-	public Button(Point2D relativPosition, Point2D size, String buttonText, Alignment verticalAlignment,
-			Alignment horizontalAlignment) {
-		this(relativPosition, size, buttonText, ImageManager.getInstance().loadImage("buttons/defaultButtonUp.png"),
-				ImageManager.getInstance().loadImage("buttons/defaultButtonDown.png"),
-				ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png"), Color.BLACK,
-				verticalAlignment, horizontalAlignment);
-	}
-
-	/**
-	 * Complex Button constructor with default buttons and text color.
-	 * 
-	 * @param position        The position where the button will be drawn
-	 *                        (top-left).
-	 * @param size            The size of the button (e.g. image size).
-	 * @param buttonText      The Text, which will be displayed on the button.
-	 * @param imageButtonUp   The image of the button which will be shown if there
-	 *                        is no hover (default view).
-	 * @param imageButtonDown The image of the button which will be shown if there
-	 *                        is a hover (mouse hover view).
-	 * @param imageInActive   The image of the button which will be shown if the
-	 *                        button is disabled.
-	 * @param textColor       The text color of the button
-	 */
-	public Button(Point2D relativPosition, Point2D size, String buttonText, Image imageButtonUp, Image imageButtonDown,
-			Image imageInActive, Color textColor, Alignment verticalAlignment, Alignment horizontalAlignment) {
 		this.buttonText = buttonText;
 		this.relativPosition = relativPosition;
 		this.position = relativPosition;
 		this.size = size;
-		this.imgUp = imageButtonUp;
-		this.imgDown = imageButtonDown;
-		this.imgInActive = imageInActive;
-		this.textColor = textColor;
 
 		InputManager.get().addMouseKeyListener(this);
 		calcButtonTextProperties();
+	}
+
+	public Button setVerticalAlignment(Alignment verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
+		return this;
+	}
+
+	public Button setHorizontalAlignment(Alignment horizontalAlignment) {
 		this.horizontalAlignment = horizontalAlignment;
+		return this;
+	}
+
+	public Button setTextColor(Color textColor) {
+		this.textColor = textColor;
+		return this;
+	}
+
+	public Button setFont(Font font) {
+		this.font = font;
+		calcButtonTextProperties();
+		return this;
 	}
 
 	/**
@@ -213,27 +192,18 @@ public final class Button implements InputMouseListener, IDrawable {
 		position = new Point2D(drawingPositionX, drawingPositionY);
 
 		if (!this.isEnabled) {
-			graphics.drawImage(imgInActive, position.getX(), position.getY(), size.getX(), size.getY());
+			graphics.drawImage(imgInActive, drawingPositionX, drawingPositionY, size.getX(), size.getY());
 		} else if (isMouseOver()) {
-			graphics.drawImage(imgDown, position.getX(), position.getY(), size.getX(), size.getY());
+			graphics.drawImage(imgDown, drawingPositionX, drawingPositionY, size.getX(), size.getY());
 		} else {
-			graphics.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
+			graphics.drawImage(imgUp, drawingPositionX, drawingPositionY, size.getX(), size.getY());
 		}
 
 		graphics.setFont(font);
 		graphics.setFill(textColor);
-		graphics.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
-				position.getY() + centeredPositioOffset.getY());
+		graphics.fillText(buttonText, drawingPositionX + centeredPositioOffset.getX(),
+				drawingPositionY + centeredPositioOffset.getY());
 
-	}
-
-	/**
-	 * Get the position of the button
-	 * 
-	 * @return position
-	 */
-	public Point2D getPosition() {
-		return position;
 	}
 
 	/**

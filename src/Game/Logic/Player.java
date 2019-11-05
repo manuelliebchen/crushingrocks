@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
  */
 public class Player {
 	private IPlayerController controller;
+	private int score;
 	private int creditPoints;
 	
 	private Color color;
@@ -63,6 +64,7 @@ public class Player {
 		
 		for(Mine mine : mapInfo.getMines()) {
 			creditPoints += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
+			score += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
 		}
 	}
 	
@@ -71,11 +73,19 @@ public class Player {
 	}
 	
 	/**
-	 * Get the score of this player.
+	 * Get the creditPoints of this player.
 	 * @return score
 	 */
 	public int getCreditPoints() {
 		return creditPoints;
+	}
+	
+	/**
+	 * Get the score of this player.
+	 * @return score
+	 */
+	public int getScore() {
+		return score;
 	}
 	
 	/**

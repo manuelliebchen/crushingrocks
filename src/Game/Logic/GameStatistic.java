@@ -15,7 +15,7 @@ public class GameStatistic {
 		players.sort( (p1, p2) -> p2.getBase().getHP() - p1.getBase().getHP());
 		String construction = "";
 		for(Player player : players) {
-			construction += String.format("%s %4d\n", player.getController().getName(), player.getBase().getHP());
+			construction += String.format("%-32s %16d %16d\n", player.getController().getName(), player.getBase().getHP(), player.getScore());
 		}
 		return construction;
 	}

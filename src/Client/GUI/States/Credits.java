@@ -28,7 +28,7 @@ public class Credits extends GameState implements IDrawable, IUpdateable {
 	public Credits(StateManager manager) {
 		super(manager);
 		text = new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen");
-		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", Alignment.RIGHT, Alignment.BOTTOM);
+		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back").setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
 	}
 
 	@Override
