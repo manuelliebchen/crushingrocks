@@ -2,6 +2,8 @@ package Game.Logic;
 
 import java.util.List;
 
+import Constants.GameConstants;
+
 public class GameStatistic {
 	
 	List<Player> players;
@@ -25,10 +27,18 @@ public class GameStatistic {
 		return isDraw;
 	}
 	
+	public String getSitesString() {
+		String construction = "";
+		for(Player player : players) {
+			construction += String.format("%s\n", GameConstants.SITES.values()[player.getPlayerID()]);
+		}
+		return construction;
+	}
+	
 	public String getNameString() {
 		String construction = "";
 		for(Player player : players) {
-			construction += String.format("%-32s\n", player.getController().getName());
+			construction += String.format("%32s\n", player.getController().getName());
 		}
 		return construction;
 	}
