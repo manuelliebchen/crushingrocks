@@ -39,6 +39,8 @@ public final class Button implements InputMouseListener, IDrawable {
 	private Font font = DesignConstants.STANDART_FONT;
 	private Alignment verticalAlignment = Alignment.LEFT;
 	private Alignment horizontalAlignment = Alignment.TOP;
+	
+	private Runnable function;
 
 	// Mouse status
 	private boolean mousePressed = false;
@@ -51,12 +53,13 @@ public final class Button implements InputMouseListener, IDrawable {
 	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
-	public Button(Point2D relativPosition, Point2D size, String buttonText) {
+	public Button(Point2D relativPosition, Point2D size, String buttonText, Runnable function) {
 		this.buttonText = buttonText;
 		this.relativPosition = relativPosition;
 		this.position = relativPosition;
 		this.size = size;
-
+		this.function = function;
+		
 		InputManager.get().addMouseKeyListener(this);
 		calcButtonTextProperties();
 	}
@@ -221,16 +224,18 @@ public final class Button implements InputMouseListener, IDrawable {
 	 */
 	@Override
 	public void mouseKeyEvent(MouseKeyEventType type, MouseButton code) {
-		if (type == MouseKeyEventType.MOUSE_RELEASED) {
-			if (code == MouseButton.PRIMARY) {
-				mousePressed = false;
-			}
-		} else if (type == MouseKeyEventType.MOUSE_PRESSED) {
-			if (code == MouseButton.PRIMARY) {
-				mousePressed = true;
-			}
+		if(isEnabled && type == MouseKeyEventType.MOUSE_CLICKED && code == MouseButton.PRIMARY && isMouseOver()) {
+			function.run();
 		}
-
+//		if (type == MouseKeyEventType.MOUSE_RELEASED) {
+//			if (code == MouseButton.PRIMARY) {
+//				mousePressed = false;
+//			}
+//		} else if (type == MouseKeyEventType.MOUSE_PRESSED) {
+//			if (code == MouseButton.PRIMARY) {
+//				mousePressed = true;
+//			}
+//		}
 	}
 
 	@Override

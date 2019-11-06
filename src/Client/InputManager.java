@@ -72,7 +72,9 @@ public class InputManager implements EventHandler<InputEvent> {
 	}
 
 	/**
-	 * Initializes the input-manager. You need to call this function before any other action!
+	 * Initializes the input-manager. You need to call this function before any
+	 * other action!
+	 * 
 	 * @param scene The javafx-scene which is watched for input events.
 	 */
 	public static void init(Scene scene) {
@@ -126,9 +128,11 @@ public class InputManager implements EventHandler<InputEvent> {
 	 *
 	 */
 	public enum KeyEventType {
-		KEY_RELEASED, 	/** key was released since the last updateTables call*/
-		KEY_PRESSED, 	/** key was pressed since the last updateTables call */
-		KEY_DOWN 		/** key is currently down */
+		KEY_RELEASED,
+		/** key was released since the last updateTables call */
+		KEY_PRESSED,
+		/** key was pressed since the last updateTables call */
+		KEY_DOWN /** key is currently down */
 	};
 
 	/**
@@ -138,11 +142,13 @@ public class InputManager implements EventHandler<InputEvent> {
 	 *
 	 */
 	public enum MouseKeyEventType {
-		MOUSE_RELEASED,	/** mouse button was released since the last updateTables call*/
-		MOUSE_PRESSED,	/** mouse button was released since the last updateTables call*/
-		MOUSE_DOWN, 	/** mouse button is currently down */
-		MOUSE_CLICKED,
-		MOUSE_DRAGGED,
+		MOUSE_RELEASED,
+		/** mouse button was released since the last updateTables call */
+		MOUSE_PRESSED,
+		/** mouse button was released since the last updateTables call */
+		MOUSE_DOWN,
+		/** mouse button is currently down */
+		MOUSE_CLICKED, MOUSE_DRAGGED,
 	};
 
 	/**
@@ -152,8 +158,7 @@ public class InputManager implements EventHandler<InputEvent> {
 	 *
 	 */
 	public enum MouseEventType {
-		MOUSE_ENTER,
-		MOUSE_EXIT,
+		MOUSE_ENTER, MOUSE_EXIT,
 	}
 
 	/**
@@ -176,22 +181,23 @@ public class InputManager implements EventHandler<InputEvent> {
 	 */
 	public interface InputMouseListener {
 		void mouseKeyEvent(MouseKeyEventType type, MouseButton code);
+
 		void mouseEvent(MouseEventType type);
 	}
 
 	private Set<InputMouseListener> mouseKeyListeners = new HashSet<InputMouseListener>();
 
 	/**
-	 * Adds a key listener. Its functions will be called every time updateTables
-	 * is called.
+	 * Adds a key listener. Its functions will be called every time updateTables is
+	 * called.
 	 */
 	public void addKeyListener(InputKeyListener listener) {
 		keyListeners.add(listener);
 	}
 
 	/**
-	 * Adds a key listener. Its functions will be called every time updateTables
-	 * is called.
+	 * Adds a key listener. Its functions will be called every time updateTables is
+	 * called.
 	 */
 	public void addMouseKeyListener(InputMouseListener listener) {
 		mouseKeyListeners.add(listener);
@@ -213,6 +219,7 @@ public class InputManager implements EventHandler<InputEvent> {
 
 	/**
 	 * Retrieves the current position of the mouse cursor.
+	 * 
 	 * @return A mouse cursor position.
 	 * @see getMousePositionX, getMousePositionY
 	 */
@@ -222,6 +229,7 @@ public class InputManager implements EventHandler<InputEvent> {
 
 	/**
 	 * Retrieves the current x position of the mouse cursor.
+	 * 
 	 * @return A mouse cursor x position.
 	 * @see getMousePositionY, getMousePosition
 	 */
@@ -231,6 +239,7 @@ public class InputManager implements EventHandler<InputEvent> {
 
 	/**
 	 * Retrieves the current y position of the mouse cursor.
+	 * 
 	 * @return A mouse cursor y position.
 	 * @see getMousePositionX, getMousePosition
 	 */
@@ -239,81 +248,91 @@ public class InputManager implements EventHandler<InputEvent> {
 	}
 
 	/**
-	 * Updates all internal tables. Should be called once per frame.
-	 * Will call all registered input handler.
+	 * Updates all internal tables. Should be called once per frame. Will call all
+	 * registered input handler.
 	 */
 	public void updateTables() {
 		for (KeyCode code : keyPressed.keySet()) {
 			if (keyPressed.get(code)) {
-				for (InputKeyListener listener : keyListeners)
+				for (InputKeyListener listener : keyListeners) {
 					listener.keyEvent(KeyEventType.KEY_PRESSED, code);
+				}
 				keyPressed.put(code, false);
 			}
 		}
 
 		for (KeyCode code : keyReleased.keySet()) {
 			if (keyReleased.get(code)) {
-				for (InputKeyListener listener : keyListeners)
+				for (InputKeyListener listener : keyListeners) {
 					listener.keyEvent(KeyEventType.KEY_RELEASED, code);
+				}
 				keyReleased.put(code, false);
 			}
 		}
 
 		for (KeyCode code : keyDown.keySet()) {
 			if (keyDown.get(code)) {
-				for (InputKeyListener listener : keyListeners)
+				for (InputKeyListener listener : keyListeners) {
 					listener.keyEvent(KeyEventType.KEY_DOWN, code);
+				}
 			}
 		}
 
 		for (MouseButton button : mouseButtonPressed.keySet()) {
 			if (mouseButtonPressed.get(button)) {
-				for (InputMouseListener listener : mouseKeyListeners)
+				for (InputMouseListener listener : mouseKeyListeners) {
 					listener.mouseKeyEvent(MouseKeyEventType.MOUSE_PRESSED, button);
+				}
 				mouseButtonPressed.put(button, false);
 			}
 		}
 
 		for (MouseButton button : mouseButtonReleased.keySet()) {
 			if (mouseButtonReleased.get(button)) {
-				for (InputMouseListener listener : mouseKeyListeners)
+				for (InputMouseListener listener : mouseKeyListeners) {
 					listener.mouseKeyEvent(MouseKeyEventType.MOUSE_RELEASED, button);
+				}
 				mouseButtonReleased.put(button, false);
 			}
 		}
 
 		for (MouseButton button : mouseButtonDown.keySet()) {
 			if (mouseButtonDown.get(button)) {
-				for (InputMouseListener listener : mouseKeyListeners)
+				for (InputMouseListener listener : mouseKeyListeners) {
 					listener.mouseKeyEvent(MouseKeyEventType.MOUSE_DOWN, button);
+				}
 			}
 		}
 
 		for (MouseButton button : mouseButtonClicked.keySet()) {
 			if (mouseButtonClicked.get(button)) {
-				for (InputMouseListener listener : mouseKeyListeners)
+				for (InputMouseListener listener : mouseKeyListeners) {
 					listener.mouseKeyEvent(MouseKeyEventType.MOUSE_CLICKED, button);
+				}
 			}
 			mouseButtonClicked.put(button, false);
 		}
 
 		for (MouseButton button : mouseDraggedButton.keySet()) {
 			if (mouseDraggedButton.get(button)) {
-				for (InputMouseListener listener : mouseKeyListeners)
+				for (InputMouseListener listener : mouseKeyListeners) {
 					listener.mouseKeyEvent(MouseKeyEventType.MOUSE_DRAGGED, button);
+				}
 			}
 			mouseDraggedButton.put(button, false);
 		}
 
 		if (mouseEntered) {
-			for (InputMouseListener listener : mouseKeyListeners)
+			for (InputMouseListener listener : mouseKeyListeners) {
 				listener.mouseEvent(MouseEventType.MOUSE_ENTER);
+			}
 			mouseEntered = false;
 		}
 
 		if (mouseExited) {
-			for (InputMouseListener listener : mouseKeyListeners)
+			for (InputMouseListener listener : mouseKeyListeners) {
 				listener.mouseEvent(MouseEventType.MOUSE_EXIT);
+			}
 			mouseExited = false;
 		}
 	}

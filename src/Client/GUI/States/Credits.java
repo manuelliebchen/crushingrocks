@@ -4,7 +4,6 @@ import Client.GUI.Elements.Button;
 import Client.GUI.Elements.TextBox;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
-import Client.GUI.States.Interfaces.IUpdateable;
 import Constants.DesignConstants;
 import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
@@ -15,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Max Klockmann (max@acagamics.de)
  *
  */
-public class Credits extends GameState implements IDrawable, IUpdateable {
+public class Credits extends GameState implements IDrawable {
 
 	Button backbutton;
 	TextBox text;
@@ -28,7 +27,7 @@ public class Credits extends GameState implements IDrawable, IUpdateable {
 	public Credits(StateManager manager) {
 		super(manager);
 		text = new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen");
-		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back").setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
+		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop()).setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
 	}
 
 	@Override
@@ -43,10 +42,10 @@ public class Credits extends GameState implements IDrawable, IUpdateable {
 		text.draw(graphics);
 	}
 
-	@Override
-	public void update(float elapsedTime) {
-		if (backbutton.isPressed()) {
-			manager.pop();
-		}
-	}
+//	@Override
+//	public void update(float elapsedTime) {
+////		if (backbutton.isPressed()) {
+////			manager.pop();
+////		}
+//	}
 }
