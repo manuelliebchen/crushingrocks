@@ -22,23 +22,53 @@ public class Map {
 	
 	Map(Random random, List<Player> player){
 		this.random = random;
-		
-		bases = new ArrayList<>(2);
+
+		int numberPlayers = GameConstants.PLAYER_BASE_POSITION.length;
+		bases = new ArrayList<>(numberPlayers);
 		this.player = player;
-		
-		bases.add(new Base(player.get(0), GameConstants.PLAYER_BASE_POSITION[0]));
-		this.player.get(0).setBase(bases.get(0));
-		
-		bases.add(new Base(player.get(1), GameConstants.PLAYER_BASE_POSITION[1]));
-		this.player.get(1).setBase(bases.get(1));
-		
-		mines = new ArrayList<>(GameConstants.NUMBER_OF_MINES);
-		for( int i = 0; i < GameConstants.NUMBER_OF_MINES; ++i) {
-			Vector pos = new Vector(2 * this.random.nextFloat() -1, 2 * this.random.nextFloat() -1);
-			mines.add(new Mine(pos.copy(), player.size()));
-//			mines.add(new Mine(pos.mult(-1).copy(), player.size()));
+
+		for (int i = 0; i < numberPlayers; i++) {
+			bases.add(new Base(player.get(i), GameConstants.PLAYER_BASE_POSITION[i]));
+			this.player.get(i).setBase(bases.get(i));
 		}
 		
+		mines = new ArrayList<>(GameConstants.NUMBER_OF_MINES);
+		int minesPerPlayer = GameConstants.NUMBER_OF_MINES / numberPlayers;
+		float baseDistance = GameConstants.PLAYER_BASE_POSITION[0].length();
+		float maxDistancePerMine = baseDistance / 2f;
+		float sumDistance = maxDistancePerMine * minesPerPlayer * 0.9f;
+		if (baseDistance < maxDistancePerMine) {
+			maxDistancePerMine = baseDistance;
+		}
+        // minimum * (mines - 1) == max
+		float minDistancePerMine = maxDistancePerMine / (GameConstants.NUMBER_OF_MINES - 1);
+		float remainingDistance = sumDistance;
+		double halfPi = Math.PI/2;
+
+		for (int j = 0; j < numberPlayers; j++) {
+			Base base = bases.get(j);
+			Vector startAngle = base.getPosition().rotate(halfPi + halfPi / 3);
+
+			for (int i = 0; i < minesPerPlayer; ++i) {
+				double angle = this.random.nextDouble() * Math.PI/1.5;
+				float distance;
+				if (i != minesPerPlayer - 1) {
+					distance = this.random.nextFloat() * maxDistancePerMine;
+					if (distance < minDistancePerMine) {
+						distance = minDistancePerMine;
+					}
+					remainingDistance -= distance;
+				} else {
+					distance = remainingDistance;
+				}
+				Vector pos = base.getPosition().add(startAngle.mult(distance).rotate(angle));
+				if (pos.getX() < -1 || pos.getX() > 1 || pos.getY() < -1 || pos.getY() > 1) {
+					--i;
+					continue;
+				}
+				mines.add(new Mine(pos, player.size()));
+			}
+		}
 	}
 	
 

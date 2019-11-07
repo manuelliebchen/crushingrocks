@@ -1,6 +1,7 @@
 package Game.Logic;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import Constants.GameConstants;
 import Game.Types.Vector;
@@ -53,10 +54,18 @@ public class Base {
 	}
 
 	void update(List<Unit> allUnits) {
-		int count = allUnits.stream().filter(
+		List<Unit> unitsInBaseRadius = allUnits.stream().filter(
 				(u) -> position.distance(u.getPosition()) < GameConstants.BASE_RADIUS && u.getOwner() != owner)
+				.collect(Collectors.toList());
+		int unitsInAttackRadius = unitsInBaseRadius.stream().filter(
+				(u) -> position.distance(u.getPosition()) < GameConstants.UNIT_RADIUS)
 				.toArray().length;
-		hp -= count * GameConstants.UNIT_BASE_ATTACK;
+
+		for (int i = 0; i < unitsInBaseRadius.size(); i++) {
+			unitsInBaseRadius.get(i).attackBy(GameConstants.BASE_DAMAGE);
+		}
+
+		hp -= unitsInAttackRadius * GameConstants.UNIT_DAMAGE;
 		hp = Math.max(hp, 0);
 	}
 }

@@ -46,12 +46,22 @@ public class Unit {
 		}
 	}
 
-	Vector updatePosition(List<Unit> enemyUnits) {
+	Vector updatePosition(List<Unit> allUnits) {
 		if (orderedDirection != null) {
 			if (orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
 				orderedDirection = orderedDirection.normalize().mult(GameConstants.MAX_UNIT_SPEED);
 			}
-			position = position.add(orderedDirection);
+			Vector targetPosition = position.add(orderedDirection);
+			boolean hit = false;
+			for (int i = 0; i < allUnits.size(); i++) {
+				if (allUnits.get(i) != this && allUnits.get(i).position.sub(targetPosition).length() < GameConstants.UNIT_SIZE) {
+					hit = true;
+					break;
+				}
+			}
+			if (!hit) {
+				position = targetPosition;
+			}
 			orderedDirection = null;
 			position = new Vector(Math.min(1, Math.max(-1, position.getX())),
 					Math.min(1, Math.max(-1, position.getY())));

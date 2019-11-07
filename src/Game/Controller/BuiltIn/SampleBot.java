@@ -37,7 +37,7 @@ public class SampleBot implements IPlayerController {
 		List<Mine> mines = mapInfo.getMines();
 		List<Unit> units = ownPlayer.getUnits();
 		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 0.9f);
-		if(mines.isEmpty() || ownPlayer.getUnits().size() == GameConstants.MAXIMUM_UNIT_AMOUNT) {
+		if(mines.isEmpty() || ownPlayer.getUnits().size() == GameConstants.MAX_UNITS_PER_PLAYER) {
 			for(Unit unit: units) {
 				unit.setOrder(this, enemyPlayerInfo.getBase().getPosition().sub(unit.getPosition()));
 			}

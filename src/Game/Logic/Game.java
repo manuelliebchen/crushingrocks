@@ -1,6 +1,7 @@
 package Game.Logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -97,12 +98,13 @@ public class Game {
 		}
 
 		// Summon all Units.
-		List<Unit> allUnits = new ArrayList<>(GameConstants.MAXIMUM_UNIT_AMOUNT);
+		List<Unit> allUnits = new ArrayList<>(GameConstants.MAX_UNITS_PER_PLAYER * 2);
 		for(Player player : players) {
 			allUnits.addAll(player.getUnits());	
 		}
 		
 		// Apply orders (move Units).
+		Collections.shuffle(allUnits);
 		for(Unit unit : allUnits) {
 			unit.updatePosition(allUnits);
 		}
@@ -130,7 +132,7 @@ public class Game {
 		for(Unit unit : allUnits) {
 			for(Unit enemyUnit : allUnits) {
 				if(unit.getPosition().distance(enemyUnit.getPosition()) < GameConstants.UNIT_RADIUS && unit.getOwner() != enemyUnit.getOwner()) {
-					enemyUnit.attackBy(GameConstants.UNIT_BASE_ATTACK);
+					enemyUnit.attackBy(GameConstants.UNIT_DAMAGE);
 					break;
 				}
 			}
