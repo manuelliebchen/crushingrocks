@@ -2,7 +2,6 @@ package Client.GUI.States;
 
 import java.util.ArrayList;
 
-import Client.GUI.InputTracker;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.GUI.States.Interfaces.IUpdateable;
@@ -27,7 +26,6 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
     private Game game;
     private MapRendering mapRenderer;
     private HUDRenderer hudRenderer;
-    private InputTracker inputTracker;
 
 //    private float timeSinceLastGameUpdate = 0;
 
@@ -56,16 +54,10 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
      */
     @Override
     public void update(float elapsedTime) {
-//        timeSinceLastGameUpdate += elapsedTime;
 
-        // TODO: The loop freezes the game, possible endless loop.
-        // This is needed to be sure that each game tick duration is always the same amount of time.
-        //while (timeSinceLastGameUpdate > ClientConstants.SIMULATION_STEP_INTERVAL) {
         GameStatistic statistic = game.tick();
-        //    timeSinceLastGameUpdate -= ClientConstants.SIMULATION_STEP_INTERVAL;
-        //}
         if(statistic != null) {
-        	manager.switchCurrentState(new GameStatisticScreen(manager, statistic));
+        	manager.switchCurrentState(new GameStatisticState(manager, statistic));
         }
 
         mapRenderer.update(elapsedTime);

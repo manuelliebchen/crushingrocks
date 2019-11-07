@@ -16,14 +16,14 @@ public class HUDRenderer implements IDrawable {
 
 	public HUDRenderer(Game game) {
 		drawables = new ArrayList<>(3);
-		drawables.add(new DynamicTextBox(new Point2D(0, 0), () -> String.valueOf(game.getFramesLeft()))
+		drawables.add(new DynamicTextBox(new Point2D(0, 50), () -> String.valueOf(game.getFramesLeft()))
 				.setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
-		drawables.add(new DynamicTextBox(new Point2D(10, 0), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
+		drawables.add(new DynamicTextBox(new Point2D(100, 50), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
 				.setTextColor(game.getPlayer(0).getColor()).setVerticalAlignment(Alignment.LEFT)
-				.setHorizontalAlignment(Alignment.TOP));
-		drawables.add(new DynamicTextBox(new Point2D(10, 0), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
+				.setHorizontalAlignment(Alignment.TOP).setTextAlignment(Alignment.LEFT));
+		drawables.add(new DynamicTextBox(new Point2D(-100, 50), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
 				.setTextColor(game.getPlayer(1).getColor()).setVerticalAlignment(Alignment.RIGHT)
-				.setHorizontalAlignment(Alignment.TOP));
+				.setHorizontalAlignment(Alignment.TOP).setTextAlignment(Alignment.RIGHT));
 	}
 
 	@Override

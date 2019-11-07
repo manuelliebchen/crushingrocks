@@ -16,7 +16,6 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class Credits extends MenuState implements IDrawable {
 
-
 	/**
 	 * Creating new Credits State.
 	 * 
@@ -24,8 +23,9 @@ public class Credits extends MenuState implements IDrawable {
 	 */
 	public Credits(StateManager manager) {
 		super(manager);
-		drawables.add( new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen"));
-		Button backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop()).setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
+		drawables.add(new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen"));
+		Button backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop())
+				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
 		drawables.add(backbutton);
 		buttons.add(backbutton);
 	}
@@ -34,11 +34,11 @@ public class Credits extends MenuState implements IDrawable {
 	public void draw(GraphicsContext graphics) {
 
 		Canvas canvas = graphics.getCanvas();
-		
+
 		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
 		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-		for(IDrawable drawable : drawables) {
+
+		for (IDrawable drawable : drawables) {
 			drawable.draw(graphics);
 		}
 	}

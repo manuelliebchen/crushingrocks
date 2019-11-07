@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import Client.GUI.InputTracker;
 import Constants.DesignConstants;
 import Constants.GameConstants;
 import Game.Controller.IPlayerController;
@@ -21,6 +22,8 @@ public class Game implements EventHandler<InputEvent> {
 	private List<Player> players;
 	private Map map;
 	private int frames_left;
+	
+	private InputTracker inputTracker;
 
 	private Random random;
 	
@@ -30,6 +33,7 @@ public class Game implements EventHandler<InputEvent> {
 	 */
 	public Game(List<IPlayerController> playerController){
 		assert(playerController != null);
+		inputTracker = new InputTracker();
 
 		players = new ArrayList<>(playerController.size());
 		for(int i=0; i<playerController.size(); ++i) {
@@ -142,7 +146,8 @@ public class Game implements EventHandler<InputEvent> {
 		for(Player player : players) {
 			player.removeDeath();	
 		}
-		
+
+		inputTracker.updateTables();
 		return statistic;
 	}
 
@@ -158,6 +163,6 @@ public class Game implements EventHandler<InputEvent> {
 				handler.handle(event);
 			}
 		}
-	
+		inputTracker.handle(event);
 	}
 }

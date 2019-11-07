@@ -112,7 +112,9 @@ public final class StateManager implements IDrawable, IUpdateable, EventHandler<
 
 	@Override
 	public void handle(InputEvent event) {
-		currentStates.peek().handle(event);
+		if(!currentStates.empty()) {
+			currentStates.peek().handle(event);
+		}
 	}
 
 }

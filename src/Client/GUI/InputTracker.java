@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.Scene;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -35,16 +34,11 @@ public class InputTracker implements EventHandler<InputEvent> {
 
 	private double mousePositionX = 0;
 	private double mousePositionY = 0;
-
-	/**
-	 * Private one and only instance.
-	 */
-	private static InputTracker instance;
-
+	
 	/**
 	 * Private constructor (singleton!).
 	 */
-	private InputTracker() {
+	public InputTracker() {
 		for (KeyCode code : KeyCode.values()) {
 			keyDown.put(code, false);
 			keyPressed.put(code, false);
@@ -56,34 +50,6 @@ public class InputTracker implements EventHandler<InputEvent> {
 			mouseButtonReleased.put(button, false);
 			mouseButtonClicked.put(button, false);
 			mouseDraggedButton.put(button, false);
-		}
-	}
-
-	/**
-	 * getter to the one-and-only singleton-instance
-	 */
-	public static InputTracker get() {
-		if (instance != null) {
-			return instance;
-		} else {
-			throw new RuntimeException("InputTracker must be initialized first.");
-		}
-	}
-
-	/**
-	 * Initializes the input-manager. You need to call this function before any
-	 * other action!
-	 * 
-	 * @param scene The javafx-scene which is watched for input events.
-	 */
-	public static void init(Scene scene) {
-		if (instance == null) {
-			instance = new InputTracker();
-
-			scene.addEventHandler(MouseEvent.ANY, instance);
-			scene.addEventHandler(KeyEvent.ANY, instance);
-		} else {
-			throw new RuntimeException("InputManager already initialized");
 		}
 	}
 
@@ -129,46 +95,6 @@ public class InputTracker implements EventHandler<InputEvent> {
 		} else {
 			System.out.println("blub");
 		}
-	}
-
-	/**
-	 * Different EventTypes for the InputKeyListener.
-	 * 
-	 * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
-	 *
-	 */
-	public enum KeyEventType {
-		KEY_RELEASED,
-		/** key was released since the last updateTables call */
-		KEY_PRESSED,
-		/** key was pressed since the last updateTables call */
-		KEY_DOWN /** key is currently down */
-	};
-
-	/**
-	 * Different EventTypes for the InputMouseKeyListener.
-	 * 
-	 * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
-	 *
-	 */
-	public enum MouseKeyEventType {
-		MOUSE_RELEASED,
-		/** mouse button was released since the last updateTables call */
-		MOUSE_PRESSED,
-		/** mouse button was released since the last updateTables call */
-		MOUSE_DOWN,
-		/** mouse button is currently down */
-		MOUSE_CLICKED, MOUSE_DRAGGED,
-	};
-
-	/**
-	 * Different EventTypes for the InputMouseKeyListener without keys.
-	 * 
-	 * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
-	 *
-	 */
-	public enum MouseEventType {
-		MOUSE_ENTER, MOUSE_EXIT,
 	}
 
 	/**

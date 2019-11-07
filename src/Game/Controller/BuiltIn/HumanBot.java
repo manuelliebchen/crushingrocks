@@ -1,6 +1,5 @@
 package Game.Controller.BuiltIn;
 
-import Client.GUI.InputTracker.KeyEventType;
 import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
@@ -53,7 +52,7 @@ public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 	public void handle(InputEvent event) {
 		if (event instanceof KeyEvent) {
 			KeyEvent keyEvent = (KeyEvent) event;
-			if (keyEvent.getEventType().equals(KeyEventType.KEY_DOWN)) {
+			if (keyEvent.getEventType().equals(KeyEvent.KEY_PRESSED)) {
 				if (keyEvent.getCode().equals(KeyCode.UP)) {
 					y -= 1;
 				}
@@ -72,7 +71,7 @@ public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 				if (y != 0)
 					y = (y > 0) ? 1 : -1;
 			}
-			if (keyEvent.getEventType().equals(KeyEventType.KEY_RELEASED)) {
+			if (keyEvent.getEventType().equals(KeyEvent.KEY_RELEASED)) {
 				if (keyEvent.getCode().equals(KeyCode.UP) || keyEvent.getCode().equals(KeyCode.DOWN))
 					y = 0;
 				if (keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.RIGHT))
