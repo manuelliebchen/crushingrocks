@@ -16,19 +16,27 @@ public class GameStatisticState extends MenuState implements IDrawable {
 	public GameStatisticState(StateManager manager, GameStatistic statistic) {
 		super(manager);
 
-		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop()).setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM));
+		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop())
+				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM));
 		drawables.add(buttons.get(0));
-		
+
 		String title = "GameStatistics";
-		if(statistic.isDraw()) {
+		if (statistic.isDraw()) {
 			title += " - Tie-Break";
 		}
-		drawables.add(new TextBox(new Point2D(100, 100), title).setVerticalAlignment(Alignment.LEFT).setHorizontalAlignment(Alignment.TOP));
-		
-		drawables.add(new TextBox(new Point2D(-450, 100), statistic.getSitesString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
-		drawables.add(new TextBox(new Point2D(-250, 100), statistic.getNameString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
-		drawables.add(new TextBox(new Point2D(200, 100), statistic.getBaseHPString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
-		drawables.add(new TextBox(new Point2D(450, 100), statistic.getScoreString()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
+		drawables.add(new TextBox(new Point2D(100, 100), title).setVerticalAlignment(Alignment.LEFT)
+				.setHorizontalAlignment(Alignment.TOP));
+
+		drawables.add(new TextBox(new Point2D(-450, 200), statistic.getSitesString())
+				.setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
+		drawables.add(new TextBox(new Point2D(-250, 200), statistic.getNameString())
+				.setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
+		drawables.add(
+				new TextBox(new Point2D(200, 200), statistic.getBaseHPString()).setVerticalAlignment(Alignment.CENTER)
+						.setHorizontalAlignment(Alignment.TOP).setTextAlignment(Alignment.RIGHT));
+		drawables.add(
+				new TextBox(new Point2D(450, 200), statistic.getScoreString()).setVerticalAlignment(Alignment.CENTER)
+						.setHorizontalAlignment(Alignment.TOP).setTextAlignment(Alignment.RIGHT));
 	}
 
 	@Override

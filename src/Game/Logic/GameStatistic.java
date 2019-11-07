@@ -38,7 +38,7 @@ public class GameStatistic {
 	public String getNameString() {
 		String construction = "Names\n";
 		for(Player player : players) {
-			construction += String.format("%32s\n", player.getController().getName());
+			construction += String.format("%s\n", player.getController().getName());
 		}
 		return construction;
 	}
@@ -46,7 +46,7 @@ public class GameStatistic {
 	public String getScoreString() {
 		String construction = "Score\n";
 		for(Player player : players) {
-			construction += String.format("%16d\n", player.getScore());
+			construction += String.format("%d\n", player.getScore());
 		}
 		return construction;
 	}
@@ -54,16 +54,7 @@ public class GameStatistic {
 	public String getBaseHPString() {
 		String construction = "BaseHP\n";
 		for(Player player : players) {
-			construction += String.format("%16d\n", player.getBase().getHP());
-		}
-		return construction;
-	}
-	
-	@Override
-	public String toString() {
-		String construction = "";
-		for(Player player : players) {
-			construction += String.format("%-32s %16d %16d\n", player.getController().getName(), player.getBase().getHP(), player.getScore());
+			construction += String.format("%d\n", player.getBase().getHP());
 		}
 		return construction;
 	}
