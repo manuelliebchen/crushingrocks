@@ -29,7 +29,7 @@ public class Player {
 		this.color = color;
 		this.playerID = playerID;
 		units = new ArrayList<>(16);
-		creditPoints = GameConstants.INITIAL_CREADIT_POINTS;
+		creditPoints = GameConstants.INITIAL_CREDIT_POINTS;
 	}
 	
 	void setBase(Base base) {
@@ -50,14 +50,14 @@ public class Player {
 		try {
 			ut = controller.think(mapInfo, this, enemyInfos);
 		} catch (Exception e) {
-			System.err.println(controller.getName() + " throu an unhandelt exeption!");
+			System.err.println(controller.getName() + " through an unhandled exception!");
 			System.err.println(e);
 			for(StackTraceElement t : e.getStackTrace()) {
 				System.err.println(t);
 			}
 		}
 		
-		if(ut != null && creditPoints >= GameConstants.UNIT_FEE && units.size() <= GameConstants.MAXIMUM_UNIT_AMOUNT) {
+		if(ut != null && creditPoints >= GameConstants.UNIT_FEE && units.size() <= GameConstants.MAX_UNITS_PER_PLAYER) {
 			units.add(new Unit(ut, this, base.getPosition()));
 			creditPoints -= GameConstants.UNIT_FEE;
 		}

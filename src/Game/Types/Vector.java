@@ -239,4 +239,15 @@ public final class Vector {
 	public Vector copy() {
 		return new Vector(x,y);
 	}
+
+	/**
+	 * Get a vector rotated anticlockwise, radians
+	 */
+	public Vector rotate(double angle) {
+		double sin = Math.sin(angle);
+		double cos = Math.cos(angle);
+		double x = this.x * cos - this.y * sin;
+		double y = this.x * sin + this.y * cos;
+		return new Vector((float) x, (float) y);
+	}
 }

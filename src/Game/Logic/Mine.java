@@ -69,9 +69,9 @@ public class Mine {
 		
 		for(int i = 0; i < count.length; ++i) {
 			if((count[i] / sum) > 1/ players.size()) {
-				ownership[i] += GameConstants.MINE_CAPTURING_PER_TICKE;
+				ownership[i] += GameConstants.MINE_CAPTURING_PER_TICK;
 			} else {
-				ownership[i] -= GameConstants.MINE_CAPTURING_PER_TICKE;
+				ownership[i] -= GameConstants.MINE_CAPTURING_PER_TICK;
 			}
 		}
 		

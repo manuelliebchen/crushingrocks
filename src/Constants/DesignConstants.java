@@ -15,6 +15,10 @@ public final class DesignConstants {
 	
 	public static final Font LARGE_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 48);
 
+	public static final Color HEALTH_BACKGROUND = Color.RED;
+
+	public static final Color HEALTH_FOREGROUND = Color.GREENYELLOW;
+
 	public static final Color FOREGROUND_COLOR = Color.color(0f, 0f,0f);
 	
 	public static final Color BACKGROUND_COLOR = Color.color(1f, 1f,1f);

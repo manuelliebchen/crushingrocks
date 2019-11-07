@@ -5,6 +5,7 @@ import java.util.List;
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.Rendering.Drawing.ImageManager;
 import Constants.ClientConstants;
+import Constants.DesignConstants;
 import Constants.GameConstants;
 import Game.Logic.Base;
 import Game.Logic.Map;
@@ -111,10 +112,10 @@ public final class MapRendering implements IDrawable {
 					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
 					2 * GameConstants.BASE_RADIUS);
 
-			context.setFill(Color.RED);
+			context.setFill(DesignConstants.HEALTH_BACKGROUND);
 			context.fillRect(base.getPosition().getX() - GameConstants.BASE_RADIUS,
 					base.getPosition().getY() - GameConstants.BASE_RADIUS - 0.04, GameConstants.BASE_RADIUS * 2, 0.02);
-			context.setFill(Color.GREEN);
+			context.setFill(DesignConstants.HEALTH_FOREGROUND);
 			context.fillRect(base.getPosition().getX() - GameConstants.BASE_RADIUS,
 					base.getPosition().getY() - GameConstants.BASE_RADIUS - 0.04,
 					GameConstants.BASE_RADIUS * 2 * base.getHP() / GameConstants.INITIAL_BASE_HP, 0.02);
@@ -131,11 +132,11 @@ public final class MapRendering implements IDrawable {
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
 						2 * GameConstants.UNIT_RADIUS);
 
-				context.setFill(Color.RED);
+				context.setFill(DesignConstants.HEALTH_BACKGROUND);
 				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04, GameConstants.UNIT_RADIUS * 2,
 						0.02);
-				context.setFill(Color.GREEN);
+				context.setFill(DesignConstants.HEALTH_FOREGROUND);
 				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04,
 						GameConstants.UNIT_RADIUS * 2 * unit.getHP() / GameConstants.INITIAL_UNIT_HP, 0.02);
