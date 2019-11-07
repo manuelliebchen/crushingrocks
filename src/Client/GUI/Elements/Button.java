@@ -1,18 +1,19 @@
 package Client.GUI.Elements;
 
-import Client.InputManager;
-import Client.InputManager.InputMouseListener;
-import Client.InputManager.MouseEventType;
-import Client.InputManager.MouseKeyEventType;
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.Rendering.Drawing.ImageManager;
 import Constants.DesignConstants;
 import Constants.DesignConstants.Alignment;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -21,10 +22,10 @@ import javafx.scene.text.Text;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de) Image buttons with customs
  *         images and text. Registers if a user pressed on it.
  */
-public final class Button implements InputMouseListener, IDrawable {
-
+public final class Button implements IDrawable, EventHandler<InputEvent> {
+	
 	// Button status
-	boolean isEnabled = true;
+	private boolean isEnabled = true;
 
 	// Drawing status
 	private String buttonText;
@@ -33,15 +34,19 @@ public final class Button implements InputMouseListener, IDrawable {
 	private Point2D relativPosition;
 	private Point2D position;
 	private Point2D size;
+
 	private Image imgUp = ImageManager.getInstance().loadImage("buttons/defaultButtonUp.png");
 	private Image imgDown = ImageManager.getInstance().loadImage("buttons/defaultButtonDown.png");
 	private Image imgInActive = ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png");
 	private Font font = DesignConstants.STANDART_FONT;
 	private Alignment verticalAlignment = Alignment.LEFT;
 	private Alignment horizontalAlignment = Alignment.TOP;
-	
+	private KeyCode keycode;
+
 	private Runnable function;
 
+	private boolean isOver;
+	
 	// Mouse status
 	private boolean mousePressed = false;
 
@@ -59,8 +64,7 @@ public final class Button implements InputMouseListener, IDrawable {
 		this.position = relativPosition;
 		this.size = size;
 		this.function = function;
-		
-		InputManager.get().addMouseKeyListener(this);
+
 		calcButtonTextProperties();
 	}
 
@@ -82,6 +86,11 @@ public final class Button implements InputMouseListener, IDrawable {
 	public Button setFont(Font font) {
 		this.font = font;
 		calcButtonTextProperties();
+		return this;
+	}
+
+	public Button setKeyCode(KeyCode keycode) {
+		this.keycode = keycode;
 		return this;
 	}
 
@@ -149,18 +158,7 @@ public final class Button implements InputMouseListener, IDrawable {
 	 * @return true or false.
 	 */
 	public boolean isPressed() {
-		return this.isEnabled && isMouseOver() && mousePressed;
-	}
-
-	/**
-	 * Checks if the mouse hovered the button
-	 * 
-	 * @return true or false
-	 */
-	private boolean isMouseOver() {
-		Point2D pos = InputManager.get().getMousePosition();
-		return pos.getX() >= position.getX() && pos.getX() <= position.getX() + size.getX()
-				&& pos.getY() >= position.getY() && pos.getY() <= position.getY() + size.getY();
+		return this.isEnabled && isOver && mousePressed;
 	}
 
 	/**
@@ -196,7 +194,7 @@ public final class Button implements InputMouseListener, IDrawable {
 
 		if (!this.isEnabled) {
 			graphics.drawImage(imgInActive, drawingPositionX, drawingPositionY, size.getX(), size.getY());
-		} else if (isMouseOver()) {
+		} else if (isOver) {
 			graphics.drawImage(imgDown, drawingPositionX, drawingPositionY, size.getX(), size.getY());
 		} else {
 			graphics.drawImage(imgUp, drawingPositionX, drawingPositionY, size.getX(), size.getY());
@@ -223,23 +221,31 @@ public final class Button implements InputMouseListener, IDrawable {
 	 * LeftButton released: mousePressed=false)
 	 */
 	@Override
-	public void mouseKeyEvent(MouseKeyEventType type, MouseButton code) {
-		if(isEnabled && type == MouseKeyEventType.MOUSE_CLICKED && code == MouseButton.PRIMARY && isMouseOver()) {
-			function.run();
+	public void handle(InputEvent event) {
+		if(!isEnabled) {
+			return;
 		}
-//		if (type == MouseKeyEventType.MOUSE_RELEASED) {
-//			if (code == MouseButton.PRIMARY) {
-//				mousePressed = false;
-//			}
-//		} else if (type == MouseKeyEventType.MOUSE_PRESSED) {
-//			if (code == MouseButton.PRIMARY) {
-//				mousePressed = true;
-//			}
-//		}
+		if (event instanceof MouseEvent) {
+			MouseEvent mouseEvent = (MouseEvent) event;
+			if (mouseEvent.getEventType() == MouseEvent.MOUSE_CLICKED) {
+				if (mouseEvent.getButton() == MouseButton.PRIMARY && isOver) {
+					function.run();
+				}
+			}
+			isOver = mouseEvent.getSceneX() >= position.getX() && mouseEvent.getSceneX() <= position.getX() + size.getX()
+			&& mouseEvent.getSceneY() >= position.getY() && mouseEvent.getSceneY() <= position.getY() + size.getY();
+			
+		}
+		if(keycode != null) {
+			if (event instanceof KeyEvent) {
+				KeyEvent keyEvent = (KeyEvent) event;
+	
+				if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED) {
+					if (keyEvent.getCode() == keycode) {
+						function.run();
+					}
+				}
+			}
+		}
 	}
-
-	@Override
-	public void mouseEvent(MouseEventType type) {
-	}
-
 }

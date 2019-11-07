@@ -4,8 +4,11 @@ import java.util.Stack;
 
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
+import Client.GUI.States.Interfaces.IOverlay;
 import Client.GUI.States.Interfaces.IUpdateable;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 /**
@@ -13,7 +16,7 @@ import javafx.stage.Stage;
  * @author Max Klockmann (max@acagamics.de)
  * 
  */
-public final class StateManager implements IDrawable, IUpdateable {
+public final class StateManager implements IDrawable, IUpdateable, EventHandler<InputEvent> {
 
 	Stage stage;
 	
@@ -83,7 +86,9 @@ public final class StateManager implements IDrawable, IUpdateable {
 		for (int i = currentStates.size() -1; i >= 0; i--) {
 			if (currentStates.get(i) instanceof IDrawable) {
 				((IDrawable) currentStates.get(i)).draw(graphics);
-				break;
+				if(!(currentStates.get(i) instanceof IOverlay)) {
+					break;
+				}
 			}
 		}
 	}
@@ -98,9 +103,16 @@ public final class StateManager implements IDrawable, IUpdateable {
 		for (int i = currentStates.size() -1; i >= 0; i--) {
 			if (currentStates.get(i) instanceof IUpdateable) {
 				((IUpdateable) currentStates.get(i)).update(elapsedTime);
-				break;
+				if(!(currentStates.get(i) instanceof IOverlay)) {
+					break;
+				}
 			}
 		}
+	}
+
+	@Override
+	public void handle(InputEvent event) {
+		currentStates.peek().handle(event);
 	}
 
 }

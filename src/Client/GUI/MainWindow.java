@@ -1,6 +1,5 @@
 package Client.GUI;
 
-import Client.InputManager;
 import Client.GUI.States.MainMenu;
 import Client.GUI.States.StateManager;
 import Client.Rendering.Drawing.ImageManager;
@@ -15,6 +14,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -49,13 +50,14 @@ public class MainWindow extends Application {
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
 		stage.setScene(scene);
 
-		InputManager.init(scene);
-
 		Timeline timeline = new Timeline();
 
 		// Create StateManager and set MainMenu as start state
 		StateManager manager = new StateManager(stage);
 		manager.push(new MainMenu(manager));
+
+		scene.addEventHandler(MouseEvent.ANY, manager);
+		scene.addEventHandler(KeyEvent.ANY, manager);
 		
 		// Create one frame
 		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS),
@@ -65,7 +67,7 @@ public class MainWindow extends Application {
 
 					// Update InputManager
 
-					InputManager.get().updateTables();
+//					InputManager.get().updateTables();
 
 					GraphicsContext context = canvas.getGraphicsContext2D();
 					// Clear screen

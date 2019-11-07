@@ -1,13 +1,9 @@
 package Client.GUI.States;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Client.GUI.Elements.Button;
 import Client.GUI.Elements.TextBox;
-import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
-import Client.GUI.States.Interfaces.IUpdateable;
+import Client.GUI.States.Interfaces.MenuState;
 import Constants.DesignConstants;
 import Constants.DesignConstants.Alignment;
 import Game.Logic.GameStatistic;
@@ -15,18 +11,13 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-public class GameStatisticScreen extends GameState implements IDrawable, IUpdateable {
+public class GameStatisticScreen extends MenuState implements IDrawable {
 
-	Button backbutton;
-
-	List<IDrawable> drawables;
-	
 	public GameStatisticScreen(StateManager manager, GameStatistic statistic) {
 		super(manager);
-		drawables = new ArrayList<>();
 
-		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop()).setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
-		drawables.add(backbutton);
+		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop()).setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM));
+		drawables.add(buttons.get(0));
 		
 		String title = "GameStatistics";
 		if(statistic.isDraw()) {
@@ -41,13 +32,6 @@ public class GameStatisticScreen extends GameState implements IDrawable, IUpdate
 	}
 
 	@Override
-	public void update(float elapsedTime) {
-//		if (backbutton.isPressed()) {
-//			manager.pop();
-//		}
-	}
-
-	@Override
 	public void draw(GraphicsContext graphics) {
 
 		Canvas canvas = graphics.getCanvas();
@@ -55,7 +39,7 @@ public class GameStatisticScreen extends GameState implements IDrawable, IUpdate
 		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
 		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-		for(IDrawable drawable : drawables) {
+		for (IDrawable drawable : drawables) {
 			drawable.draw(graphics);
 		}
 	}

@@ -7,6 +7,8 @@ import java.util.Random;
 import Constants.DesignConstants;
 import Constants.GameConstants;
 import Game.Controller.IPlayerController;
+import javafx.event.EventHandler;
+import javafx.scene.input.InputEvent;
 
 /**
  * MainClass for the GameSide. EntrancePoint for communication with ClientSide.
@@ -15,7 +17,7 @@ import Game.Controller.IPlayerController;
  * @author Manuel Liebchen
  * 
  */
-public class Game {
+public class Game implements EventHandler<InputEvent> {
 	private List<Player> players;
 	private Map map;
 	private int frames_left;
@@ -142,5 +144,20 @@ public class Game {
 		}
 		
 		return statistic;
+	}
+
+	@Override
+	public void handle(InputEvent event) {
+		for(Player player : players) {
+			IPlayerController controller = player.getController();
+			if(controller instanceof EventHandler) {
+				
+				@SuppressWarnings("unchecked")
+				EventHandler<InputEvent> handler = ((EventHandler<InputEvent>) controller);
+				
+				handler.handle(event);
+			}
+		}
+	
 	}
 }

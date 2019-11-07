@@ -2,6 +2,7 @@ package Client.GUI.States;
 
 import java.util.ArrayList;
 
+import Client.GUI.InputTracker;
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.GUI.States.Interfaces.IUpdateable;
@@ -15,6 +16,7 @@ import Game.Logic.Game;
 import Game.Logic.GameStatistic;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.InputEvent;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -25,12 +27,13 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
     private Game game;
     private MapRendering mapRenderer;
     private HUDRenderer hudRenderer;
+    private InputTracker inputTracker;
 
 //    private float timeSinceLastGameUpdate = 0;
 
     public InGame(StateManager manager) {
         super(manager);
-
+        
         PlayerControllerLoader playerLoader = new PlayerControllerLoader();
 
         // Only for testing purposes, you should use a special directory for external bots.
@@ -87,4 +90,9 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
         hudRenderer.draw(context);
         context.restore();
     }
+
+	@Override
+	public void handle(InputEvent event) {
+		game.handle(event);
+	}
 }

@@ -2,8 +2,8 @@ package Client.GUI.States;
 
 import Client.GUI.Elements.Button;
 import Client.GUI.Elements.TextBox;
-import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
+import Client.GUI.States.Interfaces.MenuState;
 import Constants.DesignConstants;
 import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
@@ -14,10 +14,8 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Max Klockmann (max@acagamics.de)
  *
  */
-public class Credits extends GameState implements IDrawable {
+public class Credits extends MenuState implements IDrawable {
 
-	Button backbutton;
-	TextBox text;
 
 	/**
 	 * Creating new Credits State.
@@ -26,8 +24,10 @@ public class Credits extends GameState implements IDrawable {
 	 */
 	public Credits(StateManager manager) {
 		super(manager);
-		text = new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen");
-		backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop()).setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
+		drawables.add( new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen"));
+		Button backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop()).setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
+		drawables.add(backbutton);
+		buttons.add(backbutton);
 	}
 
 	@Override
@@ -37,15 +37,9 @@ public class Credits extends GameState implements IDrawable {
 		
 		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
 		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-		backbutton.draw(graphics);
-		text.draw(graphics);
+		
+		for(IDrawable drawable : drawables) {
+			drawable.draw(graphics);
+		}
 	}
-
-//	@Override
-//	public void update(float elapsedTime) {
-////		if (backbutton.isPressed()) {
-////			manager.pop();
-////		}
-//	}
 }

@@ -1,12 +1,9 @@
 package Client.GUI.States;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Client.GUI.Elements.Button;
 import Client.GUI.Elements.TextBox;
-import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.IDrawable;
+import Client.GUI.States.Interfaces.MenuState;
 import Client.Web.News;
 import Client.Web.Version;
 import Constants.ClientConstants;
@@ -22,12 +19,9 @@ import javafx.scene.paint.Color;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
  *
  */
-public class MainMenu extends GameState implements IDrawable {
+public class MainMenu extends MenuState implements IDrawable {
 
 	TextBox title;
-	
-	List<Button> buttons;
-	List<IDrawable> drawables;
 
 	/**
 	 * Creating new MainMenu.
@@ -37,11 +31,9 @@ public class MainMenu extends GameState implements IDrawable {
 	 */
 	public MainMenu(StateManager manager) {
 		super(manager);
-		buttons = new ArrayList<>(3);
 		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game", () -> manager.push(new InGame(manager))).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
 		buttons.add(new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits", () -> manager.push(new Credits(manager))).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
 		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", () -> manager.pop()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.BOTTOM));
-		drawables = new ArrayList<>(3);
 		drawables.addAll(buttons);
 	}
 
