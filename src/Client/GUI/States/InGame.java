@@ -10,6 +10,7 @@ import Client.Rendering.Rendering.MapRendering;
 import Constants.DesignConstants;
 import Game.Controller.IPlayerController;
 import Game.Controller.PlayerControllerLoader;
+import Game.Controller.BuiltIn.HumanBot;
 import Game.Controller.BuiltIn.SampleBot;
 import Game.Logic.Game;
 import Game.Logic.GameStatistic;
@@ -39,7 +40,7 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
         playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
 
         ArrayList<IPlayerController> playerControllers = new ArrayList<>();
-        playerControllers.add(playerLoader.instantiateLoadedExternController(SampleBot.class.getName()));
+        playerControllers.add(playerLoader.instantiateLoadedExternController(HumanBot.class.getName()));
         playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
 
         game = new Game(playerControllers);

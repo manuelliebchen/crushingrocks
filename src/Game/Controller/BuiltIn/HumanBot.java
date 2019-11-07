@@ -4,10 +4,9 @@ import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
 import Game.Logic.Player;
-import Game.Types.Vector;
+import Game.Logic.Unit;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -18,14 +17,9 @@ import javafx.scene.input.KeyEvent;
  */
 public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 
-	private int x;
-	private int y;
+	private int mineOrder;
 
 	public HumanBot() {
-	}
-
-	Vector getDirection() {
-		return new Vector(x, y);
 	}
 
 	@Override
@@ -45,6 +39,15 @@ public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 
 	@Override
 	public UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
+		if (mineOrder - 1 >= 0 && mineOrder - 1 < mapInfo.getMines().size()) {
+			for (Unit unit : ownPlayer.getUnits()) {
+				unit.setOrder(this, mapInfo.getMines().get(mineOrder - 1).getPosition().sub(unit.getPosition()));
+			}
+		} else if (mineOrder == 0) {
+			for (Unit unit : ownPlayer.getUnits()) {
+				unit.setOrder(this, enemyPlayerInfo.getBase().getPosition().sub(unit.getPosition()));
+			}
+		}
 		return UNIT_TYPE.RED;
 	}
 
@@ -52,30 +55,11 @@ public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 	public void handle(InputEvent event) {
 		if (event instanceof KeyEvent) {
 			KeyEvent keyEvent = (KeyEvent) event;
-			if (keyEvent.getEventType().equals(KeyEvent.KEY_PRESSED)) {
-				if (keyEvent.getCode().equals(KeyCode.UP)) {
-					y -= 1;
+			if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED)) {
+				try {
+					mineOrder = Integer.valueOf(keyEvent.getCharacter());
+				} catch (Exception e) {
 				}
-				if (keyEvent.getCode().equals(KeyCode.DOWN)) {
-					y += 1;
-				}
-				if (keyEvent.getCode().equals(KeyCode.LEFT)) {
-					x -= 1;
-				}
-				if (keyEvent.getCode().equals(KeyCode.RIGHT)) {
-					x += 1;
-				}
-
-				if (x != 0)
-					x = (x > 0) ? 1 : -1;
-				if (y != 0)
-					y = (y > 0) ? 1 : -1;
-			}
-			if (keyEvent.getEventType().equals(KeyEvent.KEY_RELEASED)) {
-				if (keyEvent.getCode().equals(KeyCode.UP) || keyEvent.getCode().equals(KeyCode.DOWN))
-					y = 0;
-				if (keyEvent.getCode().equals(KeyCode.LEFT) || keyEvent.getCode().equals(KeyCode.RIGHT))
-					x = 0;
 			}
 		}
 	}
