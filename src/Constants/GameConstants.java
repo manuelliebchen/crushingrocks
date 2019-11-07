@@ -135,4 +135,7 @@ public final class GameConstants {
 	public enum UNIT_TYPE{ RED, GREEN, BLUE};
 	
 	public static final Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0)};//, new Vector(0,-1), new Vector(0,1)};
+
+	
+	public enum SITES{ YELLOW, BLUE}; 
 }

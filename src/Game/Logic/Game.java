@@ -5,9 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import Client.GUI.InputTracker;
 import Constants.DesignConstants;
 import Constants.GameConstants;
 import Game.Controller.IPlayerController;
+import javafx.event.EventHandler;
+import javafx.scene.input.InputEvent;
 
 /**
  * MainClass for the GameSide. EntrancePoint for communication with ClientSide.
@@ -16,10 +19,12 @@ import Game.Controller.IPlayerController;
  * @author Manuel Liebchen
  * 
  */
-public class Game {
+public class Game implements EventHandler<InputEvent> {
 	private List<Player> players;
 	private Map map;
 	private int frames_left;
+	
+	private InputTracker inputTracker;
 
 	private Random random;
 	
@@ -29,6 +34,7 @@ public class Game {
 	 */
 	public Game(List<IPlayerController> playerController){
 		assert(playerController != null);
+		inputTracker = new InputTracker();
 
 		players = new ArrayList<>(playerController.size());
 		for(int i=0; i<playerController.size(); ++i) {
@@ -142,7 +148,23 @@ public class Game {
 		for(Player player : players) {
 			player.removeDeath();	
 		}
-		
+
+		inputTracker.updateTables();
 		return statistic;
+	}
+
+	@Override
+	public void handle(InputEvent event) {
+		for(Player player : players) {
+			IPlayerController controller = player.getController();
+			if(controller instanceof EventHandler) {
+				
+				@SuppressWarnings("unchecked")
+				EventHandler<InputEvent> handler = ((EventHandler<InputEvent>) controller);
+				
+				handler.handle(event);
+			}
+		}
+		inputTracker.handle(event);
 	}
 }

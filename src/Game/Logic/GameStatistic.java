@@ -2,6 +2,8 @@ package Game.Logic;
 
 import java.util.List;
 
+import Constants.GameConstants;
+
 public class GameStatistic {
 	
 	List<Player> players;
@@ -25,16 +27,24 @@ public class GameStatistic {
 		return isDraw;
 	}
 	
-	public String getNameString() {
-		String construction = "";
+	public String getSitesString() {
+		String construction = "Sites\n";
 		for(Player player : players) {
-			construction += String.format("%-32s\n", player.getController().getName());
+			construction += String.format("%s\n", GameConstants.SITES.values()[player.getPlayerID()]);
+		}
+		return construction;
+	}
+	
+	public String getNameString() {
+		String construction = "Names\n";
+		for(Player player : players) {
+			construction += String.format("%32s\n", player.getController().getName());
 		}
 		return construction;
 	}
 	
 	public String getScoreString() {
-		String construction = "";
+		String construction = "Score\n";
 		for(Player player : players) {
 			construction += String.format("%16d\n", player.getScore());
 		}
@@ -42,7 +52,7 @@ public class GameStatistic {
 	}
 
 	public String getBaseHPString() {
-		String construction = "";
+		String construction = "BaseHP\n";
 		for(Player player : players) {
 			construction += String.format("%16d\n", player.getBase().getHP());
 		}
