@@ -10,6 +10,7 @@ import Game.Logic.GameStatistic;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 
 public class GameStatisticState extends MenuState implements IDrawable {
 
@@ -17,7 +18,7 @@ public class GameStatisticState extends MenuState implements IDrawable {
 		super(manager);
 
 		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop())
-				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM));
+				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE));
 		drawables.add(buttons.get(0));
 
 		String title = "GameStatistics";

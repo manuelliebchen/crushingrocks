@@ -9,6 +9,7 @@ import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
@@ -25,7 +26,7 @@ public class Credits extends MenuState implements IDrawable {
 		super(manager);
 		drawables.add(new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen"));
 		Button backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop())
-				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM);
+				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE);
 		drawables.add(backbutton);
 		buttons.add(backbutton);
 	}

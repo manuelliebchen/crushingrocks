@@ -16,6 +16,8 @@ import Game.Logic.GameStatistic;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -23,69 +25,78 @@ import javafx.scene.input.InputEvent;
  */
 public final class InGame extends GameState implements IDrawable, IUpdateable {
 
-    private Game game;
-    private MapRendering mapRenderer;
-    private HUDRenderer hudRenderer;
+	private Game game;
+	private MapRendering mapRenderer;
+	private HUDRenderer hudRenderer;
 
 //    private float timeSinceLastGameUpdate = 0;
 
-    public InGame(StateManager manager) {
-        super(manager);
-        
-        PlayerControllerLoader playerLoader = new PlayerControllerLoader();
+	public InGame(StateManager manager) {
+		super(manager);
 
-        // Only for testing purposes, you should use a special directory for external bots.
-        // Build in bots, can always be loaded via instantiateInternController.
-        playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
+		PlayerControllerLoader playerLoader = new PlayerControllerLoader();
 
-        ArrayList<IPlayerController> playerControllers = new ArrayList<>();
+		// Only for testing purposes, you should use a special directory for external
+		// bots.
+		// Build in bots, can always be loaded via instantiateInternController.
+		playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
+
+		ArrayList<IPlayerController> playerControllers = new ArrayList<>();
 //        playerControllers.add(playerLoader.instantiateLoadedExternController(HumanBot.class.getName()));
-        playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
-        playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
+		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
+		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
 
-        game = new Game(playerControllers);
+		game = new Game(playerControllers);
 
-        mapRenderer = new MapRendering(game.getMap());
-        hudRenderer = new HUDRenderer(game);
-    }
+		mapRenderer = new MapRendering(game.getMap());
+		hudRenderer = new HUDRenderer(game);
+	}
 
-    /**
-     * Updates all needed display objects, e.g. player, map.
-     * @param elapsedTime Time passed since last update in seconds.
-     */
-    @Override
-    public void update(float elapsedTime) {
+	/**
+	 * Updates all needed display objects, e.g. player, map.
+	 * 
+	 * @param elapsedTime Time passed since last update in seconds.
+	 */
+	@Override
+	public void update(float elapsedTime) {
 
-        GameStatistic statistic = game.tick();
-        if(statistic != null) {
-        	manager.switchCurrentState(new GameStatisticState(manager, statistic));
-        }
+		GameStatistic statistic = game.tick();
+		if (statistic != null) {
+			manager.switchCurrentState(new GameStatisticState(manager, statistic));
+		}
 
-        mapRenderer.update(elapsedTime);
-    }
+		mapRenderer.update(elapsedTime);
+	}
 
-    /**
-     * Draws all needed display objects, e.g. player, map.
-     * @param context The context to draw on.
-     * @param elapsedTime Time passed since last draw in seconds.
-     */
-    @Override
-    public void draw(GraphicsContext context) {
+	/**
+	 * Draws all needed display objects, e.g. player, map.
+	 * 
+	 * @param context     The context to draw on.
+	 * @param elapsedTime Time passed since last draw in seconds.
+	 */
+	@Override
+	public void draw(GraphicsContext context) {
 		Canvas canvas = context.getCanvas();
 		context.setFill(DesignConstants.BACKGROUND_COLOR);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		
-    	context.save();
-        mapRenderer.draw(context);
-        context.restore();
-    	
-        context.save();
-        hudRenderer.draw(context);
-        context.restore();
-    }
+
+		context.save();
+		mapRenderer.draw(context);
+		context.restore();
+
+		context.save();
+		hudRenderer.draw(context);
+		context.restore();
+	}
 
 	@Override
 	public void handle(InputEvent event) {
+		if (event instanceof KeyEvent) {
+			KeyEvent keyEvent = (KeyEvent) event;
+			if (keyEvent.getCode() == KeyCode.ESCAPE) {
+				manager.pop();
+			}
+		}
 		game.handle(event);
 	}
 }

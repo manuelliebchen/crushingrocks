@@ -12,6 +12,7 @@ import Constants.DesignConstants.Alignment;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 /**
@@ -33,7 +34,7 @@ public class MainMenu extends MenuState implements IDrawable {
 		super(manager);
 		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game", () -> manager.push(new InGame(manager))).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
 		buttons.add(new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits", () -> manager.push(new Credits(manager))).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
-		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", () -> manager.pop()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.BOTTOM));
+		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", () -> manager.pop()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE));
 		drawables.addAll(buttons);
 	}
 
