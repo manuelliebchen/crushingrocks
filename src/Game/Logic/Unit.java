@@ -63,8 +63,8 @@ public class Unit {
 				position = targetPosition;
 			}
 			orderedDirection = null;
-			position = new Vector(Math.min(1, Math.max(-1, position.getX())),
-					Math.min(1, Math.max(-1, position.getY())));
+//			position = new Vector(Math.min(1, Math.max(-1, position.getX())),
+//					Math.min(1, Math.max(-1, position.getY())));
 		}
 		return position;
 	}

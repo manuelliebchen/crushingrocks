@@ -124,7 +124,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #MAP_RADIUS}
 	 */
-	public static final float MAP_RADIUS = 1f;
+	public static float MAP_RADIUS = 1f;
 
 
 	/**
