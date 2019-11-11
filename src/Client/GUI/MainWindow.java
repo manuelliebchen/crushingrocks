@@ -12,6 +12,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -47,7 +48,7 @@ public class MainWindow extends Application {
 		pane.setPrefSize(ClientConstants.INITIAL_SCREEN_WIDTH, ClientConstants.INITIAL_SCREEN_HEIGHT);
 
 		// Add canvas to new scene and set scene as window content
-		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight());
+		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight(), false, SceneAntialiasing.BALANCED);
 		stage.setScene(scene);
 
 		Timeline timeline = new Timeline();

@@ -4,19 +4,14 @@ import java.util.List;
 
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.Rendering.Drawing.ImageManager;
-import Constants.ClientConstants;
-import Constants.DesignConstants;
 import Constants.GameConstants;
 import Game.Logic.Base;
 import Game.Logic.Map;
 import Game.Logic.Mine;
 import Game.Logic.Player;
 import Game.Logic.Unit;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.transform.Affine;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -30,8 +25,6 @@ public final class MapRendering implements IDrawable {
 	private List<Mine> mines;
 	private List<Player> players;
 
-	private Affine transformation;
-
 	/**
 	 * Used to render the game map.
 	 * 
@@ -42,12 +35,6 @@ public final class MapRendering implements IDrawable {
 		mines = gameMap.getMines();
 		bases = gameMap.getBases();
 		players = gameMap.getPlayers();
-
-		transformation = new Affine();
-		transformation.appendScale(ClientConstants.INITIAL_SCREEN_HEIGHT / (GameConstants.MAP_RADIUS * 2),
-				ClientConstants.INITIAL_SCREEN_HEIGHT / (GameConstants.MAP_RADIUS * 2));
-		float ratio = (float) ClientConstants.INITIAL_SCREEN_WIDTH / (float) ClientConstants.INITIAL_SCREEN_HEIGHT;
-		transformation.appendTranslation(GameConstants.MAP_RADIUS * ratio, GameConstants.MAP_RADIUS);
 	}
 
 	/**
@@ -65,81 +52,27 @@ public final class MapRendering implements IDrawable {
 	 * @param timeSinceLastDraw Time passed since last draw in seconds.
 	 */
 	public void draw(GraphicsContext context) {
-		Canvas canvas = context.getCanvas();
-
-		transformation = new Affine();
-		transformation.appendTranslation(canvas.getWidth() / 2, canvas.getHeight() / 2);
-		if (canvas.getHeight() > canvas.getWidth()) {
-			transformation.appendScale(canvas.getWidth() / (GameConstants.MAP_RADIUS * 2.5),
-					canvas.getWidth() / (GameConstants.MAP_RADIUS * 2.5));
-		} else {
-			transformation.appendScale(canvas.getHeight() / (GameConstants.MAP_RADIUS * 2.5),
-					canvas.getHeight() / (GameConstants.MAP_RADIUS * 2.5));
-		}
-
-		context.setTransform(transformation);
-		context.setLineWidth(0.01f);
-
-		Image minetexture = ImageManager.getInstance().loadImage("mine.png");
-		for (Mine mine : mines) {
-			float[] ownership = mine.getOwnership();
-
-			context.drawImage(minetexture, mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
-					2 * GameConstants.MINE_RADIUS);
-
-			context.setStroke(players.get(0).getColor().interpolate(players.get(1).getColor(), ownership[1]));
-			context.strokeOval(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
-					2 * GameConstants.MINE_RADIUS);
-
-			context.setFill(players.get(1).getColor());
-			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04, GameConstants.MINE_RADIUS * 2, 0.02);
-			context.setFill(players.get(0).getColor());
-			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04,
-					GameConstants.MINE_RADIUS * 2 * ownership[0], 0.02);
-		}
 
 		Image baseTexture = ImageManager.getInstance().loadImage("base.png");
 		for (Base base : bases) {
-			context.setStroke(base.getOwner().getColor());
 			context.drawImage(baseTexture, base.getPosition().getX() - GameConstants.BASE_RADIUS,
 					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
 					2 * GameConstants.BASE_RADIUS);
-			context.strokeOval(base.getPosition().getX() - GameConstants.BASE_RADIUS,
-					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
-					2 * GameConstants.BASE_RADIUS);
+		}
 
-			context.setFill(DesignConstants.HEALTH_BACKGROUND);
-			context.fillRect(base.getPosition().getX() - GameConstants.BASE_RADIUS,
-					base.getPosition().getY() - GameConstants.BASE_RADIUS - 0.04, GameConstants.BASE_RADIUS * 2, 0.02);
-			context.setFill(DesignConstants.HEALTH_FOREGROUND);
-			context.fillRect(base.getPosition().getX() - GameConstants.BASE_RADIUS,
-					base.getPosition().getY() - GameConstants.BASE_RADIUS - 0.04,
-					GameConstants.BASE_RADIUS * 2 * base.getHP() / GameConstants.INITIAL_BASE_HP, 0.02);
+		Image minetexture = ImageManager.getInstance().loadImage("mine.png");
+		for (Mine mine : mines) {
+			context.drawImage(minetexture, mine.getPosition().getX() - GameConstants.MINE_RADIUS,
+					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
+					2 * GameConstants.MINE_RADIUS);
 		}
 
 		Image unitTexture = ImageManager.getInstance().loadImage("player.png");
 		for (Player player : players) {
-			context.setStroke(player.getColor());
 			for (Unit unit : player.getUnits()) {
 				context.drawImage(unitTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
 						2 * GameConstants.UNIT_RADIUS);
-				context.strokeOval(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
-						2 * GameConstants.UNIT_RADIUS);
-
-				context.setFill(DesignConstants.HEALTH_BACKGROUND);
-				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04, GameConstants.UNIT_RADIUS * 2,
-						0.02);
-				context.setFill(DesignConstants.HEALTH_FOREGROUND);
-				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04,
-						GameConstants.UNIT_RADIUS * 2 * unit.getHP() / GameConstants.INITIAL_UNIT_HP, 0.02);
 			}
 		}
 	}

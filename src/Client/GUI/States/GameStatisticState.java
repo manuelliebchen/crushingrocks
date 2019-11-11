@@ -17,9 +17,12 @@ public class GameStatisticState extends MenuState implements IDrawable {
 	public GameStatisticState(StateManager manager, GameStatistic statistic) {
 		super(manager);
 
-		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop())
+		buttons.add(new Button(new Point2D(400, 125), new Point2D(150, 50), "Back", () -> manager.pop())
 				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE));
 		drawables.add(buttons.get(0));
+		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Restart", () -> manager.switchCurrentState(new InGame(manager)))
+				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ENTER));
+		drawables.add(buttons.get(1));
 
 		String title = "GameStatistics";
 		if (statistic.isDraw()) {

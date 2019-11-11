@@ -32,9 +32,15 @@ public class MainMenu extends MenuState implements IDrawable {
 	 */
 	public MainMenu(StateManager manager) {
 		super(manager);
-		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game", () -> manager.push(new InGame(manager))).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
-		buttons.add(new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits", () -> manager.push(new Credits(manager))).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
-		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", () -> manager.pop()).setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE));
+		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game",
+				() -> manager.push(new InGame(manager))).setVerticalAlignment(Alignment.CENTER)
+						.setHorizontalAlignment(Alignment.TOP).setKeyCode(KeyCode.ENTER));
+		buttons.add(new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits",
+				() -> manager.push(new Credits(manager))).setVerticalAlignment(Alignment.CENTER)
+						.setHorizontalAlignment(Alignment.TOP));
+		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", () -> manager.pop())
+				.setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.BOTTOM)
+				.setKeyCode(KeyCode.ESCAPE));
 		drawables.addAll(buttons);
 	}
 
@@ -65,17 +71,17 @@ public class MainMenu extends MenuState implements IDrawable {
 			graphics.fillText(versionText, 10, 40);
 		}
 
-		for(IDrawable drawable : drawables) {
+		for (IDrawable drawable : drawables) {
 			drawable.draw(graphics);
 		}
 	}
-	
-    /**
-     * Method witch is called when state is leaved.
-     */
-    public void leaving() {
-    	
-    }
+
+	/**
+	 * Method witch is called when state is leaved.
+	 */
+	public void leaving() {
+
+	}
 
 //	@Override
 //	public void update(float elapsedTime) {
