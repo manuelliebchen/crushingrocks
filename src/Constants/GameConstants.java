@@ -32,7 +32,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #BASE_RADIUS}
 	 */
-	public static final float BASE_RADIUS = 0.25f;
+	public static final float BASE_RADIUS = 0.2f;
 
 	/**
 	 * Radius a unit can attack.
@@ -88,7 +88,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #NUMBER_OF_MINES}
 	 */
-	public static final int NUMBER_OF_MINES = 8;
+	public static final int NUMBER_OF_MINES = 7;
 
 	/**
 	 * Income per owned mine per tick.
@@ -110,7 +110,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #MINE_RADIUS}
 	 */
-	public static final float MINE_RADIUS = 0.1f;
+	public static final float MINE_RADIUS = 0.15f;
 	
 	/**
 	 * Initial creadit points a player has.
@@ -134,7 +134,9 @@ public final class GameConstants {
 	 */
 	public enum UNIT_TYPE{ RED, GREEN, BLUE};
 	
-	public static final Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0)};//, new Vector(0,-1), new Vector(0,1)};
+	public static final float EPSILON = 0.0001f;
+	
+	public static final Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0), new Vector(0,-1), new Vector(0,1)};//, new Vector(0,-1), new Vector(0,1)};
 
 	
 	public enum SITES{ YELLOW, BLUE}; 
