@@ -42,7 +42,7 @@ public final class MapRendering implements IDrawable {
 	 * 
 	 * @param timeSinceLastUpdate Time passed since last update in seconds.
 	 */
-	public void update(float timeSinceLastUpdate) {
+	public void update() {
 	}
 
 	/**

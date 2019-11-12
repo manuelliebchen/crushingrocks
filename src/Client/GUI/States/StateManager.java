@@ -3,9 +3,8 @@ package Client.GUI.States;
 import java.util.Stack;
 
 import Client.GUI.States.Interfaces.GameState;
-import Client.GUI.States.Interfaces.IDrawable;
 import Client.GUI.States.Interfaces.IOverlay;
-import Client.GUI.States.Interfaces.IUpdateable;
+import Client.GUI.States.Interfaces.ISelfUpdating;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
@@ -16,21 +15,25 @@ import javafx.stage.Stage;
  * @author Max Klockmann (max@acagamics.de)
  * 
  */
-public final class StateManager implements IDrawable, IUpdateable, EventHandler<InputEvent> {
+public final class StateManager implements EventHandler<InputEvent> {
 
-	Stage stage;
-	
+	/**
+	 * The Stage for everything.
+	 */
+	private Stage stage;
+
 	/**
 	 * Stores all current game states from layer
 	 */
-	Stack<GameState> currentStates = new Stack<GameState>();
+	private Stack<GameState> stateStack = new Stack<GameState>();
 
 	/**
 	 * StateManager controlls state handling e.g. Add/remove/reverts states to a
 	 * layer based state handling
+	 * 
 	 * @param state sets the initial game state
 	 */
-	public StateManager(Stage stage) {
+	public StateManager(Stage stage, GraphicsContext context) {
 		this.stage = stage;
 	}
 
@@ -43,8 +46,8 @@ public final class StateManager implements IDrawable, IUpdateable, EventHandler<
 		GameState top = peek();
 		top.leaving();
 
-		currentStates.pop();
-		if (currentStates.empty()) {
+		stateStack.pop();
+		if (stateStack.empty()) {
 			stage.close();
 		}
 	}
@@ -53,7 +56,7 @@ public final class StateManager implements IDrawable, IUpdateable, EventHandler<
 	 * Returns the current state on top.
 	 */
 	public GameState peek() {
-		return currentStates.peek();
+		return stateStack.peek();
 	}
 
 	/**
@@ -63,7 +66,7 @@ public final class StateManager implements IDrawable, IUpdateable, EventHandler<
 	 */
 	public void push(GameState state) {
 		state.entered();
-		currentStates.push(state);
+		stateStack.push(state);
 	}
 
 	/**
@@ -77,19 +80,18 @@ public final class StateManager implements IDrawable, IUpdateable, EventHandler<
 	}
 
 	/**
-	 * Draws all drawables states. (Layer based)
-	 * 
-	 * @param elapsedTime elapsed time since last call
+	 * Draws top IDrawable state.
 	 */
-	@Override
-	public void draw(GraphicsContext graphics) {
-		for (int i = currentStates.size() -1; i >= 0; i--) {
-			if (currentStates.get(i) instanceof IDrawable) {
-				((IDrawable) currentStates.get(i)).draw(graphics);
-				if(!(currentStates.get(i) instanceof IOverlay)) {
-					break;
-				}
+	public void redraw() {
+		for (int i = stateStack.size() - 1; i >= 0; i--) {
+			if (stateStack.get(i) instanceof ISelfUpdating) {
+				break;
 			}
+			stateStack.get(i).redraw();
+			if (!(stateStack.get(i) instanceof IOverlay)) {
+				break;
+			}
+
 		}
 	}
 
@@ -98,22 +100,22 @@ public final class StateManager implements IDrawable, IUpdateable, EventHandler<
 	 * 
 	 * @param elapsedTime elapsed time since last call
 	 */
-	@Override
-	public void update(float elapsedTime) {
-		for (int i = currentStates.size() -1; i >= 0; i--) {
-			if (currentStates.get(i) instanceof IUpdateable) {
-				((IUpdateable) currentStates.get(i)).update(elapsedTime);
-				if(!(currentStates.get(i) instanceof IOverlay)) {
-					break;
-				}
+	public void update() {
+		for (int i = stateStack.size() - 1; i >= 0; i--) {
+			if (stateStack.get(i) instanceof ISelfUpdating) {
+				break;
+			}
+			stateStack.get(i).update();
+			if (!(stateStack.get(i) instanceof IOverlay)) {
+				break;
 			}
 		}
 	}
 
 	@Override
 	public void handle(InputEvent event) {
-		if(!currentStates.empty()) {
-			currentStates.peek().handle(event);
+		if (!stateStack.empty()) {
+			stateStack.peek().handle(event);
 		}
 	}
 

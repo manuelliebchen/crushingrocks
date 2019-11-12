@@ -2,6 +2,7 @@ package Client.GUI.States.Interfaces;
 
 import Client.GUI.States.StateManager;
 import javafx.event.EventHandler;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 
 /**
@@ -11,11 +12,14 @@ import javafx.scene.input.InputEvent;
  */
 public abstract class GameState implements EventHandler<InputEvent> {
 	
-	public GameState(StateManager manager) {		
+	protected GraphicsContext context;
+	protected StateManager manager;
+	
+	public GameState(StateManager manager, GraphicsContext context) {		
 		this.manager = manager;
+		this.context = context;
 	}
 	
-	protected StateManager manager;
     
     /**
      * Method witch is called when state is entered.
@@ -28,4 +32,9 @@ public abstract class GameState implements EventHandler<InputEvent> {
      */
     public void leaving() {
     }
+    
+    public void update() {
+    }
+    
+    public abstract void redraw();
 }

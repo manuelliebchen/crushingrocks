@@ -15,5 +15,5 @@ public interface IDrawable {
 	 * @param graphics The GraphicsContext is used for drawing
 	 * @param elapsedTime The Elapsed Time since last draw call
 	 */
-	public void draw(GraphicsContext graphics);
+	public void draw(GraphicsContext context);
 }

@@ -134,7 +134,7 @@ public final class GameConstants {
 	 */
 	public enum UNIT_TYPE{ RED, GREEN, BLUE};
 	
-	public static final float EPSILON = 0.0001f;
+	public static final float EPSILON = Float.MIN_VALUE * 100;
 	
 	public static final Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0), new Vector(0,-1), new Vector(0,1)};//, new Vector(0,-1), new Vector(0,1)};
 

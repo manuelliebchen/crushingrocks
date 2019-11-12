@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
  *
  */
-public class MainMenu extends MenuState implements IDrawable {
+public class MainMenu extends MenuState {
 
 	TextBox title;
 
@@ -30,13 +30,13 @@ public class MainMenu extends MenuState implements IDrawable {
 	 * @param manager The StateManager of the current Window
 	 * @param pane    The Gui Layout pane of the current Window. Used for Buttons
 	 */
-	public MainMenu(StateManager manager) {
-		super(manager);
+	public MainMenu(StateManager manager, GraphicsContext context) {
+		super(manager, context);
 		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game",
-				() -> manager.push(new InGame(manager))).setVerticalAlignment(Alignment.CENTER)
+				() -> manager.push(new InGame(manager, context))).setVerticalAlignment(Alignment.CENTER)
 						.setHorizontalAlignment(Alignment.TOP).setKeyCode(KeyCode.ENTER));
 		buttons.add(new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits",
-				() -> manager.push(new Credits(manager))).setVerticalAlignment(Alignment.CENTER)
+				() -> manager.push(new Credits(manager, context))).setVerticalAlignment(Alignment.CENTER)
 						.setHorizontalAlignment(Alignment.TOP));
 		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", () -> manager.pop())
 				.setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.BOTTOM)
@@ -45,54 +45,34 @@ public class MainMenu extends MenuState implements IDrawable {
 	}
 
 	@Override
-	public void draw(GraphicsContext graphics) {
+	public void redraw() {
 
-		Canvas canvas = graphics.getCanvas();
+		Canvas canvas = context.getCanvas();
 
-		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
-		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		context.setFill(DesignConstants.BACKGROUND_COLOR);
+		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		// write version
 		if (Version.isChecked()) {
 			String versionText = "version: " + ClientConstants.VERSION;
 			if (Version.isUpToDate()) {
 				versionText += " - up to date!";
-				graphics.setFill(Color.WHITE);
+				context.setFill(Color.WHITE);
 			} else {
 				versionText += " - out of date!";
-				graphics.setFill(Color.BLUE);
+				context.setFill(Color.BLUE);
 			}
-			graphics.fillText(versionText, 10, 10);
+			context.fillText(versionText, 10, 10);
 		}
 
 		// write news
 		if (News.hasNews()) {
 			String versionText = "news: " + News.getNews();
-			graphics.fillText(versionText, 10, 40);
+			context.fillText(versionText, 10, 40);
 		}
 
 		for (IDrawable drawable : drawables) {
-			drawable.draw(graphics);
+			drawable.draw(context);
 		}
 	}
-
-	/**
-	 * Method witch is called when state is leaved.
-	 */
-	public void leaving() {
-
-	}
-
-//	@Override
-//	public void update(float elapsedTime) {
-//		// Tests if buttons are pressed
-//		if (startGame.isPressed()) {
-//			manager.push(new InGame(manager));
-//		} else if (showCredits.isPressed()) {
-//			manager.push(new Credits(manager));
-//		} else if (endGame.isPressed()) {
-//			manager.pop();
-//		}
-//	}
-
 }

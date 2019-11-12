@@ -3,11 +3,11 @@ package Client.GUI.States;
 import java.util.ArrayList;
 
 import Client.GUI.States.Interfaces.GameState;
-import Client.GUI.States.Interfaces.IDrawable;
-import Client.GUI.States.Interfaces.IUpdateable;
+import Client.GUI.States.Interfaces.ISelfUpdating;
 import Client.Rendering.Rendering.HUDRenderer;
 import Client.Rendering.Rendering.MapOverlayRendering;
 import Client.Rendering.Rendering.MapRendering;
+import Constants.ClientConstants;
 import Constants.DesignConstants;
 import Constants.GameConstants;
 import Game.Controller.IPlayerController;
@@ -15,28 +15,33 @@ import Game.Controller.PlayerControllerLoader;
 import Game.Controller.BuiltIn.SampleBot;
 import Game.Logic.Game;
 import Game.Logic.GameStatistic;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.transform.Affine;
+import javafx.util.Duration;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
  * @author Manuel Liebchen
  */
-public final class InGame extends GameState implements IDrawable, IUpdateable {
+public final class InGame extends GameState implements ISelfUpdating {
 
 	private Game game;
 	private MapRendering mapRenderer;
 	private MapOverlayRendering mapOverlayRenderer;
 	private HUDRenderer hudRenderer;
 
+	Timeline timeline;
 //    private float timeSinceLastGameUpdate = 0;
 
-	public InGame(StateManager manager) {
-		super(manager);
+	public InGame(StateManager manager, GraphicsContext context) {
+		super(manager, context);
 
 		PlayerControllerLoader playerLoader = new PlayerControllerLoader();
 
@@ -56,6 +61,25 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
 		mapRenderer = new MapRendering(game.getMap());
 		mapOverlayRenderer = new MapOverlayRendering(game.getMap());
 		hudRenderer = new HUDRenderer(game);
+
+		timeline = new Timeline();
+		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS), (event) -> {
+			update();
+			redraw();
+		});
+
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.getKeyFrames().add(frame);
+	}
+	
+	@Override
+	public void entered() {
+		timeline.play();
+	}
+	
+	@Override
+	public void leaving() {
+		timeline.stop();
 	}
 
 	/**
@@ -64,14 +88,15 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
 	 * @param elapsedTime Time passed since last update in seconds.
 	 */
 	@Override
-	public void update(float elapsedTime) {
+	public void update() {
 
 		GameStatistic statistic = game.tick();
 		if (statistic != null) {
-			manager.switchCurrentState(new GameStatisticState(manager, statistic));
+			manager.switchCurrentState(new GameStatisticState(manager, context, statistic));
+			manager.redraw();
 		}
 
-		mapRenderer.update(elapsedTime);
+		mapRenderer.update();
 	}
 
 	/**
@@ -81,13 +106,13 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
 	 * @param elapsedTime Time passed since last draw in seconds.
 	 */
 	@Override
-	public void draw(GraphicsContext context) {
+	public void redraw() {
 		Canvas canvas = context.getCanvas();
 		context.setFill(DesignConstants.BACKGROUND_COLOR);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		context.save();
-		
+
 		Affine transformation = new Affine();
 		transformation.appendTranslation(canvas.getWidth() / 2, canvas.getHeight() / 2);
 		if (canvas.getHeight() > canvas.getWidth()) {
@@ -99,12 +124,12 @@ public final class InGame extends GameState implements IDrawable, IUpdateable {
 		}
 
 		context.setTransform(transformation);
-		
+
 		mapRenderer.draw(context);
-		
-		context.setLineWidth(0.005);
+
+		context.setLineWidth(DesignConstants.OVERLAY_LINE_WIDTH);
 		mapOverlayRenderer.draw(context);
-		
+
 		context.restore();
 
 		context.save();

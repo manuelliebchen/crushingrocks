@@ -15,15 +15,15 @@ import javafx.scene.input.KeyCode;
  * @author Max Klockmann (max@acagamics.de)
  *
  */
-public class Credits extends MenuState implements IDrawable {
+public class Credits extends MenuState {
 
 	/**
 	 * Creating new Credits State.
 	 * 
 	 * @param manager The StateManager of the current Window
 	 */
-	public Credits(StateManager manager) {
-		super(manager);
+	public Credits(StateManager manager, GraphicsContext context) {
+		super(manager, context);
 		drawables.add(new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen"));
 		Button backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop())
 				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE);
@@ -32,15 +32,15 @@ public class Credits extends MenuState implements IDrawable {
 	}
 
 	@Override
-	public void draw(GraphicsContext graphics) {
+	public void redraw() {
 
-		Canvas canvas = graphics.getCanvas();
+		Canvas canvas = context.getCanvas();
 
-		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
-		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		context.setFill(DesignConstants.BACKGROUND_COLOR);
+		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		for (IDrawable drawable : drawables) {
-			drawable.draw(graphics);
+			drawable.draw(context);
 		}
 	}
 }

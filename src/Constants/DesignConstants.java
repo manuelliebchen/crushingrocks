@@ -27,5 +27,7 @@ public final class DesignConstants {
 	
 	public static final Color[] PLAYER_COLORS = new Color[]{Color.color(0.925f, 0.741f, 0.192f), Color.color(0.18f, 0.314f, 0.62f), Color.color(0.467f, 0.824f, 0.173f), Color.color(0.60f, 0.125f, 0.60f)};
 
+	public static final float OVERLAY_LINE_WIDTH = 0.005f;
+	
 	public enum Alignment { CENTER, LEFT, RIGHT, TOP, BOTTOM}
 }

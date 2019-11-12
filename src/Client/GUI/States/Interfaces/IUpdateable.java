@@ -7,5 +7,5 @@ package Client.GUI.States.Interfaces;
  */
 public interface IUpdateable {
 
-	public void update(float elapsedTime);
+	public void update();
 }

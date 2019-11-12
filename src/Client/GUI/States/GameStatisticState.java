@@ -12,16 +12,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
-public class GameStatisticState extends MenuState implements IDrawable {
+public class GameStatisticState extends MenuState {
 
-	public GameStatisticState(StateManager manager, GameStatistic statistic) {
-		super(manager);
+	public GameStatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic) {
+		super(manager, context);
 
 		buttons.add(new Button(new Point2D(400, 125), new Point2D(150, 50), "Back", () -> manager.pop())
-				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE));
+				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM)
+				.setKeyCode(KeyCode.ESCAPE));
 		drawables.add(buttons.get(0));
-		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Restart", () -> manager.switchCurrentState(new InGame(manager)))
-				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ENTER));
+		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Restart",
+				() -> manager.switchCurrentState(new InGame(manager, context))).setVerticalAlignment(Alignment.RIGHT)
+						.setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ENTER));
 		drawables.add(buttons.get(1));
 
 		String title = "GameStatistics";
@@ -44,16 +46,15 @@ public class GameStatisticState extends MenuState implements IDrawable {
 	}
 
 	@Override
-	public void draw(GraphicsContext graphics) {
+	public void redraw() {
 
-		Canvas canvas = graphics.getCanvas();
+		Canvas canvas = context.getCanvas();
 
-		graphics.setFill(DesignConstants.BACKGROUND_COLOR);
-		graphics.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		context.setFill(DesignConstants.BACKGROUND_COLOR);
+		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		for (IDrawable drawable : drawables) {
-			drawable.draw(graphics);
+			drawable.draw(context);
 		}
 	}
-
 }
