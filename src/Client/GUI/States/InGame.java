@@ -16,6 +16,7 @@ import Game.Controller.BuiltIn.SampleBot;
 import Game.Logic.Game;
 import Game.Logic.GameStatistic;
 import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
@@ -71,12 +72,12 @@ public final class InGame extends GameState implements ISelfUpdating {
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
 	}
-	
+
 	@Override
 	public void entered() {
 		timeline.play();
 	}
-	
+
 	@Override
 	public void leaving() {
 		timeline.stop();
@@ -143,6 +144,14 @@ public final class InGame extends GameState implements ISelfUpdating {
 			KeyEvent keyEvent = (KeyEvent) event;
 			if (keyEvent.getCode() == KeyCode.ESCAPE) {
 				manager.pop();
+			} else if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED)) {
+				if (keyEvent.getCharacter().equals("p")) {
+					if (timeline.getStatus() == Status.RUNNING) {
+						timeline.stop();
+					} else {
+						timeline.play();
+					}
+				}
 			}
 		}
 		game.handle(event);

@@ -80,7 +80,6 @@ public class MainWindow extends Application {
 		stage.heightProperty().addListener(stageSizeListener);
 		stage.show();
 		
-		manager.update();
-		manager.redraw();
+		manager.frame();
 	}
 }

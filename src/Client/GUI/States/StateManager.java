@@ -78,6 +78,18 @@ public final class StateManager implements EventHandler<InputEvent> {
 		pop();
 		push(state);
 	}
+	
+	public void frame() {
+		for (int i = stateStack.size() - 1; i >= 0; i--) {
+			if (stateStack.get(i) instanceof ISelfUpdating) {
+				break;
+			}
+			stateStack.get(i).frame();
+			if (!(stateStack.get(i) instanceof IOverlay)) {
+				break;
+			}
+		}
+	}
 
 	/**
 	 * Draws top IDrawable state.

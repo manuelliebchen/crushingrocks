@@ -33,6 +33,11 @@ public abstract class GameState implements EventHandler<InputEvent> {
     public void leaving() {
     }
     
+    public void frame() {
+    	update();
+    	redraw();
+    }
+    
     public void update() {
     }
     
