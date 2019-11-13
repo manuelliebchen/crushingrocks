@@ -81,14 +81,14 @@ public final class MapOverlayRendering implements IDrawable {
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
 						2 * GameConstants.UNIT_RADIUS);
 
-				context.setFill(DesignConstants.HEALTH_BACKGROUND);
-				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04, GameConstants.UNIT_RADIUS * 2,
-						0.02);
-				context.setFill(DesignConstants.HEALTH_FOREGROUND);
-				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04,
-						GameConstants.UNIT_RADIUS * 2 * unit.getHP() / GameConstants.INITIAL_UNIT_HP, 0.02);
+//				context.setFill(DesignConstants.HEALTH_BACKGROUND);
+//				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
+//						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04, GameConstants.UNIT_RADIUS * 2,
+//						0.02);
+//				context.setFill(DesignConstants.HEALTH_FOREGROUND);
+//				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
+//						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04,
+//						GameConstants.UNIT_RADIUS * 2 * unit.getStrength() / GameConstants.INITIAL_UNIT_HP, 0.02);
 			}
 		}
 	}

@@ -67,10 +67,20 @@ public final class MapRendering implements IDrawable {
 					2 * GameConstants.MINE_RADIUS);
 		}
 
-		Image unitTexture = ImageManager.getInstance().loadImage("player.png");
+		Image unitTexture1 = ImageManager.getInstance().loadImage("Unit1.png");
+		Image unitTexture2 = ImageManager.getInstance().loadImage("Unit2.png");
+		Image unitTexture3 = ImageManager.getInstance().loadImage("Unit3.png");
+		Image untiTexture = unitTexture1;
 		for (Player player : players) {
 			for (Unit unit : player.getUnits()) {
-				context.drawImage(unitTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
+				if(unit.getStrength() <= 1) {
+					untiTexture = unitTexture1;
+				} else if(unit.getStrength() <= 2) {
+					untiTexture = unitTexture2;
+				} else {
+					untiTexture = unitTexture3;
+				}
+				context.drawImage(untiTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
 						2 * GameConstants.UNIT_RADIUS);
 			}
