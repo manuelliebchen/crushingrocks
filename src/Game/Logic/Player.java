@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Constants.GameConstants;
-import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import javafx.scene.paint.Color;
 
@@ -24,11 +23,13 @@ public class Player {
 	private Base base;
 	private List<Unit> units;
 	
+	private int unitCreationOrder;
+	
 	Player(IPlayerController controller, Color color, int playerID){
 		this.controller = controller;
 		this.color = color;
 		this.playerID = playerID;
-		units = new ArrayList<>(16);
+		units = new ArrayList<>(GameConstants.MAX_UNITS_PER_PLAYER);
 		creditPoints = GameConstants.INITIAL_CREDIT_POINTS;
 	}
 	
@@ -46,9 +47,8 @@ public class Player {
 		}
 		
 		// Think.
-		UNIT_TYPE ut = null;
 		try {
-			ut = controller.think(mapInfo, this, enemyInfos);
+			controller.think(mapInfo, this, enemyInfos);
 		} catch (Exception e) {
 			System.err.println(controller.getName() + " through an unhandled exception!");
 			System.err.println(e);
@@ -56,16 +56,29 @@ public class Player {
 				System.err.println(t);
 			}
 		}
-		
-		if(ut != null && creditPoints >= GameConstants.UNIT_FEE && units.size() <= GameConstants.MAX_UNITS_PER_PLAYER) {
-			units.add(new Unit(ut, this, base.getPosition()));
-			creditPoints -= GameConstants.UNIT_FEE;
+
+		int cost = Unit.getUnitCost(unitCreationOrder);
+		if(unitCreationOrder > 0 && creditPoints >= cost && units.size() <= GameConstants.MAX_UNITS_PER_PLAYER) {
+			units.add(new Unit(unitCreationOrder, this, base.getPosition()));
+			creditPoints -= cost;
 		}
+		unitCreationOrder = 0;
 		
 		for(Mine mine : mapInfo.getMines()) {
 			creditPoints += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
 			score += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
 		}
+	}
+	
+	public int setUnitCreationOrder(IPlayerController controller, int strength) {
+		if(controller == this.controller && strength > 0 && strength <= 3) {
+			int cost = Unit.getUnitCost(strength);
+			if( creditPoints >= cost) {
+				unitCreationOrder = strength;
+				return cost;
+			}
+		}
+		return 0;
 	}
 	
 	public int getPlayerID() {
@@ -103,17 +116,17 @@ public class Player {
 	public List<Unit> getUnits() {
 		return new ArrayList<>(units);
 	}
-	
-	@Override
-	public int hashCode() {
-		return controller.getAuthor().hashCode() + controller.getName().hashCode() + controller.getMatrikelnummer();
-	}
 
 	IPlayerController getController() {
 		return controller;
 	}
 
 	void removeDeath() {
-		units.removeIf( u -> u.getHP() <= 0);
+		units.removeIf( u -> u.getStrength() <= 0);
+	}
+	
+	@Override
+	public int hashCode() {
+		return controller.getAuthor().hashCode() + controller.getName().hashCode() + controller.getMatrikelnummer();
 	}
 }

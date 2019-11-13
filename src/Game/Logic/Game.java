@@ -137,7 +137,7 @@ public class Game implements EventHandler<InputEvent> {
 		// Update Unit hp by attack.
 		for(Unit unit : allUnits) {
 			for(Unit enemyUnit : allUnits) {
-				if(unit.getPosition().distance(enemyUnit.getPosition()) < GameConstants.UNIT_RADIUS && unit.getOwner() != enemyUnit.getOwner()) {
+				if(unit.getPosition().distance(enemyUnit.getPosition()) < 2 * GameConstants.UNIT_RADIUS && unit.getOwner() != enemyUnit.getOwner()) {
 					enemyUnit.attackBy(GameConstants.UNIT_DAMAGE);
 					break;
 				}

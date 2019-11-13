@@ -56,7 +56,7 @@ public class Mine {
 		float[] count = new float[players.size()];
 		for(Unit unit : allUnits) {
 			if(position.distance(unit.getPosition()) < GameConstants.MINE_RADIUS) {
-				count[unit.getOwner().getPlayerID()]++;
+				count[unit.getOwner().getPlayerID()] += unit.getStrength();
 			}
 		}
 		float sum = 0;

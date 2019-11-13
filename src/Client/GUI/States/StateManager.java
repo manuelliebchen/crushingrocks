@@ -50,6 +50,7 @@ public final class StateManager implements EventHandler<InputEvent> {
 		if (stateStack.empty()) {
 			stage.close();
 		}
+		redraw();
 	}
 
 	/**
@@ -67,6 +68,7 @@ public final class StateManager implements EventHandler<InputEvent> {
 	public void push(GameState state) {
 		state.entered();
 		stateStack.push(state);
+		redraw();
 	}
 
 	/**
@@ -92,22 +94,6 @@ public final class StateManager implements EventHandler<InputEvent> {
 	}
 
 	/**
-	 * Draws top IDrawable state.
-	 */
-	public void redraw() {
-		for (int i = stateStack.size() - 1; i >= 0; i--) {
-			if (stateStack.get(i) instanceof ISelfUpdating) {
-				break;
-			}
-			stateStack.get(i).redraw();
-			if (!(stateStack.get(i) instanceof IOverlay)) {
-				break;
-			}
-
-		}
-	}
-
-	/**
 	 * Updates all updatable states.
 	 * 
 	 * @param elapsedTime elapsed time since last call
@@ -121,6 +107,22 @@ public final class StateManager implements EventHandler<InputEvent> {
 			if (!(stateStack.get(i) instanceof IOverlay)) {
 				break;
 			}
+		}
+	}
+
+	/**
+	 * Draws top IDrawable state.
+	 */
+	public void redraw() {
+		for (int i = stateStack.size() - 1; i >= 0; i--) {
+			if (stateStack.get(i) instanceof ISelfUpdating) {
+				break;
+			}
+			stateStack.get(i).redraw();
+			if (!(stateStack.get(i) instanceof IOverlay)) {
+				break;
+			}
+
 		}
 	}
 

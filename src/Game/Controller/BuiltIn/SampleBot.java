@@ -1,9 +1,9 @@
 package Game.Controller.BuiltIn;
 
 import java.util.List;
+import java.util.Random;
 
 import Constants.GameConstants;
-import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
 import Game.Logic.Mine;
@@ -16,24 +16,12 @@ import Game.Logic.Unit;
  *
  */
 public class SampleBot implements IPlayerController {
-		
-	@Override
-	public String getName() {
-		return "Boty McBotface";
-	}
-
-	@Override
-	public String getAuthor() {
-		return "Manuel Liebchen";
-	}
-
-	@Override
-	public int getMatrikelnummer() {
-		return -1;
-	}
+	Random random = new Random();
+	
+	int nextUnit = 1;
 	
 	@Override
-	public UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
+	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		List<Mine> mines = mapInfo.getMines();
 		List<Unit> units = ownPlayer.getUnits();
 		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 0.9f);
@@ -48,9 +36,34 @@ public class SampleBot implements IPlayerController {
 			}
 		}
 		
-		return UNIT_TYPE.RED;
+//		if(Unit.getUnitCost(nextUnit) <= ownPlayer.getCreditPoints()) {
+//			if(ownPlayer.setUnitCreationOrder(this, nextUnit) != 0) {
+//				nextUnit = random.nextInt(3)+1;
+//				System.out.println(nextUnit);
+//			}
+//		}
+		if(ownPlayer.getPlayerID() == 0) {
+			ownPlayer.setUnitCreationOrder(this, 1);
+		} else {
+			ownPlayer.setUnitCreationOrder(this, 1);
+		}
 	}
 
+	
+	@Override
+	public String getName() {
+		return "Boty McBotface";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "Manuel Liebchen";
+	}
+
+	@Override
+	public int getMatrikelnummer() {
+		return -1;
+	}
 
 
 }

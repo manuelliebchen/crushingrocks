@@ -1,6 +1,5 @@
 package Game.Controller.BuiltIn;
 
-import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
 import Game.Logic.Player;
@@ -38,7 +37,7 @@ public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 	}
 
 	@Override
-	public UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
+	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		if (mineOrder - 1 >= 0 && mineOrder - 1 < mapInfo.getMines().size()) {
 			for (Unit unit : ownPlayer.getUnits()) {
 				unit.setOrder(this, mapInfo.getMines().get(mineOrder - 1).getPosition().sub(unit.getPosition()));
@@ -48,7 +47,7 @@ public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 				unit.setOrder(this, enemyPlayerInfo.getBase().getPosition().sub(unit.getPosition()));
 			}
 		}
-		return UNIT_TYPE.RED;
+		ownPlayer.setUnitCreationOrder(this, 1);
 	}
 
 	@Override

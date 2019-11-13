@@ -64,8 +64,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS), (event) -> {
-			update();
-			redraw();
+			frame();
 		});
 
 		timeline.setCycleCount(Animation.INDEFINITE);
@@ -89,7 +88,6 @@ public final class InGame extends GameState implements ISelfUpdating {
 	 */
 	@Override
 	public void update() {
-
 		GameStatistic statistic = game.tick();
 		if (statistic != null) {
 			manager.switchCurrentState(new GameStatisticState(manager, context, statistic));

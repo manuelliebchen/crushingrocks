@@ -1,6 +1,5 @@
 package Game.Controller.BuiltIn;
 
-import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Logic.Map;
 import Game.Logic.Player;
@@ -28,8 +27,7 @@ public class EmptyBot implements IPlayerController {
 	}
 	
 	@Override
-	public UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
-		return null;
+	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 	}
 
 

@@ -3,7 +3,6 @@ package Game.Logic;
 import java.util.List;
 
 import Constants.GameConstants;
-import Constants.GameConstants.UNIT_TYPE;
 import Game.Controller.IPlayerController;
 import Game.Types.Vector;
 
@@ -11,17 +10,14 @@ public class Unit {
 
 	private Vector position;
 	private Player owner;
-	private int hp;
-
-	private UNIT_TYPE type;
+	private int strength;
 
 	private Vector orderedDirection;
 
-	Unit(UNIT_TYPE ut, Player owner, Vector position) {
-		this.type = ut;
+	Unit(int strength, Player owner, Vector position) {
+		this.strength = strength;
 		this.owner = owner;
 		this.position = position;
-		this.hp = GameConstants.INITIAL_UNIT_HP;
 	}
 
 	public Player getOwner() {
@@ -32,12 +28,8 @@ public class Unit {
 		return position.copy();
 	}
 
-	public int getHP() {
-		return hp;
-	}
-
-	public UNIT_TYPE getType() {
-		return type;
+	public int getStrength() {
+		return strength;
 	}
 
 	public void setOrder(IPlayerController controller, Vector direction) {
@@ -54,10 +46,10 @@ public class Unit {
 			Vector targetPosition = position.add(orderedDirection);
 			boolean hit = false;
 			for (int i = 0; i < allUnits.size(); i++) {
-				if (allUnits.get(i) != this && allUnits.get(i).position.sub(targetPosition).length() < GameConstants.UNIT_SIZE) {
-					hit = true;
-					break;
-				}
+//				if (allUnits.get(i) != this && allUnits.get(i).position.sub(targetPosition).length() < GameConstants.UNIT_BODY_RADIUS) {
+//					hit = true;
+//					break;
+//				}
 			}
 			if (!hit) {
 				position = targetPosition;
@@ -70,6 +62,10 @@ public class Unit {
 	}
 
 	void attackBy(int damage) {
-		hp -= damage;
+		strength -= damage;
+	}
+	
+	public static int getUnitCost(int strength) {
+		return (int) (Math.pow(strength, GameConstants.COST_EXPONENT) *  GameConstants.COST_MULTIPIER);
 	}
 }

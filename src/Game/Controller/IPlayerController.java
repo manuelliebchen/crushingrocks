@@ -1,6 +1,5 @@
 package Game.Controller;
 
-import Constants.GameConstants.UNIT_TYPE;
 import Game.Logic.Map;
 import Game.Logic.Player;
 
@@ -34,5 +33,5 @@ public interface IPlayerController {
 	 * It is called in every update step of the game as long as the player is alive.
 	 * @return The direction and speed in which the should move. A zero vector means no movement.
 	 */
-	UNIT_TYPE think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo);
+	void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo);
 }

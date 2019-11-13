@@ -55,10 +55,10 @@ public class Base {
 
 	void update(List<Unit> allUnits) {
 		List<Unit> unitsInBaseRadius = allUnits.stream().filter(
-				(u) -> position.distance(u.getPosition()) < GameConstants.BASE_RADIUS && u.getOwner() != owner)
+				(u) -> position.distance(u.getPosition()) < GameConstants.BASE_RADIUS + GameConstants.UNIT_RADIUS && u.getOwner() != owner)
 				.collect(Collectors.toList());
 		int unitsInAttackRadius = unitsInBaseRadius.stream().filter(
-				(u) -> position.distance(u.getPosition()) < GameConstants.UNIT_RADIUS)
+				(u) -> position.distance(u.getPosition()) < GameConstants.BASE_RADIUS + GameConstants.UNIT_RADIUS)
 				.toArray().length;
 
 		for (int i = 0; i < unitsInBaseRadius.size(); i++) {
