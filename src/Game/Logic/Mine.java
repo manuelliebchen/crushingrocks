@@ -67,23 +67,18 @@ public class Mine {
 			return;
 		}
 		
-		for(int i = 0; i < count.length; ++i) {
-			if((count[i] / sum) > 1/ players.size()) {
-				ownership[i] += GameConstants.MINE_CAPTURING_PER_TICK;
-			} else {
-				ownership[i] -= GameConstants.MINE_CAPTURING_PER_TICK;
+		for(int i = 0; i < ownership.length; ++i) {
+			float negativSum = 0;
+			for(int j = 0; j < count.length; ++j) {
+				if(i != j) {
+					negativSum += count[j];
+				}
 			}
+			ownership[i] += (count[i] - negativSum) * GameConstants.MINE_CAPTURING_PER_TICK;
 		}
 		
-		sum = 0;
 		for(int i = 0; i < ownership.length; ++i) {
-			sum += ownership[i];
-		}
-		for(int i = 0; i < ownership.length; ++i) {
-			ownership[i] /= sum;
-		}
-		for(int i = 0; i < ownership.length; ++i) {
-			ownership[i] = Math.min(1,Math.max(0,ownership[i]));
+			ownership[i] = Math.min(1, Math.max(0, ownership[i]));
 		}
 	}
 }

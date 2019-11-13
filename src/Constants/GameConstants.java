@@ -81,14 +81,14 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #MAX_UNITS_PER_PLAYER}
 	 */
-	public static final int MAX_UNITS_PER_PLAYER = 8;
+	public static final int MAX_UNITS_PER_PLAYER = 16;
 	
 	/**
 	 * Number of mines on the map.
 	 * <p>
 	 * Value = {@value #NUMBER_OF_MINES}
 	 */
-	public static final int NUMBER_OF_MINES = 7;
+	public static final int NUMBER_OF_MINES = 9;
 
 	/**
 	 * Income per owned mine per tick.

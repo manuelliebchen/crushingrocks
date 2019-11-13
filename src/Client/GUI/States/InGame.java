@@ -55,7 +55,6 @@ public final class InGame extends GameState implements ISelfUpdating {
 //        playerControllers.add(playerLoader.instantiateLoadedExternController(HumanBot.class.getName()));
 		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
 		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
-//		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
 
 		game = new Game(playerControllers);
 
