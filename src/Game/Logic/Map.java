@@ -70,6 +70,10 @@ public class Map {
 				}
 			}
 			for(Vector mineposition : minePositions) {
+				if(mineposition.getX() > GameConstants.MAP_RADIUS || mineposition.getX() < -GameConstants.MAP_RADIUS || mineposition.getY() > GameConstants.MAP_RADIUS || mineposition.getY() < -GameConstants.MAP_RADIUS) {
+					overlap = true;
+					break;
+				}
 				for(Vector minepositiontwo : minePositions) {
 					if(mineposition.distance(minepositiontwo) < GameConstants.EPSILON) {
 						continue;

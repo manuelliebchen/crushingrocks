@@ -117,28 +117,11 @@ final class FileClassLoader extends URLClassLoader {
          if (read != bytes.length) {
             return null;
          }
-         return createClass(bytes);
+         Class<?> clazz = defineClass(null, bytes, 0, bytes.length);
+         resolveClass(clazz);
+         return clazz;
       } finally {
          fis.close();
       }
-   }
-
-   /**
-    * Converts an array of bytes into an instance of class Class and resolves
-    * the Class so it can be used.
-    * <P>
-    * The byte array should have the format of a valid class file as defined
-    * by the <a href="http://java.sun.com/docs/books/vmspec/">
-    * Java Virtual Machine Specification</a>.
-    * 
-    * @param bytes The bytes that make up the class data
-    * @return The Class object that was created from the byte array
-    * @see ClassLoader#defineClass(String, byte[], int, int) 
-    * @see ClassLoader#resolveClass(Class) 
-    */
-   public Class<?> createClass(byte[] bytes) {
-      Class<?> clazz = defineClass(null, bytes, 0, bytes.length);
-      resolveClass(clazz);
-      return clazz;
    }
 }

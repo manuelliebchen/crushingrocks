@@ -18,7 +18,7 @@ import Game.Logic.Unit;
 public class SampleBot implements IPlayerController {
 	Random random = new Random();
 	
-	int nextUnit = 1;
+	int nextUnit = random.nextInt(3)+1;
 	
 	@Override
 	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
@@ -35,24 +35,13 @@ public class SampleBot implements IPlayerController {
 				unit.setOrder(this, mines.get(mines.size() -1).getPosition().sub(unit.getPosition()));
 			}
 		}
-		
-//		if(Unit.getUnitCost(nextUnit) <= ownPlayer.getCreditPoints()) {
-//			if(ownPlayer.setUnitCreationOrder(this, nextUnit) != 0) {
-//				nextUnit = random.nextInt(3)+1;
-//				System.out.println(nextUnit);
-//			}
-//		}
-		if(ownPlayer.getPlayerID() == 0) {
-			ownPlayer.setUnitCreationOrder(this, 1);
-		} else {
-			ownPlayer.setUnitCreationOrder(this, 1);
-		}
+		ownPlayer.setUnitCreationOrder(this, nextUnit);
 	}
 
 	
 	@Override
 	public String getName() {
-		return "Boty McBotface";
+		return "Boty McBotface - " + String.valueOf(nextUnit);
 	}
 
 	@Override

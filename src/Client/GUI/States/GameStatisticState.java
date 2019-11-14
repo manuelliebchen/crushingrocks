@@ -22,7 +22,7 @@ public class GameStatisticState extends MenuState {
 				.setKeyCode(KeyCode.ESCAPE));
 		drawables.add(buttons.get(0));
 		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Restart",
-				() -> manager.switchCurrentState(new InGame(manager, context))).setVerticalAlignment(Alignment.RIGHT)
+				() -> manager.switchCurrentState(new InGame(manager, context, 1))).setVerticalAlignment(Alignment.RIGHT)
 						.setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ENTER));
 		drawables.add(buttons.get(1));
 

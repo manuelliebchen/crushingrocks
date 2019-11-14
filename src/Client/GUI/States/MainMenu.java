@@ -33,7 +33,7 @@ public class MainMenu extends MenuState {
 	public MainMenu(StateManager manager, GraphicsContext context) {
 		super(manager, context);
 		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game",
-				() -> manager.push(new InGame(manager, context))).setVerticalAlignment(Alignment.CENTER)
+				() -> manager.push(new InGame(manager, context, 4))).setVerticalAlignment(Alignment.CENTER)
 						.setHorizontalAlignment(Alignment.TOP).setKeyCode(KeyCode.ENTER));
 		buttons.add(new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits",
 				() -> manager.push(new Credits(manager, context))).setVerticalAlignment(Alignment.CENTER)

@@ -41,7 +41,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 	Timeline timeline;
 //    private float timeSinceLastGameUpdate = 0;
 
-	public InGame(StateManager manager, GraphicsContext context) {
+	public InGame(StateManager manager, GraphicsContext context, int speed) {
 		super(manager, context);
 
 		PlayerControllerLoader playerLoader = new PlayerControllerLoader();
@@ -49,7 +49,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 		// Only for testing purposes, you should use a special directory for external
 		// bots.
 		// Build in bots, can always be loaded via instantiateInternController.
-		playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
+//		playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
 
 		ArrayList<IPlayerController> playerControllers = new ArrayList<>();
 //        playerControllers.add(playerLoader.instantiateLoadedExternController(HumanBot.class.getName()));
@@ -63,7 +63,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 		hudRenderer = new HUDRenderer(game);
 
 		timeline = new Timeline();
-		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS), (event) -> {
+		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS/speed), (event) -> {
 			frame();
 		});
 
@@ -105,6 +105,9 @@ public final class InGame extends GameState implements ISelfUpdating {
 	 */
 	@Override
 	public void redraw() {
+		if(timeline.getStatus() != Status.RUNNING) {
+			return;
+		}
 		Canvas canvas = context.getCanvas();
 		context.setFill(DesignConstants.BACKGROUND_COLOR);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
