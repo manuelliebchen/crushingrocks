@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -49,7 +50,6 @@ public class MainWindow extends Application {
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight(), false, SceneAntialiasing.BALANCED);
 		stage.setScene(scene);
 
-
 		// Create StateManager and set MainMenu as start state
 		StateManager manager = new StateManager(stage, canvas.getGraphicsContext2D());
 		manager.push(new MainMenu(manager, canvas.getGraphicsContext2D()));
@@ -58,13 +58,18 @@ public class MainWindow extends Application {
 			@Override
 			public void handle(Event event) {
 				// Get elapsed time
-				if(event instanceof InputEvent) {
-					manager.handle((InputEvent)event);
+				if (event instanceof InputEvent) {
+					if (event instanceof KeyEvent) {
+						KeyEvent keyEvent = ((KeyEvent) event);
+						if (keyEvent.getCode() == KeyCode.Q && keyEvent.isControlDown()) {
+							manager.popAll();
+						}
+					}
+					manager.handle((InputEvent) event);
 				}
 				// Update and draw states
-				manager.update();
-				manager.redraw();
-				
+				manager.frame();
+
 			}
 		};
 
@@ -79,7 +84,7 @@ public class MainWindow extends Application {
 		stage.widthProperty().addListener(stageSizeListener);
 		stage.heightProperty().addListener(stageSizeListener);
 		stage.show();
-		
+
 		manager.frame();
 	}
 }

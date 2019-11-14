@@ -52,6 +52,12 @@ public final class StateManager implements EventHandler<InputEvent> {
 		}
 		redraw();
 	}
+	
+	public void popAll() {
+		while(!stateStack.empty()) {
+			pop();
+		}
+	}
 
 	/**
 	 * Returns the current state on top.
