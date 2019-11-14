@@ -11,6 +11,7 @@ import Game.Logic.Mine;
 import Game.Logic.Player;
 import Game.Logic.Unit;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.ArcType;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -42,7 +43,7 @@ public final class MapOverlayRendering implements IDrawable {
 	 * @param context           Context to draw on.
 	 * @param timeSinceLastDraw Time passed since last draw in seconds.
 	 */
-	public void draw(GraphicsContext context) {		
+	public void draw(GraphicsContext context) {
 		for (Base base : bases) {
 			context.setStroke(base.getOwner().getColor());
 			context.strokeOval(base.getPosition().getX() - GameConstants.BASE_RADIUS,
@@ -60,18 +61,27 @@ public final class MapOverlayRendering implements IDrawable {
 
 		for (Mine mine : mines) {
 			float[] ownership = mine.getOwnership();
-			context.setStroke(players.get(0).getColor().interpolate(players.get(1).getColor(), ownership[1]));
-			context.strokeOval(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
-					2 * GameConstants.MINE_RADIUS);
+//			context.setStroke(players.get(0).getColor().interpolate(players.get(1).getColor(), ownership[1]));
+//			context.strokeOval(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
+//					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
+//					2 * GameConstants.MINE_RADIUS);
 
-			context.setFill(players.get(1).getColor());
-			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04, GameConstants.MINE_RADIUS * 2, 0.02);
-			context.setFill(players.get(0).getColor());
-			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04,
-					GameConstants.MINE_RADIUS * 2 * ownership[0], 0.02);
+//			context.setFill(players.get(1).getColor());
+//			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
+//					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04, GameConstants.MINE_RADIUS * 2, 0.02);
+//			context.setFill(players.get(0).getColor());
+//			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
+//					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04,
+//					GameConstants.MINE_RADIUS * 2 * ownership[0], 0.02);
+
+			for (int i = 0; i < ownership.length; ++i) {
+				context.setStroke(players.get(i).getColor());
+				context.strokeArc(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
+						mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
+						2 * GameConstants.MINE_RADIUS,
+						(float) (GameConstants.PLAYER_BASE_POSITION[i].getAngle() * 360/(Math.PI * 2) - ownership[i] * 180),
+						(float) (ownership[i] * 360), ArcType.OPEN);
+			}
 		}
 
 		for (Player player : players) {
@@ -80,15 +90,6 @@ public final class MapOverlayRendering implements IDrawable {
 				context.strokeOval(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
 						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
 						2 * GameConstants.UNIT_RADIUS);
-
-//				context.setFill(DesignConstants.HEALTH_BACKGROUND);
-//				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-//						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04, GameConstants.UNIT_RADIUS * 2,
-//						0.02);
-//				context.setFill(DesignConstants.HEALTH_FOREGROUND);
-//				context.fillRect(unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-//						unit.getPosition().getY() - GameConstants.UNIT_RADIUS - 0.04,
-//						GameConstants.UNIT_RADIUS * 2 * unit.getStrength() / GameConstants.INITIAL_UNIT_HP, 0.02);
 			}
 		}
 	}

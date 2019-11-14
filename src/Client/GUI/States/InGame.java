@@ -1,6 +1,7 @@
 package Client.GUI.States;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.ISelfUpdating;
@@ -51,7 +52,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 		// Build in bots, can always be loaded via instantiateInternController.
 //		playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
 
-		ArrayList<IPlayerController> playerControllers = new ArrayList<>();
+		List<IPlayerController> playerControllers = new ArrayList<>();
 //        playerControllers.add(playerLoader.instantiateLoadedExternController(HumanBot.class.getName()));
 		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
 		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
@@ -91,9 +92,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 		GameStatistic statistic = game.tick();
 		if (statistic != null) {
 			manager.switchCurrentState(new GameStatisticState(manager, context, statistic));
-			manager.redraw();
 		}
-
 		mapRenderer.update();
 	}
 

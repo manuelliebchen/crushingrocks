@@ -77,6 +77,14 @@ public class Mine {
 			ownership[i] += (count[i] - negativSum) * GameConstants.MINE_CAPTURING_PER_TICK;
 		}
 		
+		sum = 0;
+		for(float owner : ownership) {
+			sum += owner;
+		}
+		for(int i = 0; i < count.length; ++i) {
+			ownership[i] /= sum;
+		}
+		
 		for(int i = 0; i < ownership.length; ++i) {
 			ownership[i] = Math.min(1, Math.max(0, ownership[i]));
 		}

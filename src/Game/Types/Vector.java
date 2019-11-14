@@ -250,4 +250,16 @@ public final class Vector {
 		double y = this.x * sin + this.y * cos;
 		return new Vector((float) x, (float) y);
 	}
+	
+	/**
+	 * 
+	 * @return angle to (1, 0)^t in rad.
+	 */
+	public float getAngle() {
+		float angle = (float) Math.acos(this.getNormalized().dot(new Vector(1,0)));
+		if(y > 0) {
+			return (float) (2 * Math.PI - angle);
+		}
+		return angle;
+	}
 }
