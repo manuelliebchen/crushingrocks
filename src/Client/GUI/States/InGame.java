@@ -1,8 +1,5 @@
 package Client.GUI.States;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Client.GUI.States.Interfaces.GameState;
 import Client.GUI.States.Interfaces.ISelfUpdating;
 import Client.Rendering.Rendering.HUDRenderer;
@@ -11,9 +8,6 @@ import Client.Rendering.Rendering.MapRendering;
 import Constants.ClientConstants;
 import Constants.DesignConstants;
 import Constants.GameConstants;
-import Game.Controller.IPlayerController;
-import Game.Controller.PlayerControllerLoader;
-import Game.Controller.BuiltIn.SampleBot;
 import Game.Logic.Game;
 import Game.Logic.GameStatistic;
 import javafx.animation.Animation;
@@ -40,31 +34,21 @@ public final class InGame extends GameState implements ISelfUpdating {
 	private HUDRenderer hudRenderer;
 
 	Timeline timeline;
-//    private float timeSinceLastGameUpdate = 0;
+	
+	private InGameSettings settings;
 
-	public InGame(StateManager manager, GraphicsContext context, int speed) {
+	public InGame(StateManager manager, GraphicsContext context, InGameSettings settings) {
 		super(manager, context);
+		this.settings = settings;
 
-		PlayerControllerLoader playerLoader = new PlayerControllerLoader();
-
-		// Only for testing purposes, you should use a special directory for external
-		// bots.
-		// Build in bots, can always be loaded via instantiateInternController.
-//		playerLoader.loadControllerFromDirectory("Game/Controller/BuiltIn/");
-
-		List<IPlayerController> playerControllers = new ArrayList<>();
-//        playerControllers.add(playerLoader.instantiateLoadedExternController(HumanBot.class.getName()));
-		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
-		playerControllers.add(playerLoader.instantiateInternController(SampleBot.class.getName()));
-
-		game = new Game(playerControllers);
+		game = new Game(settings.getControllers());
 
 		mapRenderer = new MapRendering(game.getMap());
 		mapOverlayRenderer = new MapOverlayRendering(game.getMap());
 		hudRenderer = new HUDRenderer(game);
 
 		timeline = new Timeline();
-		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS/speed), (event) -> {
+		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS/settings.getSpeedMultiplier()), (event) -> {
 			frame();
 		});
 
@@ -91,7 +75,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 	public void update() {
 		GameStatistic statistic = game.tick();
 		if (statistic != null) {
-			manager.switchCurrentState(new GameStatisticState(manager, context, statistic));
+			manager.switchCurrentState(new GameStatisticState(manager, context, statistic, settings));
 		}
 		mapRenderer.update();
 	}

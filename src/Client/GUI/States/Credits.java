@@ -24,7 +24,7 @@ public class Credits extends MenuState {
 	 */
 	public Credits(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		drawables.add(new TextBox(new Point2D(200, 125), "Credits:\nManuel Liebchen\nAnja Kaminski\nMichl Steglich"));
+		drawables.add(new TextBox(new Point2D(100, 100), "Credits:\nManuel Liebchen\nAnja Kaminski\nMichl Steglich"));
 		Button backbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Back", () -> manager.pop())
 				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ESCAPE);
 		drawables.add(backbutton);

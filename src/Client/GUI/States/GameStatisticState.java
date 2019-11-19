@@ -14,17 +14,15 @@ import javafx.scene.input.KeyCode;
 
 public class GameStatisticState extends MenuState {
 
-	public GameStatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic) {
+	public GameStatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic, InGameSettings settings) {
 		super(manager, context);
 
 		buttons.add(new Button(new Point2D(400, 125), new Point2D(150, 50), "Back", () -> manager.pop())
 				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM)
 				.setKeyCode(KeyCode.ESCAPE));
-		drawables.add(buttons.get(0));
 		buttons.add(new Button(new Point2D(200, 125), new Point2D(150, 50), "Restart",
-				() -> manager.switchCurrentState(new InGame(manager, context, 1))).setVerticalAlignment(Alignment.RIGHT)
+				() -> manager.switchCurrentState(new InGame(manager, context, settings))).setVerticalAlignment(Alignment.RIGHT)
 						.setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.ENTER));
-		drawables.add(buttons.get(1));
 
 		String title = "GameStatistics";
 		if (statistic.isDraw()) {
@@ -43,6 +41,8 @@ public class GameStatisticState extends MenuState {
 		drawables.add(
 				new TextBox(new Point2D(450, 200), statistic.getScoreString()).setVerticalAlignment(Alignment.CENTER)
 						.setHorizontalAlignment(Alignment.TOP).setTextAlignment(Alignment.RIGHT));
+
+		drawables.addAll(buttons);
 	}
 
 	@Override

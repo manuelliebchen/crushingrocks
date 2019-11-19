@@ -81,24 +81,17 @@ public final class PlayerControllerLoader {
 					if (!classFile.exists()) {
 						continue;
 					}
+					
 					// add url
 					try {
 						URL url = new URL(
-								"file:" + File.separator + FileSystems.getDefault().getPath("").toAbsolutePath());
+								"file:" + File.separator + FileSystems.getDefault().getPath("").toAbsolutePath() + classFile.getAbsolutePath());
 						fileClassLoader.addURL(url);
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
 						continue;
 					}
-				}
-			}
-			for (int i = 0; i < listOfFiles.length; i++) {
-				String filename = listOfFiles[i].getAbsolutePath();
-				if (listOfFiles[i].isFile() && filename.endsWith(".class")) {
-					File classFile = new File(filename);
-					if (!classFile.exists()) {
-						continue;
-					}
+					
 					// load subclasses
 					if (filename.contains("$")) {
 						try {

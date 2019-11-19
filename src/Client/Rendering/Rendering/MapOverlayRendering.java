@@ -45,34 +45,20 @@ public final class MapOverlayRendering implements IDrawable {
 	 */
 	public void draw(GraphicsContext context) {
 		for (Base base : bases) {
-			context.setStroke(base.getOwner().getColor());
+			context.setStroke(DesignConstants.HEALTH_BACKGROUND);
 			context.strokeOval(base.getPosition().getX() - GameConstants.BASE_RADIUS,
 					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
 					2 * GameConstants.BASE_RADIUS);
-
-			context.setFill(DesignConstants.HEALTH_BACKGROUND);
-			context.fillRect(base.getPosition().getX() - GameConstants.BASE_RADIUS,
-					base.getPosition().getY() - GameConstants.BASE_RADIUS - 0.04, GameConstants.BASE_RADIUS * 2, 0.02);
-			context.setFill(DesignConstants.HEALTH_FOREGROUND);
-			context.fillRect(base.getPosition().getX() - GameConstants.BASE_RADIUS,
-					base.getPosition().getY() - GameConstants.BASE_RADIUS - 0.04,
-					GameConstants.BASE_RADIUS * 2 * base.getHP() / GameConstants.INITIAL_BASE_HP, 0.02);
+			context.setStroke(base.getOwner().getColor());
+			context.strokeArc(base.getPosition().getX() - GameConstants.BASE_RADIUS,
+					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
+					2 * GameConstants.BASE_RADIUS,
+					(float) (GameConstants.PLAYER_BASE_POSITION[base.getOwner().getPlayerID()].getAngle() * 360/(Math.PI * 2) - (180 * base.getHP() / GameConstants.INITIAL_BASE_HP)),
+					(float) (360 * base.getHP() / GameConstants.INITIAL_BASE_HP), ArcType.OPEN);
 		}
 
 		for (Mine mine : mines) {
 			float[] ownership = mine.getOwnership();
-//			context.setStroke(players.get(0).getColor().interpolate(players.get(1).getColor(), ownership[1]));
-//			context.strokeOval(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-//					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
-//					2 * GameConstants.MINE_RADIUS);
-
-//			context.setFill(players.get(1).getColor());
-//			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-//					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04, GameConstants.MINE_RADIUS * 2, 0.02);
-//			context.setFill(players.get(0).getColor());
-//			context.fillRect(mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-//					mine.getPosition().getY() - GameConstants.MINE_RADIUS - 0.04,
-//					GameConstants.MINE_RADIUS * 2 * ownership[0], 0.02);
 
 			for (int i = 0; i < ownership.length; ++i) {
 				context.setStroke(players.get(i).getColor());

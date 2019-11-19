@@ -3,8 +3,6 @@ package Client.GUI;
 import Client.GUI.States.MainMenu;
 import Client.GUI.States.StateManager;
 import Client.Rendering.Drawing.ImageManager;
-import Client.Web.News;
-import Client.Web.Version;
 import Constants.ClientConstants;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -32,8 +30,8 @@ public class MainWindow extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Check version and news
-		Version.loadVersion();
-		News.loadNews();
+//		Version.loadVersion();
+//		News.loadNews();
 
 		// Set window settings and show window
 		stage.getIcons().add(ImageManager.getInstance().loadImage("icon.png"));
