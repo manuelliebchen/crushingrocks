@@ -22,11 +22,6 @@ public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 	}
 
 	@Override
-	public String getName() {
-		return "Human Bot";
-	}
-
-	@Override
 	public String getAuthor() {
 		return "Max Klockmann";
 	}

@@ -1,5 +1,6 @@
 package Client.GUI.States;
 
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import Client.GUI.Elements.TextBox;
 import Client.GUI.States.Interfaces.IDrawable;
 import Client.GUI.States.Interfaces.MenuState;
 import Constants.DesignConstants.Alignment;
-import Game.Controller.PlayerControllerLoader;
+import Game.Controller.BotClassLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -17,8 +18,8 @@ import javafx.scene.input.KeyCode;
 public class BotSelectionState extends MenuState {
 
 	private int[] selectedBot;
-	private PlayerControllerLoader playerLoader;
-	private List<String> bots;
+	private BotClassLoader playerLoader;
+	private List<Class<?>> bots;
 
 	private int speedMultiplier;
 
@@ -27,8 +28,8 @@ public class BotSelectionState extends MenuState {
 
 		speedMultiplier = 1;
 
-		playerLoader = new PlayerControllerLoader();
-		playerLoader.loadControllerFromDirectory("bin/");
+		playerLoader = new BotClassLoader();
+		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("bin/").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedExternControllerClassNames();
 
 		drawables.add(new TextBox(new Point2D(100, 100), "Bot Selection").setVerticalAlignment(Alignment.LEFT)
@@ -45,14 +46,14 @@ public class BotSelectionState extends MenuState {
 
 			buttons.add(new Button(new Point2D(-300, 150), new Point2D(50, 50), "<", () -> updateSelection(0, -1))
 					.setVerticalAlignment(Alignment.CENTER));
-			drawables.add(new DynamicTextBox(new Point2D(-100, 200), () -> bots.get(selectedBot[0]))
+			drawables.add(new DynamicTextBox(new Point2D(-100, 200), () -> bots.get(selectedBot[0]).getSimpleName())
 					.setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
 			buttons.add(new Button(new Point2D(300, 150), new Point2D(50, 50), ">", () -> updateSelection(0, 1))
 					.setVerticalAlignment(Alignment.CENTER));
 
 			buttons.add(new Button(new Point2D(-300, 250), new Point2D(50, 50), "<", () -> updateSelection(1, -1))
 					.setVerticalAlignment(Alignment.CENTER));
-			drawables.add(new DynamicTextBox(new Point2D(-100, 300), () -> bots.get(selectedBot[1]))
+			drawables.add(new DynamicTextBox(new Point2D(-100, 300), () -> bots.get(selectedBot[1]).getSimpleName())
 					.setVerticalAlignment(Alignment.CENTER).setHorizontalAlignment(Alignment.TOP));
 			buttons.add(new Button(new Point2D(300, 250), new Point2D(50, 50), ">", () -> updateSelection(1, 1))
 					.setVerticalAlignment(Alignment.CENTER));
@@ -87,7 +88,7 @@ public class BotSelectionState extends MenuState {
 	private InGameSettings generateSettings() {
 		List<String> names = new ArrayList<>(2);
 		for (int i = 0; i < 2; ++i) {
-			names.add(bots.get(selectedBot[i]));
+			names.add(bots.get(selectedBot[i]).getName());
 		}
 		return new InGameSettings(playerLoader, names, speedMultiplier);
 	}

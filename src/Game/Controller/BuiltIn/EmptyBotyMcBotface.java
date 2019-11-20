@@ -9,12 +9,7 @@ import Game.Logic.Player;
  * @author Manuel Liebchen
  *
  */
-public class EmptyBot implements IPlayerController {
-		
-	@Override
-	public String getName() {
-		return "Boty McBotface";
-	}
+public class EmptyBotyMcBotface implements IPlayerController {
 
 	@Override
 	public String getAuthor() {

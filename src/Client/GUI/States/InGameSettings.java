@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Game.Controller.IPlayerController;
-import Game.Controller.PlayerControllerLoader;
+import Game.Controller.BotClassLoader;
 
 public class InGameSettings {
 
-	private PlayerControllerLoader playerLoader;
+	private BotClassLoader playerLoader;
 	private List<String> names;
 	private int speedMultiplier;
 
-	InGameSettings(PlayerControllerLoader playerLoader, List<String> controllers, int speedMultiplier) {
+	InGameSettings(BotClassLoader playerLoader, List<String> controllers, int speedMultiplier) {
 		this.playerLoader = playerLoader;
 		this.speedMultiplier = speedMultiplier;
 		this.names = controllers;
@@ -25,7 +25,7 @@ public class InGameSettings {
 	public List<IPlayerController> getControllers() {
 		List<IPlayerController> controller = new ArrayList<>(names.size());
 		for(String name : names) {
-			controller.add(playerLoader.instantiateInternController(name));
+			controller.add(playerLoader.instantiateLoadedExternController(name));
 		}
 		return controller;
 	}

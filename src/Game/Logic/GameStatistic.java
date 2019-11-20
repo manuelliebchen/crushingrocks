@@ -38,7 +38,7 @@ public class GameStatistic {
 	public String getNameString() {
 		String construction = "Names\n";
 		for(Player player : players) {
-			construction += String.format("%s\n", player.getController().getName());
+			construction += String.format("%s\n", player.getController().getClass().getCanonicalName());
 		}
 		return construction;
 	}

@@ -9,12 +9,6 @@ import Game.Logic.Player;
  *
  */
 public interface IPlayerController {
-	/**
-	 * Returns the name of this player controller.
-	 * This name is used for displaying and does not need to be globally unique (though it would be nice).
-	 * @return The name of this controller.
-	 */
-	String getName();
 	
 	/**
 	 * Returns the name of the author of this player controller.

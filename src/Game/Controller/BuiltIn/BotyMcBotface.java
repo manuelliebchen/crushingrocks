@@ -15,7 +15,7 @@ import Game.Logic.Unit;
  * @author Manuel Liebchen
  *
  */
-public class SampleBot implements IPlayerController {
+public class BotyMcBotface implements IPlayerController {
 	Random random = new Random();
 	
 	int nextUnit = random.nextInt(3)+1;
@@ -36,12 +36,6 @@ public class SampleBot implements IPlayerController {
 			}
 		}
 		ownPlayer.setUnitCreationOrder(this, nextUnit);
-	}
-
-	
-	@Override
-	public String getName() {
-		return "Boty McBotface - " + String.valueOf(nextUnit);
 	}
 
 	@Override

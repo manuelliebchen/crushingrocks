@@ -50,7 +50,7 @@ public class Player {
 		try {
 			controller.think(mapInfo, this, enemyInfos);
 		} catch (Exception e) {
-			System.err.println(controller.getName() + " through an unhandled exception!");
+			System.err.println(controller.getClass().getSimpleName() + " through an unhandled exception!");
 			System.err.println(e);
 			for(StackTraceElement t : e.getStackTrace()) {
 				System.err.println(t);
@@ -127,6 +127,6 @@ public class Player {
 	
 	@Override
 	public int hashCode() {
-		return controller.getAuthor().hashCode() + controller.getName().hashCode() + controller.getMatrikelnummer();
+		return controller.getAuthor().hashCode() + controller.getClass().getSimpleName().hashCode() + controller.getMatrikelnummer();
 	}
 }
