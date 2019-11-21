@@ -15,6 +15,9 @@ import de.acagamics.game.controller.builtIn.HumanBot;
 
 public class BotClassLoader extends ClassLoader {
 
+	private final static Class<?>[] buildIn = new Class<?>[] { BotyMcBotface.class, EmptyBotyMcBotface.class,
+			HumanBot.class };
+
 	/**
 	 * List of all extern controller class names.
 	 */
@@ -23,9 +26,9 @@ public class BotClassLoader extends ClassLoader {
 	public BotClassLoader() {
 		super();
 		controllerClasses = new ArrayList<>();
-		controllerClasses.add(BotyMcBotface.class);
-		controllerClasses.add(EmptyBotyMcBotface.class);
-		controllerClasses.add(HumanBot.class);
+		for (Class<?> bot : buildIn) {
+			controllerClasses.add(bot);
+		}
 	}
 
 	/**
@@ -36,7 +39,6 @@ public class BotClassLoader extends ClassLoader {
 	 *                          files.
 	 */
 	public void loadControllerFromDirectory(String directoryFilename) {
-		System.out.println("Reading bot classes from: " + directoryFilename);
 		Stack<File> stackOfFiles = new Stack<>();
 		for (File file : new File(directoryFilename).listFiles()) {
 			stackOfFiles.push(file);
@@ -50,7 +52,7 @@ public class BotClassLoader extends ClassLoader {
 
 				Class<?> controllerClass = null;
 				controllerClass = defineClassFromFile(currentFile);
-				if(controllerClass == null) {
+				if (controllerClass == null) {
 					continue;
 				}
 
@@ -68,9 +70,11 @@ public class BotClassLoader extends ClassLoader {
 					controllerClasses.add(controller.getClass());
 				}
 			} else if (currentFile.isDirectory()) {
-//				for (File file : currentFile.listFiles()) {
-//					stackOfFiles.push(file);
-//				}
+				for (File file : currentFile.listFiles()) {
+					if (!file.getAbsolutePath().contains("de" + File.separator + "acagamics")) {
+						stackOfFiles.push(file);
+					}
+				}
 			}
 		}
 	}
@@ -139,7 +143,7 @@ public class BotClassLoader extends ClassLoader {
 			return defineClass(null, bytes, 0, bytes.length);
 		} catch (IOException e) {
 		} catch (LinkageError e) {
-		}finally {
+		} finally {
 
 			try {
 				fis.close();
