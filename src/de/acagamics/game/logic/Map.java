@@ -13,11 +13,11 @@ import de.acagamics.game.types.Vector;
  * @author Jan-Cord Gerken (jancord@acagamics.de)
  *
  */
-public class Map {
+public final class Map {
 
 	private List<Base> bases;
 	private List<Mine> mines;
-	private List<Player> player;
+	private List<Player> players;
 
 	private Random random;
 
@@ -25,11 +25,11 @@ public class Map {
 		this.random = random;
 
 		bases = new ArrayList<>(player.size());
-		this.player = player;
+		this.players = player;
 
 		for (int i = 0; i < player.size(); i++) {
 			bases.add(new Base(player.get(i), GameConstants.PLAYER_BASE_POSITION[i]));
-			this.player.get(i).setBase(bases.get(i));
+			this.players.get(i).setBase(bases.get(i));
 		}
 
 		List<Vector> minePositions = new ArrayList<>(GameConstants.NUMBER_OF_MINES);;
@@ -125,6 +125,18 @@ public class Map {
 	 * @return players in this map
 	 */
 	public List<Player> getPlayers() {
-		return new ArrayList<>(player);
+		return new ArrayList<>(players);
+	}
+	
+	/**
+	 * Get all Units on the map.
+	 * @return List of Units.
+	 */
+	public List<Unit> getAllUnits() {
+		List<Unit> allUnits = new ArrayList<>();
+		for(Player player : players) {
+			allUnits.addAll(player.getUnits());
+		}
+		return allUnits;
 	}
 }

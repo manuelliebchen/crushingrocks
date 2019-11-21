@@ -1,4 +1,4 @@
-package de.acagamics.client.rendering.rendering;
+package de.acagamics.client.rendering.renderer;
 
 import java.util.List;
 

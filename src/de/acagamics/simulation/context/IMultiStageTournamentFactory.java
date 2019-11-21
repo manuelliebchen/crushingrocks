@@ -1,4 +1,4 @@
-package de.acagamics.client.simulation.context;
+package de.acagamics.simulation.context;
 
 import java.util.List;
 

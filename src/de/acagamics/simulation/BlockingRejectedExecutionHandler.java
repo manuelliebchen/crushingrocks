@@ -1,4 +1,4 @@
-package de.acagamics.client.simulation;
+package de.acagamics.simulation;
 
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;

@@ -1,10 +1,11 @@
-package de.acagamics.game.logic;
+package de.acagamics.data;
 
 import java.util.List;
 
 import de.acagamics.constants.GameConstants;
+import de.acagamics.game.logic.Player;
 
-public class GameStatistic {
+public final class GameStatistic {
 	
 	List<Player> players;
 	boolean isDraw = false;
@@ -38,7 +39,7 @@ public class GameStatistic {
 	public String getNameString() {
 		String construction = "Names\n";
 		for(Player player : players) {
-			construction += String.format("%s\n", player.getController().getClass().getCanonicalName());
+			construction += String.format("%s\n", player.getName());
 		}
 		return construction;
 	}

@@ -1,16 +1,17 @@
-package de.acagamics.client;
+package de.acagamics;
 
 import javafx.application.Application;
 
 import org.apache.log4j.Logger;
 
-import de.acagamics.client.gui.MainWindow;
+import de.acagamics.client.MainWindow;
+import de.acagamics.data.CliArguments;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
  *
  */
-public class Main {
+public final class Main {
 	private static final Logger LOG = Logger.getLogger(Main.class);
 	
 	public static void main(String... args) throws Exception {

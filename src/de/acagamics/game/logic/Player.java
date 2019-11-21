@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
  * @author Jan-Cord Gerken (jancord@acagamics.de)
  *
  */
-public class Player {
+public final class Player {
 	private IPlayerController controller;
 	private int score;
 	private int creditPoints;
@@ -69,7 +69,26 @@ public class Player {
 			score += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
 		}
 	}
+
+	IPlayerController getController() {
+		return controller;
+	}
+
+	void removeDeath() {
+		units.removeIf( u -> u.getStrength() <= 0);
+	}
 	
+	@Override
+	public int hashCode() {
+		return controller.getAuthor().hashCode() + controller.getClass().getSimpleName().hashCode() + controller.getMatrikelnummer();
+	}
+	
+	/**
+	 * Sets the order of witch unit should be createt next frame.
+	 * @param controller of the owner of the player. This is mostly just 'this'.
+	 * @param strength of the unit to be created
+	 * @return the cost of the unit. Zero if none created.
+	 */
 	public int setUnitCreationOrder(IPlayerController controller, int strength) {
 		if(controller == this.controller && strength > 0 && strength <= 3) {
 			int cost = Unit.getUnitCost(strength);
@@ -81,6 +100,9 @@ public class Player {
 		return 0;
 	}
 	
+	/**
+	 * @return the identifier of the player.
+	 */
 	public int getPlayerID() {
 		return playerID;
 	}
@@ -94,39 +116,37 @@ public class Player {
 	}
 	
 	/**
-	 * Get the score of this player.
-	 * @return score
+	 * @return the score.
 	 */
 	public int getScore() {
 		return score;
 	}
 	
 	/**
-	 * Get the Base of the Player.
-	 * @return Base of the Player
+	 * @return the base of the Player.
 	 */
 	public Base getBase() {
 		return base;
 	}
 	
+	/**
+	 * @return the color of the player.
+	 */
 	public Color getColor() {
 		return color;
 	}
 
+	/**
+	 * @return a list of all units the player has under his controll.
+	 */
 	public List<Unit> getUnits() {
 		return new ArrayList<>(units);
 	}
-
-	IPlayerController getController() {
-		return controller;
-	}
-
-	void removeDeath() {
-		units.removeIf( u -> u.getStrength() <= 0);
-	}
 	
-	@Override
-	public int hashCode() {
-		return controller.getAuthor().hashCode() + controller.getClass().getSimpleName().hashCode() + controller.getMatrikelnummer();
+	/**
+	 * @return the name of the player.s
+	 */
+	public String getName() {
+		return controller.getClass().getSimpleName();
 	}
 }

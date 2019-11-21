@@ -1,4 +1,4 @@
-package de.acagamics.client.gui;
+package de.acagamics.client.utility;
 
 import java.util.HashMap;
 import java.util.Map;

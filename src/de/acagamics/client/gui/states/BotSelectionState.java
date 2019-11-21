@@ -10,6 +10,7 @@ import de.acagamics.client.gui.elements.TextBox;
 import de.acagamics.client.gui.states.interfaces.IDrawable;
 import de.acagamics.client.gui.states.interfaces.MenuState;
 import de.acagamics.constants.DesignConstants.Alignment;
+import de.acagamics.data.InGameSettings;
 import de.acagamics.game.controller.BotClassLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -64,10 +65,10 @@ public class BotSelectionState extends MenuState {
 		drawables.add(new TextBox(new Point2D(100, -200), "Speed Multiplier")
 				.setHorizontalAlignment(Alignment.BOTTOM));
 		buttons.add(new Button(new Point2D(100, 125), new Point2D(50, 50), "<",
-				() -> speedMultiplier += speedMultiplier > 1 ? -1 : 0).setHorizontalAlignment(Alignment.BOTTOM));
+				() -> speedMultiplier += speedMultiplier > 1 ? -1 : 0).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.MINUS));
 		drawables.add(new DynamicTextBox(new Point2D(200, -125), () -> String.valueOf(speedMultiplier) + "x")
 				.setHorizontalAlignment(Alignment.BOTTOM));
-		buttons.add(new Button(new Point2D(300, 125), new Point2D(50, 50), ">", () -> speedMultiplier += 1)
+		buttons.add(new Button(new Point2D(300, 125), new Point2D(50, 50), ">", () -> speedMultiplier += 1).setKeyCode(KeyCode.PLUS)
 				.setHorizontalAlignment(Alignment.BOTTOM));
 		
 		buttons.add(new Button(new Point2D(400, 125), new Point2D(150, 50), "Back", () -> manager.pop())
@@ -95,7 +96,6 @@ public class BotSelectionState extends MenuState {
 
 	@Override
 	public void redraw() {
-
 		for (IDrawable drawable : drawables) {
 			drawable.draw(context);
 		}

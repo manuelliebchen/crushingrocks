@@ -1,4 +1,4 @@
-package de.acagamics.client.simulation;
+package de.acagamics.simulation;
 
 import java.io.File;
 import java.lang.ProcessBuilder;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import de.acagamics.client.simulation.context.GameContext;
+import de.acagamics.simulation.context.GameContext;
 
 /**
  * Creates runnable processes from a collection of simulation contexts.
@@ -35,7 +35,7 @@ public final class SimulationProcessBuilder implements Iterator<Runnable> {
 
 	/**
 	 * Generate command line arguments as a list of strings from a
-	 * {@link de.acagamics.client.simulation.context.GameContext}.
+	 * {@link de.acagamics.simulation.context.GameContext}.
 	 * @param context the context to generate process arguments from.
 	 * @return the command line arguments in list of strings
 	 */

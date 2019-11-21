@@ -1,4 +1,4 @@
-package de.acagamics.client;
+package de.acagamics.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.beust.jcommander.Parameter;
  * Class for command-line parsing
  * @author Max Klockmann (max@acagamics.de)
  */
-public class CliArguments {
+public final class CliArguments {
 	private static final Logger LOG = Logger.getLogger(CliArguments.class);
 	
 	/**

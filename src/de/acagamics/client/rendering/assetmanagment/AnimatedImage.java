@@ -1,4 +1,4 @@
-package de.acagamics.client.rendering.drawing;
+package de.acagamics.client.rendering.assetmanagment;
 
 import javafx.scene.image.Image;
 

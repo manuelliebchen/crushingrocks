@@ -1,7 +1,7 @@
 package de.acagamics.client.gui.elements;
 
 import de.acagamics.client.gui.states.interfaces.IDrawable;
-import de.acagamics.client.rendering.drawing.ImageManager;
+import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.constants.DesignConstants.Alignment;
 import javafx.event.EventHandler;

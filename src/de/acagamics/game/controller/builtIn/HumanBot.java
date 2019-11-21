@@ -14,7 +14,7 @@ import javafx.scene.input.KeyEvent;
  * @author Max
  *
  */
-public class HumanBot implements IPlayerController, EventHandler<InputEvent> {
+public final class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 
 	private int mineOrder;
 

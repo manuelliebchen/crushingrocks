@@ -1,9 +1,9 @@
-package de.acagamics.client.rendering.rendering;
+package de.acagamics.client.rendering.renderer;
 
 import java.util.List;
 
 import de.acagamics.client.gui.states.interfaces.IDrawable;
-import de.acagamics.client.rendering.drawing.ImageManager;
+import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.logic.Base;
 import de.acagamics.game.logic.Map;
@@ -80,9 +80,9 @@ public final class MapRendering implements IDrawable {
 				} else {
 					untiTexture = unitTexture3;
 				}
-				context.drawImage(untiTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS, 2 * GameConstants.UNIT_RADIUS,
-						2 * GameConstants.UNIT_RADIUS);
+				context.drawImage(untiTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS * 2,
+						unit.getPosition().getY() - GameConstants.UNIT_RADIUS * 2, 4 * GameConstants.UNIT_RADIUS,
+						4 * GameConstants.UNIT_RADIUS);
 			}
 		}
 	}

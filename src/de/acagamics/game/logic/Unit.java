@@ -6,7 +6,7 @@ import de.acagamics.constants.GameConstants;
 import de.acagamics.game.controller.IPlayerController;
 import de.acagamics.game.types.Vector;
 
-public class Unit {
+public final class Unit {
 
 	private Vector position;
 	private Player owner;
@@ -20,18 +20,32 @@ public class Unit {
 		this.position = position;
 	}
 
+	/**
+	 * @return the player object of the owner.
+	 */
 	public Player getOwner() {
 		return owner;
 	}
 
+	/**
+	 * @return Position of this unit on the map.
+	 */
 	public Vector getPosition() {
 		return position.copy();
 	}
 
+	/**
+	 * @return strenght of this unit.
+	 */
 	public int getStrength() {
 		return strength;
 	}
 
+	/**
+	 * Sets the order for this unit for in current frame.
+	 * @param controller of the owner of the unit for verification.
+	 * @param direction in witch the unit should moves.
+	 */
 	public void setOrder(IPlayerController controller, Vector direction) {
 		if (controller == owner.getController()) {
 			orderedDirection = direction;
@@ -65,6 +79,11 @@ public class Unit {
 		strength -= damage;
 	}
 	
+	/**
+	 * Calculates the cost of an Unit with given strength.
+	 * @param strength of the unit in question
+	 * @return cost of unit with given strength
+	 */
 	public static int getUnitCost(int strength) {
 		return (int) (Math.pow(strength, GameConstants.COST_EXPONENT) *  GameConstants.COST_MULTIPIER);
 	}

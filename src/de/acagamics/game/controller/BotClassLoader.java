@@ -13,7 +13,7 @@ import de.acagamics.game.controller.builtIn.BotyMcBotface;
 import de.acagamics.game.controller.builtIn.EmptyBotyMcBotface;
 import de.acagamics.game.controller.builtIn.HumanBot;
 
-public class BotClassLoader extends ClassLoader {
+public final class BotClassLoader extends ClassLoader {
 
 	private final static Class<?>[] buildIn = new Class<?>[] { BotyMcBotface.class, EmptyBotyMcBotface.class,
 			HumanBot.class };

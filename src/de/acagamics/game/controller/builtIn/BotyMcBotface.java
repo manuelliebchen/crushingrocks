@@ -15,7 +15,7 @@ import de.acagamics.game.logic.Unit;
  * @author Manuel Liebchen
  *
  */
-public class BotyMcBotface implements IPlayerController {
+public final class BotyMcBotface implements IPlayerController {
 	Random random = new Random();
 	
 	int nextUnit = random.nextInt(3)+1;

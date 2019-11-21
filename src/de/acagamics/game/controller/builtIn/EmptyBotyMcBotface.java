@@ -9,7 +9,7 @@ import de.acagamics.game.logic.Player;
  * @author Manuel Liebchen
  *
  */
-public class EmptyBotyMcBotface implements IPlayerController {
+public final class EmptyBotyMcBotface implements IPlayerController {
 
 	@Override
 	public String getAuthor() {

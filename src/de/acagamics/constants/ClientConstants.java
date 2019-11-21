@@ -11,7 +11,7 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #VERSION}
 	 */
-	public static final String VERSION = "1.0.0";
+	public static final String VERSION = "1.1.0";
 	/**
 	 * The url to the list of news.
 	 * <p>
@@ -31,7 +31,7 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #SCREEN_TITLE} 
 	 */
-	public static final String SCREEN_TITLE = "Epic ProgWett Game!";
+	public static final String SCREEN_TITLE = "Crushing Rocks!";
 	/**
 	 * The icon of the window.
 	 * <p>

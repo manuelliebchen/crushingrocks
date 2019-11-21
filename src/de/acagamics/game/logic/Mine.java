@@ -10,7 +10,7 @@ import de.acagamics.game.types.Vector;
  * @author Manuel Liebchen
  *
  */
-public class Mine {
+public final class Mine {
 	private Vector position;
 	private float[] ownership;
 	

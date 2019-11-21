@@ -5,9 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.client.gui.InputTracker;
+import de.acagamics.client.utility.InputTracker;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.constants.GameConstants;
+import de.acagamics.data.GameStatistic;
 import de.acagamics.game.controller.IPlayerController;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
@@ -19,7 +20,7 @@ import javafx.scene.input.InputEvent;
  * @author Manuel Liebchen
  * 
  */
-public class Game implements EventHandler<InputEvent> {
+public final class Game implements EventHandler<InputEvent> {
 	private List<Player> players;
 	private Map map;
 	private int frames_left;

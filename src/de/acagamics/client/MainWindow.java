@@ -1,8 +1,8 @@
-package de.acagamics.client.gui;
+package de.acagamics.client;
 
 import de.acagamics.client.gui.states.MainMenu;
 import de.acagamics.client.gui.states.StateManager;
-import de.acagamics.client.rendering.drawing.ImageManager;
+import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.ClientConstants;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  * @author Max Klockmann (max@acagamics.de)
  *
  */
-public class MainWindow extends Application {
+public final class MainWindow extends Application {
 
 	/**
 	 * Setting up new Window and load default GameState

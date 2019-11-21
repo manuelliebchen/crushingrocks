@@ -11,7 +11,7 @@ import de.acagamics.game.types.Vector;
  * 
  * @author Manuel Liebchen
  */
-public class Base {
+public final class Base {
 	private Vector position;
 	private Player owner;
 	private int hp;

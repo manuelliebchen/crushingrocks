@@ -1,4 +1,4 @@
-package de.acagamics.client.gui.states;
+package de.acagamics.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.List;
 import de.acagamics.game.controller.BotClassLoader;
 import de.acagamics.game.controller.IPlayerController;
 
-public class InGameSettings {
+public final class InGameSettings {
 
 	private BotClassLoader playerLoader;
 	private List<String> names;
 	private int speedMultiplier;
 
-	InGameSettings(BotClassLoader playerLoader, List<String> controllers, int speedMultiplier) {
+	public InGameSettings(BotClassLoader playerLoader, List<String> controllers, int speedMultiplier) {
 		this.playerLoader = playerLoader;
 		this.speedMultiplier = speedMultiplier;
 		this.names = controllers;
