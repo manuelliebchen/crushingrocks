@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import de.acagamics.client.CliArguments;
+
 public class TestCliArguments {
 
 	@Test
