@@ -25,7 +25,9 @@ public interface IPlayerController {
 	/**
 	 * This method contains the actual AI/controlling.
 	 * It is called in every update step of the game as long as the player is alive.
-	 * @return The direction and speed in which the should move. A zero vector means no movement.
+	 * @param mapInfo Map on witch is played.
+	 * @param ownPlayer object of own player to get Units and set orders.
+	 * @param enemyPlayerInfo object for informations of the other player.
 	 */
 	void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo);
 }

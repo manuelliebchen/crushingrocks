@@ -32,10 +32,11 @@ public class MainMenu extends MenuState {
 	 */
 	public MainMenu(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Start Game",
+		drawables.add(new TextBox(new Point2D(-225, 150), "Crushing Rocks!").setFont(DesignConstants.LARGE_FONT).setVerticalAlignment(Alignment.CENTER));
+		buttons.add(new Button(new Point2D(0, 175), new Point2D(200, 50), "Start Game",
 				() -> manager.push(new BotSelectionState(manager, context))).setVerticalAlignment(Alignment.CENTER)
 						.setHorizontalAlignment(Alignment.TOP).setKeyCode(KeyCode.ENTER));
-		buttons.add(new Button(new Point2D(0, 200), new Point2D(200, 50), "Show Credits",
+		buttons.add(new Button(new Point2D(0, 250), new Point2D(200, 50), "Show Credits",
 				() -> manager.push(new Credits(manager, context))).setVerticalAlignment(Alignment.CENTER)
 						.setHorizontalAlignment(Alignment.TOP));
 		buttons.add(new Button(new Point2D(0, 100), new Point2D(200, 50), "Exit Game", () -> manager.pop())

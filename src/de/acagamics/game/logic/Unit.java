@@ -6,6 +6,10 @@ import de.acagamics.constants.GameConstants;
 import de.acagamics.game.controller.IPlayerController;
 import de.acagamics.game.types.Vector;
 
+/**
+ * Unit of the Player to be controlled.
+ * @author Manuel Liebchen
+ */
 public final class Unit {
 
 	private Vector position;
@@ -55,7 +59,7 @@ public final class Unit {
 	Vector updatePosition(List<Unit> allUnits) {
 		if (orderedDirection != null) {
 			if (orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
-				orderedDirection = orderedDirection.normalize().mult(GameConstants.MAX_UNIT_SPEED);
+				orderedDirection = orderedDirection.getNormalized().mult(GameConstants.MAX_UNIT_SPEED);
 			}
 			Vector targetPosition = position.add(orderedDirection);
 			boolean hit = false;

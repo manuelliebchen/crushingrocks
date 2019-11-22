@@ -39,7 +39,7 @@ public final class GameConstants {
 	/**
 	 * Maximal per step moving speed of a unit.
 	 * <p>
-	 * Value = {@value #MAX_PLAYER_SPEED}
+	 * Value = {@value #MAX_UNIT_SPEED}
 	 */
 	public static final float MAX_UNIT_SPEED = 0.01f;
 
@@ -113,7 +113,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #MAP_RADIUS}
 	 */
-	public static float MAP_RADIUS = 1f;
+	public static final float MAP_RADIUS = 1f;
 
 
 	/**

@@ -91,7 +91,7 @@ public final class Game implements EventHandler<InputEvent> {
 	
 	/**
 	 * Perform a single step in the gameLogic. Updates Players and Map.
-	 * @return 
+	 * @return if the game is over it returns a gamestatistic, else null.
 	 */
 	public GameStatistic tick(){
 		--frames_left;

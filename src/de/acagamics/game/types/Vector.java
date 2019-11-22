@@ -7,7 +7,7 @@ package de.acagamics.game.types;
  */
 public final class Vector {
 	
-	// No nice code, but we have no const in java.
+	
 	public static final Vector ZERO() {
 		return new Vector(0F, 0F);
 	}
@@ -24,26 +24,41 @@ public final class Vector {
 	private float x = 0;
 	private float y = 0;
 	
+	/**
+	 * Creates zero vector.
+	 */
 	public Vector() {
 	}
 	
-	public Vector(Vector vec) {
-		this.x = vec.x;
-		this.y = vec.y;
+	/**
+	 * Coping a vector
+	 * @param vector from witch to take the values
+	 */
+	public Vector(Vector vector) {
+		this.x = vector.x;
+		this.y = vector.y;
 	}
 	
+	/**
+	 * Creates Vector with x,y values
+	 * @param x value
+	 * @param y value
+	 */
 	public Vector(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
+	
 	/**
 	 * Get the x component from the vector.
+	 * @return x component of the vector.
 	 */
 	public float getX(){
 		return this.x;
 	}
 	/**
-	 * Get the x component from the vector.
+	 * Get the y component from the vector.
+	 * @return y component of the vector.
 	 */	
 	public float getY(){
 		return this.y;
@@ -216,16 +231,6 @@ public final class Vector {
 	}
 	
 	/**
-	 * Normalize this vector. If this is a Zero-Vector, components will be set to NaN.
-	 */
-	public Vector normalize() {
-		float length = this.length();
-		x = x / length;
-		y = y / length;
-		return this;
-	}
-	
-	/**
 	 * Get the normalized vector. (Won't change this instance)
 	 * @return This vector scaled to the length of 1. If this is a Zero-Vector, components will be set to NaN.
 	 */
@@ -241,7 +246,9 @@ public final class Vector {
 	}
 
 	/**
-	 * Get a vector rotated anticlockwise, radians
+	 * Get a vector rotated anticlockwise.
+	 * @param angle in radians.
+	 * @return rotated vector by angle.
 	 */
 	public Vector rotate(double angle) {
 		double sin = Math.sin(angle);
@@ -253,7 +260,7 @@ public final class Vector {
 	
 	/**
 	 * 
-	 * @return angle to (1, 0)^t in rad.
+	 * @return angle to (1, 0)^t in radians.
 	 */
 	public float getAngle() {
 		float angle = (float) Math.acos(this.getNormalized().dot(new Vector(1,0)));

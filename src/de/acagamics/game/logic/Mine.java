@@ -37,6 +37,7 @@ public final class Mine {
 	
 	/**
 	 * Owner of the Mine.
+	 * @param player of witch the ownership is returned
 	 * @return Player that owns this mine.
 	 */
 	public float getOwnership(Player player) {

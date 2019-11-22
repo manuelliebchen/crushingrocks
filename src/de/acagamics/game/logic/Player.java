@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.controller.IPlayerController;
+import de.acagamics.game.types.Vector;
 import javafx.scene.paint.Color;
 
 /**
@@ -98,6 +99,17 @@ public final class Player {
 			}
 		}
 		return 0;
+	}
+
+	/**
+	 * Sets the order for all units of the player for in current frame.
+	 * @param controller of the owner of the unit for verification.
+	 * @param position to witch the unit should moves.
+	 */
+	public void setAllUnitsOrder(IPlayerController controller, Vector position) {
+		for(Unit unit : units) {
+			unit.setOrder(controller, position.sub(unit.getPosition()));
+		}
 	}
 	
 	/**

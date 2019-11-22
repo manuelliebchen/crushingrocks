@@ -36,7 +36,7 @@ public class BotSelectionState extends MenuState {
 		drawables.add(new TextBox(new Point2D(100, 100), "Bot Selection").setVerticalAlignment(Alignment.LEFT)
 				.setHorizontalAlignment(Alignment.TOP));
 
-		Button startbutton = new Button(new Point2D(200, 125), new Point2D(150, 50), "Start",
+		Button startbutton = new Button(new Point2D(75, 75), new Point2D(100, 50), "Start",
 				() -> manager.switchCurrentState(new InGame(manager, context, generateSettings())))
 						.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM)
 						.setKeyCode(KeyCode.ENTER);
@@ -64,14 +64,14 @@ public class BotSelectionState extends MenuState {
 
 		drawables.add(new TextBox(new Point2D(100, -200), "Speed Multiplier")
 				.setHorizontalAlignment(Alignment.BOTTOM));
-		buttons.add(new Button(new Point2D(100, 125), new Point2D(50, 50), "<",
+		buttons.add(new Button(new Point2D(100, 75), new Point2D(50, 50), "<",
 				() -> speedMultiplier += speedMultiplier > 1 ? -1 : 0).setHorizontalAlignment(Alignment.BOTTOM).setKeyCode(KeyCode.MINUS));
-		drawables.add(new DynamicTextBox(new Point2D(200, -125), () -> String.valueOf(speedMultiplier) + "x")
+		drawables.add(new DynamicTextBox(new Point2D(200, -75), () -> String.valueOf(speedMultiplier) + "x")
 				.setHorizontalAlignment(Alignment.BOTTOM));
-		buttons.add(new Button(new Point2D(300, 125), new Point2D(50, 50), ">", () -> speedMultiplier += 1).setKeyCode(KeyCode.PLUS)
+		buttons.add(new Button(new Point2D(300, 75), new Point2D(50, 50), ">", () -> speedMultiplier += 1).setKeyCode(KeyCode.PLUS)
 				.setHorizontalAlignment(Alignment.BOTTOM));
 		
-		buttons.add(new Button(new Point2D(400, 125), new Point2D(150, 50), "Back", () -> manager.pop())
+		buttons.add(new Button(new Point2D(200, 75), new Point2D(100, 50), "Back", () -> manager.pop())
 				.setVerticalAlignment(Alignment.RIGHT).setHorizontalAlignment(Alignment.BOTTOM)
 				.setKeyCode(KeyCode.ESCAPE));
 		drawables.addAll(buttons);

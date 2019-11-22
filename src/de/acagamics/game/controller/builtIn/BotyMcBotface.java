@@ -26,9 +26,7 @@ public final class BotyMcBotface implements IPlayerController {
 		List<Unit> units = ownPlayer.getUnits();
 		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 0.9f);
 		if(mines.isEmpty() || ownPlayer.getUnits().size() == GameConstants.MAX_UNITS_PER_PLAYER) {
-			for(Unit unit: units) {
-				unit.setOrder(this, enemyPlayerInfo.getBase().getPosition().sub(unit.getPosition()));
-			}
+			ownPlayer.setAllUnitsOrder(this, enemyPlayerInfo.getBase().getPosition());
 		} else {
 			for(Unit unit: units) {
 				mines.sort((Mine m, Mine n) -> Math.round((n.getPosition().distanceSqr(unit.getPosition()) - m.getPosition().distanceSqr(unit.getPosition())) * 100));
