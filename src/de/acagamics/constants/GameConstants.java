@@ -34,7 +34,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #UNIT_RADIUS}
 	 */
-	public static final float UNIT_RADIUS = 0.06f;
+	public static final float UNIT_RADIUS = 0.1f;
 
 	/**
 	 * Maximal per step moving speed of a unit.
@@ -51,7 +51,6 @@ public final class GameConstants {
 	public static final float UNIT_BODY_RADIUS = 0.01f;
 	
 	public static final float COST_EXPONENT = 0.725f;
-
 	public static final int COST_MULTIPIER = 1000;
 
 	/**

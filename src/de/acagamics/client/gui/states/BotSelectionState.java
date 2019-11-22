@@ -30,7 +30,7 @@ public class BotSelectionState extends MenuState {
 		speedMultiplier = 1;
 
 		playerLoader = new BotClassLoader();
-		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("bin/").toAbsolutePath().toString());
+		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedExternControllerClassNames();
 
 		drawables.add(new TextBox(new Point2D(100, 100), "Bot Selection").setVerticalAlignment(Alignment.LEFT)

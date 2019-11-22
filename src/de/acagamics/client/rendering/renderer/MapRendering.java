@@ -80,9 +80,9 @@ public final class MapRendering implements IDrawable {
 				} else {
 					untiTexture = unitTexture3;
 				}
-				context.drawImage(untiTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS * 2,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS * 2, 4 * GameConstants.UNIT_RADIUS,
-						4 * GameConstants.UNIT_RADIUS);
+				context.drawImage(untiTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS * 3,
+						unit.getPosition().getY() - GameConstants.UNIT_RADIUS * 3, 6 * GameConstants.UNIT_RADIUS,
+						6 * GameConstants.UNIT_RADIUS);
 			}
 		}
 	}
