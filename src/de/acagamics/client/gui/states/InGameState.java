@@ -1,7 +1,8 @@
 package de.acagamics.client.gui.states;
 
-import de.acagamics.client.gui.states.interfaces.GameState;
-import de.acagamics.client.gui.states.interfaces.ISelfUpdating;
+import de.acagamics.client.gui.StateManager;
+import de.acagamics.client.gui.interfaces.GameState;
+import de.acagamics.client.gui.interfaces.ISelfUpdating;
 import de.acagamics.client.rendering.renderer.HUDRenderer;
 import de.acagamics.client.rendering.renderer.MapOverlayRendering;
 import de.acagamics.client.rendering.renderer.MapRendering;
@@ -27,7 +28,7 @@ import javafx.util.Duration;
  * @author Claudius Grimm (claudius@acagamics.de)
  * @author Manuel Liebchen
  */
-public final class InGame extends GameState implements ISelfUpdating {
+public final class InGameState extends GameState implements ISelfUpdating {
 
 	private Game game;
 	private MapRendering mapRenderer;
@@ -38,11 +39,11 @@ public final class InGame extends GameState implements ISelfUpdating {
 	
 	private InGameSettings settings;
 
-	public InGame(StateManager manager, GraphicsContext context, InGameSettings settings) {
+	public InGameState(StateManager manager, GraphicsContext context, InGameSettings settings) {
 		super(manager, context);
 		this.settings = settings;
 
-		game = new Game(settings.getControllers());
+		game = new Game(settings.getControllers(), settings.getMode());
 
 		mapRenderer = new MapRendering(game.getMap());
 		mapOverlayRenderer = new MapOverlayRendering(game.getMap());
@@ -76,7 +77,7 @@ public final class InGame extends GameState implements ISelfUpdating {
 	public void update() {
 		GameStatistic statistic = game.tick();
 		if (statistic != null) {
-			manager.switchCurrentState(new GameStatisticState(manager, context, statistic, settings));
+			manager.switchCurrentState(new StatisticState(manager, context, statistic, settings));
 		}
 		mapRenderer.update();
 	}

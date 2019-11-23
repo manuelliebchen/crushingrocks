@@ -2,9 +2,8 @@ package de.acagamics.client.gui.elements;
 
 import java.util.function.Supplier;
 
-import de.acagamics.client.gui.states.interfaces.IDrawable;
+import de.acagamics.client.gui.interfaces.IDrawable;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -21,6 +20,8 @@ public final class DynamicTextBox extends TextBox implements IDrawable {
 		this.buttonText = textSupplier.get();
 		this.relativPosition = relativPosition;
 		this.textSupplier = textSupplier;
+		
+		calcFontTextSize();
 	}
 
 	/**
@@ -33,16 +34,7 @@ public final class DynamicTextBox extends TextBox implements IDrawable {
 	public void draw(GraphicsContext context) {
 		this.buttonText = textSupplier.get();
 		calcFontTextSize();
-
-		Canvas canvas = context.getCanvas();
-
-		double drawingPositionX = relativPosition.getX() - size.getY() * textAlignmentFactor
-				+ canvas.getWidth() * verticalAlignmentFactor;
-		double drawingPositionY = relativPosition.getY() - size.getY() * 0.5
-				+ canvas.getHeight() * horizontalAlignmentFactor;
-
-		context.setFont(font);
-		context.setFill(textColor);
-		context.fillText(this.buttonText, drawingPositionX, drawingPositionY);
+		
+		super.draw(context);
 	}
 }

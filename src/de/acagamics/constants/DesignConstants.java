@@ -13,7 +13,7 @@ public final class DesignConstants {
 	
 	// http://paletton.com/#uid=70X1q0kpntDfEF8kMvZtppdvJk0
 	
-	public static final Font STANDART_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 24);
+	public static final Font STANDART_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 22);
 	
 	public static final Font LARGE_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 48);
 
@@ -29,5 +29,5 @@ public final class DesignConstants {
 
 	public static final float OVERLAY_LINE_WIDTH = 0.005f;
 	
-	public enum Alignment { CENTER, LEFT, RIGHT, TOP, BOTTOM}
+	public enum ALINGMENT { CENTER, LEFT, RIGHT, TOP, BOTTOM}
 }

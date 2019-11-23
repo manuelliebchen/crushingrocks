@@ -1,7 +1,7 @@
 package de.acagamics.client;
 
-import de.acagamics.client.gui.states.MainMenu;
-import de.acagamics.client.gui.states.StateManager;
+import de.acagamics.client.gui.StateManager;
+import de.acagamics.client.gui.states.MainMenuState;
 import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.ClientConstants;
 import javafx.application.Application;
@@ -50,7 +50,7 @@ public final class MainWindow extends Application {
 
 		// Create StateManager and set MainMenu as start state
 		StateManager manager = new StateManager(stage, canvas.getGraphicsContext2D());
-		manager.push(new MainMenu(manager, canvas.getGraphicsContext2D()));
+		manager.push(new MainMenuState(manager, canvas.getGraphicsContext2D()));
 
 		EventHandler<Event> eventmanager = new EventHandler<Event>() {
 			@Override

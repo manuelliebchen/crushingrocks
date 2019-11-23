@@ -85,7 +85,7 @@ public final class Player {
 	}
 	
 	/**
-	 * Sets the order of witch unit should be createt next frame.
+	 * Sets the order of which unit should be createt next frame.
 	 * @param controller of the owner of the player. This is mostly just 'this'.
 	 * @param strength of the unit to be created
 	 * @return the cost of the unit. Zero if none created.
@@ -104,7 +104,7 @@ public final class Player {
 	/**
 	 * Sets the order for all units of the player for in current frame.
 	 * @param controller of the owner of the unit for verification.
-	 * @param position to witch the unit should moves.
+	 * @param position to which the unit should moves.
 	 */
 	public void setAllUnitsOrder(IPlayerController controller, Vector position) {
 		for(Unit unit : units) {

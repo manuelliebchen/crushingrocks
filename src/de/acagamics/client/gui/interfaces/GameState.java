@@ -1,6 +1,6 @@
-package de.acagamics.client.gui.states.interfaces;
+package de.acagamics.client.gui.interfaces;
 
-import de.acagamics.client.gui.states.StateManager;
+import de.acagamics.client.gui.StateManager;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;

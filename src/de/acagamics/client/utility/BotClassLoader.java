@@ -1,5 +1,5 @@
 
-package de.acagamics.game.controller;
+package de.acagamics.client.utility;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,14 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import de.acagamics.game.controller.IPlayerController;
 import de.acagamics.game.controller.builtIn.BotyMcBotface;
 import de.acagamics.game.controller.builtIn.EmptyBotyMcBotface;
+import de.acagamics.game.controller.builtIn.EvilSanta;
 import de.acagamics.game.controller.builtIn.HumanBot;
 
 public final class BotClassLoader extends ClassLoader {
 
 	private final static Class<?>[] buildIn = new Class<?>[] { BotyMcBotface.class, EmptyBotyMcBotface.class,
-			HumanBot.class };
+			HumanBot.class, EvilSanta.class };
 
 	/**
 	 * List of all extern controller class names.
@@ -159,7 +161,7 @@ public final class BotClassLoader extends ClassLoader {
 	 * 
 	 * @return List of class names.
 	 */
-	public List<Class<?>> getLoadedExternControllerClassNames() {
-		return controllerClasses;
+	public List<Class<?>> getLoadedBots() {
+		return new ArrayList<>(controllerClasses);
 	}
 }

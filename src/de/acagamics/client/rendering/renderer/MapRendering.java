@@ -2,7 +2,7 @@ package de.acagamics.client.rendering.renderer;
 
 import java.util.List;
 
-import de.acagamics.client.gui.states.interfaces.IDrawable;
+import de.acagamics.client.gui.interfaces.IDrawable;
 import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.logic.Base;

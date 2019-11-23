@@ -37,7 +37,7 @@ public final class Mine {
 	
 	/**
 	 * Owner of the Mine.
-	 * @param player of witch the ownership is returned
+	 * @param player of which the ownership is returned
 	 * @return Player that owns this mine.
 	 */
 	public float getOwnership(Player player) {
@@ -51,9 +51,12 @@ public final class Mine {
 	public float[] getOwnership() {
 		return ownership;
 	}
+	
+	void setOwnership(float[] ownership) {
+		this.ownership = ownership;
+	}
 
 	void update(List<Player> players, List<Unit> allUnits) {
-		//TODO:Implement transition function
 		float[] count = new float[players.size()];
 		for(Unit unit : allUnits) {
 			if(position.distance(unit.getPosition()) < GameConstants.MINE_RADIUS) {

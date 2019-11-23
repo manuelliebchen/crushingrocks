@@ -1,10 +1,10 @@
-package de.acagamics.client.gui.states;
+package de.acagamics.client.gui;
 
 import java.util.Stack;
 
-import de.acagamics.client.gui.states.interfaces.GameState;
-import de.acagamics.client.gui.states.interfaces.IOverlay;
-import de.acagamics.client.gui.states.interfaces.ISelfUpdating;
+import de.acagamics.client.gui.interfaces.GameState;
+import de.acagamics.client.gui.interfaces.IOverlay;
+import de.acagamics.client.gui.interfaces.ISelfUpdating;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;

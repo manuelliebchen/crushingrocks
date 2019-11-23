@@ -1,4 +1,4 @@
-package de.acagamics.client.gui.states.interfaces;
+package de.acagamics.client.gui.interfaces;
 
 /**
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)

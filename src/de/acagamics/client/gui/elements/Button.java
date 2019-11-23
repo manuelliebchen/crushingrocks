@@ -1,10 +1,9 @@
 package de.acagamics.client.gui.elements;
 
-import de.acagamics.client.gui.states.interfaces.IDrawable;
+import de.acagamics.client.gui.interfaces.IClickable;
 import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.DesignConstants;
-import de.acagamics.constants.DesignConstants.Alignment;
-import javafx.event.EventHandler;
+import de.acagamics.constants.DesignConstants.ALINGMENT;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,7 +21,9 @@ import javafx.scene.text.Text;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de) Image buttons with customs
  *         images and text. Registers if a user pressed on it.
  */
-public final class Button implements IDrawable, EventHandler<InputEvent> {
+public final class Button implements IClickable {
+	
+	public static enum BUTTON_TYPE {NORMAL, WIDE, SQUARE};
 	
 	// Button status
 	private boolean isEnabled = true;
@@ -34,13 +35,19 @@ public final class Button implements IDrawable, EventHandler<InputEvent> {
 	private Point2D relativPosition;
 	private Point2D position;
 	private Point2D size;
+	
+//	private BUTTON_TYPE type;
 
 	private Image imgUp = ImageManager.getInstance().loadImage("buttons/defaultButtonUp.png");
 	private Image imgDown = ImageManager.getInstance().loadImage("buttons/defaultButtonDown.png");
 	private Image imgInActive = ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png");
 	private Font font = DesignConstants.STANDART_FONT;
-	private Alignment verticalAlignment = Alignment.LEFT;
-	private Alignment horizontalAlignment = Alignment.TOP;
+
+	protected ALINGMENT verticalAlignment = ALINGMENT.LEFT;
+	protected float verticalAlignmentFactor = 0;
+	protected ALINGMENT horizontalAlignment = ALINGMENT.TOP;
+	protected float horizontalAlignmentFactor = 0;
+	
 	private KeyCode keycode;
 
 	private Runnable function;
@@ -58,23 +65,36 @@ public final class Button implements IDrawable, EventHandler<InputEvent> {
 	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
-	public Button(Point2D relativPosition, Point2D size, String buttonText, Runnable function) {
+	public Button(Point2D relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
 		this.buttonText = buttonText;
-		this.relativPosition = relativPosition;
-		this.position = relativPosition;
-		this.size = size;
+//		this.type = type;
+		switch(type) {
+		case WIDE:
+			size = new Point2D(200, 50);
+			break;
+		case SQUARE:
+			size = new Point2D(50, 50);
+			break;
+		default:
+			size = new Point2D(100, 50);
+			break;
+		} 
+		this.relativPosition = relativPosition.subtract(size.multiply(0.5));
+		this.position = this.relativPosition;
 		this.function = function;
 
 		calcButtonTextProperties();
 	}
 
-	public Button setVerticalAlignment(Alignment verticalAlignment) {
+	public Button setVerticalAlignment(ALINGMENT verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
+		recalculateAlignment();
 		return this;
 	}
 
-	public Button setHorizontalAlignment(Alignment horizontalAlignment) {
+	public Button setHorizontalAlignment(ALINGMENT horizontalAlignment) {
 		this.horizontalAlignment = horizontalAlignment;
+		recalculateAlignment();
 		return this;
 	}
 
@@ -109,6 +129,24 @@ public final class Button implements IDrawable, EventHandler<InputEvent> {
 				size.getY() / 2 + buttonTextSize.getY() / 4);
 	}
 
+	protected void recalculateAlignment() {
+		if (verticalAlignment == ALINGMENT.LEFT) {
+			verticalAlignmentFactor = 0;
+		} else if (verticalAlignment == ALINGMENT.CENTER) {
+			verticalAlignmentFactor = 0.5f;
+		} else if (verticalAlignment == ALINGMENT.RIGHT) {
+			verticalAlignmentFactor = 1;
+		}
+
+		if (horizontalAlignment == ALINGMENT.TOP) {
+			horizontalAlignmentFactor = 0;
+		} else if (horizontalAlignment == ALINGMENT.CENTER) {
+			horizontalAlignmentFactor = 0.5f;
+		} else if (horizontalAlignment == ALINGMENT.BOTTOM) {
+			horizontalAlignmentFactor = 1;
+		}
+	}
+
 	/**
 	 * Change font of button. Updates text properties
 	 * 
@@ -130,15 +168,6 @@ public final class Button implements IDrawable, EventHandler<InputEvent> {
 	public void changeText(String buttonText) {
 		this.buttonText = buttonText;
 		calcButtonTextProperties();
-	}
-
-	/**
-	 * Change color of button text.
-	 * 
-	 * @param color
-	 */
-	public void changeTextColor(Color color) {
-		this.textColor = color;
 	}
 
 	/**
@@ -171,24 +200,10 @@ public final class Button implements IDrawable, EventHandler<InputEvent> {
 
 		Canvas canvas = graphics.getCanvas();
 
-		double drawingPositionX = 0;
-		double drawingPositionY = 0;
-
-		if (verticalAlignment == Alignment.LEFT) {
-			drawingPositionX = relativPosition.getX();
-		} else if (verticalAlignment == Alignment.CENTER) {
-			drawingPositionX = (relativPosition.getX() + canvas.getWidth() - size.getX()) / 2;
-		} else if (verticalAlignment == Alignment.RIGHT) {
-			drawingPositionX = (canvas.getWidth() - relativPosition.getX() - size.getX());
-		}
-
-		if (horizontalAlignment == Alignment.TOP) {
-			drawingPositionY = relativPosition.getY();
-		} else if (horizontalAlignment == Alignment.CENTER) {
-			drawingPositionY = (relativPosition.getY() + canvas.getHeight() - size.getY()) / 2;
-		} else if (horizontalAlignment == Alignment.BOTTOM) {
-			drawingPositionY = (canvas.getHeight() - relativPosition.getY() - size.getY());
-		}
+		double drawingPositionX = relativPosition.getX()
+				+ canvas.getWidth() * verticalAlignmentFactor;
+		double drawingPositionY = relativPosition.getY() - size.getY() * 0.5
+				+ canvas.getHeight() * horizontalAlignmentFactor;
 
 		position = new Point2D(drawingPositionX, drawingPositionY);
 
