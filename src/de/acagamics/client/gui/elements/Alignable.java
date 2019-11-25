@@ -1,6 +1,5 @@
 package de.acagamics.client.gui.elements;
 
-import de.acagamics.constants.DesignConstants.ALINGNMENT;
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,19 +7,19 @@ import javafx.scene.canvas.GraphicsContext;
 public abstract class Alignable extends GUIElement {
 
 	private final Vec2f relativPosition;
-	protected ALINGNMENT verticalAlignment = ALINGNMENT.LEFT;
-	protected ALINGNMENT horizontalAlignment = ALINGNMENT.TOP;
+	protected ALIGNMENT verticalAlignment = ALIGNMENT.LEFT;
+	protected ALIGNMENT horizontalAlignment = ALIGNMENT.TOP;
 
 	protected Alignable(Vec2f relativPosition) {
 		this.relativPosition = relativPosition;
 	}
 
-	public Alignable setVerticalAlignment(ALINGNMENT verticalAlignment) {
+	public Alignable setVerticalAlignment(ALIGNMENT verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
 		return this;
 	}
 
-	public Alignable setHorizontalAlignment(ALINGNMENT horizontalAlignment) {
+	public Alignable setHorizontalAlignment(ALIGNMENT horizontalAlignment) {
 		this.horizontalAlignment = horizontalAlignment;
 		return this;
 	}

@@ -4,7 +4,6 @@ import java.util.function.IntFunction;
 
 import de.acagamics.client.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.client.gui.interfaces.IClickable;
-import de.acagamics.constants.DesignConstants.ALINGNMENT;
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
@@ -29,14 +28,14 @@ public class Selector implements IClickable {
 
 	}
 
-	public Selector setVerticalAlignment(ALINGNMENT verticalAlignment) {
+	public Selector setVerticalAlignment(ALIGNMENT verticalAlignment) {
 		minusButton.setVerticalAlignment(verticalAlignment);
 		textbox.setVerticalAlignment(verticalAlignment);
 		plusButton.setVerticalAlignment(verticalAlignment);
 		return this;
 	}
 
-	public Selector setHorizontalAlignment(ALINGNMENT horizontalAlignment) {
+	public Selector setHorizontalAlignment(ALIGNMENT horizontalAlignment) {
 		minusButton.setHorizontalAlignment(horizontalAlignment);
 		textbox.setHorizontalAlignment(horizontalAlignment);
 		plusButton.setHorizontalAlignment(horizontalAlignment);

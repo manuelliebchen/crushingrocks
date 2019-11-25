@@ -2,7 +2,6 @@ package de.acagamics.client;
 
 import de.acagamics.client.gui.StateManager;
 import de.acagamics.client.gui.states.MainMenuState;
-import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.ClientConstants;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;

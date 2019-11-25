@@ -1,7 +1,6 @@
 package de.acagamics.client.gui.elements;
 
 import de.acagamics.constants.DesignConstants;
-import de.acagamics.constants.DesignConstants.ALINGNMENT;
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -19,7 +18,7 @@ public class TextBox extends Alignable {
 	protected Color textColor = DesignConstants.FOREGROUND_COLOR;
 	protected Vec2f size = Vec2f.ZERO();
 	protected Font font = DesignConstants.STANDART_FONT;
-	protected ALINGNMENT textAlignment;
+	protected ALIGNMENT textAlignment;
 
 	/**
 	 * Default button constructor with default buttons images and text color
@@ -40,7 +39,7 @@ public class TextBox extends Alignable {
 		return this;
 	}
 
-	public TextBox setTextAlignment(ALINGNMENT textAlignment) {
+	public TextBox setTextAlignment(ALIGNMENT textAlignment) {
 		this.textAlignment = textAlignment;
 		return this;
 	}

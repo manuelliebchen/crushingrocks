@@ -24,8 +24,8 @@ public final class DesignConstants {
 	public static final Color FOREGROUND_COLOR = Color.color(0f, 0f,0f);
 	
 	public static final Color BACKGROUND_COLOR = Color.WHITE;
+	
 	public static final Color GAME_BACKGROUND_COLOR = Color.web("#82BB0F");
-//	public static final Color BACKGROUND_COLOR = Color.color(0.392f, 0.584f, 0.04f);
 	
 	public static final Color[] PLAYER_COLORS = new Color[]{Color.color(0.925f, 0.741f, 0.192f), Color.color(0.18f, 0.314f, 0.62f), Color.color(0.467f, 0.824f, 0.173f), Color.color(0.60f, 0.125f, 0.60f)};
 
@@ -37,17 +37,4 @@ public final class DesignConstants {
 	
 	public static final float UNIT_RENDERING_SIZE_MULTIPLIER = 2;
 	
-	public enum ALINGNMENT { 
-		CENTER(0.5f), LEFT(0), RIGHT(1), TOP(0), BOTTOM(1);
-		
-		private float value;
-		
-		private ALINGNMENT(float value) {
-			this.value = value;
-		}
-		
-		public float getValue() {
-			return value;
-		}
-	}
 }

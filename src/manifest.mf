@@ -1,0 +1,4 @@
+Manifest-Version: 1.1.0
+Created-By: Acagamics e.V.
+Main-Class: de.acagamics.Main
+Name: Crushing Rocks!

@@ -3,7 +3,6 @@ package de.acagamics.client.gui.elements;
 import de.acagamics.client.gui.interfaces.IClickable;
 import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.DesignConstants;
-import de.acagamics.constants.DesignConstants.ALINGNMENT;
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -34,17 +33,15 @@ public final class Button extends Alignable implements IClickable {
 	private Vec2f relativPosition;
 	private Vec2f position;
 	private Vec2f size;
-	
-	private BUTTON_TYPE type;
 
-	private Image imgUp = ImageManager.getInstance().loadImage("buttons/defaultButtonUp.png");
-	private Image imgDown = ImageManager.getInstance().loadImage("buttons/defaultButtonDown.png");
-	private Image imgInActive = ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png");
+	private Image imgUp;
+	private Image imgDown;
+	private Image imgInActive;
 	
 	private Font font = DesignConstants.STANDART_FONT;
 
-	protected ALINGNMENT verticalAlignment = ALINGNMENT.LEFT;
-	protected ALINGNMENT horizontalAlignment = ALINGNMENT.TOP;
+	protected ALIGNMENT verticalAlignment = ALIGNMENT.LEFT;
+	protected ALIGNMENT horizontalAlignment = ALIGNMENT.TOP;
 	
 	private KeyCode keycode;
 
@@ -66,8 +63,7 @@ public final class Button extends Alignable implements IClickable {
 	public Button(Vec2f relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
 		super(relativPosition);
 		this.buttonText = buttonText;
-		this.type = type;
-		String buttonTexture = "buttons/Button";
+		String buttonTexture = "buttons" + "/" + "Button";
 		switch(type) {
 		case WIDE:
 			size = new Vec2f(DesignConstants.BUTTON_HEIGHT * 4, DesignConstants.BUTTON_HEIGHT);
@@ -177,16 +173,6 @@ public final class Button extends Alignable implements IClickable {
 	public void draw(GraphicsContext graphics) {		
 		position = super.getAlignedPosition(graphics).add(size.mult(-0.5f));
 
-		switch(type) {
-		case SQUARE: 
-			
-			break;
-		case WIDE:
-			
-			break;
-		default:
-			
-		}
 		if (!this.isEnabled) {
 			graphics.drawImage(imgInActive, position.getX(), position.getY(), size.getX(), size.getY());
 		} else if (isOver) {
