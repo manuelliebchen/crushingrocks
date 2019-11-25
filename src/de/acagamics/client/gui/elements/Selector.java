@@ -4,8 +4,8 @@ import java.util.function.IntFunction;
 
 import de.acagamics.client.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.client.gui.interfaces.IClickable;
-import de.acagamics.constants.DesignConstants.ALINGMENT;
-import javafx.geometry.Point2D;
+import de.acagamics.constants.DesignConstants.ALINGNMENT;
+import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
@@ -19,24 +19,24 @@ public class Selector implements IClickable {
 	private Button plusButton;
 	private DynamicTextBox textbox;
 
-	public Selector(Point2D position, int width, int minValue, int maxValue, IntFunction<String> textGenerator) {
+	public Selector(Vec2f position, int width, int minValue, int maxValue, IntFunction<String> textGenerator) {
 		value = minValue;
-		minusButton = new Button(new Point2D(position.getX() - width, position.getY()), BUTTON_TYPE.SQUARE, "<",
+		minusButton = new Button(new Vec2f(position.getX() - width, position.getY()), BUTTON_TYPE.SQUARE, "<",
 				() -> value = (value - 1) < minValue ? maxValue : (value - 1));
-		textbox = new DynamicTextBox(new Point2D(position.getX(), position.getY()), () -> textGenerator.apply(value));
-		plusButton = new Button(new Point2D(position.getX() + width, position.getY()), BUTTON_TYPE.SQUARE, ">",
+		textbox = new DynamicTextBox(position, () -> textGenerator.apply(value));
+		plusButton = new Button(new Vec2f(position.getX() + width, position.getY()), BUTTON_TYPE.SQUARE, ">",
 				() -> value = (value + 1) > maxValue ? minValue : (value + 1));
 
 	}
 
-	public Selector setVerticalAlignment(ALINGMENT verticalAlignment) {
+	public Selector setVerticalAlignment(ALINGNMENT verticalAlignment) {
 		minusButton.setVerticalAlignment(verticalAlignment);
 		textbox.setVerticalAlignment(verticalAlignment);
 		plusButton.setVerticalAlignment(verticalAlignment);
 		return this;
 	}
 
-	public Selector setHorizontalAlignment(ALINGMENT horizontalAlignment) {
+	public Selector setHorizontalAlignment(ALINGNMENT horizontalAlignment) {
 		minusButton.setHorizontalAlignment(horizontalAlignment);
 		textbox.setHorizontalAlignment(horizontalAlignment);
 		plusButton.setHorizontalAlignment(horizontalAlignment);

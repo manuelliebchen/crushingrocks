@@ -1,6 +1,6 @@
 package de.acagamics.constants;
 
-import de.acagamics.game.types.Vector;
+import de.acagamics.game.types.Vec2f;
 
 /**
  * Class for various game relevant constants.
@@ -124,7 +124,7 @@ public final class GameConstants {
 	public static final float EPSILON = Float.MIN_VALUE * 100;
 	
 	
-	public static final Vector[] PLAYER_BASE_POSITION = new Vector[]{new Vector(-1, 0), new Vector(1,0), new Vector(0,-1), new Vector(0,1)};
+	public static final Vec2f[] PLAYER_BASE_POSITION = new Vec2f[]{new Vec2f(-1, 0), new Vec2f(1,0), new Vec2f(0,-1), new Vec2f(0,1)};
 
 	public enum SITES{ YELLOW, BLUE, GREEN, PURPLE}; 
 }

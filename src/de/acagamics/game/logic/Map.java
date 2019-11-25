@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import de.acagamics.constants.GameConstants;
-import de.acagamics.game.types.Vector;
+import de.acagamics.game.types.Vec2f;
 
 /**
  * A map has a certain size and contains items like coins.
@@ -32,14 +32,14 @@ public final class Map {
 			this.players.get(i).setBase(bases.get(i));
 		}
 
-		List<Vector> minePositions = new ArrayList<>(GameConstants.NUMBER_OF_MINES);;
+		List<Vec2f> minePositions = new ArrayList<>(GameConstants.NUMBER_OF_MINES);;
 		mines = new ArrayList<>(GameConstants.NUMBER_OF_MINES);
 		boolean overlap = false;
 		do {
 			overlap = false;
 			minePositions.clear();
 			for (int i = 0; i < GameConstants.NUMBER_OF_MINES; ++i) {
-				minePositions.add(new Vector(this.random.nextFloat() * 2 - 1, this.random.nextFloat() * 2 - 1));
+				minePositions.add(new Vec2f(this.random.nextFloat() * 2 - 1, this.random.nextFloat() * 2 - 1));
 			}
 		
 			// Procesdureal Positioning
@@ -57,10 +57,10 @@ public final class Map {
 	
 				// Updating
 				for (int j = 0; j < GameConstants.NUMBER_OF_MINES; ++j) {
-					Vector aditor = new Vector();
-					Vector baseVector = new Vector();
+					Vec2f aditor = new Vec2f();
+					Vec2f baseVector = new Vec2f();
 					for (int k = 0; k < bases.size(); ++k) {
-						Vector singleBaseVector = bases.get(k).getPosition().sub(minePositions.get(j));
+						Vec2f singleBaseVector = bases.get(k).getPosition().sub(minePositions.get(j));
 						aditor = aditor.add(singleBaseVector.mult(GameConstants.NUMBER_OF_MINES / dists[k]));
 						baseVector = baseVector.add(singleBaseVector);
 					}
@@ -69,12 +69,12 @@ public final class Map {
 					minePositions.set(j, minePositions.get(j).add(aditor.mult(0.765169f)));
 				}
 			}
-			for(Vector mineposition : minePositions) {
+			for(Vec2f mineposition : minePositions) {
 				if(mineposition.getX() > GameConstants.MAP_RADIUS || mineposition.getX() < -GameConstants.MAP_RADIUS || mineposition.getY() > GameConstants.MAP_RADIUS || mineposition.getY() < -GameConstants.MAP_RADIUS) {
 					overlap = true;
 					break;
 				}
-				for(Vector minepositiontwo : minePositions) {
+				for(Vec2f minepositiontwo : minePositions) {
 					if(mineposition.distance(minepositiontwo) < GameConstants.EPSILON) {
 						continue;
 					}

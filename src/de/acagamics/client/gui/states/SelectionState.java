@@ -11,11 +11,11 @@ import de.acagamics.client.gui.elements.Selector;
 import de.acagamics.client.gui.elements.TextBox;
 import de.acagamics.client.gui.interfaces.MenuState;
 import de.acagamics.client.utility.BotClassLoader;
-import de.acagamics.constants.DesignConstants.ALINGMENT;
+import de.acagamics.constants.DesignConstants.ALINGNMENT;
 import de.acagamics.data.InGameSettings;
 import de.acagamics.data.InGameSettings.GAMEMODE;
 import de.acagamics.game.controller.builtIn.EvilSanta;
-import javafx.geometry.Point2D;
+import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
@@ -36,37 +36,36 @@ public class SelectionState extends MenuState {
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
-		drawables.add(new TextBox(new Point2D(200, 100), "Bot Selection").setVerticalAlignment(ALINGMENT.LEFT)
-				.setHorizontalAlignment(ALINGMENT.TOP));
+		drawables.add(new TextBox(new Vec2f(200, 100), "Bot Selection").setVerticalAlignment(ALINGNMENT.LEFT)
+				.setHorizontalAlignment(ALINGNMENT.TOP));
 
-		modeSelector = new Selector(new Point2D(0, 200), 200, 0, GAMEMODE.values().length - 1,
-				(i) -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALINGMENT.CENTER);
+		modeSelector = new Selector(new Vec2f(0, 200), 200, 0, GAMEMODE.values().length - 1,
+				(i) -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALINGNMENT.CENTER);
 		clickable.add(modeSelector);
 
-		Button startbutton = new Button(new Point2D(-175, -125), BUTTON_TYPE.NORMAL, "Start",
-				() -> manager.push(new InGameState(manager, context, generateSettings())))
-						.setVerticalAlignment(ALINGMENT.RIGHT).setHorizontalAlignment(ALINGMENT.BOTTOM)
-						.setKeyCode(KeyCode.ENTER);
+		Button startbutton = (Button) (new Button(new Vec2f(-175, -125), BUTTON_TYPE.NORMAL, "Start",
+				() -> manager.push(new InGameState(manager, context, generateSettings()))).setKeyCode(KeyCode.ENTER)
+						.setVerticalAlignment(ALINGNMENT.RIGHT).setHorizontalAlignment(ALINGNMENT.BOTTOM));
 		clickable.add(startbutton);
 
-		clickable.add(new Button(new Point2D(-300, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
-				.setVerticalAlignment(ALINGMENT.RIGHT).setHorizontalAlignment(ALINGMENT.BOTTOM)
-				.setKeyCode(KeyCode.ESCAPE));
+		clickable.add((Button) (new Button(new Vec2f(-300, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
+				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALINGNMENT.RIGHT)
+				.setHorizontalAlignment(ALINGNMENT.BOTTOM)));
 
 		if (!bots.isEmpty()) {
 			botSelectors = new Selector[2];
-			for(int i = 0; i < botSelectors.length; ++i) {
-				botSelectors[i] = new Selector(new Point2D(0, 400 + i * 100), 200, 0, bots.size() - 1,
-						(i2) -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALINGMENT.CENTER);
+			for (int i = 0; i < botSelectors.length; ++i) {
+				botSelectors[i] = new Selector(new Vec2f(0, 400 + i * 100), 200, 0, bots.size() - 1,
+						(i2) -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALINGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}
 		} else {
 			startbutton.setEnabled(false);
 		}
 
-		drawables.add(new TextBox(new Point2D(200, -200), "Speed Multiplier").setHorizontalAlignment(ALINGMENT.BOTTOM));
-		speedSelectors = new Selector(new Point2D(200, -125), 100, 1, 16, (i) -> i + "x")
-				.setHorizontalAlignment(ALINGMENT.BOTTOM);
+		drawables.add(new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALINGNMENT.BOTTOM));
+		speedSelectors = new Selector(new Vec2f(200, -125), 100, 1, 16, (i) -> i + "x")
+				.setHorizontalAlignment(ALINGNMENT.BOTTOM);
 		clickable.add(speedSelectors);
 
 	}
@@ -81,6 +80,7 @@ public class SelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()).getName());
 			names.add(EvilSanta.class.getName());
 		}
-		return new InGameSettings(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names, speedSelectors.getValue());
+		return new InGameSettings(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
+				speedSelectors.getValue());
 	}
 }

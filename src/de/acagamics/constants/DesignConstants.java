@@ -29,5 +29,17 @@ public final class DesignConstants {
 
 	public static final float OVERLAY_LINE_WIDTH = 0.005f;
 	
-	public enum ALINGMENT { CENTER, LEFT, RIGHT, TOP, BOTTOM}
+	public enum ALINGNMENT { 
+		CENTER(0.5f), LEFT(0), RIGHT(1), TOP(0), BOTTOM(1);
+		
+		private float value;
+		
+		private ALINGNMENT(float value) {
+			this.value = value;
+		}
+		
+		public float getValue() {
+			return value;
+		}
+	}
 }

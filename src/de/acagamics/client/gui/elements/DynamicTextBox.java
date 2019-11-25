@@ -3,7 +3,7 @@ package de.acagamics.client.gui.elements;
 import java.util.function.Supplier;
 
 import de.acagamics.client.gui.interfaces.IDrawable;
-import javafx.geometry.Point2D;
+import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -16,9 +16,9 @@ public final class DynamicTextBox extends TextBox implements IDrawable {
 	// Drawing status
 	private Supplier<String> textSupplier;
 
-	public DynamicTextBox(Point2D relativPosition, Supplier<String> textSupplier) {
+	public DynamicTextBox(Vec2f relativPosition, Supplier<String> textSupplier) {
+		super(relativPosition, textSupplier.get());
 		this.buttonText = textSupplier.get();
-		this.relativPosition = relativPosition;
 		this.textSupplier = textSupplier;
 		
 		calcFontTextSize();

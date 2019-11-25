@@ -3,7 +3,7 @@ package de.acagamics.game.logic;
 import java.util.List;
 
 import de.acagamics.constants.GameConstants;
-import de.acagamics.game.types.Vector;
+import de.acagamics.game.types.Vec2f;
 
 /**
  * Coins can be collected by Players for increasing their score.
@@ -11,15 +11,15 @@ import de.acagamics.game.types.Vector;
  *
  */
 public final class Mine {
-	private Vector position;
+	private Vec2f position;
 	private float[] ownership;
 	
 	Mine(Mine copy){
-		this.position = new Vector(copy.position);
+		this.position = new Vec2f(copy.position);
 		this.ownership = copy.ownership;
 	}
 	
-	Mine(Vector position, int numberOfPlayer){
+	Mine(Vec2f position, int numberOfPlayer){
 		this.position = position;
 		ownership = new float[numberOfPlayer];
 		for(int i = 0; i < numberOfPlayer; ++i) {
@@ -31,7 +31,7 @@ public final class Mine {
 	 * Get the position of this coin.
 	 * @return position
 	 */
-	public Vector getPosition() {
+	public Vec2f getPosition() {
 		return position.copy();
 	}
 	

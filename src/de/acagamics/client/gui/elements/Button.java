@@ -3,9 +3,8 @@ package de.acagamics.client.gui.elements;
 import de.acagamics.client.gui.interfaces.IClickable;
 import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.DesignConstants;
-import de.acagamics.constants.DesignConstants.ALINGMENT;
-import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
+import de.acagamics.constants.DesignConstants.ALINGNMENT;
+import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
@@ -21,7 +20,7 @@ import javafx.scene.text.Text;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de) Image buttons with customs
  *         images and text. Registers if a user pressed on it.
  */
-public final class Button implements IClickable {
+public final class Button extends Alignable implements IClickable {
 	
 	public static enum BUTTON_TYPE {NORMAL, WIDE, SQUARE};
 	
@@ -30,23 +29,22 @@ public final class Button implements IClickable {
 
 	// Drawing status
 	private String buttonText;
-	private Point2D centeredPositioOffset;
+	private Vec2f centeredPositioOffset;
 	private Color textColor = DesignConstants.FOREGROUND_COLOR;
-	private Point2D relativPosition;
-	private Point2D position;
-	private Point2D size;
+	private Vec2f relativPosition;
+	private Vec2f position;
+	private Vec2f size;
 	
-//	private BUTTON_TYPE type;
+	private BUTTON_TYPE type;
 
 	private Image imgUp = ImageManager.getInstance().loadImage("buttons/defaultButtonUp.png");
 	private Image imgDown = ImageManager.getInstance().loadImage("buttons/defaultButtonDown.png");
 	private Image imgInActive = ImageManager.getInstance().loadImage("buttons/defaultButtonInActive.png");
+	
 	private Font font = DesignConstants.STANDART_FONT;
 
-	protected ALINGMENT verticalAlignment = ALINGMENT.LEFT;
-	protected float verticalAlignmentFactor = 0;
-	protected ALINGMENT horizontalAlignment = ALINGMENT.TOP;
-	protected float horizontalAlignmentFactor = 0;
+	protected ALINGNMENT verticalAlignment = ALINGNMENT.LEFT;
+	protected ALINGNMENT horizontalAlignment = ALINGNMENT.TOP;
 	
 	private KeyCode keycode;
 
@@ -65,37 +63,26 @@ public final class Button implements IClickable {
 	 * @param size       The size of the button (e.g. image size).
 	 * @param buttonText The Text, which will be displayed on the button.
 	 */
-	public Button(Point2D relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
+	public Button(Vec2f relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
+		super(relativPosition);
 		this.buttonText = buttonText;
-//		this.type = type;
+		this.type = type;
 		switch(type) {
 		case WIDE:
-			size = new Point2D(200, 50);
+			size = new Vec2f(200, 50);
 			break;
 		case SQUARE:
-			size = new Point2D(50, 50);
+			size = new Vec2f(50, 50);
 			break;
 		default:
-			size = new Point2D(100, 50);
+			size = new Vec2f(100, 50);
 			break;
 		} 
-		this.relativPosition = relativPosition.subtract(size.multiply(0.5));
+		this.relativPosition = relativPosition.sub(size.mult(0.5f));
 		this.position = this.relativPosition;
 		this.function = function;
 
 		calcButtonTextProperties();
-	}
-
-	public Button setVerticalAlignment(ALINGMENT verticalAlignment) {
-		this.verticalAlignment = verticalAlignment;
-		recalculateAlignment();
-		return this;
-	}
-
-	public Button setHorizontalAlignment(ALINGMENT horizontalAlignment) {
-		this.horizontalAlignment = horizontalAlignment;
-		recalculateAlignment();
-		return this;
 	}
 
 	public Button setTextColor(Color textColor) {
@@ -124,27 +111,9 @@ public final class Button implements IClickable {
 		Text text = new Text(buttonText);
 		text.setFont(font);
 
-		Point2D buttonTextSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
-		centeredPositioOffset = new Point2D((size.getX() - buttonTextSize.getX()) / 2,
+		Vec2f buttonTextSize = new Vec2f((float) text.getLayoutBounds().getWidth(), (float) text.getLayoutBounds().getHeight());
+		centeredPositioOffset = new Vec2f((size.getX() - buttonTextSize.getX()) / 2,
 				size.getY() / 2 + buttonTextSize.getY() / 4);
-	}
-
-	protected void recalculateAlignment() {
-		if (verticalAlignment == ALINGMENT.LEFT) {
-			verticalAlignmentFactor = 0;
-		} else if (verticalAlignment == ALINGMENT.CENTER) {
-			verticalAlignmentFactor = 0.5f;
-		} else if (verticalAlignment == ALINGMENT.RIGHT) {
-			verticalAlignmentFactor = 1;
-		}
-
-		if (horizontalAlignment == ALINGMENT.TOP) {
-			horizontalAlignmentFactor = 0;
-		} else if (horizontalAlignment == ALINGMENT.CENTER) {
-			horizontalAlignmentFactor = 0.5f;
-		} else if (horizontalAlignment == ALINGMENT.BOTTOM) {
-			horizontalAlignmentFactor = 1;
-		}
 	}
 
 	/**
@@ -196,29 +165,31 @@ public final class Button implements IClickable {
 	 * 
 	 * @param graphics
 	 */
-	public void draw(GraphicsContext graphics) {
+	public void draw(GraphicsContext graphics) {		
+		position = super.getAlignedPosition(graphics).add(size.mult(-0.5f));
 
-		Canvas canvas = graphics.getCanvas();
-
-		double drawingPositionX = relativPosition.getX()
-				+ canvas.getWidth() * verticalAlignmentFactor;
-		double drawingPositionY = relativPosition.getY() - size.getY() * 0.5
-				+ canvas.getHeight() * horizontalAlignmentFactor;
-
-		position = new Point2D(drawingPositionX, drawingPositionY);
-
+		switch(type) {
+		case SQUARE: 
+			
+			break;
+		case WIDE:
+			
+			break;
+		default:
+			
+		}
 		if (!this.isEnabled) {
-			graphics.drawImage(imgInActive, drawingPositionX, drawingPositionY, size.getX(), size.getY());
+			graphics.drawImage(imgInActive, position.getX(), position.getY(), size.getX(), size.getY());
 		} else if (isOver) {
-			graphics.drawImage(imgDown, drawingPositionX, drawingPositionY, size.getX(), size.getY());
+			graphics.drawImage(imgDown, position.getX(), position.getY(), size.getX(), size.getY());
 		} else {
-			graphics.drawImage(imgUp, drawingPositionX, drawingPositionY, size.getX(), size.getY());
+			graphics.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
 		}
 
 		graphics.setFont(font);
 		graphics.setFill(textColor);
-		graphics.fillText(buttonText, drawingPositionX + centeredPositioOffset.getX(),
-				drawingPositionY + centeredPositioOffset.getY());
+		graphics.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
+				position.getY() + centeredPositioOffset.getY());
 
 	}
 
@@ -227,7 +198,7 @@ public final class Button implements IClickable {
 	 * 
 	 * @return size
 	 */
-	public Point2D getSize() {
+	public Vec2f getSize() {
 		return size;
 	}
 

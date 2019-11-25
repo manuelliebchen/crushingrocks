@@ -5,20 +5,20 @@ package de.acagamics.game.types;
  * methods to work with and manipulate vectors.
  * @author Jan-Cord Gerken (jancord@acagamics.de)
  */
-public final class Vector {
+public final class Vec2f {
 	
 	
-	public static final Vector ZERO() {
-		return new Vector(0F, 0F);
+	public static final Vec2f ZERO() {
+		return new Vec2f(0F, 0F);
 	}
-	public static final Vector ONE() {
-		return new Vector(1F, 1F);
+	public static final Vec2f ONE() {
+		return new Vec2f(1F, 1F);
 	}
-	public static final Vector UNIT_X() {
-		return new Vector(1F, 0F);
+	public static final Vec2f UNIT_X() {
+		return new Vec2f(1F, 0F);
 	}
-	public static final Vector UNIT_Y() {
-		return new Vector(0F, 1F);
+	public static final Vec2f UNIT_Y() {
+		return new Vec2f(0F, 1F);
 	}
 	
 	private float x = 0;
@@ -27,14 +27,14 @@ public final class Vector {
 	/**
 	 * Creates zero vector.
 	 */
-	public Vector() {
+	public Vec2f() {
 	}
 	
 	/**
 	 * Coping a vector
 	 * @param vector from witch to take the values
 	 */
-	public Vector(Vector vector) {
+	public Vec2f(Vec2f vector) {
 		this.x = vector.x;
 		this.y = vector.y;
 	}
@@ -44,7 +44,7 @@ public final class Vector {
 	 * @param x value
 	 * @param y value
 	 */
-	public Vector(float x, float y) {
+	public Vec2f(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -69,8 +69,8 @@ public final class Vector {
 	 * @param vec incoming vector to add
 	 * @return new resulting vector
 	 */
-	public Vector add(Vector vec) {
-		return new Vector(this.x + vec.x, this.y + vec.y);
+	public Vec2f add(Vec2f vec) {
+		return new Vec2f(this.x + vec.x, this.y + vec.y);
 	}
 	
 	/**
@@ -79,8 +79,8 @@ public final class Vector {
 	 * @param y incoming y-Value to add
 	 * @return new resulting vector
 	 */
-	public Vector add(float x, float y) {
-		return new Vector(this.x + x, this.y + y);
+	public Vec2f add(float x, float y) {
+		return new Vec2f(this.x + x, this.y + y);
 	}
 	
 	/**
@@ -88,8 +88,8 @@ public final class Vector {
 	 * @param vec incoming vector to subtract
 	 * @return new resulting vector
 	 */
-	public Vector sub(Vector vec) {
-		return new Vector(this.x - vec.x, this.y - vec.y);
+	public Vec2f sub(Vec2f vec) {
+		return new Vec2f(this.x - vec.x, this.y - vec.y);
 	}
 	
 	/**
@@ -98,8 +98,8 @@ public final class Vector {
 	 * @param y incoming y-Value to subtract
 	 * @return new resulting vector
 	 */
-	public Vector sub(float x, float y) {
-		return new Vector(this.x - x, this.y - y);
+	public Vec2f sub(float x, float y) {
+		return new Vec2f(this.x - x, this.y - y);
 	}
 	
 	/**
@@ -107,8 +107,8 @@ public final class Vector {
 	 * @param a incoming factor to multiply
 	 * @return new resulting vector
 	 */
-	public Vector mult(float a){
-		return new Vector(this.x * a, this.y * a);
+	public Vec2f mult(float a){
+		return new Vec2f(this.x * a, this.y * a);
 	}
 	
 	/**
@@ -117,8 +117,8 @@ public final class Vector {
 	 * @param y incoming y-Value to multiply
 	 * @return new resulting vector
 	 */
-	public Vector mult(float x, float y) {
-		return new Vector(this.x * x, this.y * y);
+	public Vec2f mult(float x, float y) {
+		return new Vec2f(this.x * x, this.y * y);
 	}
 	
 	/**
@@ -126,8 +126,8 @@ public final class Vector {
 	 * @param vec incoming vector to multiply
 	 * @return new resulting vector
 	 */
-	public Vector mult(Vector vec) {
-		return new Vector(this.x * vec.x, this.y * vec.y);
+	public Vec2f mult(Vec2f vec) {
+		return new Vec2f(this.x * vec.x, this.y * vec.y);
 	}
 		
 	/**
@@ -135,8 +135,8 @@ public final class Vector {
 	 * @param a incoming dividend for division
 	 * @return new resulting vector
 	 */
-	public Vector div(float a){
-		return new Vector(this.x / a, this.y / a);
+	public Vec2f div(float a){
+		return new Vec2f(this.x / a, this.y / a);
 	}
 	
 	/**
@@ -145,8 +145,8 @@ public final class Vector {
 	 * @param y incoming y-Value to divide
 	 * @return new resulting vector
 	 */
-	public Vector div(float x, float y) {
-		return new Vector(this.x / x, this.y / y);
+	public Vec2f div(float x, float y) {
+		return new Vec2f(this.x / x, this.y / y);
 	}
 	
 	/**
@@ -154,8 +154,8 @@ public final class Vector {
 	 * @param vec incoming vector to divide
 	 * @return new resulting vector
 	 */
-	public Vector div(Vector vec) {
-		return new Vector(this.x / vec.x, this.y / vec.y);
+	public Vec2f div(Vec2f vec) {
+		return new Vec2f(this.x / vec.x, this.y / vec.y);
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public final class Vector {
 	 * @param vec incoming vector
 	 * @return dot product (scalar product)
 	 */
-	public float dot(Vector vec)
+	public float dot(Vec2f vec)
 	{
 		return this.x * vec.x + this.y * vec.y;
 	}
@@ -197,10 +197,10 @@ public final class Vector {
 	 * @param t interpolation value [0,1]
 	 * @return interpolated vector rounded integers
 	 */
-	public Vector lerp(Vector vec, float t) {
+	public Vec2f lerp(Vec2f vec, float t) {
 		float x = t * (vec.x - this.x) + this.x;
 		float y = t * (vec.y - this.y) + this.y;
-		return new Vector(x, y);
+		return new Vec2f(x, y);
 	}
 
 	/**
@@ -208,7 +208,7 @@ public final class Vector {
 	 * @param p second vector
 	 * @return the Euclidean distance between this and the second vector
 	 */
-	public float distance(Vector p) {
+	public float distance(Vec2f p) {
 		return this.sub(p).length();
 	}
 	
@@ -217,7 +217,7 @@ public final class Vector {
 	 * @param p second vector
 	 * @return squared Euclidean distance between this and the second vector
 	 */
-	public float distanceSqr(Vector p) {
+	public float distanceSqr(Vec2f p) {
 		return this.sub(p).lengthSqr();
 	}
 	
@@ -226,7 +226,7 @@ public final class Vector {
 	 * @param other vector to be checked for equality
 	 * @return if vectors have same values
 	 */
-	public boolean equals(Vector other) {
+	public boolean equals(Vec2f other) {
 		return (x == other.x && y == other.y);
 	}
 	
@@ -234,15 +234,15 @@ public final class Vector {
 	 * Get the normalized vector. (Won't change this instance)
 	 * @return This vector scaled to the length of 1. If this is a Zero-Vector, components will be set to NaN.
 	 */
-	public Vector getNormalized() {
+	public Vec2f getNormalized() {
 		return this.div(this.length());
 	}
 	
 	/**
 	 * @return new Vector with same Values.
 	 */
-	public Vector copy() {
-		return new Vector(x,y);
+	public Vec2f copy() {
+		return new Vec2f(x,y);
 	}
 
 	/**
@@ -250,12 +250,12 @@ public final class Vector {
 	 * @param angle in radians.
 	 * @return rotated vector by angle.
 	 */
-	public Vector rotate(double angle) {
+	public Vec2f rotate(double angle) {
 		double sin = Math.sin(angle);
 		double cos = Math.cos(angle);
 		double x = this.x * cos - this.y * sin;
 		double y = this.x * sin + this.y * cos;
-		return new Vector((float) x, (float) y);
+		return new Vec2f((float) x, (float) y);
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public final class Vector {
 	 * @return angle to (1, 0)^t in radians.
 	 */
 	public float getAngle() {
-		float angle = (float) Math.acos(this.getNormalized().dot(new Vector(1,0)));
+		float angle = (float) Math.acos(this.getNormalized().dot(new Vec2f(1,0)));
 		if(y > 0) {
 			return (float) (2 * Math.PI - angle);
 		}

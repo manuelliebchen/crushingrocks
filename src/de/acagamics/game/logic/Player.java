@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.controller.IPlayerController;
-import de.acagamics.game.types.Vector;
+import de.acagamics.game.types.Vec2f;
 import javafx.scene.paint.Color;
 
 /**
@@ -106,7 +106,7 @@ public final class Player {
 	 * @param controller of the owner of the unit for verification.
 	 * @param position to which the unit should moves.
 	 */
-	public void setAllUnitsOrder(IPlayerController controller, Vector position) {
+	public void setAllUnitsOrder(IPlayerController controller, Vec2f position) {
 		for(Unit unit : units) {
 			unit.setOrder(controller, position.sub(unit.getPosition()));
 		}

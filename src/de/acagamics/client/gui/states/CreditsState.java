@@ -5,8 +5,8 @@ import de.acagamics.client.gui.elements.Button;
 import de.acagamics.client.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.client.gui.elements.TextBox;
 import de.acagamics.client.gui.interfaces.MenuState;
-import de.acagamics.constants.DesignConstants.ALINGMENT;
-import javafx.geometry.Point2D;
+import de.acagamics.constants.DesignConstants.ALINGNMENT;
+import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
@@ -23,8 +23,9 @@ public class CreditsState extends MenuState {
 	 */
 	public CreditsState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		drawables.add(new TextBox(new Point2D(200, 200), "Credits:\nManuel Liebchen\nAnja Kaminski\nMichl Steglich"));
-		clickable.add(new Button(new Point2D(200, 125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
-				.setVerticalAlignment(ALINGMENT.RIGHT).setHorizontalAlignment(ALINGMENT.BOTTOM).setKeyCode(KeyCode.ESCAPE));
+		drawables.add(new TextBox(new Vec2f(200, 200), "Credits:\nManuel Liebchen\nAnja Kaminski\nMichl Steglich"));
+		clickable.add((Button) (new Button(new Vec2f(200, 125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
+				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALINGNMENT.RIGHT)
+				.setHorizontalAlignment(ALINGNMENT.BOTTOM)));
 	}
 }

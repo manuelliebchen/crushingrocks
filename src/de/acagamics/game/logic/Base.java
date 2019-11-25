@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.acagamics.constants.GameConstants;
-import de.acagamics.game.types.Vector;
+import de.acagamics.game.types.Vec2f;
 
 /**
  * A Class for the Base of a Player.
@@ -12,7 +12,7 @@ import de.acagamics.game.types.Vector;
  * @author Manuel Liebchen
  */
 public final class Base {
-	private Vector position;
+	private Vec2f position;
 	private Player owner;
 	private int hp;
 
@@ -22,7 +22,7 @@ public final class Base {
 	 * @param owner
 	 * @param position
 	 */
-	Base(Player owner, Vector position) {
+	Base(Player owner, Vec2f position) {
 		this.owner = owner;
 		this.position = position;
 		hp = GameConstants.INITIAL_BASE_HP;
@@ -42,7 +42,7 @@ public final class Base {
 	 * 
 	 * @return position
 	 */
-	public Vector getPosition() {
+	public Vec2f getPosition() {
 		return position.copy();
 	}
 

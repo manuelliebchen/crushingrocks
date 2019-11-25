@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.controller.IPlayerController;
-import de.acagamics.game.types.Vector;
+import de.acagamics.game.types.Vec2f;
 
 /**
  * Unit of the Player to be controlled.
@@ -12,13 +12,13 @@ import de.acagamics.game.types.Vector;
  */
 public final class Unit {
 
-	private Vector position;
+	private Vec2f position;
 	private Player owner;
 	private int strength;
 
-	private Vector orderedDirection;
+	private Vec2f orderedDirection;
 
-	Unit(int strength, Player owner, Vector position) {
+	Unit(int strength, Player owner, Vec2f position) {
 		this.strength = strength;
 		this.owner = owner;
 		this.position = position;
@@ -34,7 +34,7 @@ public final class Unit {
 	/**
 	 * @return Position of this unit on the map.
 	 */
-	public Vector getPosition() {
+	public Vec2f getPosition() {
 		return position.copy();
 	}
 
@@ -50,18 +50,18 @@ public final class Unit {
 	 * @param controller of the owner of the unit for verification.
 	 * @param direction in witch the unit should moves.
 	 */
-	public void setOrder(IPlayerController controller, Vector direction) {
+	public void setOrder(IPlayerController controller, Vec2f direction) {
 		if (controller == owner.getController()) {
 			orderedDirection = direction;
 		}
 	}
 
-	Vector updatePosition(List<Unit> allUnits) {
+	Vec2f updatePosition(List<Unit> allUnits) {
 		if (orderedDirection != null) {
 			if (orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
 				orderedDirection = orderedDirection.getNormalized().mult(GameConstants.MAX_UNIT_SPEED);
 			}
-			Vector targetPosition = position.add(orderedDirection);
+			Vec2f targetPosition = position.add(orderedDirection);
 			boolean hit = false;
 			for (int i = 0; i < allUnits.size(); i++) {
 //				if (allUnits.get(i) != this && allUnits.get(i).position.sub(targetPosition).length() < GameConstants.UNIT_BODY_RADIUS) {
