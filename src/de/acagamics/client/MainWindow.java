@@ -34,7 +34,7 @@ public final class MainWindow extends Application {
 //		News.loadNews();
 
 		// Set window settings and show window
-		stage.getIcons().add(ImageManager.getInstance().loadImage("icon.png"));
+//		stage.getIcons().add(ImageManager.getInstance().loadImage("icon.png"));
 		stage.setTitle(ClientConstants.SCREEN_TITLE);
 
 		// Create Canvas and Layout(Pane) for window

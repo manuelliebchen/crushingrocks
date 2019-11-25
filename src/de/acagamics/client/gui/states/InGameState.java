@@ -94,7 +94,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			return;
 		}
 		Canvas canvas = context.getCanvas();
-		context.setFill(DesignConstants.BACKGROUND_COLOR);
+		context.setFill(DesignConstants.GAME_BACKGROUND_COLOR);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 		context.save();

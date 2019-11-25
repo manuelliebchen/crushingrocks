@@ -67,17 +67,26 @@ public final class Button extends Alignable implements IClickable {
 		super(relativPosition);
 		this.buttonText = buttonText;
 		this.type = type;
+		String buttonTexture = "buttons/Button";
 		switch(type) {
 		case WIDE:
-			size = new Vec2f(200, 50);
+			size = new Vec2f(DesignConstants.BUTTON_HEIGHT * 4, DesignConstants.BUTTON_HEIGHT);
+			buttonTexture += "4";
 			break;
 		case SQUARE:
-			size = new Vec2f(50, 50);
+			size = new Vec2f(DesignConstants.BUTTON_HEIGHT, DesignConstants.BUTTON_HEIGHT);
+			buttonTexture += "1";
 			break;
 		default:
-			size = new Vec2f(100, 50);
+			size = new Vec2f(DesignConstants.BUTTON_HEIGHT * 2, DesignConstants.BUTTON_HEIGHT);
+			buttonTexture += "2";
 			break;
-		} 
+		}
+
+		imgUp = ImageManager.getInstance().loadImage(buttonTexture + ".png");
+		imgDown = ImageManager.getInstance().loadImage(buttonTexture + "dark.png");
+		imgInActive = ImageManager.getInstance().loadImage(buttonTexture + "Inactive.png");
+		
 		this.relativPosition = relativPosition.sub(size.mult(0.5f));
 		this.position = this.relativPosition;
 		this.function = function;

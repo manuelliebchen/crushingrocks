@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.acagamics.client.gui.interfaces.IDrawable;
 import de.acagamics.client.rendering.assetmanagment.ImageManager;
+import de.acagamics.constants.DesignConstants;
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.logic.Base;
 import de.acagamics.game.logic.Map;
@@ -52,12 +53,15 @@ public final class MapRendering implements IDrawable {
 	 * @param timeSinceLastDraw Time passed since last draw in seconds.
 	 */
 	public void draw(GraphicsContext context) {
-
-		Image baseTexture = ImageManager.getInstance().loadImage("base.png");
 		for (Base base : bases) {
-			context.drawImage(baseTexture, base.getPosition().getX() - GameConstants.BASE_RADIUS,
-					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
-					2 * GameConstants.BASE_RADIUS);
+			Image baseTexture = ImageManager.getInstance().loadImage("Base" + base.getOwner().getPlayerID() + ".png");
+			context.drawImage(baseTexture,
+					base.getPosition().getX()
+							- GameConstants.BASE_RADIUS * DesignConstants.BASE_RENDERING_SIZE_MULTIPLIER,
+					base.getPosition().getY()
+							- GameConstants.BASE_RADIUS * DesignConstants.BASE_RENDERING_SIZE_MULTIPLIER,
+					2 * DesignConstants.BASE_RENDERING_SIZE_MULTIPLIER * GameConstants.BASE_RADIUS,
+					2 * DesignConstants.BASE_RENDERING_SIZE_MULTIPLIER * GameConstants.BASE_RADIUS);
 		}
 
 		Image minetexture = ImageManager.getInstance().loadImage("mine.png");
@@ -73,16 +77,20 @@ public final class MapRendering implements IDrawable {
 		Image untiTexture = unitTexture1;
 		for (Player player : players) {
 			for (Unit unit : player.getUnits()) {
-				if(unit.getStrength() <= 1) {
+				if (unit.getStrength() <= 1) {
 					untiTexture = unitTexture1;
-				} else if(unit.getStrength() <= 2) {
+				} else if (unit.getStrength() <= 2) {
 					untiTexture = unitTexture2;
 				} else {
 					untiTexture = unitTexture3;
 				}
-				context.drawImage(untiTexture, unit.getPosition().getX() - GameConstants.UNIT_RADIUS * 3,
-						unit.getPosition().getY() - GameConstants.UNIT_RADIUS * 3, 6 * GameConstants.UNIT_RADIUS,
-						6 * GameConstants.UNIT_RADIUS);
+				context.drawImage(untiTexture,
+						unit.getPosition().getX()
+								- GameConstants.UNIT_RADIUS * DesignConstants.UNIT_RENDERING_SIZE_MULTIPLIER,
+						unit.getPosition().getY()
+								- GameConstants.UNIT_RADIUS * DesignConstants.UNIT_RENDERING_SIZE_MULTIPLIER,
+						2 * DesignConstants.UNIT_RENDERING_SIZE_MULTIPLIER * GameConstants.UNIT_RADIUS,
+						2 * DesignConstants.UNIT_RENDERING_SIZE_MULTIPLIER * GameConstants.UNIT_RADIUS);
 			}
 		}
 	}
