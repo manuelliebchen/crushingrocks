@@ -39,7 +39,7 @@ public class SelectionState extends MenuState {
 		drawables.add(new TextBox(new Vec2f(200, 100), "Bot Selection").setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
-		modeSelector = new Selector(new Vec2f(0, 200), 200, 0, GAMEMODE.values().length - 1,
+		modeSelector = new Selector(new Vec2f(0, 200), 300, 0, GAMEMODE.values().length - 1,
 				(i) -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(modeSelector);
 
@@ -48,14 +48,14 @@ public class SelectionState extends MenuState {
 						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.BOTTOM));
 		clickable.add(startbutton);
 
-		clickable.add((Button) (new Button(new Vec2f(-300, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
+		clickable.add((Button) (new Button(new Vec2f(-325, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 
 		if (!bots.isEmpty()) {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
-				botSelectors[i] = new Selector(new Vec2f(0, 400 + i * 100), 200, 0, bots.size() - 1,
+				botSelectors[i] = new Selector(new Vec2f(0, 400 + i * 100), 300, 0, bots.size() - 1,
 						(i2) -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALIGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}

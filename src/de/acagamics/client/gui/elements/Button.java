@@ -1,5 +1,7 @@
 package de.acagamics.client.gui.elements;
 
+import java.io.File;
+
 import de.acagamics.client.gui.interfaces.IClickable;
 import de.acagamics.client.rendering.assetmanagment.ImageManager;
 import de.acagamics.constants.DesignConstants;
@@ -20,9 +22,11 @@ import javafx.scene.text.Text;
  *         images and text. Registers if a user pressed on it.
  */
 public final class Button extends Alignable implements IClickable {
-	
-	public static enum BUTTON_TYPE {NORMAL, WIDE, SQUARE};
-	
+
+	public static enum BUTTON_TYPE {
+		NORMAL, WIDE, SQUARE
+	};
+
 	// Button status
 	private boolean isEnabled = true;
 
@@ -37,18 +41,18 @@ public final class Button extends Alignable implements IClickable {
 	private Image imgUp;
 	private Image imgDown;
 	private Image imgInActive;
-	
-	private Font font = DesignConstants.STANDART_FONT;
+
+	private Font font = DesignConstants.BUTTON_FONT;
 
 	protected ALIGNMENT verticalAlignment = ALIGNMENT.LEFT;
 	protected ALIGNMENT horizontalAlignment = ALIGNMENT.TOP;
-	
+
 	private KeyCode keycode;
 
 	private Runnable function;
 
 	private boolean isOver;
-	
+
 	// Mouse status
 	private boolean mousePressed = false;
 
@@ -63,8 +67,8 @@ public final class Button extends Alignable implements IClickable {
 	public Button(Vec2f relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
 		super(relativPosition);
 		this.buttonText = buttonText;
-		String buttonTexture = "buttons" + "/" + "Button";
-		switch(type) {
+		String buttonTexture = "buttons" + File.separator + "Button";
+		switch (type) {
 		case WIDE:
 			size = new Vec2f(DesignConstants.BUTTON_HEIGHT * 4, DesignConstants.BUTTON_HEIGHT);
 			buttonTexture += "4";
@@ -82,7 +86,7 @@ public final class Button extends Alignable implements IClickable {
 		imgUp = ImageManager.getInstance().loadImage(buttonTexture + ".png");
 		imgDown = ImageManager.getInstance().loadImage(buttonTexture + "dark.png");
 		imgInActive = ImageManager.getInstance().loadImage(buttonTexture + "Inactive.png");
-		
+
 		this.relativPosition = relativPosition.sub(size.mult(0.5f));
 		this.position = this.relativPosition;
 		this.function = function;
@@ -116,7 +120,8 @@ public final class Button extends Alignable implements IClickable {
 		Text text = new Text(buttonText);
 		text.setFont(font);
 
-		Vec2f buttonTextSize = new Vec2f((float) text.getLayoutBounds().getWidth(), (float) text.getLayoutBounds().getHeight());
+		Vec2f buttonTextSize = new Vec2f((float) text.getLayoutBounds().getWidth(),
+				(float) text.getLayoutBounds().getHeight());
 		centeredPositioOffset = new Vec2f((size.getX() - buttonTextSize.getX()) / 2,
 				size.getY() / 2 + buttonTextSize.getY() / 4);
 	}
@@ -170,7 +175,7 @@ public final class Button extends Alignable implements IClickable {
 	 * 
 	 * @param graphics
 	 */
-	public void draw(GraphicsContext graphics) {		
+	public void draw(GraphicsContext graphics) {
 		position = super.getAlignedPosition(graphics).add(size.mult(-0.5f));
 
 		if (!this.isEnabled) {
@@ -203,7 +208,7 @@ public final class Button extends Alignable implements IClickable {
 	 */
 	@Override
 	public void handle(InputEvent event) {
-		if(!isEnabled) {
+		if (!isEnabled) {
 			return;
 		}
 		if (event instanceof MouseEvent) {
@@ -213,14 +218,16 @@ public final class Button extends Alignable implements IClickable {
 					function.run();
 				}
 			}
-			isOver = mouseEvent.getSceneX() >= position.getX() && mouseEvent.getSceneX() <= position.getX() + size.getX()
-			&& mouseEvent.getSceneY() >= position.getY() && mouseEvent.getSceneY() <= position.getY() + size.getY();
-			
+			isOver = mouseEvent.getSceneX() >= position.getX()
+					&& mouseEvent.getSceneX() <= position.getX() + size.getX()
+					&& mouseEvent.getSceneY() >= position.getY()
+					&& mouseEvent.getSceneY() <= position.getY() + size.getY();
+
 		}
-		if(keycode != null) {
+		if (keycode != null) {
 			if (event instanceof KeyEvent) {
 				KeyEvent keyEvent = (KeyEvent) event;
-	
+
 				if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED) {
 					if (keyEvent.getCode() == keycode) {
 						function.run();

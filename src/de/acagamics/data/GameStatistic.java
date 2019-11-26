@@ -1,5 +1,6 @@
 package de.acagamics.data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.acagamics.constants.GameConstants;
@@ -28,35 +29,27 @@ public final class GameStatistic {
 		return isDraw;
 	}
 	
-	public String getSitesString() {
-		String construction = "Sites\n";
-		for(Player player : players) {
-			construction += String.format("%s\n", GameConstants.SITES.values()[player.getPlayerID()]);
-		}
-		return construction;
+	public String getSitesString(int playerID) {
+		return String.valueOf(GameConstants.SITES.values()[playerID]);
 	}
 	
-	public String getNameString() {
-		String construction = "Names\n";
-		for(Player player : players) {
-			construction += String.format("%s\n", player.getName());
-		}
-		return construction;
+	public String getNameString(int playerID) {
+		return String.valueOf(players.get(playerID).getName());
 	}
 	
-	public String getScoreString() {
-		String construction = "Score\n";
-		for(Player player : players) {
-			construction += String.format("%d\n", player.getScore());
-		}
-		return construction;
+	public String getScoreString(int playerID) {
+		return String.valueOf(players.get(playerID).getScore());
 	}
 
-	public String getBaseHPString() {
-		String construction = "BaseHP\n";
+	public String getBaseHPString(int playerID) {
+		return String.valueOf(players.get(playerID).getBase().getHP());
+	}
+
+	public List<Integer> getPlayerIDs() {
+		List<Integer> playerIDs = new ArrayList<>(players.size());
 		for(Player player : players) {
-			construction += String.format("%d\n", player.getBase().getHP());
+			playerIDs.add(player.getPlayerID());
 		}
-		return construction;
+		return playerIDs;
 	}
 }

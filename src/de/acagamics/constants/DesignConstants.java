@@ -13,7 +13,9 @@ public final class DesignConstants {
 	
 	// http://paletton.com/#uid=70X1q0kpntDfEF8kMvZtppdvJk0
 	
-	public static final Font STANDART_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 20);
+	public static final Font STANDART_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 32);
+	
+	public static final Font BUTTON_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 20);
 	
 	public static final Font LARGE_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 48);
 
@@ -23,7 +25,8 @@ public final class DesignConstants {
 
 	public static final Color FOREGROUND_COLOR = Color.color(0f, 0f,0f);
 	
-	public static final Color BACKGROUND_COLOR = Color.WHITE;
+//	public static final Color BACKGROUND_COLOR = Color.WHITE;
+	public static final Color BACKGROUND_COLOR = Color.web("#649501");
 	
 	public static final Color GAME_BACKGROUND_COLOR = Color.web("#82BB0F");
 	

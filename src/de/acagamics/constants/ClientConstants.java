@@ -1,5 +1,7 @@
 package de.acagamics.constants;
 
+import java.io.File;
+
 /**
  * Class for various client relevant constants.
  * @author Max Klockmann (max@acagamics.de)
@@ -37,13 +39,13 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #SCREEN_ICON} 
 	 */
-	public static final String SCREEN_ICON = "de/acagamics/assets/icon.png";
+	public static final String SCREEN_ICON = "de" + File.separator + "acagamics" + File.separator + "assets" + File.separator + "Ressource.png";
 	/**
 	 * The asset manager root folder, all assets are relative to this path.
 	 * <p>
 	 * Value = {@value #ASSET_ROOT}
 	 */
-	public static final String ASSET_ROOT = "de/acagamics/assets/";
+	public static final String ASSET_ROOT = "de" + File.separator + "acagamics" + File.separator + "assets" + File.separator;
 	/**
 	 * The window width.
 	 * <p>
@@ -62,11 +64,4 @@ public final class ClientConstants {
 	 * Value = {@value #MINIMUM_TIME_PER_FRAME_MS}
 	 */
 	public static final long MINIMUM_TIME_PER_FRAME_MS = 16;
-
-	/**
-	 * Time of a simulation step in seconds.
-	 * <p>
-	 * Value = {@value #SIMULATION_STEP_INTERVAL}
-	 */
-	public static final int SIMULATION_STEP_INTERVAL = 16 / 1000;
 }

@@ -18,7 +18,7 @@ public class StatisticState extends MenuState {
 			InGameSettings settings) {
 		super(manager, context);
 
-		clickable.add((Button) (new Button(new Vec2f(-325, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
+		clickable.add((Button) (new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 		clickable.add((Button) (new Button(new Vec2f(-200, -125), BUTTON_TYPE.NORMAL, "Restart",
@@ -31,16 +31,27 @@ public class StatisticState extends MenuState {
 		}
 		drawables.add(new TextBox(new Vec2f(300, 100), title).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
-
-		drawables.add(new TextBox(new Vec2f(-450, 200), statistic.getSitesString())
+		
+		drawables.add(new TextBox(new Vec2f(-500, 200), "Color")
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-		drawables.add(new TextBox(new Vec2f(-250, 200), statistic.getNameString())
+		drawables.add(new TextBox(new Vec2f(-250, 200), "Name")
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-		drawables.add(new TextBox(new Vec2f(200, 200), statistic.getBaseHPString())
+		drawables.add(new TextBox(new Vec2f(200, 200), "Base HP")
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-		drawables.add(new TextBox(new Vec2f(450, 200), statistic.getScoreString())
+		drawables.add(new TextBox(new Vec2f(450, 200), "Score")
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-
-		drawables.addAll(clickable);
+		
+		int i = 0;
+		for(Integer playerID : statistic.getPlayerIDs()) {			
+			drawables.add(new TextBox(new Vec2f(-500, 250 + i * 50), statistic.getSitesString(playerID))
+					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
+			drawables.add(new TextBox(new Vec2f(-250, 250 + i * 50), statistic.getNameString(playerID))
+					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
+			drawables.add(new TextBox(new Vec2f(200, 250 + i * 50), statistic.getBaseHPString(playerID))
+					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
+			drawables.add(new TextBox(new Vec2f(450, 250 + i * 50), statistic.getScoreString(playerID))
+					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
+			i++;
+		}
 	}
 }
