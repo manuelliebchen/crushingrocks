@@ -12,6 +12,7 @@ import de.acagamics.client.gui.elements.Selector;
 import de.acagamics.client.gui.elements.TextBox;
 import de.acagamics.client.gui.interfaces.MenuState;
 import de.acagamics.client.utility.BotClassLoader;
+import de.acagamics.constants.DesignConstants;
 import de.acagamics.data.InGameSettings;
 import de.acagamics.data.InGameSettings.GAMEMODE;
 import de.acagamics.game.controller.builtIn.EvilSanta;
@@ -36,26 +37,26 @@ public class SelectionState extends MenuState {
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
-		drawables.add(new TextBox(new Vec2f(200, 100), "Bot Selection").setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(200, 100), "Bot Selection").setFont(DesignConstants.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
-		modeSelector = new Selector(new Vec2f(0, 200), 300, 0, GAMEMODE.values().length - 1,
+		modeSelector = new Selector(new Vec2f(0, 200), 200, 0, GAMEMODE.values().length - 1,
 				(i) -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(modeSelector);
 
-		Button startbutton = (Button) (new Button(new Vec2f(-175, -125), BUTTON_TYPE.NORMAL, "Start",
+		Button startbutton = (Button) (new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
 				() -> manager.push(new InGameState(manager, context, generateSettings()))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.BOTTOM));
 		clickable.add(startbutton);
 
-		clickable.add((Button) (new Button(new Vec2f(-325, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
+		clickable.add((Button) (new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 
 		if (!bots.isEmpty()) {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
-				botSelectors[i] = new Selector(new Vec2f(0, 400 + i * 100), 300, 0, bots.size() - 1,
+				botSelectors[i] = new Selector(new Vec2f(0, 400 + i * 100), 200, 0, bots.size() - 1,
 						(i2) -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALIGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}
@@ -63,8 +64,8 @@ public class SelectionState extends MenuState {
 			startbutton.setEnabled(false);
 		}
 
-		drawables.add(new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.BOTTOM));
-		speedSelectors = new Selector(new Vec2f(200, -125), 100, 1, 16, (i) -> i + "x")
+		drawables.add(new TextBox(new Vec2f(200, -180), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.BOTTOM));
+		speedSelectors = new Selector(new Vec2f(200, -120), 75, 1, 16, (i) -> i + "x")
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM);
 		clickable.add(speedSelectors);
 

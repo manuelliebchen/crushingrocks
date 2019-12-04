@@ -1,11 +1,10 @@
 package de.acagamics;
 
-import javafx.application.Application;
-
 import org.apache.log4j.Logger;
 
 import de.acagamics.client.MainWindow;
 import de.acagamics.data.CliArguments;
+import javafx.application.Application;
 
 /**
  * @author Max Klockmann (max@acagamics.de)

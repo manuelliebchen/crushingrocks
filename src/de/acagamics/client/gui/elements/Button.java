@@ -3,7 +3,7 @@ package de.acagamics.client.gui.elements;
 import java.io.File;
 
 import de.acagamics.client.gui.interfaces.IClickable;
-import de.acagamics.client.rendering.assetmanagment.ImageManager;
+import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,7 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -41,8 +40,6 @@ public final class Button extends Alignable implements IClickable {
 	private Image imgUp;
 	private Image imgDown;
 	private Image imgInActive;
-
-	private Font font = DesignConstants.BUTTON_FONT;
 
 	protected ALIGNMENT verticalAlignment = ALIGNMENT.LEFT;
 	protected ALIGNMENT horizontalAlignment = ALIGNMENT.TOP;
@@ -83,9 +80,9 @@ public final class Button extends Alignable implements IClickable {
 			break;
 		}
 
-		imgUp = ImageManager.getInstance().loadImage(buttonTexture + ".png");
-		imgDown = ImageManager.getInstance().loadImage(buttonTexture + "dark.png");
-		imgInActive = ImageManager.getInstance().loadImage(buttonTexture + "Inactive.png");
+		imgUp = AssetManager.getInstance().loadImage(buttonTexture + ".png");
+		imgDown = AssetManager.getInstance().loadImage(buttonTexture + "dark.png");
+		imgInActive = AssetManager.getInstance().loadImage(buttonTexture + "Inactive.png");
 
 		this.relativPosition = relativPosition.sub(size.mult(0.5f));
 		this.position = this.relativPosition;
@@ -96,12 +93,6 @@ public final class Button extends Alignable implements IClickable {
 
 	public Button setTextColor(Color textColor) {
 		this.textColor = textColor;
-		return this;
-	}
-
-	public Button setFont(Font font) {
-		this.font = font;
-		calcButtonTextProperties();
 		return this;
 	}
 
@@ -118,24 +109,12 @@ public final class Button extends Alignable implements IClickable {
 	 */
 	private void calcButtonTextProperties() {
 		Text text = new Text(buttonText);
-		text.setFont(font);
+		text.setFont(DesignConstants.BUTTON_FONT);
 
 		Vec2f buttonTextSize = new Vec2f((float) text.getLayoutBounds().getWidth(),
 				(float) text.getLayoutBounds().getHeight());
 		centeredPositioOffset = new Vec2f((size.getX() - buttonTextSize.getX()) / 2,
 				size.getY() / 2 + buttonTextSize.getY() / 4);
-	}
-
-	/**
-	 * Change font of button. Updates text properties
-	 * 
-	 * @see calcButtonTextProperties()
-	 * @param font
-	 */
-	public void changeFont(Font font) {
-		this.font = font;
-		calcButtonTextProperties();
-
 	}
 
 	/**
@@ -186,7 +165,7 @@ public final class Button extends Alignable implements IClickable {
 			graphics.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
 		}
 
-		graphics.setFont(font);
+		graphics.setFont(DesignConstants.BUTTON_FONT);
 		graphics.setFill(textColor);
 		graphics.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
 				position.getY() + centeredPositioOffset.getY());

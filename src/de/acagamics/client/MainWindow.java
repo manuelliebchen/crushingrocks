@@ -35,6 +35,10 @@ public final class MainWindow extends Application {
 		// Set window settings and show window
 //		stage.getIcons().add(ImageManager.getInstance().loadImage("icon.png"));
 		stage.setTitle(ClientConstants.SCREEN_TITLE);
+		stage.setWidth(ClientConstants.INITIAL_SCREEN_WIDTH);
+		stage.setHeight(ClientConstants.INITIAL_SCREEN_HEIGHT);
+		stage.setMinWidth(ClientConstants.INITIAL_SCREEN_WIDTH);
+		stage.setMinHeight(ClientConstants.INITIAL_SCREEN_HEIGHT);
 
 		// Create Canvas and Layout(Pane) for window
 		Pane pane = new Pane();

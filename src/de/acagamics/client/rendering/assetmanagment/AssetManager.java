@@ -1,23 +1,27 @@
 package de.acagamics.client.rendering.assetmanagment;
 
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
+
 import org.apache.log4j.Logger;
 
 import de.acagamics.constants.ClientConstants;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
  */
-public final class ImageManager {
+public final class AssetManager {
 
-    private static final Logger LOG = Logger.getLogger(ImageManager.class);
+    private static final Logger LOG = Logger.getLogger(AssetManager.class);
 
-    private static final ImageManager INSTANCE = new ImageManager();
+    private static final AssetManager INSTANCE = new AssetManager();
 
-    private ImageManager() {
+    private AssetManager() {
         if (INSTANCE != null) {
             LOG.error("Already instantiated");
         }
@@ -28,10 +32,13 @@ public final class ImageManager {
      * Singleton pattern.
      * @return instance of the ImageManager
      */
-    public static ImageManager getInstance() {
+    public static AssetManager getInstance() {
         return INSTANCE;
     }
-
+    
+    
+// IMAGES
+    
     private Map<String, Image> imageCache = new HashMap<>();
 
     /**
@@ -53,6 +60,8 @@ public final class ImageManager {
         }
     }
 
+    
+//ANIMATIONS
     private Map<String, AnimatedImage> animImageCache = new HashMap<>();
 
     /**
@@ -101,4 +110,36 @@ public final class ImageManager {
             return animg;
         }
     }
+    
+//FONTS
+    
+    private Map<String, Font> fontCache = new HashMap<>();
+
+    /**
+     * Loads an font from the given path. Also caches multiple loads of the same font.
+     * @param imagePath Path to the image, as seen from the Asset package.
+     * @return Image at the given path.
+     */
+    public Font loadFont(String fontPath, int size) {
+        assert fontPath != null;
+
+        String assetPath = "src" + File.separator +ClientConstants.ASSET_ROOT + fontPath;
+
+        fontPath += String.valueOf(size);
+        
+        if (fontCache.containsKey(fontPath)) {
+            return fontCache.get(fontPath);
+        } else {
+            Font font = null;
+			try {
+				font = Font.loadFont(new File(assetPath).toURI().toURL().toString(), size);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+            fontCache.put(fontPath, font);
+            return font;
+        }
+    }
+    
+    
 }

@@ -28,8 +28,10 @@ public class MainMenuState extends MenuState {
 	 */
 	public MainMenuState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		drawables.add(new TextBox(new Vec2f(0, 100), "Crushing Rocks!").setFont(DesignConstants.LARGE_FONT)
+		drawables.add(new TextBox(new Vec2f(0, 100), "Crushing Rocks!")
+				.setFont(DesignConstants.TITLE_FONT)
 				.setVerticalAlignment(ALIGNMENT.CENTER));
+
 		clickable.add((Button) (new Button(new Vec2f(0, 225), BUTTON_TYPE.WIDE, "Start Game",
 				() -> manager.push(new SelectionState(manager, context))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP)));

@@ -1,8 +1,8 @@
 package de.acagamics.constants;
 
+import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 /**
  * Class for all color const constants.
@@ -13,11 +13,13 @@ public final class DesignConstants {
 	
 	// http://paletton.com/#uid=70X1q0kpntDfEF8kMvZtppdvJk0
 	
-	public static final Font STANDART_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 32);
+	public static final Font STANDART_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 32);
 	
-	public static final Font BUTTON_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 20);
+	public static final Font BUTTON_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 24);
 	
-	public static final Font LARGE_FONT = Font.font(Font.getDefault().getFamily(), FontWeight.BOLD, 48);
+	public static final Font TITLE_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 72);
+	
+	public static final Font SECOND_TITLE_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 42);
 
 	public static final Color HEALTH_BACKGROUND = Color.color(0.741f, 0.153f, 0.486f);
 

@@ -3,7 +3,7 @@ package de.acagamics.client.rendering.renderer;
 import java.util.List;
 
 import de.acagamics.client.gui.interfaces.IDrawable;
-import de.acagamics.client.rendering.assetmanagment.ImageManager;
+import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.logic.Base;
@@ -54,7 +54,7 @@ public final class MapRendering implements IDrawable {
 	 */
 	public void draw(GraphicsContext context) {
 		for (Base base : bases) {
-			Image baseTexture = ImageManager.getInstance().loadImage("Base" + base.getOwner().getPlayerID() + ".png");
+			Image baseTexture = AssetManager.getInstance().loadImage("Base" + base.getOwner().getPlayerID() + ".png");
 			context.drawImage(baseTexture,
 					base.getPosition().getX()
 							- GameConstants.BASE_RADIUS * DesignConstants.BASE_RENDERING_SIZE_MULTIPLIER,
@@ -64,16 +64,16 @@ public final class MapRendering implements IDrawable {
 					2 * DesignConstants.BASE_RENDERING_SIZE_MULTIPLIER * GameConstants.BASE_RADIUS);
 		}
 
-		Image minetexture = ImageManager.getInstance().loadImage("mine.png");
+		Image minetexture = AssetManager.getInstance().loadImage("mine.png");
 		for (Mine mine : mines) {
 			context.drawImage(minetexture, mine.getPosition().getX() - GameConstants.MINE_RADIUS,
 					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
 					2 * GameConstants.MINE_RADIUS);
 		}
 
-		Image unitTexture1 = ImageManager.getInstance().loadImage("Unit1.png");
-		Image unitTexture2 = ImageManager.getInstance().loadImage("Unit2.png");
-		Image unitTexture3 = ImageManager.getInstance().loadImage("Unit3.png");
+		Image unitTexture1 = AssetManager.getInstance().loadImage("Unit1.png");
+		Image unitTexture2 = AssetManager.getInstance().loadImage("Unit2.png");
+		Image unitTexture3 = AssetManager.getInstance().loadImage("Unit3.png");
 		Image untiTexture = unitTexture1;
 		for (Player player : players) {
 			for (Unit unit : player.getUnits()) {

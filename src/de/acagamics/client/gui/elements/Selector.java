@@ -73,9 +73,9 @@ public class Selector implements IClickable {
 
 	@Override
 	public void draw(GraphicsContext context) {
+		textbox.draw(context);
 		minusButton.draw(context);
 		plusButton.draw(context);
-		textbox.draw(context);
 	}
 
 }
