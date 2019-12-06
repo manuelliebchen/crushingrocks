@@ -1,16 +1,13 @@
 package de.acagamics.client.rendering.assetmanagment;
 
-import javafx.scene.image.Image;
-import javafx.scene.text.Font;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import de.acagamics.constants.ClientConstants;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Map;
+import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -123,7 +120,7 @@ public final class AssetManager {
     public Font loadFont(String fontPath, int size) {
         assert fontPath != null;
 
-        String assetPath = "src" + File.separator +ClientConstants.ASSET_ROOT + fontPath;
+        String assetPath = ClientConstants.ASSET_ROOT + fontPath;
 
         fontPath += String.valueOf(size);
         
@@ -131,11 +128,7 @@ public final class AssetManager {
             return fontCache.get(fontPath);
         } else {
             Font font = null;
-			try {
-				font = Font.loadFont(new File(assetPath).toURI().toURL().toString(), size);
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
+            font = Font.loadFont(this.getClass().getClassLoader().getResourceAsStream(assetPath), size);
             fontCache.put(fontPath, font);
             return font;
         }

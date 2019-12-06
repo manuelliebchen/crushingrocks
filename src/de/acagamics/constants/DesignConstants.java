@@ -27,7 +27,6 @@ public final class DesignConstants {
 
 	public static final Color FOREGROUND_COLOR = Color.color(0f, 0f,0f);
 	
-//	public static final Color BACKGROUND_COLOR = Color.WHITE;
 	public static final Color BACKGROUND_COLOR = Color.web("#649501");
 	
 	public static final Color GAME_BACKGROUND_COLOR = Color.web("#82BB0F");
