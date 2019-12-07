@@ -1,7 +1,5 @@
 package de.acagamics.constants;
 
-import java.io.File;
-
 /**
  * Class for various client relevant constants.
  * @author Max Klockmann (max@acagamics.de)
@@ -39,13 +37,13 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #SCREEN_ICON} 
 	 */
-	public static final String SCREEN_ICON = "de" + File.separator + "acagamics" + File.separator + "assets" + File.separator + "Ressource.png";
+	public static final String SCREEN_ICON = "de/acagamics/assets/Ressource.png";
 	/**
 	 * The asset manager root folder, all assets are relative to this path.
 	 * <p>
 	 * Value = {@value #ASSET_ROOT}
 	 */
-	public static final String ASSET_ROOT = "de" + File.separator + "acagamics" + File.separator + "assets" + File.separator;
+	public static final String ASSET_ROOT = "de/acagamics/assets/";
 	/**
 	 * The window width.
 	 * <p>

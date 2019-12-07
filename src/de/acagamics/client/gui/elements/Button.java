@@ -1,7 +1,5 @@
 package de.acagamics.client.gui.elements;
 
-import java.io.File;
-
 import de.acagamics.client.gui.interfaces.IClickable;
 import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import de.acagamics.constants.DesignConstants;
@@ -64,7 +62,7 @@ public final class Button extends Alignable implements IClickable {
 	public Button(Vec2f relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
 		super(relativPosition);
 		this.buttonText = buttonText;
-		String buttonTexture = "buttons" + File.separator + "Button";
+		String buttonTexture = "buttons/Button";
 		switch (type) {
 		case WIDE:
 			size = new Vec2f(DesignConstants.BUTTON_HEIGHT * 4, DesignConstants.BUTTON_HEIGHT);

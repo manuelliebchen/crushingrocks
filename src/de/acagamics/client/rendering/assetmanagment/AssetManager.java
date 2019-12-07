@@ -1,9 +1,8 @@
 package de.acagamics.client.rendering.assetmanagment;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
 
 import de.acagamics.constants.ClientConstants;
 import javafx.scene.image.Image;
@@ -14,14 +13,9 @@ import javafx.scene.text.Font;
  */
 public final class AssetManager {
 
-    private static final Logger LOG = Logger.getLogger(AssetManager.class);
-
     private static final AssetManager INSTANCE = new AssetManager();
 
     private AssetManager() {
-        if (INSTANCE != null) {
-            LOG.error("Already instantiated");
-        }
     }
 
     /**
@@ -51,7 +45,8 @@ public final class AssetManager {
         if (imageCache.containsKey(imagePath)) {
             return imageCache.get(imagePath);
         } else {
-            Image img = new Image(assetPath, false);
+            InputStream instream = this.getClass().getClassLoader().getResourceAsStream(assetPath);
+            Image img = new Image(instream);
             imageCache.put(imagePath, img);
             return img;
         }
