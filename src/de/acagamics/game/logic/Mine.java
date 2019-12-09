@@ -11,20 +11,34 @@ import de.acagamics.game.types.Vec2f;
  *
  */
 public final class Mine {
+	
+	private final int mineid;
+	
 	private Vec2f position;
 	private float[] ownership;
 	
 	Mine(Mine copy){
+		this.mineid = copy.mineid;
 		this.position = new Vec2f(copy.position);
 		this.ownership = copy.ownership;
 	}
 	
-	Mine(Vec2f position, int numberOfPlayer){
+	Mine(Vec2f position, int mineid, int numberOfPlayer){
+		this.mineid = mineid;
 		this.position = position;
 		ownership = new float[numberOfPlayer];
 		for(int i = 0; i < numberOfPlayer; ++i) {
 			ownership[i] = 1 / (float) numberOfPlayer;
 		}
+	}
+	
+	
+	/**
+	 * Mine id getter.
+	 * @return the mineid.
+	 */
+	public int getMineID() {
+		return mineid;
 	}
 
 	/**

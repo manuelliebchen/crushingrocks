@@ -96,7 +96,7 @@ public final class Map {
 		} while(overlap);
 
 		for (int i = 0; i < GameConstants.NUMBER_OF_MINES; ++i) {
-			mines.add(new Mine(minePositions.get(i), player.size()));
+			mines.add(new Mine(minePositions.get(i), i, player.size()));
 		}
 		mines.sort((m, n) -> (int) (1000 * (m.getPosition().getY() - n.getPosition().getY())));
 	}

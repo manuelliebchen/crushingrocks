@@ -1,9 +1,11 @@
 package de.acagamics.game.controller.builtIn;
 
+import java.util.Optional;
+
 import de.acagamics.game.controller.IPlayerController;
 import de.acagamics.game.logic.Map;
+import de.acagamics.game.logic.Mine;
 import de.acagamics.game.logic.Player;
-import de.acagamics.game.logic.Unit;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
@@ -34,13 +36,12 @@ public final class HumanBot implements IPlayerController, EventHandler<InputEven
 	@Override
 	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		if (mineOrder - 1 >= 0 && mineOrder - 1 < mapInfo.getMines().size()) {
-			for (Unit unit : ownPlayer.getUnits()) {
-				unit.setOrder(this, mapInfo.getMines().get(mineOrder - 1).getPosition().sub(unit.getPosition()));
+			Optional<Mine> order = mapInfo.getMines().stream().filter((m)-> m.getMineID() == mineOrder-1).findFirst();
+			if(order.isPresent()) {
+				ownPlayer.setAllUnitsOrder(this, order.get().getPosition());
 			}
 		} else if (mineOrder == 0) {
-			for (Unit unit : ownPlayer.getUnits()) {
-				unit.setOrder(this, enemyPlayerInfo.getBase().getPosition().sub(unit.getPosition()));
-			}
+			ownPlayer.setAllUnitsOrder(this, enemyPlayerInfo.getBase().getPosition());
 		}
 		ownPlayer.setUnitCreationOrder(this, 1);
 	}

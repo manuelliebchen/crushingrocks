@@ -3,6 +3,7 @@ package de.acagamics.client.rendering.renderer;
 import java.util.List;
 
 import de.acagamics.client.gui.interfaces.IDrawable;
+import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.logic.Base;
@@ -12,6 +13,7 @@ import de.acagamics.game.logic.Player;
 import de.acagamics.game.logic.Unit;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
+import javafx.scene.text.TextAlignment;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)

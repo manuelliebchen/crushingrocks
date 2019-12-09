@@ -1,5 +1,7 @@
 package de.acagamics.game.types;
 
+import javafx.geometry.Point2D;
+
 /**
  * A class for defining a 2-dimensional vector. With different helpful 
  * methods to work with and manipulate vectors.
@@ -268,5 +270,13 @@ public final class Vec2f {
 			return (float) (2 * Math.PI - angle);
 		}
 		return angle;
+	}
+	
+	/**
+	 * Creates a Point2D Objekt from a Vector.
+	 * @return Point2D with same x and y value.
+	 */
+	public Point2D getPoint2D() {
+		return new Point2D(x, y);
 	}
 }

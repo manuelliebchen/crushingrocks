@@ -12,15 +12,18 @@ import de.acagamics.constants.GameConstants;
 import de.acagamics.data.GameStatistic;
 import de.acagamics.data.InGameSettings;
 import de.acagamics.game.logic.Game;
+import de.acagamics.game.logic.Mine;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Affine;
 import javafx.util.Duration;
 
@@ -36,7 +39,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	private HUDRenderer hudRenderer;
 
 	Timeline timeline;
-	
+
 	private InGameSettings settings;
 
 	public InGameState(StateManager manager, GraphicsContext context, InGameSettings settings) {
@@ -50,9 +53,10 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		hudRenderer = new HUDRenderer(game);
 
 		timeline = new Timeline();
-		KeyFrame frame = new KeyFrame(Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS/settings.getSpeedMultiplier()), (event) -> {
-			frame();
-		});
+		KeyFrame frame = new KeyFrame(
+				Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS / settings.getSpeedMultiplier()), (event) -> {
+					frame();
+				});
 
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
@@ -90,7 +94,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	 */
 	@Override
 	public void redraw() {
-		if(timeline.getStatus() != Status.RUNNING) {
+		if (timeline.getStatus() != Status.RUNNING) {
 			return;
 		}
 		Canvas canvas = context.getCanvas();
@@ -116,6 +120,22 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		context.setLineWidth(DesignConstants.OVERLAY_LINE_WIDTH);
 		mapOverlayRenderer.draw(context);
 
+		context.restore();
+
+		context.save();
+		for (Mine mine : game.getMap().getMines()) {
+			Point2D position = mine.getPosition().add(0, GameConstants.MINE_RADIUS).getPoint2D();
+			position = transformation.transform(position);
+			String mineText = String.valueOf(mine.getMineID());
+			Text text = new Text(mineText);
+			text.setFont(DesignConstants.BUTTON_FONT);
+			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
+			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
+
+			context.setFill(DesignConstants.FOREGROUND_COLOR);
+			context.setFont(DesignConstants.STANDART_FONT);
+			context.fillText(mineText, position.getX(), position.getY());
+		}
 		context.restore();
 
 		context.save();

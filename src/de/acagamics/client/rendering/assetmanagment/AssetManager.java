@@ -112,7 +112,7 @@ public final class AssetManager {
      * @param imagePath Path to the image, as seen from the Asset package.
      * @return Image at the given path.
      */
-    public Font loadFont(String fontPath, int size) {
+    public Font loadFont(String fontPath, double size) {
         assert fontPath != null;
 
         String assetPath = ClientConstants.ASSET_ROOT + fontPath;
