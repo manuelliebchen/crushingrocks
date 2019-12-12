@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.acagamics.client.gui.elements.ALIGNMENT;
 import de.acagamics.client.gui.elements.DynamicTextBox;
+import de.acagamics.client.gui.elements.ImageElement;
 import de.acagamics.client.gui.interfaces.IDrawable;
 import de.acagamics.game.logic.Game;
 import de.acagamics.game.types.Vec2f;
@@ -21,9 +22,13 @@ public class HUDRenderer implements IDrawable {
 		drawables.add(new DynamicTextBox(new Vec2f(100, 50), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
 				.setTextAlignment(ALIGNMENT.LEFT).setTextColor(game.getPlayer(0).getColor())
 				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new ImageElement(new Vec2f(70, 50), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.LEFT)
+				.setHorizontalAlignment(ALIGNMENT.TOP));
 		drawables.add(new DynamicTextBox(new Vec2f(-100, 50), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
 				.setTextAlignment(ALIGNMENT.RIGHT).setTextColor(game.getPlayer(1).getColor())
 				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new ImageElement(new Vec2f(-70, 50), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.RIGHT)
+				.setHorizontalAlignment(ALIGNMENT.TOP));
 	}
 
 	@Override

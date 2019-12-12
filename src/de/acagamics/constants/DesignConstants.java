@@ -18,6 +18,8 @@ public final class DesignConstants {
 	public static final Font BUTTON_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 24);
 	
 	public static final Font TITLE_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 72);
+
+	public static final Font SMALL_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 16);
 	
 	public static final Font SECOND_TITLE_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 42);
 
@@ -25,9 +27,9 @@ public final class DesignConstants {
 
 	public static final Color HEALTH_FOREGROUND = Color.color(0.635f, 0.863f, 0.18f);
 
-	public static final Color FOREGROUND_COLOR = Color.color(0f, 0f,0f);
+	public static final Color FOREGROUND_COLOR = Color.web("#BD277C");
 	
-	public static final Color BACKGROUND_COLOR = Color.web("#649501");
+	public static final Color BACKGROUND_COLOR = Color.web("#82BB0F");
 	
 	public static final Color GAME_BACKGROUND_COLOR = Color.web("#82BB0F");
 	

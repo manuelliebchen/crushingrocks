@@ -128,12 +128,12 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			position = transformation.transform(position);
 			String mineText = String.valueOf(mine.getMineID());
 			Text text = new Text(mineText);
-			text.setFont(DesignConstants.BUTTON_FONT);
+			text.setFont(DesignConstants.SMALL_FONT);
 			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
 			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
 
 			context.setFill(DesignConstants.FOREGROUND_COLOR);
-			context.setFont(DesignConstants.STANDART_FONT);
+			context.setFont(DesignConstants.SMALL_FONT);
 			context.fillText(mineText, position.getX(), position.getY());
 		}
 		context.restore();

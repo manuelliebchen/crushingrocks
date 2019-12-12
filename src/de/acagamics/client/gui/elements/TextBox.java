@@ -18,7 +18,7 @@ public class TextBox extends Alignable {
 	protected Color textColor = DesignConstants.FOREGROUND_COLOR;
 	protected Vec2f size = Vec2f.ZERO();
 	protected Font font = DesignConstants.STANDART_FONT;
-	protected ALIGNMENT textAlignment;
+	protected ALIGNMENT textAlignment = ALIGNMENT.CENTER;
 
 	/**
 	 * Default button constructor with default buttons images and text color
@@ -65,7 +65,7 @@ public class TextBox extends Alignable {
 	 */
 	public void draw(GraphicsContext context) {
 		Vec2f position = getAlignedPosition(context);
-		position = position.add(size.mult(-0.5f, 0.5f));
+		position = position.add(size.mult(-(textAlignment.getValue()), 0.5f));
 
 		context.setFont(font);
 		context.setFill(textColor);
