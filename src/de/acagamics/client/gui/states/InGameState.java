@@ -16,6 +16,7 @@ import de.acagamics.data.GameStatistic;
 import de.acagamics.data.InGameSettings;
 import de.acagamics.game.logic.Game;
 import de.acagamics.game.logic.Mine;
+import de.acagamics.game.logic.Unit;
 import de.acagamics.game.types.Vec2f;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
@@ -151,6 +152,32 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			context.setFill(DesignConstants.FOREGROUND_COLOR);
 			context.setFont(DesignConstants.SMALL_FONT);
 			context.fillText(mineText, position.getX(), position.getY());
+		}
+		
+		for(Unit unit : game.getMap().getAllUnits()) {
+			Point2D position = unit.getPosition().add(0, GameConstants.UNIT_RADIUS).getPoint2D();
+			position = transformation.transform(position);
+			String unitText = "";
+			switch(unit.getStrength()) {
+			case 1: 
+				unitText = "I";
+				break;
+			case 2: 
+				unitText = "II";
+				break;
+			case 3: 
+				unitText = "III";
+				break;
+			
+			}
+			Text text = new Text(unitText);
+			text.setFont(DesignConstants.SMALL_FONT);
+			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
+			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
+	
+			context.setFill(DesignConstants.FOREGROUND_COLOR);
+			context.setFont(DesignConstants.SMALL_FONT);
+			context.fillText(unitText, position.getX(), position.getY());
 		}
 		
 		drawables.draw(context);
