@@ -3,6 +3,7 @@ package de.acagamics.client.gui.elements;
 import java.util.function.IntFunction;
 
 import de.acagamics.client.gui.elements.Button.BUTTON_TYPE;
+import de.acagamics.client.gui.interfaces.ALIGNMENT;
 import de.acagamics.client.gui.interfaces.IClickable;
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;

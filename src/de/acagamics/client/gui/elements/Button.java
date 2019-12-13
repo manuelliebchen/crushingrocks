@@ -1,5 +1,7 @@
 package de.acagamics.client.gui.elements;
 
+import de.acagamics.client.gui.interfaces.ALIGNMENT;
+import de.acagamics.client.gui.interfaces.Alignable;
 import de.acagamics.client.gui.interfaces.IClickable;
 import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import de.acagamics.constants.DesignConstants;

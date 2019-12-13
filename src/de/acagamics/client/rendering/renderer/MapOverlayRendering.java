@@ -3,7 +3,6 @@ package de.acagamics.client.rendering.renderer;
 import java.util.List;
 
 import de.acagamics.client.gui.interfaces.IDrawable;
-import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.constants.GameConstants;
 import de.acagamics.game.logic.Base;
@@ -13,7 +12,6 @@ import de.acagamics.game.logic.Player;
 import de.acagamics.game.logic.Unit;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
-import javafx.scene.text.TextAlignment;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -46,6 +44,7 @@ public final class MapOverlayRendering implements IDrawable {
 	 * @param timeSinceLastDraw Time passed since last draw in seconds.
 	 */
 	public void draw(GraphicsContext context) {
+		context.setLineWidth(DesignConstants.OVERLAY_LINE_WIDTH);
 		for (Base base : bases) {
 			context.setStroke(DesignConstants.HEALTH_BACKGROUND);
 			context.strokeOval(base.getPosition().getX() - GameConstants.BASE_RADIUS,

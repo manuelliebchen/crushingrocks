@@ -1,5 +1,6 @@
 package de.acagamics.client.gui.elements;
 
+import de.acagamics.client.gui.interfaces.Alignable;
 import de.acagamics.client.rendering.assetmanagment.AssetManager;
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;

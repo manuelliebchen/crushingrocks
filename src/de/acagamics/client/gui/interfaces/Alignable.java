@@ -1,4 +1,4 @@
-package de.acagamics.client.gui.elements;
+package de.acagamics.client.gui.interfaces;
 
 import de.acagamics.game.types.Vec2f;
 import javafx.scene.canvas.Canvas;

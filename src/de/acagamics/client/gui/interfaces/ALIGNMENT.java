@@ -1,4 +1,4 @@
-package de.acagamics.client.gui.elements;
+package de.acagamics.client.gui.interfaces;
 
 public enum ALIGNMENT {
 	CENTER(0.5f), LEFT(0), RIGHT(1), TOP(0), BOTTOM(1);

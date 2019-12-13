@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.acagamics.client.gui.StateManager;
-import de.acagamics.client.gui.elements.ALIGNMENT;
 import de.acagamics.client.gui.elements.Button;
 import de.acagamics.client.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.client.gui.elements.Selector;
 import de.acagamics.client.gui.elements.TextBox;
+import de.acagamics.client.gui.interfaces.ALIGNMENT;
 import de.acagamics.client.gui.interfaces.MenuState;
 import de.acagamics.client.utility.BotClassLoader;
 import de.acagamics.constants.DesignConstants;

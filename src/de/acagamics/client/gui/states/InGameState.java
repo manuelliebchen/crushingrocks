@@ -1,9 +1,12 @@
 package de.acagamics.client.gui.states;
 
 import de.acagamics.client.gui.StateManager;
+import de.acagamics.client.gui.elements.DynamicTextBox;
+import de.acagamics.client.gui.elements.ImageElement;
+import de.acagamics.client.gui.elements.RenderingLayer;
+import de.acagamics.client.gui.interfaces.ALIGNMENT;
 import de.acagamics.client.gui.interfaces.GameState;
 import de.acagamics.client.gui.interfaces.ISelfUpdating;
-import de.acagamics.client.rendering.renderer.HUDRenderer;
 import de.acagamics.client.rendering.renderer.MapOverlayRendering;
 import de.acagamics.client.rendering.renderer.MapRendering;
 import de.acagamics.constants.ClientConstants;
@@ -13,6 +16,7 @@ import de.acagamics.data.GameStatistic;
 import de.acagamics.data.InGameSettings;
 import de.acagamics.game.logic.Game;
 import de.acagamics.game.logic.Mine;
+import de.acagamics.game.types.Vec2f;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
@@ -36,7 +40,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	private Game game;
 	private MapRendering mapRenderer;
 	private MapOverlayRendering mapOverlayRenderer;
-	private HUDRenderer hudRenderer;
+	private RenderingLayer drawables;
 
 	Timeline timeline;
 
@@ -49,8 +53,22 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		game = new Game(settings.getControllers(), settings.getMode());
 
 		mapRenderer = new MapRendering(game.getMap());
-		mapOverlayRenderer = new MapOverlayRendering(game.getMap());
-		hudRenderer = new HUDRenderer(game);
+		mapOverlayRenderer = new MapOverlayRendering(game.getMap());		
+
+		drawables = new RenderingLayer();
+		drawables.add(new DynamicTextBox(new Vec2f(0, 50), () -> String.valueOf(game.getFramesLeft()))
+				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new DynamicTextBox(new Vec2f(100, 50), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
+				.setTextAlignment(ALIGNMENT.LEFT).setTextColor(game.getPlayer(0).getColor())
+				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new ImageElement(new Vec2f(70, 50), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.LEFT)
+				.setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new DynamicTextBox(new Vec2f(-100, 50), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
+				.setTextAlignment(ALIGNMENT.RIGHT).setTextColor(game.getPlayer(1).getColor())
+				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new ImageElement(new Vec2f(-70, 50), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.RIGHT)
+				.setHorizontalAlignment(ALIGNMENT.TOP));
+		
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(
@@ -117,12 +135,10 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		mapRenderer.draw(context);
 
-		context.setLineWidth(DesignConstants.OVERLAY_LINE_WIDTH);
 		mapOverlayRenderer.draw(context);
 
 		context.restore();
 
-		context.save();
 		for (Mine mine : game.getMap().getMines()) {
 			Point2D position = mine.getPosition().add(0, GameConstants.MINE_RADIUS).getPoint2D();
 			position = transformation.transform(position);
@@ -136,11 +152,8 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			context.setFont(DesignConstants.SMALL_FONT);
 			context.fillText(mineText, position.getX(), position.getY());
 		}
-		context.restore();
-
-		context.save();
-		hudRenderer.draw(context);
-		context.restore();
+		
+		drawables.draw(context);
 	}
 
 	@Override
