@@ -11,7 +11,7 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #VERSION}
 	 */
-	public static final String VERSION = "1.1.0";
+	public static final String VERSION = "1.2.0";
 	/**
 	 * The url to the list of news.
 	 * <p>
