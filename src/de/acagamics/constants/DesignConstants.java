@@ -15,7 +15,7 @@ public final class DesignConstants {
 	
 	public static final Font STANDART_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 32);
 	
-	public static final Font BUTTON_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 24);
+	public static final Font BUTTON_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 32);
 
 	public static final Color BUTTON_TEXT_COLOR = Color.web("#000000");
 	

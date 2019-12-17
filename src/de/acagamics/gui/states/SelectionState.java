@@ -40,6 +40,7 @@ public class SelectionState extends MenuState {
 		drawables.add(new TextBox(new Vec2f(200, 100), "Bot Selection").setFont(DesignConstants.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
+		drawables.add(new TextBox(new Vec2f(-350, 200), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
 		modeSelector = new Selector(new Vec2f(0, 200), 200, 0, GAMEMODE.values().length - 1,
 				(i) -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(modeSelector);
@@ -53,6 +54,8 @@ public class SelectionState extends MenuState {
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 
+
+		drawables.add(new TextBox(new Vec2f(-350, 400), "Bots:").setVerticalAlignment(ALIGNMENT.CENTER));
 		if (!bots.isEmpty()) {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
@@ -64,8 +67,8 @@ public class SelectionState extends MenuState {
 			startbutton.setEnabled(false);
 		}
 
-		drawables.add(new TextBox(new Vec2f(200, -180), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.BOTTOM));
-		speedSelectors = new Selector(new Vec2f(200, -120), 75, 1, 16, (i) -> i + "x")
+		drawables.add(new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.BOTTOM));
+		speedSelectors = new Selector(new Vec2f(200, -120), 100, 1, 16, (i) -> i + "x")
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM);
 		clickable.add(speedSelectors);
 

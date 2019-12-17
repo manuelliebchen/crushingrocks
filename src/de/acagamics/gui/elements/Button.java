@@ -157,6 +157,7 @@ public final class Button extends Alignable implements IClickable {
 	public void draw(GraphicsContext graphics) {
 		position = super.getAlignedPosition(graphics).add(size.mult(-0.5f));
 
+		
 		if (!this.isEnabled) {
 			graphics.drawImage(imgInActive, position.getX(), position.getY(), size.getX(), size.getY());
 		} else if (isOver) {
@@ -169,6 +170,15 @@ public final class Button extends Alignable implements IClickable {
 		graphics.setFill(textColor);
 		graphics.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
 				position.getY() + centeredPositioOffset.getY());
+
+		graphics.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
+				position.getX() + DesignConstants.BUTTON_HEIGHT * 1/2,
+				position.getY() + size.getY() * 1/5, -DesignConstants.BUTTON_HEIGHT,
+				DesignConstants.BUTTON_HEIGHT);
+		graphics.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
+				position.getX() + size.getX() - DesignConstants.BUTTON_HEIGHT / 2,
+				position.getY() + size.getY() * 1/5, DesignConstants.BUTTON_HEIGHT,
+				DesignConstants.BUTTON_HEIGHT);
 
 	}
 
