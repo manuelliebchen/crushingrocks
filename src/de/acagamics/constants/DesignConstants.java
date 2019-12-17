@@ -1,6 +1,6 @@
 package de.acagamics.constants;
 
-import de.acagamics.client.rendering.assetmanagment.AssetManager;
+import de.acagamics.gui.rendering.assetmanagment.AssetManager;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -16,6 +16,8 @@ public final class DesignConstants {
 	public static final Font STANDART_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 32);
 	
 	public static final Font BUTTON_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 24);
+
+	public static final Color BUTTON_TEXT_COLOR = Color.web("#000000");
 	
 	public static final Font TITLE_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 72);
 

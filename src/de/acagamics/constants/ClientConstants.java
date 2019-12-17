@@ -37,7 +37,7 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #SCREEN_ICON} 
 	 */
-	public static final String SCREEN_ICON = "de/acagamics/assets/Ressource.png";
+	public static final String SCREEN_ICON = "de/acagamics/assets/icon.png";
 	/**
 	 * The asset manager root folder, all assets are relative to this path.
 	 * <p>

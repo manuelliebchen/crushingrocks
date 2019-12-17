@@ -1,8 +1,8 @@
 package de.acagamics.client;
 
-import de.acagamics.client.gui.StateManager;
-import de.acagamics.client.gui.states.MainMenuState;
 import de.acagamics.constants.ClientConstants;
+import de.acagamics.gui.StateManager;
+import de.acagamics.gui.states.MainMenuState;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.event.Event;
