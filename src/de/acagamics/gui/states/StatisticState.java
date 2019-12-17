@@ -42,17 +42,15 @@ public class StatisticState extends MenuState {
 		drawables.add(new TextBox(new Vec2f(450, 200), "Score").setTextAlignment(ALIGNMENT.RIGHT)
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
 		
-		int i = 0;
-		for(Integer playerID : statistic.getPlayerIDs()) {			
-			drawables.add(new TextBox(new Vec2f(-500, 250 + i * 50), statistic.getSitesString(playerID)).setTextAlignment(ALIGNMENT.LEFT)
+		for(int i = 0; i < statistic.getPlayerAmount(); ++i) {			
+			drawables.add(new TextBox(new Vec2f(-500, 250 + i * 50), statistic.getSitesString(i)).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(-250, 250 + i * 50), statistic.getNameString(playerID)).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-250, 250 + i * 50), statistic.getNameString(i)).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(200, 250 + i * 50), statistic.getBaseHPString(playerID)).setTextAlignment(ALIGNMENT.RIGHT)
+			drawables.add(new TextBox(new Vec2f(200, 250 + i * 50), statistic.getBaseHPString(i)).setTextAlignment(ALIGNMENT.RIGHT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(450, 250 + i * 50), statistic.getScoreString(playerID)).setTextAlignment(ALIGNMENT.RIGHT)
+			drawables.add(new TextBox(new Vec2f(450, 250 + i * 50), statistic.getScoreString(i)).setTextAlignment(ALIGNMENT.RIGHT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			i++;
 		}
 	}
 }

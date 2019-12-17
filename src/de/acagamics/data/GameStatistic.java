@@ -11,8 +11,9 @@ public final class GameStatistic {
 	List<Player> players;
 	boolean isDraw = false;
 	
-	public GameStatistic(List<Player> players) {
+	public GameStatistic(List<Player> players_original) {
 		boolean hasWon = false;
+		this.players = new ArrayList<>(players_original);
 		for(Player player : players) {
 			hasWon |= player.getBase().getHP() <= 0;
 		}
@@ -21,8 +22,11 @@ public final class GameStatistic {
 		} else {
 			players.sort( (p1, p2) -> p2.getScore() - p1.getScore());
 		}
-		this.players = players;
 		isDraw = !hasWon;
+	}
+	
+	public int getPlayerAmount() {
+		return players.size();
 	}
 	
 	public boolean isDraw() {
@@ -30,7 +34,7 @@ public final class GameStatistic {
 	}
 	
 	public String getSitesString(int playerID) {
-		return String.valueOf(GameConstants.SITES.values()[playerID]);
+		return String.valueOf(GameConstants.SITES.values()[players.get(playerID).getPlayerID()]);
 	}
 	
 	public String getNameString(int playerID) {
@@ -43,13 +47,5 @@ public final class GameStatistic {
 
 	public String getBaseHPString(int playerID) {
 		return String.valueOf(players.get(playerID).getBase().getHP());
-	}
-
-	public List<Integer> getPlayerIDs() {
-		List<Integer> playerIDs = new ArrayList<>(players.size());
-		for(Player player : players) {
-			playerIDs.add(player.getPlayerID());
-		}
-		return playerIDs;
 	}
 }
