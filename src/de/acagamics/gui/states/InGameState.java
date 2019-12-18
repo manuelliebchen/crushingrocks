@@ -10,13 +10,13 @@ import de.acagamics.game.logic.Mine;
 import de.acagamics.game.logic.Unit;
 import de.acagamics.game.types.Vec2f;
 import de.acagamics.gui.StateManager;
+import de.acagamics.gui.elements.Background;
 import de.acagamics.gui.elements.DynamicTextBox;
 import de.acagamics.gui.elements.ImageElement;
 import de.acagamics.gui.elements.RenderingLayer;
 import de.acagamics.gui.interfaces.ALIGNMENT;
 import de.acagamics.gui.interfaces.GameState;
 import de.acagamics.gui.interfaces.ISelfUpdating;
-import de.acagamics.gui.rendering.assetmanagment.AssetManager;
 import de.acagamics.gui.rendering.renderer.MapOverlayRendering;
 import de.acagamics.gui.rendering.renderer.MapRendering;
 import javafx.animation.Animation;
@@ -47,10 +47,13 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	Timeline timeline;
 
 	private InGameSettings settings;
+	private Background background;
 
 	public InGameState(StateManager manager, GraphicsContext context, InGameSettings settings) {
 		super(manager, context);
 		this.settings = settings;
+		
+		background = new Background(50);
 		
 		game = new Game(settings.getControllers(), settings.getMode());
 
@@ -58,18 +61,18 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		mapOverlayRenderer = new MapOverlayRendering(game.getMap());	
 
 		drawables = new RenderingLayer();
-		drawables.add(new DynamicTextBox(new Vec2f(0, -50), () -> String.valueOf(game.getFramesLeft()))
-				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.BOTTOM));
-		drawables.add(new DynamicTextBox(new Vec2f(100, -50), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
+		drawables.add(new DynamicTextBox(new Vec2f(0, 30), () -> String.valueOf(game.getFramesLeft()))
+				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new DynamicTextBox(new Vec2f(100, 30), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
 				.setTextAlignment(ALIGNMENT.LEFT).setTextColor(game.getPlayer(0).getColor())
-				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.BOTTOM));
-		drawables.add(new ImageElement(new Vec2f(70, -50), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.LEFT)
-				.setHorizontalAlignment(ALIGNMENT.BOTTOM));
-		drawables.add(new DynamicTextBox(new Vec2f(-100, -50), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
+				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new ImageElement(new Vec2f(70, 30), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.LEFT)
+				.setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new DynamicTextBox(new Vec2f(-100, 30), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
 				.setTextAlignment(ALIGNMENT.RIGHT).setTextColor(game.getPlayer(1).getColor())
-				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.BOTTOM));
-		drawables.add(new ImageElement(new Vec2f(-70, -50), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.BOTTOM));
+				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.TOP));
+		drawables.add(new ImageElement(new Vec2f(-70, 30), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.RIGHT)
+				.setHorizontalAlignment(ALIGNMENT.TOP));
 		
 
 		timeline = new Timeline();
@@ -117,8 +120,9 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		if (timeline.getStatus() != Status.RUNNING) {
 			return;
 		}
-		Canvas canvas = context.getCanvas();	
-		AssetManager.getInstance().getBackground().draw(context);
+		background.draw(context);
+		Canvas canvas = context.getCanvas();
+		
 		context.save();
 
 		Affine transformation = new Affine();

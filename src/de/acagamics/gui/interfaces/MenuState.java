@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.acagamics.gui.StateManager;
+import de.acagamics.gui.elements.Background;
 import de.acagamics.gui.rendering.assetmanagment.AssetManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
@@ -12,6 +13,8 @@ public abstract class MenuState extends GameState {
 
 	protected List<IClickable> clickable;
 	protected List<IDrawable> drawables;
+	
+	protected Background background = AssetManager.getInstance().getBackground();
 
 	public MenuState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
@@ -33,8 +36,8 @@ public abstract class MenuState extends GameState {
 	
 	@Override
 	public void redraw() {
-		AssetManager.getInstance().getBackground().draw(context);
-
+		background.draw(context);
+		
 		for (IDrawable drawable : drawables) {
 			drawable.draw(context);
 		}

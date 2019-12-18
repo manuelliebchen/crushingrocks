@@ -3,6 +3,7 @@ package de.acagamics.gui.states;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.game.types.Vec2f;
 import de.acagamics.gui.StateManager;
+import de.acagamics.gui.elements.Background;
 import de.acagamics.gui.elements.Button;
 import de.acagamics.gui.elements.TextBox;
 import de.acagamics.gui.elements.Button.BUTTON_TYPE;
@@ -28,14 +29,17 @@ public class MainMenuState extends MenuState {
 	 */
 	public MainMenuState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		drawables.add(new TextBox(new Vec2f(0, 150), "Crushing Rocks!")
+		
+		background = new Background(150);
+		
+		drawables.add(new TextBox(new Vec2f(0, 60), "Crushing Rocks!")
 				.setFont(DesignConstants.TITLE_FONT)
 				.setVerticalAlignment(ALIGNMENT.CENTER));
 
-		clickable.add((Button) (new Button(new Vec2f(0, 275), BUTTON_TYPE.WIDE, "Start Game",
+		clickable.add((Button) (new Button(new Vec2f(0, 350), BUTTON_TYPE.WIDE, "Start Game",
 				() -> manager.push(new SelectionState(manager, context))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP)));
-		clickable.add((Button) (new Button(new Vec2f(0, 350), BUTTON_TYPE.WIDE, "Show Credits",
+		clickable.add((Button) (new Button(new Vec2f(0, 425), BUTTON_TYPE.WIDE, "Show Credits",
 				() -> manager.push(new CreditsState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
 						.setHorizontalAlignment(ALIGNMENT.TOP)));
 		clickable.add((Button) (new Button(new Vec2f(0, -100), BUTTON_TYPE.WIDE, "Exit Game", () -> manager.pop())

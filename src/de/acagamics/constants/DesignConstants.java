@@ -6,7 +6,7 @@ import javafx.scene.text.Font;
 
 /**
  * Class for all color const constants.
- * @author Max Klockmann (max@acagamics.de)
+ * @author Manuel Liebchen
  *
  */
 public final class DesignConstants {

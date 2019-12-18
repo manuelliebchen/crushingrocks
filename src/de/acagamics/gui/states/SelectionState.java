@@ -37,11 +37,11 @@ public class SelectionState extends MenuState {
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
-		drawables.add(new TextBox(new Vec2f(200, 100), "Bot Selection").setFont(DesignConstants.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(DesignConstants.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
-		drawables.add(new TextBox(new Vec2f(-350, 200), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
-		modeSelector = new Selector(new Vec2f(0, 200), 200, 0, GAMEMODE.values().length - 1,
+		drawables.add(new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
+		modeSelector = new Selector(new Vec2f(0, 300), 200, 0, GAMEMODE.values().length - 1,
 				(i) -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(modeSelector);
 

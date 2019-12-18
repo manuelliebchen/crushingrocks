@@ -61,7 +61,7 @@ public final class AssetManager {
      */
     public Background getBackground() {
     	if(background == null) {
-    		background = new Background();
+    		background = new Background(100);
     	}
     	return background;
     }

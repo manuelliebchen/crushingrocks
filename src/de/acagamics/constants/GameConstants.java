@@ -20,7 +20,7 @@ public final class GameConstants {
 	 * <p>
 	 * Value = {@value #INITIAL_BASE_HP}
 	 */
-	public static final int INITIAL_BASE_HP = 10;
+	public static final int INITIAL_BASE_HP = 20;
 
 	/**
 	 * Attack radius of the Base.

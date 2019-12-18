@@ -13,22 +13,25 @@ public class Background implements IDrawable {
 	Color tophalf = Color.web("#8fe3ff");
 	Color bottomhalf = Color.web("#84c750");
 	
-	float position = 0.1f;
+	int pixel_above = 70;
+	
+	public Background(int pixel_above) {
+		this.pixel_above = pixel_above;
+	}
 	
 	@Override
 	public void draw(GraphicsContext context) {
 		Canvas canvas = context.getCanvas();
 		
-		int pixel_position = (int) (canvas.getHeight() * position);
 		int pixel_hight = (int) (canvas.getWidth() *  image.getHeight() / image.getWidth());
 		
 		context.setFill(bottomhalf);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		context.setFill(tophalf);
-		context.fillRect(0, 0, canvas.getWidth(), pixel_position);
+		context.fillRect(0, 0, canvas.getWidth(), pixel_above + pixel_hight / 2);
 		
 		
-		context.drawImage(image, 0, canvas.getHeight() * position - pixel_hight / 2, canvas.getWidth(), pixel_hight);
+		context.drawImage(image, 0, pixel_above, canvas.getWidth(), pixel_hight);
 	}
 
 }
