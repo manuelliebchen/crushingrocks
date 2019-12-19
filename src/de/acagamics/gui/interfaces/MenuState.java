@@ -5,7 +5,6 @@ import java.util.List;
 
 import de.acagamics.gui.StateManager;
 import de.acagamics.gui.elements.Background;
-import de.acagamics.gui.rendering.assetmanagment.AssetManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 
@@ -14,7 +13,7 @@ public abstract class MenuState extends GameState {
 	protected List<IClickable> clickable;
 	protected List<IDrawable> drawables;
 	
-	protected Background background = AssetManager.getInstance().getBackground();
+	protected Background background = new Background(100);
 
 	public MenuState(StateManager manager, GraphicsContext context) {
 		super(manager, context);

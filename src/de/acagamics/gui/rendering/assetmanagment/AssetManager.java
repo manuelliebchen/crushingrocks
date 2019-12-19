@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.acagamics.constants.ClientConstants;
-import de.acagamics.gui.elements.Background;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 
@@ -51,19 +50,6 @@ public final class AssetManager {
             imageCache.put(imagePath, img);
             return img;
         }
-    }
-    
-    private Background background;
-    
-    /**
-     * Background object for background of the game.
-     * @return backgound.
-     */
-    public Background getBackground() {
-    	if(background == null) {
-    		background = new Background(100);
-    	}
-    	return background;
     }
 
     
