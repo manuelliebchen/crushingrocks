@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 public class Background implements IDrawable {
 
-	Image image = AssetManager.getInstance().loadImage("Hintergrund.png");
+	Image image;
 	Color tophalf = Color.web("#8fe3ff");
 	Color bottomhalf = Color.web("#84c750");
 	
@@ -17,6 +17,8 @@ public class Background implements IDrawable {
 	
 	public Background(int pixel_above) {
 		this.pixel_above = pixel_above;
+		
+		image = AssetManager.getInstance().loadImage("Hintergrund.png");
 	}
 	
 	@Override

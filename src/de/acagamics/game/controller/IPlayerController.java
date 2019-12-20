@@ -17,8 +17,8 @@ public interface IPlayerController {
 	String getAuthor();
 	
 	/**
-	 * Returns the  of the author of this player controller.
-	 * @return A name of a human being.
+	 * Returns the Matrikelnummer of the author of this controller.
+	 * @return A valid matrikelnummer for the evaluation of the programming competition.
 	 */
 	int getMatrikelnummer();
 	

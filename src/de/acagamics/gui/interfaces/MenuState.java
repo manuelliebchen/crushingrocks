@@ -13,12 +13,13 @@ public abstract class MenuState extends GameState {
 	protected List<IClickable> clickable;
 	protected List<IDrawable> drawables;
 	
-	protected Background background = new Background(100);
+	protected Background background;
 
 	public MenuState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
 		drawables = new ArrayList<>();
 		clickable = new ArrayList<>();
+		background = new Background(100);
 	}
 
 	@Override
