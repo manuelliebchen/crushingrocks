@@ -1,12 +1,13 @@
 package de.acagamics.gui.states;
 
+import de.acagamics.client.web.Version;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.game.types.Vec2f;
 import de.acagamics.gui.StateManager;
 import de.acagamics.gui.elements.Background;
 import de.acagamics.gui.elements.Button;
-import de.acagamics.gui.elements.TextBox;
 import de.acagamics.gui.elements.Button.BUTTON_TYPE;
+import de.acagamics.gui.elements.TextBox;
 import de.acagamics.gui.interfaces.ALIGNMENT;
 import de.acagamics.gui.interfaces.MenuState;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,8 +19,6 @@ import javafx.scene.input.KeyCode;
  *
  */
 public class MainMenuState extends MenuState {
-
-	TextBox title;
 
 	/**
 	 * Creating new MainMenu.
@@ -46,6 +45,12 @@ public class MainMenuState extends MenuState {
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.CENTER)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 		drawables.addAll(clickable);
+
+		if(Version.isChecked() && !Version.isUpToDate()) {
+			drawables.add(new TextBox(new Vec2f(0,125), "You may update your game.")
+					.setFont(DesignConstants.MEDIUM_SMALL_FONT)
+					.setVerticalAlignment(ALIGNMENT.CENTER));
+		}
 	}
 
 //	private String checkVersion() {

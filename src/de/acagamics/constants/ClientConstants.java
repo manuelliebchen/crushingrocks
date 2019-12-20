@@ -11,21 +11,21 @@ public final class ClientConstants {
 	 * <p>
 	 * Value = {@value #VERSION}
 	 */
-	public static final String VERSION = "1.2.0";
+	public static final String VERSION = "1.2.2";
 	/**
 	 * The url to the list of news.
 	 * <p>
 	 * Value = {@value #NEWS_URL}
 	 */
 	// TODO change "localhost:12686" to real domain
-	public static final String NEWS_URL = "http://localhost:12686/wp-admin/admin-ajax.php?action=news";
+	public static final String NEWS_URL = "https://wettbewerb.acagamics.de/downloads/news/";
 	/**
 	 * The url to the current version.
 	 * <p>
 	 * Value = {@value #VERSION_URL}
 	 */
 	// TODO change "localhost:12686" to real domain
-	public static final String VERSION_URL = "http://localhost:12686/wp-admin/admin-ajax.php?action=version";
+	public static final String VERSION_URL = "https://wettbewerb.acagamics.de/downloads/changelog/";
 	/**
 	 * The title of the window.
 	 * <p>

@@ -1,5 +1,7 @@
 package de.acagamics.client;
 
+import de.acagamics.client.web.News;
+import de.acagamics.client.web.Version;
 import de.acagamics.constants.ClientConstants;
 import de.acagamics.gui.StateManager;
 import de.acagamics.gui.states.MainMenuState;
@@ -29,8 +31,8 @@ public final class MainWindow extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Check version and news
-//		Version.loadVersion();
-//		News.loadNews();
+		Version.loadVersion();
+		News.loadNews();
 
 		// Set window settings and show window
 //		stage.getIcons().add(ImageManager.getInstance().loadImage("icon.png"));

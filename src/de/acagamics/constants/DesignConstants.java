@@ -20,10 +20,12 @@ public final class DesignConstants {
 	public static final Color BUTTON_TEXT_COLOR = Color.web("#000000");
 	
 	public static final Font TITLE_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 72);
-
-	public static final Font SMALL_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 16);
 	
 	public static final Font SECOND_TITLE_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 42);
+	
+	public static final Font MEDIUM_SMALL_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 24);
+
+	public static final Font SMALL_FONT = AssetManager.getInstance().loadFont("breathe_fire.otf", 16);
 
 	public static final Color HEALTH_BACKGROUND = Color.color(0.741f, 0.153f, 0.486f);
 

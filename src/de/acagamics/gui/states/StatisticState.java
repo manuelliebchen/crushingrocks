@@ -30,26 +30,26 @@ public class StatisticState extends MenuState {
 		if (statistic.isDraw()) {
 			title += " - Tie-Break";
 		}
-		drawables.add(new TextBox(new Vec2f(300, 100), title).setFont(DesignConstants.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(200, 50), title).setFont(DesignConstants.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 		
-		drawables.add(new TextBox(new Vec2f(-500, 200), "Color").setTextAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(-500, 300), "Color").setTextAlignment(ALIGNMENT.LEFT)
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-		drawables.add(new TextBox(new Vec2f(-250, 200), "Name").setTextAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(-250, 300), "Name").setTextAlignment(ALIGNMENT.LEFT)
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-		drawables.add(new TextBox(new Vec2f(200, 200), "Base HP").setTextAlignment(ALIGNMENT.RIGHT)
+		drawables.add(new TextBox(new Vec2f(200, 300), "Base HP").setTextAlignment(ALIGNMENT.RIGHT)
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-		drawables.add(new TextBox(new Vec2f(450, 200), "Score").setTextAlignment(ALIGNMENT.RIGHT)
+		drawables.add(new TextBox(new Vec2f(450, 300), "Score").setTextAlignment(ALIGNMENT.RIGHT)
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
 		
 		for(int i = 0; i < statistic.getPlayerAmount(); ++i) {			
-			drawables.add(new TextBox(new Vec2f(-500, 250 + i * 50), statistic.getSitesString(i)).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-500, 350 + i * 50), statistic.getSitesString(i)).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(-250, 250 + i * 50), statistic.getNameString(i)).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-250, 350 + i * 50), statistic.getNameString(i)).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(200, 250 + i * 50), statistic.getBaseHPString(i)).setTextAlignment(ALIGNMENT.RIGHT)
+			drawables.add(new TextBox(new Vec2f(200, 350 + i * 50), statistic.getBaseHPString(i)).setTextAlignment(ALIGNMENT.RIGHT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(450, 250 + i * 50), statistic.getScoreString(i)).setTextAlignment(ALIGNMENT.RIGHT)
+			drawables.add(new TextBox(new Vec2f(450, 350 + i * 50), statistic.getScoreString(i)).setTextAlignment(ALIGNMENT.RIGHT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
 		}
 	}

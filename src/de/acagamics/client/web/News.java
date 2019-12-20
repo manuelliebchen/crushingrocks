@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
-
 import de.acagamics.constants.ClientConstants;
 
 /**
@@ -19,7 +17,6 @@ import de.acagamics.constants.ClientConstants;
  *
  */
 public class News {
-	private static final Logger LOG = Logger.getLogger(News.class);
 	
 	private static final Random rnd = new Random();
 	
@@ -86,7 +83,6 @@ public class News {
 		try {
 			connection = website.openConnection();
 		} catch (IOException e) {
-			LOG.warn("Can't connect to the mother ship (tried to get news)");
 			return;
 		}
 		
@@ -95,7 +91,6 @@ public class News {
 		try {
 			in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		} catch (IOException e) {
-			LOG.warn("Can't connect to the mother ship (tried to get news)");
 			return;
 		}
 		
