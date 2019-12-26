@@ -3,11 +3,6 @@ package de.acagamics.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-
-import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
 /**
@@ -15,7 +10,7 @@ import com.beust.jcommander.Parameter;
  * @author Max Klockmann (max@acagamics.de)
  */
 public final class CliArguments {
-	private static final Logger LOG = LogManager.getLogger(CliArguments.class.getName());
+//	private static final Logger LOG = LogManager.getLogger(CliArguments.class.getName());
 	
 	/**
 	 * automatic Parameter parsing.
@@ -53,24 +48,5 @@ public final class CliArguments {
 	
 	public List<String> selectedBots() {
 		return this.bots;
-	}
-	
-	/**
-	 * Creating new CliArguments
-	 * @param args the arguments, which have to been parsed
-	 */
-	public CliArguments(String... args) {
-		// parse arguments
-		JCommander commander = new JCommander(this, args);
-		
-		// output parameters and descriptions
-		if (this.help) {
-			commander.usage();
-		}
-		
-		// enable debug mode
-		if (this.debug) {
-			LOG.getParent().setLevel(Level.ALL);
-		}
 	}
 }

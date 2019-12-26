@@ -3,6 +3,7 @@ package de.acagamics.simulation;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.lang.Runnable;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.Logger;
  */
 public final class ThreadPoolExecutorMonitor implements Runnable {
 	
-	private static final Logger LOG = Logger.getLogger(ThreadPoolExecutorMonitor.class);
+	private static final Logger LOG = LogManager.getLogger(ThreadPoolExecutorMonitor.class.getName());
 	/** The default log message interval of {@value #DEFAULT_INTERVAL} milliseconds, or one second. */
 	private static final long DEFAULT_INTERVAL = 1000L;
 	

@@ -8,6 +8,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.acagamics.constants.ClientConstants;
@@ -17,7 +18,7 @@ import de.acagamics.constants.ClientConstants;
  *
  */
 public class Version {
-	private static final Logger LOG = Logger.getLogger(Version.class);
+	private static final Logger LOG = LogManager.getLogger(Version.class.getName());
 	
 	/**
 	 * The result of "current Version".compareTo(version).

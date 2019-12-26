@@ -2,6 +2,7 @@ package de.acagamics.simulation;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -12,7 +13,7 @@ import org.apache.logging.log4j.Logger;
  */
 public final class RunnableProcess implements Runnable {
 	
-	private static final Logger LOG = Logger.getLogger(RunnableProcess.class);
+	private static final Logger LOG = LogManager.getLogger(RunnableProcess.class.getName());
 	
 	/** The process builder with the given run configuration. */
 	private final ProcessBuilder builder;

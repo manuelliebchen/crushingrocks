@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Solution for the all combinations of length k problem with a lazy iterator.
@@ -19,7 +20,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class StaticCombinationIterator<T> implements Iterator<List<T>> {
 	
-	private static final Logger LOG = Logger.getLogger(StaticCombinationIterator.class);
+	private static final Logger LOG = LogManager.getLogger(StaticCombinationIterator.class.getName());
 	
 	/** The list to choose combinations from. */
 	private final List<T> list;
