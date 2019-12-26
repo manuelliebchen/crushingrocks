@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Base for a simulation context series factory. It creates the infrastructure
  * for nothing more than the name of the game and the name of the tournament
- * system. See the {@link #Client.Simulation.Context.CombinatoricsFactory} for
+ * system. See the {@link CombinatoricsFactory} for
  * a concrete implementation.
  * 
  * @author Tim Benedict Jagla {@literal <tim@acagamics.de>}

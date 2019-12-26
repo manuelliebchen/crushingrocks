@@ -1,4 +1,4 @@
-package de.acagamics.gui.rendering.renderer;
+package de.acagamics.gui.rendering;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import de.acagamics.game.logic.Map;
 import de.acagamics.game.logic.Mine;
 import de.acagamics.game.logic.Player;
 import de.acagamics.game.logic.Unit;
+import de.acagamics.gui.assetmanagment.AssetManager;
 import de.acagamics.gui.interfaces.IDrawable;
-import de.acagamics.gui.rendering.assetmanagment.AssetManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -40,8 +40,6 @@ public final class MapRendering implements IDrawable {
 
 	/**
 	 * Updates the map rendering. E.g. animated sprites.
-	 * 
-	 * @param timeSinceLastUpdate Time passed since last update in seconds.
 	 */
 	public void update() {
 	}
@@ -50,7 +48,6 @@ public final class MapRendering implements IDrawable {
 	 * Displays the map images etc.
 	 * 
 	 * @param context           Context to draw on.
-	 * @param timeSinceLastDraw Time passed since last draw in seconds.
 	 */
 	public void draw(GraphicsContext context) {
 		for (Base base : bases) {

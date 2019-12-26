@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A custom implementation of a {@link #java.util.concurrent.RejectedExecutionHandler}
+ * A custom implementation of a {@link java.util.concurrent.RejectedExecutionHandler}
  * to block task submitting threads from adding more tasks.
  * 
  * @author Tim Benedict Jagla {@literal <tim@acagamics.de>}

@@ -35,9 +35,12 @@ java {
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+    
+    withJavadocJar()
+    withSourcesJar()
 }
 
-val jar by tasks.getting(Jar::class) {
+tasks.jar {
     manifest {
         attributes["Main-Class"] = "de.acagamics.Main"
     }

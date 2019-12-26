@@ -21,6 +21,7 @@ public class CreditsState extends MenuState {
 	 * Creating new Credits State.
 	 * 
 	 * @param manager The StateManager of the current Window
+	 * @param context GraphicsContext for rendering the state when active.
 	 */
 	public CreditsState(StateManager manager, GraphicsContext context) {
 		super(manager, context);

@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A java process embedded into a class conforming to the {@link #java.lang.Runnable}
+ * A java process embedded into a class conforming to the {@link java.lang.Runnable}
  * interface.
  * 
  * @author Tim Benedict Jagla {@literal <tim@acagamics.de>}

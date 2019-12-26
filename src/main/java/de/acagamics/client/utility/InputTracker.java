@@ -101,7 +101,6 @@ public class InputTracker implements EventHandler<InputEvent> {
 	 * Retrieves the current position of the mouse cursor.
 	 * 
 	 * @return A mouse cursor position.
-	 * @see getMousePositionX, getMousePositionY
 	 */
 	public Point2D getMousePosition() {
 		return new Point2D(mousePositionX, mousePositionY);

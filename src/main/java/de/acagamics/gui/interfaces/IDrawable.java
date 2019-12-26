@@ -12,8 +12,7 @@ public interface IDrawable {
 
 	/**
 	 * This method is invoked in each step and draws the content on the window
-	 * @param graphics The GraphicsContext is used for drawing
-	 * @param elapsedTime The Elapsed Time since last draw call
+	 * @param context The GraphicsContext is used for drawing
 	 */
 	public void draw(GraphicsContext context);
 }

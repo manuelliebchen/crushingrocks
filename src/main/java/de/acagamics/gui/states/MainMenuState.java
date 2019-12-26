@@ -24,7 +24,7 @@ public class MainMenuState extends MenuState {
 	 * Creating new MainMenu.
 	 * 
 	 * @param manager The StateManager of the current Window
-	 * @param pane    The Gui Layout pane of the current Window. Used for Buttons
+	 * @param context GraphicsContext for rendering the state when active.
 	 */
 	public MainMenuState(StateManager manager, GraphicsContext context) {
 		super(manager, context);

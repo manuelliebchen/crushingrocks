@@ -2,10 +2,10 @@ package de.acagamics.gui.elements;
 
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.game.types.Vec2f;
+import de.acagamics.gui.assetmanagment.AssetManager;
 import de.acagamics.gui.interfaces.ALIGNMENT;
 import de.acagamics.gui.interfaces.Alignable;
 import de.acagamics.gui.interfaces.IClickable;
-import de.acagamics.gui.rendering.assetmanagment.AssetManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
@@ -57,9 +57,10 @@ public final class Button extends Alignable implements IClickable {
 	 * Default button constructor with default buttons images and text color
 	 * (black).
 	 * 
-	 * @param position   The position where the button will be drawn (top-left).
-	 * @param size       The size of the button (e.g. image size).
+	 * @param relativPosition   The relative position where the button will be drawn.
+	 * @param type       The size of the button.
 	 * @param buttonText The Text, which will be displayed on the button.
+	 * @param function   The Function to be executed when pressed.
 	 */
 	public Button(Vec2f relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
 		super(relativPosition);
@@ -121,19 +122,21 @@ public final class Button extends Alignable implements IClickable {
 	 * Change text of button. Updates text properties
 	 * 
 	 * @see calcButtonTextProperties()
-	 * @param buttonText
+	 * @param buttonText the new Text to be displayed.
+	 * @return this Button for further modifications.
 	 */
-	public void changeText(String buttonText) {
+	public Button setButtonText(String buttonText) {
 		this.buttonText = buttonText;
 		calcButtonTextProperties();
+		return this;
 	}
 
 	/**
-	 * Changes if the button is enabled or not. If not -> show button image:
-	 * imageInActive and isPressed() is false.
+	 * Changes if the button is enabled or not. If not this button show button image:
+	 * imageInActives.
 	 * 
 	 * @see isPressed()
-	 * @param enabled
+	 * @param enabled wether this button is enabled
 	 */
 	public void setEnabled(boolean enabled) {
 		this.isEnabled = enabled;
@@ -152,30 +155,30 @@ public final class Button extends Alignable implements IClickable {
 	 * Draws the button. First button image (imgUp,imgDown,imgInActive). Second:
 	 * button text
 	 * 
-	 * @param graphics
+	 * @param context GraphicsContext for rendering the state when active.
 	 */
-	public void draw(GraphicsContext graphics) {
-		position = super.getAlignedPosition(graphics).add(size.mult(-0.5f));
+	public void draw(GraphicsContext context) {
+		position = super.getAlignedPosition(context).add(size.mult(-0.5f));
 
 		
 		if (!this.isEnabled) {
-			graphics.drawImage(imgInActive, position.getX(), position.getY(), size.getX(), size.getY());
+			context.drawImage(imgInActive, position.getX(), position.getY(), size.getX(), size.getY());
 		} else if (isOver) {
-			graphics.drawImage(imgDown, position.getX(), position.getY(), size.getX(), size.getY());
+			context.drawImage(imgDown, position.getX(), position.getY(), size.getX(), size.getY());
 		} else {
-			graphics.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
+			context.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
 		}
 
-		graphics.setFont(DesignConstants.BUTTON_FONT);
-		graphics.setFill(textColor);
-		graphics.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
+		context.setFont(DesignConstants.BUTTON_FONT);
+		context.setFill(textColor);
+		context.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
 				position.getY() + centeredPositioOffset.getY());
 
-		graphics.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
+		context.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
 				position.getX() + DesignConstants.BUTTON_HEIGHT * 1/2,
 				position.getY() + size.getY() * 1/5, -DesignConstants.BUTTON_HEIGHT,
 				DesignConstants.BUTTON_HEIGHT);
-		graphics.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
+		context.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
 				position.getX() + size.getX() - DesignConstants.BUTTON_HEIGHT / 2,
 				position.getY() + size.getY() * 1/5, DesignConstants.BUTTON_HEIGHT,
 				DesignConstants.BUTTON_HEIGHT);

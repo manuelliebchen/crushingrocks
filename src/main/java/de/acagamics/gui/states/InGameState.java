@@ -17,8 +17,8 @@ import de.acagamics.gui.elements.RenderingLayer;
 import de.acagamics.gui.interfaces.ALIGNMENT;
 import de.acagamics.gui.interfaces.GameState;
 import de.acagamics.gui.interfaces.ISelfUpdating;
-import de.acagamics.gui.rendering.renderer.MapOverlayRendering;
-import de.acagamics.gui.rendering.renderer.MapRendering;
+import de.acagamics.gui.rendering.MapOverlayRendering;
+import de.acagamics.gui.rendering.MapRendering;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
@@ -97,8 +97,6 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 	/**
 	 * Updates all needed display objects, e.g. player, map.
-	 * 
-	 * @param elapsedTime Time passed since last update in seconds.
 	 */
 	@Override
 	public void update() {
@@ -111,9 +109,6 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 	/**
 	 * Draws all needed display objects, e.g. player, map.
-	 * 
-	 * @param context     The context to draw on.
-	 * @param elapsedTime Time passed since last draw in seconds.
 	 */
 	@Override
 	public void redraw() {

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.LogManager;
 
 /**
  * Solution for the all combinations of length k problem with a lazy iterator.
- * See various solutions to the problem on {@link http://rosettacode.org/wiki/Combinations}.
+ * See various solutions to the problem on <a href="http://rosettacode.org/wiki/Combinations">rosettacode</a>.
  * 
  * @param <T> type of the values to combine into combinations.
  * 

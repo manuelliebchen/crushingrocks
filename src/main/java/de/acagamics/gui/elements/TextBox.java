@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 public class TextBox extends Alignable {
 
 	// Drawing status
-	protected String buttonText = "";
+	protected String text = "";
 	protected Color textColor = DesignConstants.FOREGROUND_COLOR;
 	protected Vec2f size = Vec2f.ZERO();
 	protected Font font = DesignConstants.STANDART_FONT;
@@ -26,12 +26,12 @@ public class TextBox extends Alignable {
 	 * Default button constructor with default buttons images and text color
 	 * (black).
 	 * 
-	 * @param position   The position where the button will be drawn (top-left).
-	 * @param buttonText The Text, which will be displayed on the button.
+	 * @param relativPosition   The relativ position where the button will be drawn.
+	 * @param text The Text, which will be displayed on the button.
 	 */
-	public TextBox(Vec2f relativPosition, String buttonText) {
+	public TextBox(Vec2f relativPosition, String text) {
 		super(relativPosition);
-		this.buttonText = buttonText;
+		this.text = text;
 		calcFontTextSize();
 	}
 
@@ -52,18 +52,19 @@ public class TextBox extends Alignable {
 	}
 
 	/**
-	 * Change text of button. Updates text properties
+	 * Change text of this TextBox.
 	 * 
-	 * @see calcButtonTextProperties()
-	 * @param buttonText
+	 * @see #calcFontTextSize
+	 * @param text The new Text of this TextBox
+	 * @return this {@link TextBox} for further modifications.
 	 */
-	public TextBox setText(String buttonText) {
-		this.buttonText = buttonText;
+	public TextBox setText(String text) {
+		this.text = text;
 		return this;
 	}
 
 	/**
-	 * @param context
+	 * @param context GraphicsContext for rendering the state when active.
 	 */
 	public void draw(GraphicsContext context) {
 		Vec2f position = getAlignedPosition(context);
@@ -71,20 +72,20 @@ public class TextBox extends Alignable {
 
 		context.setFont(font);
 		context.setFill(textColor);
-		context.fillText(buttonText, position.getX(), position.getY());
+		context.fillText(text, position.getX(), position.getY());
 
 	}
 
 	/**
 	 * Updates buttonTextSize and centeredPosition if font oder text has changed
 	 * 
-	 * @see changeFont(Font font)
-	 * @see changeText(String buttonText)
+	 * @see #setFont
+	 * @see #setText
 	 */
 	protected void calcFontTextSize() {
-		Text text = new Text(buttonText);
-		text.setFont(font);
+		Text jfxtext = new Text(text);
+		jfxtext.setFont(font);
 
-		size = new Vec2f((float) text.getLayoutBounds().getWidth(), (float) text.getLayoutBounds().getHeight());
+		size = new Vec2f((float) jfxtext.getLayoutBounds().getWidth(), (float) jfxtext.getLayoutBounds().getHeight());
 	}
 }

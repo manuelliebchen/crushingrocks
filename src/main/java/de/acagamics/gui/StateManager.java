@@ -31,7 +31,8 @@ public final class StateManager implements EventHandler<InputEvent> {
 	 * StateManager controlls state handling e.g. Add/remove/reverts states to a
 	 * layer based state handling
 	 * 
-	 * @param state sets the initial game state
+	 * @param stage Stage object to close wenn finished.
+	 * @param context GraphicsContext for rendering the state when active.
 	 */
 	public StateManager(Stage stage, GraphicsContext context) {
 		this.stage = stage;
@@ -61,6 +62,7 @@ public final class StateManager implements EventHandler<InputEvent> {
 
 	/**
 	 * Returns the current state on top.
+	 * @return The current state on top.
 	 */
 	public GameState peek() {
 		return stateStack.peek();
@@ -69,7 +71,7 @@ public final class StateManager implements EventHandler<InputEvent> {
 	/**
 	 * Adds a new game state to current state list.
 	 * 
-	 * @param state -> new game state
+	 * @param state Pushes new game state to be active one.
 	 */
 	public void push(GameState state) {
 		state.entered();
@@ -80,7 +82,7 @@ public final class StateManager implements EventHandler<InputEvent> {
 	/**
 	 * Removes the last state and adds a new state
 	 * 
-	 * @param state -> new game state
+	 * @param state Replaces top game state by poping and pushing.
 	 */
 	public void switchCurrentState(GameState state) {
 		pop();
@@ -102,7 +104,6 @@ public final class StateManager implements EventHandler<InputEvent> {
 	/**
 	 * Updates all updatable states.
 	 * 
-	 * @param elapsedTime elapsed time since last call
 	 */
 	public void update() {
 		for (int i = stateStack.size() - 1; i >= 0; i--) {

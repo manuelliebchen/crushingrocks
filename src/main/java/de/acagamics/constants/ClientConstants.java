@@ -47,13 +47,13 @@ public final class ClientConstants {
 	/**
 	 * The window width.
 	 * <p>
-	 * Value = {@value #SCREEN_WIDTH} 
+	 * Value = {@value #INITIAL_SCREEN_WIDTH} 
 	 */
 	public static final int INITIAL_SCREEN_WIDTH = 1280;
 	/**
 	 * The window height.
 	 * <p>
-	 * Value = {@value #SCREEN_HEIGHT} 
+	 * Value = {@value #INITIAL_SCREEN_HEIGHT} 
 	 */
 	public static final int INITIAL_SCREEN_HEIGHT = 720;
 	/**

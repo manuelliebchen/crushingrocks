@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This class monitors the intrinsics of a given {@link #java.util.concurrent.ThreadPoolExecutor}
+ * This class monitors the intrinsics of a given {@link java.util.concurrent.ThreadPoolExecutor}
  * and logs them.
  * 
  * @author Tim Benedict Jagla {@literal <tim@acagamics.de>}

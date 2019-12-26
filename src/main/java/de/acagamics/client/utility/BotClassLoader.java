@@ -108,6 +108,7 @@ public final class BotClassLoader extends ClassLoader {
 	/**
 	 * Instantiates an already loaded extern player controller.
 	 * 
+	 * @param className Name of the class of with instance should be loaded.
 	 * @return New instance of player controller or null if something went wrong.
 	 */
 	public IPlayerController instantiateLoadedExternController(String className) {

@@ -39,7 +39,7 @@ public final class GameContext {
 	
 	/**
 	 * Copy Constructor
-	 * @param context the {@link #GameContext} to copy
+	 * @param context the {@link GameContext} to copy
 	 */
 	private GameContext(final GameContext context) {
 		this.gameName = context.gameName;
@@ -51,7 +51,7 @@ public final class GameContext {
 	}
 	
 	/**
-	 * A Builder to mitigate the need for a huge constructor for a {@link #GameContext} object.
+	 * A Builder to mitigate the need for a huge constructor for a {@link GameContext} object.
 	 * Additionally the builder provides parsing capabilities of the output filename of a
 	 * process, defined in {@link #toFilename()}.
 	 */
@@ -100,9 +100,9 @@ public final class GameContext {
         }
         
         /**
-         * Parses an {@link GameContext#toFilename()} into an instance of {@link #GameContext}.
+         * Parses an {@link GameContext#toFilename()} into an instance of {@link GameContext}.
          * @param filename fully qualifying filename of a game process instance.
-         * @return a builder setup to build {@link #GameContext}s according to the input parameter.
+         * @return a builder setup to build {@link GameContext}s according to the input parameter.
          */
         public Builder fromFilename(final String filename) {
     		String[] split = filename.split("-");
@@ -116,8 +116,8 @@ public final class GameContext {
         }
         
         /**
-         * @param info Instance of the {@link #GameContext} to clone.
-         * @return The builder to create clones of the given {@link #GameContext}.
+         * @param context Instance of the {@link GameContext} to clone.
+         * @return The builder to create clones of the given {@link GameContext}.
          */
         public Builder fromSimulationContext(GameContext context) {
         	this.gameName(context.gameName)
@@ -130,8 +130,8 @@ public final class GameContext {
         }
         
         /**
-         * Last action after a chained build statement to return a {@link #GameContext}.
-         * @return A copy constructed instance of {@link #GameContext} from the {@link #prototype}.
+         * Last action after a chained build statement to return a {@link GameContext}.
+         * @return A copy constructed instance of {@link GameContext} from the {@link #prototype}.
          */
         public GameContext build() {
            if (prototype.gameName == null || prototype.tournamentSystem == null || prototype.bots == null) {
@@ -155,7 +155,7 @@ public final class GameContext {
 	
 	/**
 	 * Converts a {@link #GameContext} to a fully qualifying filename.
-	 * @see Builder#fromFilename()
+	 * @see Builder#fromFilename(String)
 	 * @return fully qualifying filename of the expected statistics file returned from the game.
 	 */
 	public String toFilename() {

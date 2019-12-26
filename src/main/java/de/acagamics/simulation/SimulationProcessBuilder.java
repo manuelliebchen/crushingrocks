@@ -26,7 +26,7 @@ public final class SimulationProcessBuilder implements Iterator<Runnable> {
 	/**
 	 * 
 	 * @param filepathExecutableJar filepath to the executable jar
-	 * @param contextIterator iterator over {@link #Client.Simulation.Context.GameContext}.
+	 * @param contextIterator iterator over {@link GameContext}.
 	 */
 	public SimulationProcessBuilder(String filepathExecutableJar, Iterator<GameContext> contextIterator) {
 		setFilepathExecutableJar(filepathExecutableJar);
@@ -35,7 +35,7 @@ public final class SimulationProcessBuilder implements Iterator<Runnable> {
 
 	/**
 	 * Generate command line arguments as a list of strings from a
-	 * {@link de.acagamics.simulation.context.GameContext}.
+	 * {@link GameContext}.
 	 * @param context the context to generate process arguments from.
 	 * @return the command line arguments in list of strings
 	 */
@@ -59,7 +59,7 @@ public final class SimulationProcessBuilder implements Iterator<Runnable> {
 	}
 
 	/**
-	 * Returns whether the iterator has a next {@link #Client.Simulation.Context.GameContext}.
+	 * Returns whether the iterator has a next {@link GameContext}.
 	 * @see java.util.Iterator#hasNext()
 	 */
 	@Override
@@ -68,7 +68,7 @@ public final class SimulationProcessBuilder implements Iterator<Runnable> {
 	}
 
 	/**
-	 * Returns the next {@link #Client.Simulation.Context.GameContext}.
+	 * Returns the next {@link GameContext}.
 	 * @see java.util.Iterator#next()
 	 */
 	@Override

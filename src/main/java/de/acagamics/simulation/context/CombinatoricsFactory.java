@@ -28,6 +28,8 @@ public final class CombinatoricsFactory extends TournamentFactoryBase {
 	
 	/**
 	 * Constructor
+	 * @param bots Bots to play.
+	 * @param gameName Name of the Game.
 	 * @param gameSize Number of controllers in a single game.
 	 */
 	public CombinatoricsFactory(List<String> bots, String gameName, int gameSize) {

@@ -1,4 +1,4 @@
-package de.acagamics.gui.rendering.renderer;
+package de.acagamics.gui.rendering;
 
 import java.util.List;
 
@@ -41,7 +41,6 @@ public final class MapOverlayRendering implements IDrawable {
 	 * Displays the map images etc.
 	 * 
 	 * @param context           Context to draw on.
-	 * @param timeSinceLastDraw Time passed since last draw in seconds.
 	 */
 	public void draw(GraphicsContext context) {
 		context.setLineWidth(DesignConstants.OVERLAY_LINE_WIDTH);

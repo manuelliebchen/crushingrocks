@@ -1,4 +1,4 @@
-package de.acagamics.gui.rendering.assetmanagment;
+package de.acagamics.gui.assetmanagment;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -83,6 +83,7 @@ public final class AssetManager {
      * Loads an animated image from the given path.
      * Images should be handed as strings containing the frame names.
      * E.g. loadAnimatedImage("path/to/", "jump1.png", "jump2.png", ..., "jumpn.png");
+     * @param animationDuration duration of the animation.
      * @param pathToImages Path to the directory where the images are located, as seen from the de.acagamics.assets package.
      * @param imgNames Name of the frame images as string.
      * @return Animated image.
@@ -109,7 +110,8 @@ public final class AssetManager {
 
     /**
      * Loads an font from the given path. Also caches multiple loads of the same font.
-     * @param imagePath Path to the image, as seen from the Asset package.
+     * @param fontPath Path to the font file
+     * @param size Size of the font.
      * @return Image at the given path.
      */
     public Font loadFont(String fontPath, double size) {

@@ -6,7 +6,7 @@ import java.util.BitSet;
  * Static helper functions to make dynamic bitset operations a little bit more
  * convenient. The requirements where to low to create a custom dynamic bitset
  * class and to high to do it from within the
- * {@link #Client.Utility.StaticCombinationIterator<T>}, thats why the
+ * {@link StaticCombinationIterator}, thats why the
  * {@link #BitSetOps()} came into existence.
  * 
  * This helper functions assume the least significant bit at index 0 instead of
