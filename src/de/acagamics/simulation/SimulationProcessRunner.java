@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class deals with the logic behind the parallelization of runnable processes and conducts the calculations.
@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
  */
 public final class SimulationProcessRunner implements Runnable {
 	
-	private static final Logger LOG = Logger.getLogger(SimulationProcessRunner.class);
+	private static final Logger LOG = LogManager.getLogger(SimulationProcessRunner.class);
 	/** Keep threads alive for {@value #THREAD_KEEP_ALIVE_TIME} milliseconds. */
 	private static final long THREAD_KEEP_ALIVE_TIME = 1000L;
 	/** Timeout of {@value #PROCESS_EXECUTOR_TIMEOUT} minutes, which equals two days of calculation time, until a forced termination. */

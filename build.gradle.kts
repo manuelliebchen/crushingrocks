@@ -4,3 +4,44 @@
  * This is a general purpose Gradle build.
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds
  */
+
+
+plugins {
+    `java-library`
+    
+     id("org.openjfx.javafxplugin") version "0.0.8"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile("org.apache.logging.log4j:log4j-api:2.13.0")
+	compile("org.apache.logging.log4j:log4j-core:2.13.0")
+	compile("org.apache.logging.log4j:log4j-jcl:2.13.0")
+
+	compile("com.beust:jcommander:1.78")
+}
+
+javafx {
+    version = "11"
+    modules("javafx.controls", "javafx.fxml")
+}
+
+java {
+    group = "de.acagamics"
+	version = "1.2.2"
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs(listOf("src"))
+        }
+    }
+}
+

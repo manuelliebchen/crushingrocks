@@ -1,6 +1,6 @@
 package de.acagamics;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import de.acagamics.client.MainWindow;
 import de.acagamics.data.CliArguments;

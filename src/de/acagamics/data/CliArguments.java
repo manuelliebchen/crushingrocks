@@ -3,8 +3,9 @@ package de.acagamics.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -14,7 +15,7 @@ import com.beust.jcommander.Parameter;
  * @author Max Klockmann (max@acagamics.de)
  */
 public final class CliArguments {
-	private static final Logger LOG = Logger.getLogger(CliArguments.class);
+	private static final Logger LOG = LogManager.getLogger(CliArguments.class.getName());
 	
 	/**
 	 * automatic Parameter parsing.

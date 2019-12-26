@@ -2,7 +2,7 @@ package de.acagamics.simulation;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A java process embedded into a class conforming to the {@link #java.lang.Runnable}

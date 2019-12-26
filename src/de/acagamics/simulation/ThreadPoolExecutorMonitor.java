@@ -3,7 +3,7 @@ package de.acagamics.simulation;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.lang.Runnable;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class monitors the intrinsics of a given {@link #java.util.concurrent.ThreadPoolExecutor}

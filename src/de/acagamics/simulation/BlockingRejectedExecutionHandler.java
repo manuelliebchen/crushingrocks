@@ -3,7 +3,7 @@ package de.acagamics.simulation;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 /**
  * A custom implementation of a {@link #java.util.concurrent.RejectedExecutionHandler}
