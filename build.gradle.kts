@@ -8,6 +8,7 @@
 
 plugins {
     `java-library`
+    `java-library-distribution`
     
      id("org.openjfx.javafxplugin") version "0.0.8"
 }
@@ -17,11 +18,10 @@ repositories {
 }
 
 dependencies {
-	compile("org.apache.logging.log4j:log4j-api:2.13.0")
-	compile("org.apache.logging.log4j:log4j-core:2.13.0")
-	compile("org.apache.logging.log4j:log4j-jcl:2.13.0")
+	implementation("org.apache.logging.log4j:log4j-core:2.13.0")
+	implementation("org.apache.logging.log4j:log4j-jcl:2.13.0")
 
-	compile("com.beust:jcommander:1.78")
+	implementation("com.beust:jcommander:1.78")
 }
 
 javafx {
@@ -31,17 +31,14 @@ javafx {
 
 java {
     group = "de.acagamics"
-	version = "1.2.2"
+	version = "1.2.4"
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src"))
-        }
+val jar by tasks.getting(Jar::class) {
+    manifest {
+        attributes["Main-Class"] = "de.acagamics.Main"
     }
 }
-
