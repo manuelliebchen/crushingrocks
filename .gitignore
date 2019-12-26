@@ -73,7 +73,5 @@ src/extrenaltestbots/*
 *.xcf
 *_Original.png
 
-# Ignore Gradle project-specific cache directory
 .gradle
-
 build
