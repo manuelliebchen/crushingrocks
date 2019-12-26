@@ -26,8 +26,6 @@ public final class Main {
 		  .build()
 		  .parse(args);
 		
-		System.out.println(JCommander.newBuilder().addObject(cliArg).toString());
-		
 		// enable debug mode
 		if (cliArg.isDebug()) {
 			Configurator.setRootLevel(Level.ALL);

@@ -104,9 +104,9 @@ public class Version {
 		String version = response.toString();
 		upToDate = Optional.of(version.compareTo(ClientConstants.VERSION));
 		if (upToDate.get() > 0) {
-			LOG.error("You're running an old version (" + ClientConstants.VERSION + ")! The most recent version is " + version + ". Please Update!");
+			LOG.warn("You're running an old version (" + ClientConstants.VERSION + ")! The most recent version is " + version + ". Please Update!");
 		} else if (upToDate.get() < 0) {
-			LOG.error("You're running a future version (" + ClientConstants.VERSION + ")! The most recent version is " + version + ". Please report to mothership!");
+			LOG.warn("You're running a future version (" + ClientConstants.VERSION + ")! The most recent version is " + version + ". Please report to mothership!");
 		}
 	}
 }

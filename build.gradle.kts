@@ -7,6 +7,8 @@
 
 
 plugins {
+	application
+	
     `java-library`
     `java-library-distribution`
     
@@ -44,4 +46,8 @@ tasks.jar {
     manifest {
         attributes["Main-Class"] = "de.acagamics.Main"
     }
+}
+
+application {
+	mainClassName = "de.acagamics.Main"
 }

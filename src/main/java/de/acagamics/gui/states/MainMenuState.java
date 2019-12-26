@@ -1,6 +1,7 @@
 package de.acagamics.gui.states;
 
 import de.acagamics.client.web.Version;
+import de.acagamics.constants.ClientConstants;
 import de.acagamics.constants.DesignConstants;
 import de.acagamics.game.types.Vec2f;
 import de.acagamics.gui.StateManager;
@@ -51,6 +52,10 @@ public class MainMenuState extends MenuState {
 					.setFont(DesignConstants.MEDIUM_SMALL_FONT)
 					.setVerticalAlignment(ALIGNMENT.CENTER));
 		}
+		
+		drawables.add(new TextBox(new Vec2f(-40,-20), "v" + ClientConstants.VERSION)
+				.setFont(DesignConstants.SMALL_FONT)
+				.setVerticalAlignment(ALIGNMENT.BOTTOM).setHorizontalAlignment(ALIGNMENT.RIGHT));
 	}
 
 //	private String checkVersion() {
