@@ -8,7 +8,6 @@ import de.acagamics.framework.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.gui.elements.TextBox;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.MenuState;
-import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
@@ -33,7 +32,7 @@ public class MainMenuState extends MenuState {
 		background = new Background(150);
 		
 		drawables.add(new TextBox(new Vec2f(0, 60), "Crushing Rocks!")
-				.setFont(DesignProperties.TITLE_FONT)
+				.setFont(ResourceManager.getInstance().getDesignProperties().getTitleFont())
 				.setVerticalAlignment(ALIGNMENT.CENTER));
 
 		clickable.add((Button) (new Button(new Vec2f(0, 350), BUTTON_TYPE.WIDE, "Start Game",
@@ -49,12 +48,12 @@ public class MainMenuState extends MenuState {
 
 		if(Version.isChecked() && !Version.isUpToDate()) {
 			drawables.add(new TextBox(new Vec2f(0,125), "You may update your game.")
-					.setFont(DesignProperties.MEDIUM_SMALL_FONT)
+					.setFont(ResourceManager.getInstance().getDesignProperties().getMediumSmallFont())
 					.setVerticalAlignment(ALIGNMENT.CENTER));
 		}
 		
 		drawables.add(new TextBox(new Vec2f(-40,-20), "v" + ResourceManager.getInstance().getClientProperties().getVersion())
-				.setFont(DesignProperties.SMALL_FONT)
+				.setFont(ResourceManager.getInstance().getDesignProperties().getSmallFont())
 				.setVerticalAlignment(ALIGNMENT.BOTTOM).setHorizontalAlignment(ALIGNMENT.RIGHT));
 	}
 

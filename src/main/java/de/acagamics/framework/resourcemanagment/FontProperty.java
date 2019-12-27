@@ -3,6 +3,7 @@ package de.acagamics.framework.resourcemanagment;
 import javafx.scene.text.Font;
 
 public class FontProperty {
+
 	private String file;
 	private int size;
 

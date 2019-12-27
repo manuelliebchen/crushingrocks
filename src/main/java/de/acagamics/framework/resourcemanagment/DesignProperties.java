@@ -12,24 +12,65 @@ public final class DesignProperties {
 	
 	// http://paletton.com/#uid=70X1q0kpntDfEF8kMvZtppdvJk0
 	
-	public static final Font STANDART_FONT = ResourceManager.getInstance().loadFont("breathe_fire.otf", 32);
+	private FontProperty standart_font;
 	
-	public static final Font BUTTON_FONT = ResourceManager.getInstance().loadFont("breathe_fire.otf", 32);
+	public Font getStandartFont() {
+		return standart_font.getFont();
+	}
+	
+	private FontProperty title_font;
+	
+	public Font getTitleFont() {
+		return title_font.getFont();
+	}
+	
+	private FontProperty subtitle_font;
+	
+	public Font getSubtitleFont() {
+		return subtitle_font.getFont();
+	}
+	
+	private FontProperty medium_small_font;
 
-	public static final Color BUTTON_TEXT_COLOR = Color.web("#000000");
-	
-	public static final Font TITLE_FONT = ResourceManager.getInstance().loadFont("breathe_fire.otf", 72);
-	
-	public static final Font SECOND_TITLE_FONT = ResourceManager.getInstance().loadFont("breathe_fire.otf", 42);
-	
-	public static final Font MEDIUM_SMALL_FONT = ResourceManager.getInstance().loadFont("breathe_fire.otf", 24);
+	public Font getMediumSmallFont() {
+		return medium_small_font.getFont();
+	}
 
-	public static final Font SMALL_FONT = ResourceManager.getInstance().loadFont("breathe_fire.otf", 16);
+	private FontProperty small_font;
+	
+	public Font getSmallFont() {
+		return small_font.getFont();
+	}
+	
+	private String foreground_color;
+	
+	public Color getForegroundColor() {
+		return Color.web(foreground_color);
+	}
+	
+	private String background_color;
+	
+	public Color getBackgroundColor() {
+		return Color.web(background_color);
+	}
 
-	public static final Color FOREGROUND_COLOR = Color.web("#BD277C");
+	private FontProperty button_font;
 	
-	public static final Color BACKGROUND_COLOR = Color.web("#82BB0F");
+	public Font getButtonFont() {
+		return button_font.getFont();
+	}
+
 	
-	public static final int BUTTON_HEIGHT = 70;
+	private String button_text_color;
+	
+	public Color getButtonTextColor() {
+		return Color.web(button_text_color);
+	}
+
+	private int button_height;
+	
+	public int getButtonHeight() {
+		return button_height;
+	}
 	
 }

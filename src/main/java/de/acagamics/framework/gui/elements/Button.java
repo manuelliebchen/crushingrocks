@@ -3,7 +3,6 @@ package de.acagamics.framework.gui.elements;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.Alignable;
 import de.acagamics.framework.gui.interfaces.IClickable;
-import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,7 +31,7 @@ public final class Button extends Alignable implements IClickable {
 	// Drawing status
 	private String buttonText;
 	private Vec2f centeredPositioOffset;
-	private Color textColor = DesignProperties.BUTTON_TEXT_COLOR;
+	private Color textColor = ResourceManager.getInstance().getDesignProperties().getButtonTextColor();
 	private Vec2f relativPosition;
 	private Vec2f position;
 	private Vec2f size;
@@ -66,17 +65,18 @@ public final class Button extends Alignable implements IClickable {
 		super(relativPosition);
 		this.buttonText = buttonText;
 		String buttonTexture = "buttons/Button";
+		int buttonHeight = ResourceManager.getInstance().getDesignProperties().getButtonHeight();
 		switch (type) {
 		case WIDE:
-			size = new Vec2f(DesignProperties.BUTTON_HEIGHT * 4, DesignProperties.BUTTON_HEIGHT);
+			size = new Vec2f(buttonHeight * 4, buttonHeight);
 			buttonTexture += "4";
 			break;
 		case SQUARE:
-			size = new Vec2f(DesignProperties.BUTTON_HEIGHT, DesignProperties.BUTTON_HEIGHT);
+			size = new Vec2f(buttonHeight, buttonHeight);
 			buttonTexture += "1";
 			break;
 		default:
-			size = new Vec2f(DesignProperties.BUTTON_HEIGHT * 2, DesignProperties.BUTTON_HEIGHT);
+			size = new Vec2f(buttonHeight * 2, buttonHeight);
 			buttonTexture += "2";
 			break;
 		}
@@ -110,7 +110,7 @@ public final class Button extends Alignable implements IClickable {
 	 */
 	private void calcButtonTextProperties() {
 		Text text = new Text(buttonText);
-		text.setFont(DesignProperties.BUTTON_FONT);
+		text.setFont(ResourceManager.getInstance().getDesignProperties().getButtonFont());
 
 		Vec2f buttonTextSize = new Vec2f((float) text.getLayoutBounds().getWidth(),
 				(float) text.getLayoutBounds().getHeight());
@@ -169,19 +169,19 @@ public final class Button extends Alignable implements IClickable {
 			context.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
 		}
 
-		context.setFont(DesignProperties.BUTTON_FONT);
+		context.setFont(ResourceManager.getInstance().getDesignProperties().getButtonFont());
 		context.setFill(textColor);
 		context.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
 				position.getY() + centeredPositioOffset.getY());
 
 		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + DesignProperties.BUTTON_HEIGHT * 1/2,
-				position.getY() + size.getY() * 1/5, -DesignProperties.BUTTON_HEIGHT,
-				DesignProperties.BUTTON_HEIGHT);
+				position.getX() + ResourceManager.getInstance().getDesignProperties().getButtonHeight() * 1/2,
+				position.getY() + size.getY() * 1/5, -ResourceManager.getInstance().getDesignProperties().getButtonHeight(),
+				ResourceManager.getInstance().getDesignProperties().getButtonHeight());
 		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + size.getX() - DesignProperties.BUTTON_HEIGHT / 2,
-				position.getY() + size.getY() * 1/5, DesignProperties.BUTTON_HEIGHT,
-				DesignProperties.BUTTON_HEIGHT);
+				position.getX() + size.getX() - ResourceManager.getInstance().getDesignProperties().getButtonHeight() / 2,
+				position.getY() + size.getY() * 1/5, ResourceManager.getInstance().getDesignProperties().getButtonHeight(),
+				ResourceManager.getInstance().getDesignProperties().getButtonHeight());
 
 	}
 

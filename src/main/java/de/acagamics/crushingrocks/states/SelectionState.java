@@ -8,15 +8,15 @@ import de.acagamics.crushingrocks.controller.builtIn.EvilSanta;
 import de.acagamics.framework.client.utility.BotClassLoader;
 import de.acagamics.framework.gui.StateManager;
 import de.acagamics.framework.gui.elements.Button;
+import de.acagamics.framework.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.gui.elements.Selector;
 import de.acagamics.framework.gui.elements.TextBox;
-import de.acagamics.framework.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.MenuState;
-import de.acagamics.framework.resourcemanagment.DesignProperties;
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.InGameSettings;
-import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.types.InGameSettings.GAMEMODE;
+import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
@@ -37,7 +37,7 @@ public class SelectionState extends MenuState {
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
-		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(DesignProperties.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().getDesignProperties().getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
 		drawables.add(new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
