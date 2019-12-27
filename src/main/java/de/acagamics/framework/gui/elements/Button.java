@@ -1,10 +1,10 @@
 package de.acagamics.framework.gui.elements;
 
-import de.acagamics.constants.DesignConstants;
-import de.acagamics.framework.gui.assetmanagment.AssetManager;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.Alignable;
 import de.acagamics.framework.gui.interfaces.IClickable;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -32,7 +32,7 @@ public final class Button extends Alignable implements IClickable {
 	// Drawing status
 	private String buttonText;
 	private Vec2f centeredPositioOffset;
-	private Color textColor = DesignConstants.BUTTON_TEXT_COLOR;
+	private Color textColor = DesignProperties.BUTTON_TEXT_COLOR;
 	private Vec2f relativPosition;
 	private Vec2f position;
 	private Vec2f size;
@@ -68,22 +68,22 @@ public final class Button extends Alignable implements IClickable {
 		String buttonTexture = "buttons/Button";
 		switch (type) {
 		case WIDE:
-			size = new Vec2f(DesignConstants.BUTTON_HEIGHT * 4, DesignConstants.BUTTON_HEIGHT);
+			size = new Vec2f(DesignProperties.BUTTON_HEIGHT * 4, DesignProperties.BUTTON_HEIGHT);
 			buttonTexture += "4";
 			break;
 		case SQUARE:
-			size = new Vec2f(DesignConstants.BUTTON_HEIGHT, DesignConstants.BUTTON_HEIGHT);
+			size = new Vec2f(DesignProperties.BUTTON_HEIGHT, DesignProperties.BUTTON_HEIGHT);
 			buttonTexture += "1";
 			break;
 		default:
-			size = new Vec2f(DesignConstants.BUTTON_HEIGHT * 2, DesignConstants.BUTTON_HEIGHT);
+			size = new Vec2f(DesignProperties.BUTTON_HEIGHT * 2, DesignProperties.BUTTON_HEIGHT);
 			buttonTexture += "2";
 			break;
 		}
 
-		imgUp = AssetManager.getInstance().loadImage(buttonTexture + ".png");
-		imgDown = AssetManager.getInstance().loadImage(buttonTexture + "dark.png");
-		imgInActive = AssetManager.getInstance().loadImage(buttonTexture + "Inactive.png");
+		imgUp = ResourceManager.getInstance().loadImage(buttonTexture + ".png");
+		imgDown = ResourceManager.getInstance().loadImage(buttonTexture + "dark.png");
+		imgInActive = ResourceManager.getInstance().loadImage(buttonTexture + "Inactive.png");
 
 		this.relativPosition = relativPosition.sub(size.mult(0.5f));
 		this.position = this.relativPosition;
@@ -110,7 +110,7 @@ public final class Button extends Alignable implements IClickable {
 	 */
 	private void calcButtonTextProperties() {
 		Text text = new Text(buttonText);
-		text.setFont(DesignConstants.BUTTON_FONT);
+		text.setFont(DesignProperties.BUTTON_FONT);
 
 		Vec2f buttonTextSize = new Vec2f((float) text.getLayoutBounds().getWidth(),
 				(float) text.getLayoutBounds().getHeight());
@@ -169,19 +169,19 @@ public final class Button extends Alignable implements IClickable {
 			context.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
 		}
 
-		context.setFont(DesignConstants.BUTTON_FONT);
+		context.setFont(DesignProperties.BUTTON_FONT);
 		context.setFill(textColor);
 		context.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
 				position.getY() + centeredPositioOffset.getY());
 
-		context.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + DesignConstants.BUTTON_HEIGHT * 1/2,
-				position.getY() + size.getY() * 1/5, -DesignConstants.BUTTON_HEIGHT,
-				DesignConstants.BUTTON_HEIGHT);
-		context.drawImage(AssetManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + size.getX() - DesignConstants.BUTTON_HEIGHT / 2,
-				position.getY() + size.getY() * 1/5, DesignConstants.BUTTON_HEIGHT,
-				DesignConstants.BUTTON_HEIGHT);
+		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
+				position.getX() + DesignProperties.BUTTON_HEIGHT * 1/2,
+				position.getY() + size.getY() * 1/5, -DesignProperties.BUTTON_HEIGHT,
+				DesignProperties.BUTTON_HEIGHT);
+		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
+				position.getX() + size.getX() - DesignProperties.BUTTON_HEIGHT / 2,
+				position.getY() + size.getY() * 1/5, DesignProperties.BUTTON_HEIGHT,
+				DesignProperties.BUTTON_HEIGHT);
 
 	}
 

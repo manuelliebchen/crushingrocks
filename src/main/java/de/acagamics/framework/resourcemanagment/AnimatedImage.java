@@ -1,4 +1,4 @@
-package de.acagamics.framework.gui.assetmanagment;
+package de.acagamics.framework.resourcemanagment;
 
 import javafx.scene.image.Image;
 

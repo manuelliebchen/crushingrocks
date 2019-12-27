@@ -1,0 +1,29 @@
+standart_font:
+   file: "breathe_fire.otf"
+   size: 32
+
+title_font:
+   file: "breathe_fire.otf"
+   size: 72
+   
+subtitle_font:
+   file: "breathe_fire.otf"
+   size: 42
+
+medium_small_font:
+   file: "breathe_fire.otf"
+   size: 24
+   
+small_font:
+   file: "breathe_fire.otf"
+   size: 16
+
+foreground_color: "#BD277C"
+background_color: "#82BB0F"
+
+button_font:
+   file: "breathe_fire.otf"
+   size: 32
+button_color: "#000000"  
+button_hight: 70
+   

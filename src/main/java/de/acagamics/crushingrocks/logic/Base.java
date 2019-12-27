@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.logic;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.acagamics.constants.GameConstants;
+import de.acagamics.crushingrocks.GameConstants;
 import de.acagamics.framework.types.Vec2f;
 
 /**

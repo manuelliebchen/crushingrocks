@@ -1,8 +1,6 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.constants.ClientConstants;
-import de.acagamics.constants.DesignConstants;
-import de.acagamics.constants.GameConstants;
+import de.acagamics.crushingrocks.GameConstants;
 import de.acagamics.crushingrocks.logic.Game;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Unit;
@@ -16,6 +14,8 @@ import de.acagamics.framework.gui.elements.RenderingLayer;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.GameState;
 import de.acagamics.framework.gui.interfaces.ISelfUpdating;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.types.InGameSettings;
 import de.acagamics.framework.types.Vec2f;
@@ -77,7 +77,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(
-				Duration.millis(ClientConstants.MINIMUM_TIME_PER_FRAME_MS / settings.getSpeedMultiplier()), (event) -> {
+				Duration.millis(ResourceManager.getInstance().getClientProperties().getMilisPerFrame() / settings.getSpeedMultiplier()), (event) -> {
 					frame();
 				});
 
@@ -143,12 +143,12 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			position = transformation.transform(position);
 			String mineText = String.valueOf(mine.getMineID());
 			Text text = new Text(mineText);
-			text.setFont(DesignConstants.SMALL_FONT);
+			text.setFont(DesignProperties.SMALL_FONT);
 			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
 			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
 
-			context.setFill(DesignConstants.FOREGROUND_COLOR);
-			context.setFont(DesignConstants.SMALL_FONT);
+			context.setFill(DesignProperties.FOREGROUND_COLOR);
+			context.setFont(DesignProperties.SMALL_FONT);
 			context.fillText(mineText, position.getX(), position.getY());
 		}
 		
@@ -169,12 +169,12 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			
 			}
 			Text text = new Text(unitText);
-			text.setFont(DesignConstants.SMALL_FONT);
+			text.setFont(DesignProperties.SMALL_FONT);
 			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
 			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
 	
-			context.setFill(DesignConstants.FOREGROUND_COLOR);
-			context.setFont(DesignConstants.SMALL_FONT);
+			context.setFill(DesignProperties.FOREGROUND_COLOR);
+			context.setFont(DesignProperties.SMALL_FONT);
 			context.fillText(unitText, position.getX(), position.getY());
 		}
 		

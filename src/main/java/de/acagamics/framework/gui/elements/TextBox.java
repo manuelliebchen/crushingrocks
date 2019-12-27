@@ -1,8 +1,8 @@
 package de.acagamics.framework.gui.elements;
 
-import de.acagamics.constants.DesignConstants;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.Alignable;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -17,9 +17,9 @@ public class TextBox extends Alignable {
 
 	// Drawing status
 	protected String text = "";
-	protected Color textColor = DesignConstants.FOREGROUND_COLOR;
+	protected Color textColor = DesignProperties.FOREGROUND_COLOR;
 	protected Vec2f size = Vec2f.ZERO();
-	protected Font font = DesignConstants.STANDART_FONT;
+	protected Font font = DesignProperties.STANDART_FONT;
 	protected ALIGNMENT textAlignment = ALIGNMENT.CENTER;
 
 	/**

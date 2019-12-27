@@ -3,7 +3,7 @@ package de.acagamics.framework.types;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.constants.GameConstants;
+import de.acagamics.crushingrocks.GameConstants;
 import de.acagamics.crushingrocks.logic.Player;
 
 public final class GameStatistic {

@@ -1,7 +1,7 @@
 package de.acagamics.framework.gui.elements;
 
-import de.acagamics.framework.gui.assetmanagment.AssetManager;
 import de.acagamics.framework.gui.interfaces.IDrawable;
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -18,7 +18,7 @@ public class Background implements IDrawable {
 	public Background(int pixel_above) {
 		this.pixel_above = pixel_above;
 		
-		image = AssetManager.getInstance().loadImage("Hintergrund.png");
+		image = ResourceManager.getInstance().loadImage("Hintergrund.png");
 	}
 	
 	@Override

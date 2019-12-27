@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.constants.DesignConstants;
-import de.acagamics.constants.GameConstants;
+import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.RenderingConstants;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.client.utility.InputTracker;
 import de.acagamics.framework.types.GameStatistic;
@@ -44,7 +44,7 @@ public final class Game implements EventHandler<InputEvent> {
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
 			assert (playerController.get(i) != null);
-			players.add(new Player(playerController.get(i), DesignConstants.PLAYER_COLORS[i], i));
+			players.add(new Player(playerController.get(i), RenderingConstants.PLAYER_COLORS[i], i));
 		}
 
 		this.random = new Random();

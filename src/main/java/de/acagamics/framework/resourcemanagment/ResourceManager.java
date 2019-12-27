@@ -1,21 +1,23 @@
-package de.acagamics.framework.gui.assetmanagment;
+package de.acagamics.framework.resourcemanagment;
 
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.acagamics.constants.ClientConstants;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.introspector.BeanAccess;
+
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
  */
-public final class AssetManager {
+public final class ResourceManager {
 
-    private static final AssetManager INSTANCE = new AssetManager();
+    private static final ResourceManager INSTANCE = new ResourceManager();
 
-    private AssetManager() {
+    private ResourceManager() {
     }
 
     /**
@@ -23,8 +25,41 @@ public final class AssetManager {
      * Singleton pattern.
      * @return instance of the ImageManager
      */
-    public static AssetManager getInstance() {
+    public static ResourceManager getInstance() {
         return INSTANCE;
+    }
+    
+    
+// ClientProperties 
+    
+    private ClientProperties clientProperties = null;
+    
+    public ClientProperties getClientProperties() {
+    	if( clientProperties == null) {
+    		Yaml yaml = new Yaml();
+    		InputStream inputStream = this.getClass()
+    		 .getClassLoader()
+    		 .getResourceAsStream("client.yaml");
+    		yaml.setBeanAccess(BeanAccess.FIELD);
+    		clientProperties = yaml.loadAs(inputStream, ClientProperties.class);
+    	}
+    	return clientProperties;
+    }
+    
+//Design Properties
+    
+    private DesignProperties designProperties = null;
+    
+    public DesignProperties getDesignProperties() {
+    	if( designProperties == null) {
+    		Yaml yaml = new Yaml();
+    		InputStream inputStream = this.getClass()
+    		 .getClassLoader()
+    		 .getResourceAsStream("design.yaml");
+    		yaml.setBeanAccess(BeanAccess.FIELD);
+    		designProperties = yaml.loadAs(inputStream,DesignProperties.class);
+    	}
+    	return designProperties;
     }
     
     
@@ -40,7 +75,7 @@ public final class AssetManager {
     public Image loadImage(String imagePath) {
         assert imagePath != null;
 
-        String assetPath = ClientConstants.ASSET_ROOT + imagePath;
+        String assetPath = imagePath;
 
         if (imageCache.containsKey(imagePath)) {
             return imageCache.get(imagePath);
@@ -68,7 +103,7 @@ public final class AssetManager {
         assert pathToImages != null;
         assert imgNames != null;
 
-        String assetPath = ClientConstants.ASSET_ROOT + pathToImages;
+        String assetPath = pathToImages;
 
         if (animImageCache.containsKey(imgNames[0])) {
             return animImageCache.get(imgNames[0]);
@@ -93,7 +128,7 @@ public final class AssetManager {
         assert imgNames != null;
         assert animationDuration > 0.0f;
 
-        String assetPath = ClientConstants.ASSET_ROOT + pathToImages;
+        String assetPath = pathToImages;
 
         if (animImageCache.containsKey(imgNames[0])) {
             return animImageCache.get(imgNames[0]);
@@ -117,7 +152,7 @@ public final class AssetManager {
     public Font loadFont(String fontPath, double size) {
         assert fontPath != null;
 
-        String assetPath = ClientConstants.ASSET_ROOT + fontPath;
+        String assetPath = fontPath;
 
         fontPath += String.valueOf(size);
         

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.constants.GameConstants;
+import de.acagamics.crushingrocks.GameConstants;
 import de.acagamics.framework.types.Vec2f;
 
 /**

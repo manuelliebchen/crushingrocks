@@ -1,0 +1,11 @@
+title: Crushing Rocks!
+version: "1.2.3"
+
+screen_width: 1280
+screen_height: 720
+
+framerate: 60
+
+news_url: https://wettbewerb.acagamics.de/downloads/news/
+version_url: https://wettbewerb.acagamics.de/downloads/changelog/
+

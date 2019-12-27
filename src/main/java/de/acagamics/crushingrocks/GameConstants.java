@@ -1,4 +1,4 @@
-package de.acagamics.constants;
+package de.acagamics.crushingrocks;
 
 import de.acagamics.framework.types.Vec2f;
 

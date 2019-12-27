@@ -11,7 +11,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.acagamics.constants.ClientConstants;
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
@@ -59,7 +59,7 @@ public class Version {
 		// create URL to version
 		URL website;
 		try {
-			website = new URL(ClientConstants.VERSION_URL);
+			website = new URL(ResourceManager.getInstance().getClientProperties().getVersionURL());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return;
@@ -102,11 +102,11 @@ public class Version {
 
 		// check version
 		String version = response.toString();
-		upToDate = Optional.of(version.compareTo(ClientConstants.VERSION));
+		upToDate = Optional.of(version.compareTo(ResourceManager.getInstance().getClientProperties().getVersion()));
 		if (upToDate.get() > 0) {
-			LOG.warn("You're running an old version (" + ClientConstants.VERSION + ")! The most recent version is " + version + ". Please Update!");
+			LOG.warn("You're running an old version (" + ResourceManager.getInstance().getClientProperties().getVersion() + ")! The most recent version is " + version + ". Please Update!");
 		} else if (upToDate.get() < 0) {
-			LOG.warn("You're running a future version (" + ClientConstants.VERSION + ")! The most recent version is " + version + ". Please report to mothership!");
+			LOG.warn("You're running a future version (" + ResourceManager.getInstance().getClientProperties().getVersion() + ")! The most recent version is " + version + ". Please report to mothership!");
 		}
 	}
 }

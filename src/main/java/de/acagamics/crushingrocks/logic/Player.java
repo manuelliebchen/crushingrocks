@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.constants.GameConstants;
+import de.acagamics.crushingrocks.GameConstants;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.paint.Color;

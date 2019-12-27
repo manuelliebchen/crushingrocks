@@ -2,8 +2,8 @@ package de.acagamics.crushingrocks.rendering;
 
 import java.util.List;
 
-import de.acagamics.constants.DesignConstants;
-import de.acagamics.constants.GameConstants;
+import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.RenderingConstants;
 import de.acagamics.crushingrocks.logic.Base;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
@@ -43,9 +43,9 @@ public final class MapOverlayRendering implements IDrawable {
 	 * @param context           Context to draw on.
 	 */
 	public void draw(GraphicsContext context) {
-		context.setLineWidth(DesignConstants.OVERLAY_LINE_WIDTH);
+		context.setLineWidth(RenderingConstants.OVERLAY_LINE_WIDTH);
 		for (Base base : bases) {
-			context.setStroke(DesignConstants.HEALTH_BACKGROUND);
+			context.setStroke(RenderingConstants.HEALTH_BACKGROUND);
 			context.strokeOval(base.getPosition().getX() - GameConstants.BASE_RADIUS,
 					base.getPosition().getY() - GameConstants.BASE_RADIUS, 2 * GameConstants.BASE_RADIUS,
 					2 * GameConstants.BASE_RADIUS);

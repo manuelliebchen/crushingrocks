@@ -4,7 +4,6 @@ import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.constants.DesignConstants;
 import de.acagamics.crushingrocks.controller.builtIn.EvilSanta;
 import de.acagamics.framework.client.utility.BotClassLoader;
 import de.acagamics.framework.gui.StateManager;
@@ -14,6 +13,7 @@ import de.acagamics.framework.gui.elements.TextBox;
 import de.acagamics.framework.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.MenuState;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.types.InGameSettings;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.types.InGameSettings.GAMEMODE;
@@ -37,7 +37,7 @@ public class SelectionState extends MenuState {
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
-		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(DesignConstants.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(DesignProperties.SECOND_TITLE_FONT).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
 		drawables.add(new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));

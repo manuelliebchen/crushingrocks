@@ -1,7 +1,7 @@
 package de.acagamics.framework.gui.elements;
 
-import de.acagamics.framework.gui.assetmanagment.AssetManager;
 import de.acagamics.framework.gui.interfaces.Alignable;
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -13,7 +13,7 @@ public class ImageElement extends Alignable {
 
 	public ImageElement(Vec2f relativPosition, String image, float size) {
 		super(relativPosition);
-		this.image = AssetManager.getInstance().loadImage(image);
+		this.image = ResourceManager.getInstance().loadImage(image);
 		this.size = size;
 	}
 
