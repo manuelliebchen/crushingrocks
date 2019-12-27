@@ -4,6 +4,7 @@ import de.acagamics.crushingrocks.states.MainMenuState;
 import de.acagamics.framework.client.web.News;
 import de.acagamics.framework.client.web.Version;
 import de.acagamics.framework.gui.StateManager;
+import de.acagamics.framework.resourcemanagment.ClientProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -37,18 +38,18 @@ public final class MainWindow extends Application {
 
 		// Set window settings and show window
 		stage.getIcons().add(ResourceManager.getInstance().loadImage("icon.png"));
-		stage.setTitle(ResourceManager.getInstance().getClientProperties().getTitle());
-		stage.setWidth(ResourceManager.getInstance().getClientProperties().getScreenWidth());
-		stage.setHeight(ResourceManager.getInstance().getClientProperties().getScreenHeight());
-		stage.setMinWidth(ResourceManager.getInstance().getClientProperties().getScreenWidth());
-		stage.setMinHeight(ResourceManager.getInstance().getClientProperties().getScreenHeight());
+		stage.setTitle(ResourceManager.getInstance().loadProperties(ClientProperties.class).getTitle());
+		stage.setWidth(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth());
+		stage.setHeight(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
+		stage.setMinWidth(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth());
+		stage.setMinHeight(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
 
 		// Create Canvas and Layout(Pane) for window
 		Pane pane = new Pane();
-		Canvas canvas = new Canvas(ResourceManager.getInstance().getClientProperties().getScreenWidth(), ResourceManager.getInstance().getClientProperties().getScreenHeight());
+		Canvas canvas = new Canvas(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth(), ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
 		pane.getChildren().add(canvas);
 		pane.autosize();
-		pane.setPrefSize(ResourceManager.getInstance().getClientProperties().getScreenWidth(), ResourceManager.getInstance().getClientProperties().getScreenHeight());
+		pane.setPrefSize(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth(), ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
 
 		// Add canvas to new scene and set scene as window content
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight(), false, SceneAntialiasing.BALANCED);

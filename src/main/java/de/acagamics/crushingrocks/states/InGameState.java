@@ -14,6 +14,8 @@ import de.acagamics.framework.gui.elements.RenderingLayer;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.GameState;
 import de.acagamics.framework.gui.interfaces.ISelfUpdating;
+import de.acagamics.framework.resourcemanagment.ClientProperties;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.types.InGameSettings;
@@ -76,7 +78,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(
-				Duration.millis(ResourceManager.getInstance().getClientProperties().getMilisPerFrame() / settings.getSpeedMultiplier()), (event) -> {
+				Duration.millis(ResourceManager.getInstance().loadProperties(ClientProperties.class).getMilisPerFrame() / settings.getSpeedMultiplier()), (event) -> {
 					frame();
 				});
 
@@ -137,17 +139,19 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		context.restore();
 
+		DesignProperties designProperties = ResourceManager.getInstance().loadProperties(DesignProperties.class);
+		
 		for (Mine mine : game.getMap().getMines()) {
 			Point2D position = mine.getPosition().add(0, GameConstants.MINE_RADIUS).getPoint2D();
 			position = transformation.transform(position);
 			String mineText = String.valueOf(mine.getMineID());
 			Text text = new Text(mineText);
-			text.setFont(ResourceManager.getInstance().getDesignProperties().getSmallFont());
+			text.setFont(designProperties.getSmallFont());
 			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
 			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
 
-			context.setFill(ResourceManager.getInstance().getDesignProperties().getForegroundColor());
-			context.setFont(ResourceManager.getInstance().getDesignProperties().getSmallFont());
+			context.setFill(designProperties.getForegroundColor());
+			context.setFont(designProperties.getSmallFont());
 			context.fillText(mineText, position.getX(), position.getY());
 		}
 		
@@ -168,12 +172,12 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			
 			}
 			Text text = new Text(unitText);
-			text.setFont(ResourceManager.getInstance().getDesignProperties().getSmallFont());
+			text.setFont(designProperties.getSmallFont());
 			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
 			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
 	
-			context.setFill(ResourceManager.getInstance().getDesignProperties().getForegroundColor());
-			context.setFont(ResourceManager.getInstance().getDesignProperties().getSmallFont());
+			context.setFill(designProperties.getForegroundColor());
+			context.setFont(designProperties.getSmallFont());
 			context.fillText(unitText, position.getX(), position.getY());
 		}
 		

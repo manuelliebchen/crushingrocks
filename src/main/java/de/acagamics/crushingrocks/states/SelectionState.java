@@ -13,6 +13,7 @@ import de.acagamics.framework.gui.elements.Selector;
 import de.acagamics.framework.gui.elements.TextBox;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.MenuState;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.InGameSettings;
 import de.acagamics.framework.types.InGameSettings.GAMEMODE;
@@ -37,7 +38,7 @@ public class SelectionState extends MenuState {
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
-		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().getDesignProperties().getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
 		drawables.add(new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));

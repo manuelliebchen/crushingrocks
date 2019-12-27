@@ -3,6 +3,7 @@ package de.acagamics.framework.gui.elements;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.Alignable;
 import de.acagamics.framework.gui.interfaces.IClickable;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,7 +32,7 @@ public final class Button extends Alignable implements IClickable {
 	// Drawing status
 	private String buttonText;
 	private Vec2f centeredPositioOffset;
-	private Color textColor = ResourceManager.getInstance().getDesignProperties().getButtonTextColor();
+	private Color textColor = ResourceManager.getInstance().loadProperties(DesignProperties.class).getButtonTextColor();
 	private Vec2f relativPosition;
 	private Vec2f position;
 	private Vec2f size;
@@ -65,7 +66,7 @@ public final class Button extends Alignable implements IClickable {
 		super(relativPosition);
 		this.buttonText = buttonText;
 		String buttonTexture = "buttons/Button";
-		int buttonHeight = ResourceManager.getInstance().getDesignProperties().getButtonHeight();
+		int buttonHeight = ResourceManager.getInstance().loadProperties(DesignProperties.class).getButtonHeight();
 		switch (type) {
 		case WIDE:
 			size = new Vec2f(buttonHeight * 4, buttonHeight);
@@ -110,7 +111,7 @@ public final class Button extends Alignable implements IClickable {
 	 */
 	private void calcButtonTextProperties() {
 		Text text = new Text(buttonText);
-		text.setFont(ResourceManager.getInstance().getDesignProperties().getButtonFont());
+		text.setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getButtonFont());
 
 		Vec2f buttonTextSize = new Vec2f((float) text.getLayoutBounds().getWidth(),
 				(float) text.getLayoutBounds().getHeight());
@@ -169,19 +170,20 @@ public final class Button extends Alignable implements IClickable {
 			context.drawImage(imgUp, position.getX(), position.getY(), size.getX(), size.getY());
 		}
 
-		context.setFont(ResourceManager.getInstance().getDesignProperties().getButtonFont());
+		DesignProperties propeties = ResourceManager.getInstance().loadProperties(DesignProperties.class);
+		context.setFont(propeties.getButtonFont());
 		context.setFill(textColor);
 		context.fillText(buttonText, position.getX() + centeredPositioOffset.getX(),
 				position.getY() + centeredPositioOffset.getY());
 
 		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + ResourceManager.getInstance().getDesignProperties().getButtonHeight() * 1/2,
-				position.getY() + size.getY() * 1/5, -ResourceManager.getInstance().getDesignProperties().getButtonHeight(),
-				ResourceManager.getInstance().getDesignProperties().getButtonHeight());
+				position.getX() + propeties.getButtonHeight() * 1/2,
+				position.getY() + size.getY() * 1/5, -propeties.getButtonHeight(),
+				propeties.getButtonHeight());
 		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + size.getX() - ResourceManager.getInstance().getDesignProperties().getButtonHeight() / 2,
-				position.getY() + size.getY() * 1/5, ResourceManager.getInstance().getDesignProperties().getButtonHeight(),
-				ResourceManager.getInstance().getDesignProperties().getButtonHeight());
+				position.getX() + size.getX() - propeties.getButtonHeight() / 2,
+				position.getY() + size.getY() * 1/5, propeties.getButtonHeight(),
+				propeties.getButtonHeight());
 
 	}
 

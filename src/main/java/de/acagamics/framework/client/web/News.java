@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import de.acagamics.framework.resourcemanagment.ClientProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 
 /**
@@ -72,7 +73,7 @@ public class News {
 		// create URL to version
 		URL website;
 		try {
-			website = new URL(ResourceManager.getInstance().getClientProperties().getNewsURL());
+			website = new URL(ResourceManager.getInstance().loadProperties(ClientProperties.class).getNewsURL());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return;

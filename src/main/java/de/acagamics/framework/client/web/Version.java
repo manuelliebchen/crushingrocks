@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.acagamics.framework.resourcemanagment.ClientProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 
 /**
@@ -59,7 +60,7 @@ public class Version {
 		// create URL to version
 		URL website;
 		try {
-			website = new URL(ResourceManager.getInstance().getClientProperties().getVersionURL());
+			website = new URL(ResourceManager.getInstance().loadProperties(ClientProperties.class).getVersionURL());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return;
@@ -102,11 +103,11 @@ public class Version {
 
 		// check version
 		String version = response.toString();
-		upToDate = Optional.of(version.compareTo(ResourceManager.getInstance().getClientProperties().getVersion()));
+		upToDate = Optional.of(version.compareTo(ResourceManager.getInstance().loadProperties(ClientProperties.class).getVersion()));
 		if (upToDate.get() > 0) {
-			LOG.warn("You're running an old version (" + ResourceManager.getInstance().getClientProperties().getVersion() + ")! The most recent version is " + version + ". Please Update!");
+			LOG.warn("You're running an old version (" + ResourceManager.getInstance().loadProperties(ClientProperties.class).getVersion() + ")! The most recent version is " + version + ". Please Update!");
 		} else if (upToDate.get() < 0) {
-			LOG.warn("You're running a future version (" + ResourceManager.getInstance().getClientProperties().getVersion() + ")! The most recent version is " + version + ". Please report to mothership!");
+			LOG.warn("You're running a future version (" + ResourceManager.getInstance().loadProperties(ClientProperties.class).getVersion() + ")! The most recent version is " + version + ". Please report to mothership!");
 		}
 	}
 }

@@ -6,6 +6,7 @@ import de.acagamics.framework.gui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.gui.elements.TextBox;
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.MenuState;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.types.InGameSettings;
@@ -30,7 +31,7 @@ public class StatisticState extends MenuState {
 		if (statistic.isDraw()) {
 			title += " - Tie-Break";
 		}
-		drawables.add(new TextBox(new Vec2f(200, 50), title).setFont(ResourceManager.getInstance().getDesignProperties().getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add(new TextBox(new Vec2f(200, 50), title).setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 		
 		drawables.add(new TextBox(new Vec2f(-500, 300), "Color").setTextAlignment(ALIGNMENT.LEFT)

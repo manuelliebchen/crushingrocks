@@ -2,6 +2,7 @@ package de.acagamics.framework.gui.elements;
 
 import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.Alignable;
+import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,9 +18,9 @@ public class TextBox extends Alignable {
 
 	// Drawing status
 	protected String text = "";
-	protected Color textColor = ResourceManager.getInstance().getDesignProperties().getForegroundColor();
+	protected Color textColor = ResourceManager.getInstance().loadProperties(DesignProperties.class).getForegroundColor();
 	protected Vec2f size = Vec2f.ZERO();
-	protected Font font = ResourceManager.getInstance().getDesignProperties().getStandartFont();
+	protected Font font = ResourceManager.getInstance().loadProperties(DesignProperties.class).getStandartFont();
 	protected ALIGNMENT textAlignment = ALIGNMENT.CENTER;
 
 	/**
