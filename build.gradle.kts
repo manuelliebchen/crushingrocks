@@ -44,10 +44,10 @@ java {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "de.acagamics.Main"
+        attributes["Main-Class"] = "de.acagamics.framework.Main"
     }
 }
 
 application {
-	mainClassName = "de.acagamics.Main"
+	mainClassName = "de.acagamics.framework.Main"
 }

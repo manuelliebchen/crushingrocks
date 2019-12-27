@@ -1,6 +1,6 @@
 package de.acagamics.constants;
 
-import de.acagamics.gui.assetmanagment.AssetManager;
+import de.acagamics.framework.gui.assetmanagment.AssetManager;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 

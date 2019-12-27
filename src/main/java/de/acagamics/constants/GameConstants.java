@@ -1,6 +1,6 @@
 package de.acagamics.constants;
 
-import de.acagamics.game.types.Vec2f;
+import de.acagamics.framework.types.Vec2f;
 
 /**
  * Class for various game relevant constants.
