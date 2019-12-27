@@ -10,8 +10,6 @@ import javafx.scene.text.Font;
  */
 public final class DesignProperties {
 	
-	// http://paletton.com/#uid=70X1q0kpntDfEF8kMvZtppdvJk0
-	
 	private FontProperty standart_font;
 	
 	public Font getStandartFont() {

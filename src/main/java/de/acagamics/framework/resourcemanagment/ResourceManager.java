@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
+ * @author Manuel Liebchen
  */
 public final class ResourceManager {
 

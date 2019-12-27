@@ -6,7 +6,7 @@ import de.acagamics.framework.types.Vec2f;
  * Class for various game relevant constants.
  * @author Manuel Liebchen
  */
-public final class GameConstants {
+public final class GameProperties {
 	
 	/**
 	 * Initial health points of the base.

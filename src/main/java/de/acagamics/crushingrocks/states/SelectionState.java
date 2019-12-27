@@ -15,8 +15,8 @@ import de.acagamics.framework.gui.interfaces.ALIGNMENT;
 import de.acagamics.framework.gui.interfaces.MenuState;
 import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
-import de.acagamics.framework.types.InGameSettings;
-import de.acagamics.framework.types.InGameSettings.GAMEMODE;
+import de.acagamics.framework.types.MatchSettings;
+import de.acagamics.framework.types.MatchSettings.GAMEMODE;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -75,7 +75,7 @@ public class SelectionState extends MenuState {
 
 	}
 
-	private InGameSettings generateSettings() {
+	private MatchSettings generateSettings() {
 		List<String> names = new ArrayList<>(2);
 		if (GAMEMODE.values()[modeSelector.getValue()] == GAMEMODE.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
@@ -85,7 +85,7 @@ public class SelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()).getName());
 			names.add(EvilSanta.class.getName());
 		}
-		return new InGameSettings(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
+		return new MatchSettings(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
 				speedSelectors.getValue());
 	}
 }

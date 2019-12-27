@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.paint.Color;
@@ -30,8 +30,8 @@ public final class Player {
 		this.controller = controller;
 		this.color = color;
 		this.playerID = playerID;
-		units = new ArrayList<>(GameConstants.MAX_UNITS_PER_PLAYER);
-		creditPoints = GameConstants.INITIAL_CREDIT_POINTS;
+		units = new ArrayList<>(GameProperties.MAX_UNITS_PER_PLAYER);
+		creditPoints = GameProperties.INITIAL_CREDIT_POINTS;
 	}
 	
 	void setBase(Base base) {
@@ -59,15 +59,15 @@ public final class Player {
 		}
 
 		int cost = Unit.getUnitCost(unitCreationOrder);
-		if(unitCreationOrder > 0 && creditPoints >= cost && units.size() <= GameConstants.MAX_UNITS_PER_PLAYER) {
+		if(unitCreationOrder > 0 && creditPoints >= cost && units.size() <= GameProperties.MAX_UNITS_PER_PLAYER) {
 			units.add(new Unit(unitCreationOrder, this, base.getPosition()));
 			creditPoints -= cost;
 		}
 		unitCreationOrder = 0;
 		
 		for(Mine mine : mapInfo.getMines()) {
-			creditPoints += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
-			score += mine.getOwnership()[playerID] * GameConstants.PER_MINE_INCOME;
+			creditPoints += mine.getOwnership()[playerID] * GameProperties.PER_MINE_INCOME;
+			score += mine.getOwnership()[playerID] * GameProperties.PER_MINE_INCOME;
 		}
 	}
 

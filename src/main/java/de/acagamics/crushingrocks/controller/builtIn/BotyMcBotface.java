@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.controller.builtIn;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
@@ -25,7 +25,7 @@ public final class BotyMcBotface implements IPlayerController {
 		List<Mine> mines = mapInfo.getMines();
 		List<Unit> units = ownPlayer.getUnits();
 		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 0.9f);
-		if(mines.isEmpty() || ownPlayer.getUnits().size() == GameConstants.MAX_UNITS_PER_PLAYER) {
+		if(mines.isEmpty() || ownPlayer.getUnits().size() == GameProperties.MAX_UNITS_PER_PLAYER) {
 			ownPlayer.setAllUnitsOrder(this, enemyPlayerInfo.getBase().getPosition());
 		} else {
 			for(Unit unit: units) {

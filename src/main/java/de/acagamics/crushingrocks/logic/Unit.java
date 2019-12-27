@@ -2,7 +2,7 @@ package de.acagamics.crushingrocks.logic;
 
 import java.util.List;
 
-import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.types.Vec2f;
 
@@ -58,8 +58,8 @@ public final class Unit {
 
 	Vec2f updatePosition(List<Unit> allUnits) {
 		if (orderedDirection != null) {
-			if (orderedDirection.length() > GameConstants.MAX_UNIT_SPEED) {
-				orderedDirection = orderedDirection.getNormalized().mult(GameConstants.MAX_UNIT_SPEED);
+			if (orderedDirection.length() > GameProperties.MAX_UNIT_SPEED) {
+				orderedDirection = orderedDirection.getNormalized().mult(GameProperties.MAX_UNIT_SPEED);
 			}
 			Vec2f targetPosition = position.add(orderedDirection);
 			boolean hit = false;
@@ -89,6 +89,6 @@ public final class Unit {
 	 * @return cost of unit with given strength
 	 */
 	public static int getUnitCost(int strength) {
-		return (int) (Math.pow(strength, GameConstants.COST_EXPONENT) *  GameConstants.COST_MULTIPIER);
+		return (int) (Math.pow(strength, GameProperties.COST_EXPONENT) *  GameProperties.COST_MULTIPIER);
 	}
 }

@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
  * at a specific point in the gameloop (updateTables).
  * 
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
+ * @author Manuel Liebchen
  */
 public class InputTracker implements EventHandler<InputEvent> {
 	// Pressed-status of all keys.

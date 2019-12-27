@@ -1,6 +1,6 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.logic.Game;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Unit;
@@ -18,7 +18,7 @@ import de.acagamics.framework.resourcemanagment.ClientProperties;
 import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.GameStatistic;
-import de.acagamics.framework.types.InGameSettings;
+import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
@@ -47,10 +47,10 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	
 	Timeline timeline;
 
-	private InGameSettings settings;
+	private MatchSettings settings;
 	private Background background;
 
-	public InGameState(StateManager manager, GraphicsContext context, InGameSettings settings) {
+	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings) {
 		super(manager, context);
 		this.settings = settings;
 		
@@ -124,11 +124,11 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		Affine transformation = new Affine();
 		transformation.appendTranslation(canvas.getWidth() / 2, canvas.getHeight() / 2);
 		if (canvas.getHeight() > canvas.getWidth()) {
-			transformation.appendScale(canvas.getWidth() / (GameConstants.MAP_RADIUS * 2.5),
-					canvas.getWidth() / (GameConstants.MAP_RADIUS * 2.5));
+			transformation.appendScale(canvas.getWidth() / (GameProperties.MAP_RADIUS * 2.5),
+					canvas.getWidth() / (GameProperties.MAP_RADIUS * 2.5));
 		} else {
-			transformation.appendScale(canvas.getHeight() / (GameConstants.MAP_RADIUS * 2.5),
-					canvas.getHeight() / (GameConstants.MAP_RADIUS * 2.5));
+			transformation.appendScale(canvas.getHeight() / (GameProperties.MAP_RADIUS * 2.5),
+					canvas.getHeight() / (GameProperties.MAP_RADIUS * 2.5));
 		}
 
 		context.setTransform(transformation);
@@ -142,7 +142,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		DesignProperties designProperties = ResourceManager.getInstance().loadProperties(DesignProperties.class);
 		
 		for (Mine mine : game.getMap().getMines()) {
-			Point2D position = mine.getPosition().add(0, GameConstants.MINE_RADIUS).getPoint2D();
+			Point2D position = mine.getPosition().add(0, GameProperties.MINE_RADIUS).getPoint2D();
 			position = transformation.transform(position);
 			String mineText = String.valueOf(mine.getMineID());
 			Text text = new Text(mineText);
@@ -156,7 +156,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		}
 		
 		for(Unit unit : game.getMap().getAllUnits()) {
-			Point2D position = unit.getPosition().add(0, GameConstants.UNIT_RADIUS).getPoint2D();
+			Point2D position = unit.getPosition().add(0, GameProperties.UNIT_RADIUS).getPoint2D();
 			position = transformation.transform(position);
 			String unitText = "";
 			switch(unit.getStrength()) {

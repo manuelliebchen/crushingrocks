@@ -9,7 +9,7 @@ import de.acagamics.framework.gui.interfaces.MenuState;
 import de.acagamics.framework.resourcemanagment.DesignProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.GameStatistic;
-import de.acagamics.framework.types.InGameSettings;
+import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -17,7 +17,7 @@ import javafx.scene.input.KeyCode;
 public class StatisticState extends MenuState {
 
 	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic,
-			InGameSettings settings) {
+			MatchSettings settings) {
 		super(manager, context);
 
 		clickable.add((Button) (new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())

@@ -5,12 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.crushingrocks.GameConstants;
-import de.acagamics.crushingrocks.RenderingConstants;
+import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.RenderingProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.client.utility.InputTracker;
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.GameStatistic;
-import de.acagamics.framework.types.InGameSettings.GAMEMODE;
+import de.acagamics.framework.types.MatchSettings.GAMEMODE;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 
@@ -44,7 +45,7 @@ public final class Game implements EventHandler<InputEvent> {
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
 			assert (playerController.get(i) != null);
-			players.add(new Player(playerController.get(i), RenderingConstants.PLAYER_COLORS[i], i));
+			players.add(new Player(playerController.get(i), ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(i), i));
 		}
 
 		this.random = new Random();
@@ -56,7 +57,7 @@ public final class Game implements EventHandler<InputEvent> {
 			}
 		}
 
-		frames_left = GameConstants.INITIAL_FRAME_AMOUNT;
+		frames_left = GameProperties.INITIAL_FRAME_AMOUNT;
 	}
 
 	/**
@@ -120,7 +121,7 @@ public final class Game implements EventHandler<InputEvent> {
 		}
 
 		// Summon all Units.
-		List<Unit> allUnits = new ArrayList<>(GameConstants.MAX_UNITS_PER_PLAYER * 2);
+		List<Unit> allUnits = new ArrayList<>(GameProperties.MAX_UNITS_PER_PLAYER * 2);
 		for (Player player : players) {
 			allUnits.addAll(player.getUnits());
 		}
@@ -153,9 +154,9 @@ public final class Game implements EventHandler<InputEvent> {
 		// Update Unit hp by attack.
 		for (Unit unit : allUnits) {
 			for (Unit enemyUnit : allUnits) {
-				if (unit.getPosition().distance(enemyUnit.getPosition()) < 2 * GameConstants.UNIT_RADIUS
+				if (unit.getPosition().distance(enemyUnit.getPosition()) < 2 * GameProperties.UNIT_RADIUS
 						&& unit.getOwner() != enemyUnit.getOwner()) {
-					enemyUnit.attackBy(GameConstants.UNIT_DAMAGE);
+					enemyUnit.attackBy(GameProperties.UNIT_DAMAGE);
 					break;
 				}
 			}

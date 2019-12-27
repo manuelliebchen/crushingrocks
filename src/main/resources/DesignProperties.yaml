@@ -18,6 +18,8 @@ small_font:
    file: "breathe_fire.otf"
    size: 16
 
+# http://paletton.com/#uid=70X1q0kpntDfEF8kMvZtppdvJk0
+
 foreground_color: "#BD277C"
 background_color: "#82BB0F"
 

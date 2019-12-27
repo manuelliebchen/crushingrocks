@@ -3,7 +3,7 @@ package de.acagamics.framework.types;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.logic.Player;
 
 public final class GameStatistic {
@@ -34,7 +34,7 @@ public final class GameStatistic {
 	}
 	
 	public String getSitesString(int playerID) {
-		return String.valueOf(GameConstants.SITES.values()[players.get(playerID).getPlayerID()]);
+		return String.valueOf(GameProperties.SITES.values()[players.get(playerID).getPlayerID()]);
 	}
 	
 	public String getNameString(int playerID) {

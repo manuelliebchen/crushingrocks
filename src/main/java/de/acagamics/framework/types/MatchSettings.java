@@ -6,7 +6,7 @@ import java.util.List;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.client.utility.BotClassLoader;
 
-public final class InGameSettings {
+public final class MatchSettings {
 	
 	public static enum GAMEMODE { NORMAL, XMAS_CHALLENGE };
 
@@ -16,7 +16,7 @@ public final class InGameSettings {
 	
 	private GAMEMODE mode;
 
-	public InGameSettings(GAMEMODE mode, BotClassLoader playerLoader, List<String> controllers, int speedMultiplier) {
+	public MatchSettings(GAMEMODE mode, BotClassLoader playerLoader, List<String> controllers, int speedMultiplier) {
 		this.mode = mode;
 		this.playerLoader = playerLoader;
 		this.speedMultiplier = speedMultiplier;

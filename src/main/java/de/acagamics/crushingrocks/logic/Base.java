@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.logic;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.acagamics.crushingrocks.GameConstants;
+import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.framework.types.Vec2f;
 
 /**
@@ -25,7 +25,7 @@ public final class Base {
 	Base(Player owner, Vec2f position) {
 		this.owner = owner;
 		this.position = position;
-		hp = GameConstants.INITIAL_BASE_HP;
+		hp = GameProperties.INITIAL_BASE_HP;
 	}
 
 	/**
@@ -55,17 +55,17 @@ public final class Base {
 
 	void update(List<Unit> allUnits) {
 		List<Unit> unitsInBaseRadius = allUnits.stream().filter(
-				(u) -> position.distance(u.getPosition()) < GameConstants.BASE_RADIUS + GameConstants.UNIT_RADIUS && u.getOwner() != owner)
+				(u) -> position.distance(u.getPosition()) < GameProperties.BASE_RADIUS + GameProperties.UNIT_RADIUS && u.getOwner() != owner)
 				.collect(Collectors.toList());
 		int unitsInAttackRadius = unitsInBaseRadius.stream().filter(
-				(u) -> position.distance(u.getPosition()) < GameConstants.BASE_RADIUS + GameConstants.UNIT_RADIUS)
+				(u) -> position.distance(u.getPosition()) < GameProperties.BASE_RADIUS + GameProperties.UNIT_RADIUS)
 				.toArray().length;
 
 		for (int i = 0; i < unitsInBaseRadius.size(); i++) {
-			unitsInBaseRadius.get(i).attackBy(GameConstants.BASE_DAMAGE);
+			unitsInBaseRadius.get(i).attackBy(GameProperties.BASE_DAMAGE);
 		}
 
-		hp -= unitsInAttackRadius * GameConstants.UNIT_DAMAGE;
+		hp -= unitsInAttackRadius * GameProperties.UNIT_DAMAGE;
 		hp = Math.max(hp, 0);
 	}
 }

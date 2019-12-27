@@ -2,8 +2,8 @@ package de.acagamics.crushingrocks.rendering;
 
 import java.util.List;
 
-import de.acagamics.crushingrocks.GameConstants;
-import de.acagamics.crushingrocks.RenderingConstants;
+import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.RenderingProperties;
 import de.acagamics.crushingrocks.logic.Base;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
@@ -50,22 +50,25 @@ public final class MapRendering implements IDrawable {
 	 * @param context           Context to draw on.
 	 */
 	public void draw(GraphicsContext context) {
+		
+		RenderingProperties renderingProperties = ResourceManager.getInstance().loadProperties(RenderingProperties.class);
+		
 		for (Base base : bases) {
 			Image baseTexture = ResourceManager.getInstance().loadImage("Base" + base.getOwner().getPlayerID() + ".png");
 			context.drawImage(baseTexture,
 					base.getPosition().getX()
-							- GameConstants.BASE_RADIUS * RenderingConstants.BASE_RENDERING_SIZE_MULTIPLIER,
+							- GameProperties.BASE_RADIUS * renderingProperties.getBaseRenderingMultiplier(),
 					base.getPosition().getY()
-							- GameConstants.BASE_RADIUS * RenderingConstants.BASE_RENDERING_SIZE_MULTIPLIER,
-					2 * RenderingConstants.BASE_RENDERING_SIZE_MULTIPLIER * GameConstants.BASE_RADIUS,
-					2 * RenderingConstants.BASE_RENDERING_SIZE_MULTIPLIER * GameConstants.BASE_RADIUS);
+							- GameProperties.BASE_RADIUS * renderingProperties.getBaseRenderingMultiplier(),
+					2 * renderingProperties.getBaseRenderingMultiplier() * GameProperties.BASE_RADIUS,
+					2 * renderingProperties.getBaseRenderingMultiplier() * GameProperties.BASE_RADIUS);
 		}
 
 		Image minetexture = ResourceManager.getInstance().loadImage("mine.png");
 		for (Mine mine : mines) {
-			context.drawImage(minetexture, mine.getPosition().getX() - GameConstants.MINE_RADIUS,
-					mine.getPosition().getY() - GameConstants.MINE_RADIUS, 2 * GameConstants.MINE_RADIUS,
-					2 * GameConstants.MINE_RADIUS);
+			context.drawImage(minetexture, mine.getPosition().getX() - GameProperties.MINE_RADIUS,
+					mine.getPosition().getY() - GameProperties.MINE_RADIUS, 2 * GameProperties.MINE_RADIUS,
+					2 * GameProperties.MINE_RADIUS);
 		}
 
 		Image unitTexture1 = ResourceManager.getInstance().loadImage("Unit1.png");
@@ -83,11 +86,11 @@ public final class MapRendering implements IDrawable {
 				}
 				context.drawImage(untiTexture,
 						unit.getPosition().getX()
-								- GameConstants.UNIT_RADIUS * RenderingConstants.UNIT_RENDERING_SIZE_MULTIPLIER,
+								- GameProperties.UNIT_RADIUS * renderingProperties.getUnitRenderingMultiplier(),
 						unit.getPosition().getY()
-								- GameConstants.UNIT_RADIUS * RenderingConstants.UNIT_RENDERING_SIZE_MULTIPLIER,
-						2 * RenderingConstants.UNIT_RENDERING_SIZE_MULTIPLIER * GameConstants.UNIT_RADIUS,
-						2 * RenderingConstants.UNIT_RENDERING_SIZE_MULTIPLIER * GameConstants.UNIT_RADIUS);
+								- GameProperties.UNIT_RADIUS * renderingProperties.getUnitRenderingMultiplier(),
+						2 * renderingProperties.getUnitRenderingMultiplier() * GameProperties.UNIT_RADIUS,
+						2 * renderingProperties.getUnitRenderingMultiplier() * GameProperties.UNIT_RADIUS);
 			}
 		}
 	}

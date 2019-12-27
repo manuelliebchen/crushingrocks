@@ -17,8 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
- * @author Gerd Schmidt (gerd.schmidt@acagamics.de) Image buttons with customs
- *         images and text. Registers if a user pressed on it.
+ * Image buttons with customs images and text. Registers if a user pressed on
+ * it.
+ * 
+ * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
+ * @author Manuel Liebchen
  */
 public final class Button extends Alignable implements IClickable {
 
@@ -57,10 +60,10 @@ public final class Button extends Alignable implements IClickable {
 	 * Default button constructor with default buttons images and text color
 	 * (black).
 	 * 
-	 * @param relativPosition   The relative position where the button will be drawn.
-	 * @param type       The size of the button.
-	 * @param buttonText The Text, which will be displayed on the button.
-	 * @param function   The Function to be executed when pressed.
+	 * @param relativPosition The relative position where the button will be drawn.
+	 * @param type            The size of the button.
+	 * @param buttonText      The Text, which will be displayed on the button.
+	 * @param function        The Function to be executed when pressed.
 	 */
 	public Button(Vec2f relativPosition, BUTTON_TYPE type, String buttonText, Runnable function) {
 		super(relativPosition);
@@ -133,8 +136,8 @@ public final class Button extends Alignable implements IClickable {
 	}
 
 	/**
-	 * Changes if the button is enabled or not. If not this button show button image:
-	 * imageInActives.
+	 * Changes if the button is enabled or not. If not this button show button
+	 * image: imageInActives.
 	 * 
 	 * @see isPressed()
 	 * @param enabled wether this button is enabled
@@ -161,7 +164,6 @@ public final class Button extends Alignable implements IClickable {
 	public void draw(GraphicsContext context) {
 		position = super.getAlignedPosition(context).add(size.mult(-0.5f));
 
-		
 		if (!this.isEnabled) {
 			context.drawImage(imgInActive, position.getX(), position.getY(), size.getX(), size.getY());
 		} else if (isOver) {
@@ -177,13 +179,11 @@ public final class Button extends Alignable implements IClickable {
 				position.getY() + centeredPositioOffset.getY());
 
 		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + propeties.getButtonHeight() * 1/2,
-				position.getY() + size.getY() * 1/5, -propeties.getButtonHeight(),
-				propeties.getButtonHeight());
+				position.getX() + propeties.getButtonHeight() * 1 / 2, position.getY() + size.getY() * 1 / 5,
+				-propeties.getButtonHeight(), propeties.getButtonHeight());
 		context.drawImage(ResourceManager.getInstance().loadImage("Ressource.png"),
-				position.getX() + size.getX() - propeties.getButtonHeight() / 2,
-				position.getY() + size.getY() * 1/5, propeties.getButtonHeight(),
-				propeties.getButtonHeight());
+				position.getX() + size.getX() - propeties.getButtonHeight() / 2, position.getY() + size.getY() * 1 / 5,
+				propeties.getButtonHeight(), propeties.getButtonHeight());
 
 	}
 
