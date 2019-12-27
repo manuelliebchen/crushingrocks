@@ -2,7 +2,9 @@ package de.acagamics.crushingrocks.logic;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import de.acagamics.crushingrocks.GameProperties;
@@ -45,7 +47,9 @@ public final class Game implements EventHandler<InputEvent> {
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
 			assert (playerController.get(i) != null);
-			players.add(new Player(playerController.get(i), ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(i), i));
+			players.add(new Player(playerController.get(i),
+					ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(i),
+					i));
 		}
 
 		this.random = new Random();
@@ -53,7 +57,7 @@ public final class Game implements EventHandler<InputEvent> {
 		if (gamemode == GAMEMODE.XMAS_CHALLENGE) {
 			List<Mine> mines = map.getMines();
 			for (Mine mine : mines) {
-				mine.setOwnership(new float[] { 0, 1});
+				mine.setOwnership(new float[] { 0, 1 });
 			}
 		}
 
@@ -152,17 +156,26 @@ public final class Game implements EventHandler<InputEvent> {
 		}
 
 		// Update Unit hp by attack.
-		// TODO: update attack model, should be enemyUnit.attackBy(unit.getStrength)
-		
+		java.util.Map<Unit, Integer> inflictedDamage = new HashMap<>();
+
 		for (Unit unit : allUnits) {
-			for (Unit enemyUnit : allUnits) {
-				if (unit.getPosition().distance(enemyUnit.getPosition()) < 2 * GameProperties.get().getUnitRadius()
-						&& unit.getOwner() != enemyUnit.getOwner()) {
-					enemyUnit.attackBy(1);
-					break;
+			Optional<Unit> posibleAttacker = allUnits
+					.stream().filter(
+							(e) -> unit.getPosition().distance(e.getPosition()) < 2
+									* GameProperties.get().getUnitRadius() && unit.getOwner() != e.getOwner())
+					.sorted((e1, e2) -> e1.getPosition().distance(unit.getPosition())
+							- e2.getPosition().distance(unit.getPosition()) > 0 ? 1 : -1)
+					.findFirst();
+			if (posibleAttacker.isPresent()) {
+				if (inflictedDamage.containsKey(posibleAttacker.get())) {
+					inflictedDamage.put(posibleAttacker.get(),
+							inflictedDamage.get(posibleAttacker.get()) + unit.getStrength());
+				} else {
+					inflictedDamage.put(posibleAttacker.get(), unit.getStrength());
 				}
 			}
 		}
+		inflictedDamage.forEach((u, i) -> u.attackBy(i));
 
 		// Remove Death Units
 		for (Player player : players) {
