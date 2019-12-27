@@ -28,17 +28,17 @@ public final class Map {
 		this.players = player;
 
 		for (int i = 0; i < player.size(); i++) {
-			bases.add(new Base(player.get(i), GameProperties.PLAYER_BASE_POSITION[i]));
+			bases.add(new Base(player.get(i), GameProperties.get().getPlayerBasePosition().get(i)));
 			this.players.get(i).setBase(bases.get(i));
 		}
 
-		List<Vec2f> minePositions = new ArrayList<>(GameProperties.NUMBER_OF_MINES);;
-		mines = new ArrayList<>(GameProperties.NUMBER_OF_MINES);
+		List<Vec2f> minePositions = new ArrayList<>(GameProperties.get().getNumberOfMines());
+		mines = new ArrayList<>(GameProperties.get().getNumberOfMines());
 		boolean overlap = false;
 		do {
 			overlap = false;
 			minePositions.clear();
-			for (int i = 0; i < GameProperties.NUMBER_OF_MINES; ++i) {
+			for (int i = 0; i < GameProperties.get().getNumberOfMines(); ++i) {
 				minePositions.add(new Vec2f(this.random.nextFloat() * 2 - 1, this.random.nextFloat() * 2 - 1));
 			}
 		
@@ -47,7 +47,7 @@ public final class Map {
 				float distSum = 0;
 				float[] dists = new float[player.size()];
 				// Data aquisition
-				for (int j = 0; j < GameProperties.NUMBER_OF_MINES; ++j) {
+				for (int j = 0; j < GameProperties.get().getNumberOfMines(); ++j) {
 					for (int k = 0; k < bases.size(); ++k) {
 						float dist = bases.get(k).getPosition().distance(minePositions.get(j));
 						dists[k] += dist;
@@ -56,21 +56,21 @@ public final class Map {
 				}
 	
 				// Updating
-				for (int j = 0; j < GameProperties.NUMBER_OF_MINES; ++j) {
+				for (int j = 0; j < GameProperties.get().getNumberOfMines(); ++j) {
 					Vec2f aditor = new Vec2f();
 					Vec2f baseVector = new Vec2f();
 					for (int k = 0; k < bases.size(); ++k) {
 						Vec2f singleBaseVector = bases.get(k).getPosition().sub(minePositions.get(j));
-						aditor = aditor.add(singleBaseVector.mult(GameProperties.NUMBER_OF_MINES / dists[k]));
+						aditor = aditor.add(singleBaseVector.mult(GameProperties.get().getNumberOfMines() / dists[k]));
 						baseVector = baseVector.add(singleBaseVector);
 					}
-					aditor = aditor.add(baseVector.mult(GameProperties.NUMBER_OF_MINES / distSum));
+					aditor = aditor.add(baseVector.mult(GameProperties.get().getNumberOfMines() / distSum));
 					//0.765169, der Durschnitswert der Entfernurng von allen Punkten im Einheitsquadrat zu einer Ecke
 					minePositions.set(j, minePositions.get(j).add(aditor.mult(0.765169f)));
 				}
 			}
 			for(Vec2f mineposition : minePositions) {
-				if(mineposition.getX() > GameProperties.MAP_RADIUS || mineposition.getX() < -GameProperties.MAP_RADIUS || mineposition.getY() > GameProperties.MAP_RADIUS || mineposition.getY() < -GameProperties.MAP_RADIUS) {
+				if(mineposition.getX() > GameProperties.get().getMapRadius() || mineposition.getX() < -GameProperties.get().getMapRadius() || mineposition.getY() > GameProperties.get().getMapRadius() || mineposition.getY() < -GameProperties.get().getMapRadius()) {
 					overlap = true;
 					break;
 				}
@@ -78,13 +78,13 @@ public final class Map {
 					if(mineposition.distance(minepositiontwo) < GameProperties.EPSILON) {
 						continue;
 					}
-					if(mineposition.distance(minepositiontwo) < 2 * GameProperties.MINE_RADIUS) {
+					if(mineposition.distance(minepositiontwo) < 2 * GameProperties.get().getMineRadius()) {
 						overlap = true;
 						break;
 					}
 				}
 				for(Base base : bases) {
-					if(mineposition.distance(base.getPosition()) < GameProperties.MINE_RADIUS + GameProperties.BASE_RADIUS) {
+					if(mineposition.distance(base.getPosition()) < GameProperties.get().getMineRadius() + GameProperties.get().getBaseRadius()) {
 						overlap = true;
 						break;
 					}
@@ -95,7 +95,7 @@ public final class Map {
 			}
 		} while(overlap);
 
-		for (int i = 0; i < GameProperties.NUMBER_OF_MINES; ++i) {
+		for (int i = 0; i < GameProperties.get().getNumberOfMines(); ++i) {
 			mines.add(new Mine(minePositions.get(i), i, player.size()));
 		}
 		mines.sort((m, n) -> (int) (1000 * (m.getPosition().getY() - n.getPosition().getY())));

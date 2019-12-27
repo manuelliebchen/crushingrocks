@@ -57,7 +57,7 @@ public final class Game implements EventHandler<InputEvent> {
 			}
 		}
 
-		frames_left = GameProperties.INITIAL_FRAME_AMOUNT;
+		frames_left = GameProperties.get().getMatchFrameQuantity();
 	}
 
 	/**
@@ -121,7 +121,7 @@ public final class Game implements EventHandler<InputEvent> {
 		}
 
 		// Summon all Units.
-		List<Unit> allUnits = new ArrayList<>(GameProperties.MAX_UNITS_PER_PLAYER * 2);
+		List<Unit> allUnits = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer() * 2);
 		for (Player player : players) {
 			allUnits.addAll(player.getUnits());
 		}
@@ -152,11 +152,13 @@ public final class Game implements EventHandler<InputEvent> {
 		}
 
 		// Update Unit hp by attack.
+		// TODO: update attack model, should be enemyUnit.attackBy(unit.getStrength)
+		
 		for (Unit unit : allUnits) {
 			for (Unit enemyUnit : allUnits) {
-				if (unit.getPosition().distance(enemyUnit.getPosition()) < 2 * GameProperties.UNIT_RADIUS
+				if (unit.getPosition().distance(enemyUnit.getPosition()) < 2 * GameProperties.get().getUnitRadius()
 						&& unit.getOwner() != enemyUnit.getOwner()) {
-					enemyUnit.attackBy(GameProperties.UNIT_DAMAGE);
+					enemyUnit.attackBy(1);
 					break;
 				}
 			}

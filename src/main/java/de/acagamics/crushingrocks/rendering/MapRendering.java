@@ -47,28 +47,31 @@ public final class MapRendering implements IDrawable {
 	/**
 	 * Displays the map images etc.
 	 * 
-	 * @param context           Context to draw on.
+	 * @param context Context to draw on.
 	 */
 	public void draw(GraphicsContext context) {
-		
-		RenderingProperties renderingProperties = ResourceManager.getInstance().loadProperties(RenderingProperties.class);
-		
+
+		RenderingProperties renderingProperties = ResourceManager.getInstance()
+				.loadProperties(RenderingProperties.class);
+		GameProperties gameProperties = ResourceManager.getInstance().loadProperties(GameProperties.class);
+
 		for (Base base : bases) {
-			Image baseTexture = ResourceManager.getInstance().loadImage("Base" + base.getOwner().getPlayerID() + ".png");
+			Image baseTexture = ResourceManager.getInstance()
+					.loadImage("Base" + base.getOwner().getPlayerID() + ".png");
 			context.drawImage(baseTexture,
 					base.getPosition().getX()
-							- GameProperties.BASE_RADIUS * renderingProperties.getBaseRenderingMultiplier(),
+							- gameProperties.getBaseRadius() * renderingProperties.getBaseRenderingMultiplier(),
 					base.getPosition().getY()
-							- GameProperties.BASE_RADIUS * renderingProperties.getBaseRenderingMultiplier(),
-					2 * renderingProperties.getBaseRenderingMultiplier() * GameProperties.BASE_RADIUS,
-					2 * renderingProperties.getBaseRenderingMultiplier() * GameProperties.BASE_RADIUS);
+							- gameProperties.getBaseRadius() * renderingProperties.getBaseRenderingMultiplier(),
+					2 * renderingProperties.getBaseRenderingMultiplier() * gameProperties.getBaseRadius(),
+					2 * renderingProperties.getBaseRenderingMultiplier() * gameProperties.getBaseRadius());
 		}
 
 		Image minetexture = ResourceManager.getInstance().loadImage("mine.png");
 		for (Mine mine : mines) {
-			context.drawImage(minetexture, mine.getPosition().getX() - GameProperties.MINE_RADIUS,
-					mine.getPosition().getY() - GameProperties.MINE_RADIUS, 2 * GameProperties.MINE_RADIUS,
-					2 * GameProperties.MINE_RADIUS);
+			context.drawImage(minetexture, mine.getPosition().getX() - gameProperties.getMineRadius(),
+					mine.getPosition().getY() - gameProperties.getMineRadius(), 2 * gameProperties.getMineRadius(),
+					2 * gameProperties.getMineRadius());
 		}
 
 		Image unitTexture1 = ResourceManager.getInstance().loadImage("Unit1.png");
@@ -86,11 +89,11 @@ public final class MapRendering implements IDrawable {
 				}
 				context.drawImage(untiTexture,
 						unit.getPosition().getX()
-								- GameProperties.UNIT_RADIUS * renderingProperties.getUnitRenderingMultiplier(),
+								- gameProperties.getUnitRadius() * renderingProperties.getUnitRenderingMultiplier(),
 						unit.getPosition().getY()
-								- GameProperties.UNIT_RADIUS * renderingProperties.getUnitRenderingMultiplier(),
-						2 * renderingProperties.getUnitRenderingMultiplier() * GameProperties.UNIT_RADIUS,
-						2 * renderingProperties.getUnitRenderingMultiplier() * GameProperties.UNIT_RADIUS);
+								- gameProperties.getUnitRadius() * renderingProperties.getUnitRenderingMultiplier(),
+						2 * renderingProperties.getUnitRenderingMultiplier() * gameProperties.getUnitRadius(),
+						2 * renderingProperties.getUnitRenderingMultiplier() * gameProperties.getUnitRadius());
 			}
 		}
 	}

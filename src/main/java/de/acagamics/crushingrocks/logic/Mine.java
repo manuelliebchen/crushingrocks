@@ -73,7 +73,7 @@ public final class Mine {
 	void update(List<Player> players, List<Unit> allUnits) {
 		float[] count = new float[players.size()];
 		for(Unit unit : allUnits) {
-			if(position.distance(unit.getPosition()) < GameProperties.MINE_RADIUS) {
+			if(position.distance(unit.getPosition()) < GameProperties.get().getMineRadius()) {
 				count[unit.getOwner().getPlayerID()] += unit.getStrength();
 			}
 		}
@@ -92,7 +92,7 @@ public final class Mine {
 					negativSum += count[j];
 				}
 			}
-			ownership[i] += (count[i] - negativSum) * GameProperties.MINE_CAPTURING_PER_TICK;
+			ownership[i] += (count[i] - negativSum) * GameProperties.get().getMineCapturingPerFrame();
 		}
 		
 		sum = 0;

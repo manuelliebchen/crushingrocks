@@ -122,13 +122,14 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		context.save();
 
 		Affine transformation = new Affine();
+		GameProperties gameProperties = ResourceManager.getInstance().loadProperties(GameProperties.class);
 		transformation.appendTranslation(canvas.getWidth() / 2, canvas.getHeight() / 2);
 		if (canvas.getHeight() > canvas.getWidth()) {
-			transformation.appendScale(canvas.getWidth() / (GameProperties.MAP_RADIUS * 2.5),
-					canvas.getWidth() / (GameProperties.MAP_RADIUS * 2.5));
+			transformation.appendScale(canvas.getWidth() / (gameProperties.getMapRadius() * 2.5),
+					canvas.getWidth() / (gameProperties.getMapRadius() * 2.5));
 		} else {
-			transformation.appendScale(canvas.getHeight() / (GameProperties.MAP_RADIUS * 2.5),
-					canvas.getHeight() / (GameProperties.MAP_RADIUS * 2.5));
+			transformation.appendScale(canvas.getHeight() / (gameProperties.getMapRadius() * 2.5),
+					canvas.getHeight() / (gameProperties.getMapRadius() * 2.5));
 		}
 
 		context.setTransform(transformation);
@@ -142,7 +143,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		DesignProperties designProperties = ResourceManager.getInstance().loadProperties(DesignProperties.class);
 		
 		for (Mine mine : game.getMap().getMines()) {
-			Point2D position = mine.getPosition().add(0, GameProperties.MINE_RADIUS).getPoint2D();
+			Point2D position = mine.getPosition().add(0, gameProperties.getMineRadius()).getPoint2D();
 			position = transformation.transform(position);
 			String mineText = String.valueOf(mine.getMineID());
 			Text text = new Text(mineText);
@@ -156,7 +157,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		}
 		
 		for(Unit unit : game.getMap().getAllUnits()) {
-			Point2D position = unit.getPosition().add(0, GameProperties.UNIT_RADIUS).getPoint2D();
+			Point2D position = unit.getPosition().add(0, gameProperties.getUnitRadius()).getPoint2D();
 			position = transformation.transform(position);
 			String unitText = "";
 			switch(unit.getStrength()) {

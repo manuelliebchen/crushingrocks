@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
+ * 
  * @author Jan-Cord Gerken (jancord@acagamics.de)
  *
  */
@@ -17,57 +18,58 @@ public final class Player {
 	private IPlayerController controller;
 	private int score;
 	private int creditPoints;
-	
+
 	private Color color;
 	private int playerID;
-	
+
 	private Base base;
 	private List<Unit> units;
-	
+
 	private int unitCreationOrder;
-	
-	Player(IPlayerController controller, Color color, int playerID){
+
+	Player(IPlayerController controller, Color color, int playerID) {
 		this.controller = controller;
 		this.color = color;
 		this.playerID = playerID;
-		units = new ArrayList<>(GameProperties.MAX_UNITS_PER_PLAYER);
-		creditPoints = GameProperties.INITIAL_CREDIT_POINTS;
+		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());
+		creditPoints = GameProperties.get().getInitialResources();
 	}
-	
+
 	void setBase(Base base) {
 		this.base = base;
 	}
-	
+
 	void update(Map mapInfo, List<Player> players) {
 		// Create a list with enemy player infos.
 		Player enemyInfos;
-		if(players.get(0) == this) {
+		if (players.get(0) == this) {
 			enemyInfos = players.get(1);
 		} else {
 			enemyInfos = players.get(0);
 		}
-		
+
 		// Think.
 		try {
 			controller.think(mapInfo, this, enemyInfos);
 		} catch (Exception e) {
 			System.err.println(controller.getClass().getSimpleName() + " through an unhandled exception!");
 			System.err.println(e);
-			for(StackTraceElement t : e.getStackTrace()) {
+			for (StackTraceElement t : e.getStackTrace()) {
 				System.err.println(t);
 			}
 		}
 
 		int cost = Unit.getUnitCost(unitCreationOrder);
-		if(unitCreationOrder > 0 && creditPoints >= cost && units.size() <= GameProperties.MAX_UNITS_PER_PLAYER) {
+		if (unitCreationOrder > 0 && creditPoints >= cost
+				&& units.size() <= GameProperties.get().getMaxUnitsPerPlayer()) {
 			units.add(new Unit(unitCreationOrder, this, base.getPosition()));
 			creditPoints -= cost;
 		}
 		unitCreationOrder = 0;
-		
-		for(Mine mine : mapInfo.getMines()) {
-			creditPoints += mine.getOwnership()[playerID] * GameProperties.PER_MINE_INCOME;
-			score += mine.getOwnership()[playerID] * GameProperties.PER_MINE_INCOME;
+
+		for (Mine mine : mapInfo.getMines()) {
+			creditPoints += mine.getOwnership()[playerID] * GameProperties.get().getPerMineIncome();
+			score += mine.getOwnership()[playerID] * GameProperties.get().getPerMineIncome();
 		}
 	}
 
@@ -76,24 +78,26 @@ public final class Player {
 	}
 
 	void removeDeath() {
-		units.removeIf( u -> u.getStrength() <= 0);
+		units.removeIf(u -> u.getStrength() <= 0);
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return controller.getAuthor().hashCode() + controller.getClass().getSimpleName().hashCode() + controller.getMatrikelnummer();
+		return controller.getAuthor().hashCode() + controller.getClass().getSimpleName().hashCode()
+				+ controller.getMatrikelnummer();
 	}
-	
+
 	/**
 	 * Sets the order of which unit should be createt next frame.
+	 * 
 	 * @param controller of the owner of the player. This is mostly just 'this'.
-	 * @param strength of the unit to be created
+	 * @param strength   of the unit to be created
 	 * @return the cost of the unit. Zero if none created.
 	 */
 	public int setUnitCreationOrder(IPlayerController controller, int strength) {
-		if(controller == this.controller && strength > 0 && strength <= 3) {
+		if (controller == this.controller && strength > 0 && strength <= 3) {
 			int cost = Unit.getUnitCost(strength);
-			if( creditPoints >= cost) {
+			if (creditPoints >= cost) {
 				unitCreationOrder = strength;
 				return cost;
 			}
@@ -103,44 +107,46 @@ public final class Player {
 
 	/**
 	 * Sets the order for all units of the player for in current frame.
+	 * 
 	 * @param controller of the owner of the unit for verification.
-	 * @param position to which the unit should moves.
+	 * @param position   to which the unit should moves.
 	 */
 	public void setAllUnitsOrder(IPlayerController controller, Vec2f position) {
-		for(Unit unit : units) {
+		for (Unit unit : units) {
 			unit.setOrder(controller, position.sub(unit.getPosition()));
 		}
 	}
-	
+
 	/**
 	 * @return the identifier of the player.
 	 */
 	public int getPlayerID() {
 		return playerID;
 	}
-	
+
 	/**
 	 * Get the creditPoints of this player.
+	 * 
 	 * @return score
 	 */
 	public int getCreditPoints() {
 		return creditPoints;
 	}
-	
+
 	/**
 	 * @return the score.
 	 */
 	public int getScore() {
 		return score;
 	}
-	
+
 	/**
 	 * @return the base of the Player.
 	 */
 	public Base getBase() {
 		return base;
 	}
-	
+
 	/**
 	 * @return the color of the player.
 	 */
@@ -154,7 +160,7 @@ public final class Player {
 	public List<Unit> getUnits() {
 		return new ArrayList<>(units);
 	}
-	
+
 	/**
 	 * @return the name of the player.s
 	 */

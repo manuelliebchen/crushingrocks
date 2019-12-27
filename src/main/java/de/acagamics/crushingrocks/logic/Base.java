@@ -25,7 +25,7 @@ public final class Base {
 	Base(Player owner, Vec2f position) {
 		this.owner = owner;
 		this.position = position;
-		hp = GameProperties.INITIAL_BASE_HP;
+		hp = GameProperties.get().getBaseHP();
 	}
 
 	/**
@@ -54,18 +54,20 @@ public final class Base {
 	}
 
 	void update(List<Unit> allUnits) {
-		List<Unit> unitsInBaseRadius = allUnits.stream().filter(
-				(u) -> position.distance(u.getPosition()) < GameProperties.BASE_RADIUS + GameProperties.UNIT_RADIUS && u.getOwner() != owner)
+		List<Unit> unitsInBaseRadius = allUnits.stream()
+				.filter((u) -> position.distance(u.getPosition()) < GameProperties.get().getBaseRadius()
+						+ GameProperties.get().getUnitRadius() && u.getOwner() != owner)
 				.collect(Collectors.toList());
-		int unitsInAttackRadius = unitsInBaseRadius.stream().filter(
-				(u) -> position.distance(u.getPosition()) < GameProperties.BASE_RADIUS + GameProperties.UNIT_RADIUS)
-				.toArray().length;
+		int unitsInAttackRadius = unitsInBaseRadius.stream()
+				.filter((u) -> position.distance(u.getPosition()) < GameProperties.get().getBaseRadius()
+						+ GameProperties.get().getUnitRadius())
+				.mapToInt((u) -> u.getStrength()).sum();
 
 		for (int i = 0; i < unitsInBaseRadius.size(); i++) {
-			unitsInBaseRadius.get(i).attackBy(GameProperties.BASE_DAMAGE);
+			unitsInBaseRadius.get(i).attackBy(1);
 		}
 
-		hp -= unitsInAttackRadius * GameProperties.UNIT_DAMAGE;
+		hp -= unitsInAttackRadius;
 		hp = Math.max(hp, 0);
 	}
 }

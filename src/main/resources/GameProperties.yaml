@@ -1,0 +1,17 @@
+match_frame_quantity: 5000
+base_hp: 20
+base_radius: 0.2
+unit_radius: 0.1
+max_unit_speed: 0.01
+cost_exponent: 0.725
+const_multipier: 1000
+number_of_mines: 7
+max_units_per_player: 8
+per_mine_income: 10
+mine_capturing_per_frame: 0.005
+mine_radius: 0.15
+initial_resources: 2500
+map_radius: 1
+player_base_position:
+ - [-1, 0]
+ - [ 1, 0]

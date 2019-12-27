@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.introspector.BeanAccess;
 
@@ -15,6 +17,7 @@ import javafx.scene.text.Font;
  * @author Manuel Liebchen
  */
 public final class ResourceManager {
+	private static final Logger LOG = LogManager.getLogger(ResourceManager.class.getName());
 
 	private static final ResourceManager INSTANCE = new ResourceManager();
 
@@ -35,14 +38,15 @@ public final class ResourceManager {
 	@SuppressWarnings("unchecked")
 	public <T> T loadProperties(Class<T> type) {
 		String file_name = type.getSimpleName() + ".yaml";
-		if (imageCache.containsKey(file_name)) {
+		if (porpertiesCache.containsKey(file_name)) {
 			return (T) porpertiesCache.get(file_name);
 		}
+		LOG.debug("Loading Property file: " + file_name);
 		Yaml yaml = new Yaml();
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(file_name);
 		yaml.setBeanAccess(BeanAccess.FIELD);
 		T properties = yaml.loadAs(inputStream, type);
-		porpertiesCache.put(type.getSimpleName(), properties);
+		porpertiesCache.put(file_name, properties);
 		return properties;
 	}
 

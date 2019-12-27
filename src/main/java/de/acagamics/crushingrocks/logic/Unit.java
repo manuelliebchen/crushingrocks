@@ -8,6 +8,7 @@ import de.acagamics.framework.types.Vec2f;
 
 /**
  * Unit of the Player to be controlled.
+ * 
  * @author Manuel Liebchen
  */
 public final class Unit {
@@ -47,8 +48,9 @@ public final class Unit {
 
 	/**
 	 * Sets the order for this unit for in current frame.
+	 * 
 	 * @param controller of the owner of the unit for verification.
-	 * @param direction in witch the unit should moves.
+	 * @param direction  in witch the unit should moves.
 	 */
 	public void setOrder(IPlayerController controller, Vec2f direction) {
 		if (controller == owner.getController()) {
@@ -58,8 +60,8 @@ public final class Unit {
 
 	Vec2f updatePosition(List<Unit> allUnits) {
 		if (orderedDirection != null) {
-			if (orderedDirection.length() > GameProperties.MAX_UNIT_SPEED) {
-				orderedDirection = orderedDirection.getNormalized().mult(GameProperties.MAX_UNIT_SPEED);
+			if (orderedDirection.length() > GameProperties.get().getMaxUnitSpeed()) {
+				orderedDirection = orderedDirection.getNormalized().mult(GameProperties.get().getMaxUnitSpeed());
 			}
 			Vec2f targetPosition = position.add(orderedDirection);
 			boolean hit = false;
@@ -82,13 +84,15 @@ public final class Unit {
 	void attackBy(int damage) {
 		strength -= damage;
 	}
-	
+
 	/**
 	 * Calculates the cost of an Unit with given strength.
+	 * 
 	 * @param strength of the unit in question
 	 * @return cost of unit with given strength
 	 */
 	public static int getUnitCost(int strength) {
-		return (int) (Math.pow(strength, GameProperties.COST_EXPONENT) *  GameProperties.COST_MULTIPIER);
+		return (int) (Math.pow(strength, GameProperties.get().getCostExponent())
+				* GameProperties.get().getConstMultipier());
 	}
 }

@@ -41,25 +41,27 @@ public final class MapOverlayRendering implements IDrawable {
 	/**
 	 * Displays the map images etc.
 	 * 
-	 * @param context           Context to draw on.
+	 * @param context Context to draw on.
 	 */
 	public void draw(GraphicsContext context) {
-		
-		RenderingProperties renderingProperties = ResourceManager.getInstance().loadProperties(RenderingProperties.class);
-		
-		
+
+		RenderingProperties renderingProperties = ResourceManager.getInstance()
+				.loadProperties(RenderingProperties.class);
+		GameProperties gameProperties = GameProperties.get();
+
 		context.setLineWidth(renderingProperties.getOverlayLineWidth());
 		for (Base base : bases) {
 			context.setStroke(renderingProperties.getHealthBackground());
-			context.strokeOval(base.getPosition().getX() - GameProperties.BASE_RADIUS,
-					base.getPosition().getY() - GameProperties.BASE_RADIUS, 2 * GameProperties.BASE_RADIUS,
-					2 * GameProperties.BASE_RADIUS);
+			context.strokeOval(base.getPosition().getX() - gameProperties.getBaseRadius(),
+					base.getPosition().getY() - gameProperties.getBaseRadius(), 2 * gameProperties.getBaseRadius(),
+					2 * gameProperties.getBaseRadius());
 			context.setStroke(base.getOwner().getColor());
-			context.strokeArc(base.getPosition().getX() - GameProperties.BASE_RADIUS,
-					base.getPosition().getY() - GameProperties.BASE_RADIUS, 2 * GameProperties.BASE_RADIUS,
-					2 * GameProperties.BASE_RADIUS,
-					(float) (GameProperties.PLAYER_BASE_POSITION[base.getOwner().getPlayerID()].getAngle() * 360/(Math.PI * 2) - (180 * base.getHP() / GameProperties.INITIAL_BASE_HP)),
-					(float) (360 * base.getHP() / GameProperties.INITIAL_BASE_HP), ArcType.OPEN);
+			context.strokeArc(base.getPosition().getX() - gameProperties.getBaseRadius(),
+					base.getPosition().getY() - gameProperties.getBaseRadius(), 2 * gameProperties.getBaseRadius(),
+					2 * gameProperties.getBaseRadius(),
+					(float) (gameProperties.getPlayerBasePosition().get(base.getOwner().getPlayerID()).getAngle() * 360
+							/ (Math.PI * 2) - (180 * base.getHP() / gameProperties.getBaseHP())),
+					(float) (360 * base.getHP() / gameProperties.getBaseHP()), ArcType.OPEN);
 		}
 
 		for (Mine mine : mines) {
@@ -67,10 +69,11 @@ public final class MapOverlayRendering implements IDrawable {
 
 			for (int i = 0; i < ownership.length; ++i) {
 				context.setStroke(players.get(i).getColor());
-				context.strokeArc(mine.getPosition().getX() - GameProperties.MINE_RADIUS,
-						mine.getPosition().getY() - GameProperties.MINE_RADIUS, 2 * GameProperties.MINE_RADIUS,
-						2 * GameProperties.MINE_RADIUS,
-						(float) (GameProperties.PLAYER_BASE_POSITION[i].getAngle() * 360/(Math.PI * 2) - ownership[i] * 180),
+				context.strokeArc(mine.getPosition().getX() - gameProperties.getMineRadius(),
+						mine.getPosition().getY() - gameProperties.getMineRadius(), 2 * gameProperties.getMineRadius(),
+						2 * gameProperties.getMineRadius(),
+						(float) (gameProperties.getPlayerBasePosition().get(i).getAngle() * 360 / (Math.PI * 2)
+								- ownership[i] * 180),
 						(float) (ownership[i] * 360), ArcType.OPEN);
 			}
 		}
@@ -78,9 +81,9 @@ public final class MapOverlayRendering implements IDrawable {
 		for (Player player : players) {
 			context.setStroke(player.getColor());
 			for (Unit unit : player.getUnits()) {
-				context.strokeOval(unit.getPosition().getX() - GameProperties.UNIT_RADIUS,
-						unit.getPosition().getY() - GameProperties.UNIT_RADIUS, 2 * GameProperties.UNIT_RADIUS,
-						2 * GameProperties.UNIT_RADIUS);
+				context.strokeOval(unit.getPosition().getX() - gameProperties.getUnitRadius(),
+						unit.getPosition().getY() - gameProperties.getUnitRadius(), 2 * gameProperties.getUnitRadius(),
+						2 * gameProperties.getUnitRadius());
 			}
 		}
 	}

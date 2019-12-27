@@ -1,5 +1,8 @@
 package de.acagamics.crushingrocks;
 
+import java.util.List;
+
+import de.acagamics.framework.resourcemanagment.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 
 /**
@@ -8,123 +11,144 @@ import de.acagamics.framework.types.Vec2f;
  */
 public final class GameProperties {
 	
+	public static GameProperties get() {
+		return ResourceManager.getInstance().loadProperties(GameProperties.class);
+	}
+	private GameProperties() {
+	}
+	
 	/**
 	 * Initial health points of the base.
-	 * <p>
-	 * Value = {@value #INITIAL_BASE_HP}
 	 */
-	public static final int INITIAL_FRAME_AMOUNT = 5000;
+	private int match_frame_quantity;
 
 	/**
 	 * Initial health points of the base.
-	 * <p>
-	 * Value = {@value #INITIAL_BASE_HP}
 	 */
-	public static final int INITIAL_BASE_HP = 20;
+	private int base_hp;
 
 	/**
 	 * Attack radius of the Base.
-	 * <p>
-	 * Value = {@value #BASE_RADIUS}
 	 */
-	public static final float BASE_RADIUS = 0.2f;
+	private float base_radius;
 
 	/**
 	 * Radius a unit can attack.
-	 * <p>
-	 * Value = {@value #UNIT_RADIUS}
 	 */
-	public static final float UNIT_RADIUS = 0.1f;
+	private float unit_radius;
 
 	/**
 	 * Maximal per step moving speed of a unit.
-	 * <p>
-	 * Value = {@value #MAX_UNIT_SPEED}
 	 */
-	public static final float MAX_UNIT_SPEED = 0.01f;
-
-	/**
-	 * Radius a unit body blocks.
-	 * <p>
-	 * Value = {@value #UNIT_BODY_RADIUS}
-	 */
-	public static final float UNIT_BODY_RADIUS = 0.01f;
+	private float max_unit_speed;
 	
-	public static final float COST_EXPONENT = 0.725f;
-	public static final int COST_MULTIPIER = 1000;
-
-	/**
-	 * Base attack damage of an Unit.
-	 * <p>
-	 * Value = {@value #UNIT_DAMAGE}
-	 */
-	public static final int UNIT_DAMAGE = 1;
-
-	/**
-	 * Damage the base does to each unit
-	 */
-	public static final int BASE_DAMAGE = 1;
+	private float cost_exponent;
+	private int const_multipier;
 
 	/**
 	 * Number of mines on the map.
-	 * <p>
-	 * Value = {@value #NUMBER_OF_MINES}
 	 */
-	public static final int NUMBER_OF_MINES = 7;
+	private int number_of_mines = 7;
 	
 	/**
 	 * Maximum amount of units one can command.
-	 * <p>
-	 * Value = {@value #MAX_UNITS_PER_PLAYER}
 	 */
-	public static final int MAX_UNITS_PER_PLAYER = 8;
+	private int max_units_per_player = 8;
 
 	/**
 	 * Income per owned mine per tick.
-	 * <p>
-	 * Value = {@value #PER_MINE_INCOME}
 	 */
-	public static final int PER_MINE_INCOME = 10;
+	private int per_mine_income = 10;
 
 	/**
 	 * Ticks it takes to capture a mine;
-	 * <p>
-	 * Value = {@value #MINE_CAPTURING_PER_TICK}
 	 */
 
-	public static final float MINE_CAPTURING_PER_TICK = 0.005f;
+	private float mine_capturing_per_frame = 0.005f;
 
 	/**
 	 * Capture radius for mines.
-	 * <p>
-	 * Value = {@value #MINE_RADIUS}
 	 */
-	public static final float MINE_RADIUS = 0.15f;
+	private float mine_radius = 0.15f;
 	
 	/**
 	 * Initial creadit points a player has.
-	 * <p>
-	 * Value = {@value #INITIAL_CREDIT_POINTS}
 	 */
-	public static final int INITIAL_CREDIT_POINTS = (int) (COST_MULTIPIER * 2.5f);
+	private int initial_resources;
 
 	/**
 	 * Radius of the in game map.
-	 * <p>
-	 * Value = {@value #MAP_RADIUS}
 	 */
-	public static final float MAP_RADIUS = 1f;
+	private float map_radius = 1f;
 
 
 	/**
 	 * Minimum distinct float difference.
-	 * <p>
-	 * Value = {@value #EPSILON}
 	 */
-	public static final float EPSILON = Float.MIN_VALUE * 100;
+	public final static float EPSILON = Float.MIN_VALUE * 100;
 	
 	
-	public static final Vec2f[] PLAYER_BASE_POSITION = new Vec2f[]{new Vec2f(-1, 0), new Vec2f(1,0), new Vec2f(0,-1), new Vec2f(0,1)};
+	private List<Vec2f> player_base_position;
 
-	public enum SITES{ YELLOW, BLUE, GREEN, PURPLE}; 
+	public static enum SITES{ YELLOW, BLUE}
+
+	public int getMatchFrameQuantity() {
+		return match_frame_quantity;
+	}
+
+	public int getBaseHP() {
+		return base_hp;
+	}
+
+	public float getBaseRadius() {
+		return base_radius;
+	}
+
+	public float getUnitRadius() {
+		return unit_radius;
+	}
+
+	public float getMaxUnitSpeed() {
+		return max_unit_speed;
+	}
+
+	public float getCostExponent() {
+		return cost_exponent;
+	}
+
+	public int getConstMultipier() {
+		return const_multipier;
+	}
+
+	public int getNumberOfMines() {
+		return number_of_mines;
+	}
+
+	public int getMaxUnitsPerPlayer() {
+		return max_units_per_player;
+	}
+
+	public int getPerMineIncome() {
+		return per_mine_income;
+	}
+
+	public float getMineCapturingPerFrame() {
+		return mine_capturing_per_frame;
+	}
+
+	public float getMineRadius() {
+		return mine_radius;
+	}
+
+	public int getInitialResources() {
+		return initial_resources;
+	}
+
+	public float getMapRadius() {
+		return map_radius;
+	}
+
+	public List<Vec2f> getPlayerBasePosition() {
+		return player_base_position;
+	}; 
 }
