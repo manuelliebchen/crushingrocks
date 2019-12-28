@@ -9,30 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.controller.builtIn.BotyMcBotface;
-import de.acagamics.crushingrocks.controller.builtIn.EmptyBotyMcBotface;
-import de.acagamics.crushingrocks.controller.builtIn.EvilSanta;
-import de.acagamics.crushingrocks.controller.builtIn.HumanBot;
-
-public final class BotClassLoader extends ClassLoader {
-
-	private final static Class<?>[] buildIn = new Class<?>[] { BotyMcBotface.class, EmptyBotyMcBotface.class,
-			HumanBot.class, EvilSanta.class };
+public final class BotClassLoader<T> extends ClassLoader {
 
 	/**
 	 * List of all extern controller class names.
 	 */
 	List<Class<?>> controllerClasses;
+	final Class<T> controllerInterface;
 
-	public BotClassLoader() {
+	public BotClassLoader(Class<T> controllerInterface, List<Class<?>> buildIn) {
 		super();
+		this.controllerInterface = controllerInterface;
 		controllerClasses = new ArrayList<>();
 		for (Class<?> bot : buildIn) {
 			controllerClasses.add(bot);
 		}
 	}
-
+	
 	/**
 	 * Parse directory for extern player controllers. Attention: Does not parse the
 	 * directory recursively!
@@ -40,6 +33,7 @@ public final class BotClassLoader extends ClassLoader {
 	 * @param directoryFilename Directory where to look for player controller class
 	 *                          files.
 	 */
+	@SuppressWarnings("unchecked")
 	public void loadControllerFromDirectory(String directoryFilename) {
 		Stack<File> stackOfFiles = new Stack<>();
 		for (File file : new File(directoryFilename).listFiles()) {
@@ -50,7 +44,7 @@ public final class BotClassLoader extends ClassLoader {
 			if (currentFile.isFile() && currentFile.getAbsolutePath().endsWith(".class")) {
 
 				// Instantiate the controller
-				IPlayerController controller = null;
+				T controller = null;
 
 				Class<?> controllerClass = null;
 				controllerClass = defineClassFromFile(currentFile);
@@ -59,9 +53,9 @@ public final class BotClassLoader extends ClassLoader {
 				}
 
 				// Perform several validation checks on the supposed to be controller class.
-				if (IPlayerController.class.isAssignableFrom(controllerClass)) {
+				if (controllerInterface.isAssignableFrom(controllerClass)) {
 					try {
-						controller = (IPlayerController) controllerClass.getDeclaredConstructor().newInstance();
+						controller = (T) controllerClass.getDeclaredConstructor().newInstance();
 					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 							| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 						System.err.println("Unable to load Controller from file.");
@@ -87,7 +81,8 @@ public final class BotClassLoader extends ClassLoader {
 	 * @param name Full package name of the class.
 	 * @return New instance of player controller or null if something went wrong.
 	 */
-	public IPlayerController instantiateInternController(String name) {
+	@SuppressWarnings("unchecked")
+	public T instantiateInternController(String name) {
 		assert (name != null);
 
 		Class<?> controllerClass = null;
@@ -98,7 +93,7 @@ public final class BotClassLoader extends ClassLoader {
 		}
 
 		try {
-			return (IPlayerController) controllerClass.getDeclaredConstructor().newInstance();
+			return (T) controllerClass.getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -111,7 +106,8 @@ public final class BotClassLoader extends ClassLoader {
 	 * @param className Name of the class of with instance should be loaded.
 	 * @return New instance of player controller or null if something went wrong.
 	 */
-	public IPlayerController instantiateLoadedExternController(String className) {
+	@SuppressWarnings("unchecked")
+	public T instantiateLoadedExternController(String className) {
 		Class<?> controllerClass;
 		try {
 			controllerClass = loadClass(className);
@@ -121,9 +117,9 @@ public final class BotClassLoader extends ClassLoader {
 		}
 		Class<?>[] interfaces = controllerClass.getInterfaces();
 		for (Class<?> iface : interfaces) {
-			if (iface == IPlayerController.class) {
+			if (iface == controllerInterface) {
 				try {
-					return (IPlayerController) controllerClass.getDeclaredConstructor().newInstance();
+					return (T) controllerClass.getDeclaredConstructor().newInstance();
 				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 					e.printStackTrace();

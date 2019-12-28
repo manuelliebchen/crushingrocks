@@ -24,6 +24,16 @@ public class ClientProperties {
 		return version;
 	}
 	
+	private String main_state;
+	
+	/**
+	 * Get the name of the main menu State.
+	 * @return Name of state.
+	 */
+	public String getMainState() {
+		return main_state;
+	}
+	
 	/**
 	 * The url to the list of news.
 	 */

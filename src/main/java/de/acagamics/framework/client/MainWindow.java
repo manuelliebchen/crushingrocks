@@ -1,9 +1,9 @@
 package de.acagamics.framework.client;
 
-import de.acagamics.crushingrocks.states.MainMenuState;
 import de.acagamics.framework.client.web.News;
 import de.acagamics.framework.client.web.Version;
 import de.acagamics.framework.gui.StateManager;
+import de.acagamics.framework.gui.interfaces.GameState;
 import de.acagamics.framework.resourcemanagment.ClientProperties;
 import de.acagamics.framework.resourcemanagment.ResourceManager;
 import javafx.application.Application;
@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,7 +32,7 @@ public final class MainWindow extends Application {
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {
-		
+
 		// Check version and news
 		Version.loadVersion();
 		News.loadNews();
@@ -46,10 +47,13 @@ public final class MainWindow extends Application {
 
 		// Create Canvas and Layout(Pane) for window
 		Pane pane = new Pane();
-		Canvas canvas = new Canvas(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth(), ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
+		Canvas canvas = new Canvas(
+				ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth(),
+				ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
 		pane.getChildren().add(canvas);
 		pane.autosize();
-		pane.setPrefSize(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth(), ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
+		pane.setPrefSize(ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenWidth(),
+				ResourceManager.getInstance().loadProperties(ClientProperties.class).getScreenHeight());
 
 		// Add canvas to new scene and set scene as window content
 		Scene scene = new Scene(pane, pane.getWidth(), pane.getHeight(), false, SceneAntialiasing.BALANCED);
@@ -57,7 +61,15 @@ public final class MainWindow extends Application {
 
 		// Create StateManager and set MainMenu as start state
 		StateManager manager = new StateManager(stage, canvas.getGraphicsContext2D());
-		manager.push(new MainMenuState(manager, canvas.getGraphicsContext2D()));
+
+		String main_menue = ResourceManager.getInstance().loadProperties(ClientProperties.class).getMainState();
+
+		Class<?> controllerClass = Class.forName(main_menue);
+		GameState mainState = (GameState) controllerClass
+				.getDeclaredConstructor(StateManager.class, GraphicsContext.class)
+				.newInstance(manager, canvas.getGraphicsContext2D());
+
+		manager.push((GameState) mainState);
 
 		EventHandler<Event> eventmanager = new EventHandler<Event>() {
 			@Override

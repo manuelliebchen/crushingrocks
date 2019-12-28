@@ -1,6 +1,7 @@
 package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Game;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Unit;
@@ -47,10 +48,10 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	
 	Timeline timeline;
 
-	private MatchSettings settings;
+	private MatchSettings<IPlayerController> settings;
 	private Background background;
 
-	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings) {
+	public InGameState(StateManager manager, GraphicsContext context, MatchSettings<IPlayerController> settings) {
 		super(manager, context);
 		this.settings = settings;
 		

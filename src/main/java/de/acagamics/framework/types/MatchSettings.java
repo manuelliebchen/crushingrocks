@@ -3,20 +3,19 @@ package de.acagamics.framework.types;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.client.utility.BotClassLoader;
 
-public final class MatchSettings {
+public final class MatchSettings<T> {
 	
 	public static enum GAMEMODE { NORMAL, XMAS_CHALLENGE };
 
-	private BotClassLoader playerLoader;
+	private BotClassLoader<T> playerLoader;
 	private List<String> names;
 	private int speedMultiplier;
 	
 	private GAMEMODE mode;
 
-	public MatchSettings(GAMEMODE mode, BotClassLoader playerLoader, List<String> controllers, int speedMultiplier) {
+	public MatchSettings(GAMEMODE mode, BotClassLoader<T> playerLoader, List<String> controllers, int speedMultiplier) {
 		this.mode = mode;
 		this.playerLoader = playerLoader;
 		this.speedMultiplier = speedMultiplier;
@@ -31,8 +30,8 @@ public final class MatchSettings {
 		return speedMultiplier;
 	}
 
-	public List<IPlayerController> getControllers() {
-		List<IPlayerController> controller = new ArrayList<>(names.size());
+	public List<T> getControllers() {
+		List<T> controller = new ArrayList<>(names.size());
 		for(String name : names) {
 			controller.add(playerLoader.instantiateLoadedExternController(name));
 		}

@@ -2,9 +2,14 @@ package de.acagamics.crushingrocks.states;
 
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.crushingrocks.controller.builtIn.BotyMcBotface;
+import de.acagamics.crushingrocks.controller.builtIn.EmptyBotyMcBotface;
 import de.acagamics.crushingrocks.controller.builtIn.EvilSanta;
+import de.acagamics.crushingrocks.controller.builtIn.HumanBot;
 import de.acagamics.framework.client.utility.BotClassLoader;
 import de.acagamics.framework.gui.StateManager;
 import de.acagamics.framework.gui.elements.Button;
@@ -24,7 +29,7 @@ import javafx.scene.input.KeyCode;
 public class SelectionState extends MenuState {
 
 	private Selector[] botSelectors;
-	private BotClassLoader playerLoader;
+	private BotClassLoader<IPlayerController> playerLoader;
 	private List<Class<?>> bots;
 
 	private Selector modeSelector;
@@ -33,8 +38,9 @@ public class SelectionState extends MenuState {
 
 	public SelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-
-		playerLoader = new BotClassLoader();
+		List<Class<?>> buildin = Arrays.asList(new Class<?>[]{ BotyMcBotface.class, EmptyBotyMcBotface.class,
+				HumanBot.class, EvilSanta.class });
+		playerLoader = new BotClassLoader<IPlayerController>(IPlayerController.class, buildin);
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
@@ -75,7 +81,7 @@ public class SelectionState extends MenuState {
 
 	}
 
-	private MatchSettings generateSettings() {
+	private MatchSettings<IPlayerController> generateSettings() {
 		List<String> names = new ArrayList<>(2);
 		if (GAMEMODE.values()[modeSelector.getValue()] == GAMEMODE.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
@@ -85,7 +91,7 @@ public class SelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()).getName());
 			names.add(EvilSanta.class.getName());
 		}
-		return new MatchSettings(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
+		return new MatchSettings<IPlayerController>(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
 				speedSelectors.getValue());
 	}
 }

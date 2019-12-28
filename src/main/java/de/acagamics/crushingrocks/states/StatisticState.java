@@ -1,5 +1,6 @@
 package de.acagamics.crushingrocks.states;
 
+import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.gui.StateManager;
 import de.acagamics.framework.gui.elements.Button;
 import de.acagamics.framework.gui.elements.Button.BUTTON_TYPE;
@@ -17,7 +18,7 @@ import javafx.scene.input.KeyCode;
 public class StatisticState extends MenuState {
 
 	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic,
-			MatchSettings settings) {
+			MatchSettings<IPlayerController> settings) {
 		super(manager, context);
 
 		clickable.add((Button) (new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
