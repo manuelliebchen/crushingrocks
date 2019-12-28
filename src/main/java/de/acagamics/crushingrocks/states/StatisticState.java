@@ -1,17 +1,17 @@
 package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.framework.gui.StateManager;
-import de.acagamics.framework.gui.elements.Button;
-import de.acagamics.framework.gui.elements.Button.BUTTON_TYPE;
-import de.acagamics.framework.gui.elements.TextBox;
-import de.acagamics.framework.gui.interfaces.ALIGNMENT;
-import de.acagamics.framework.gui.interfaces.MenuState;
-import de.acagamics.framework.resourcemanagment.DesignProperties;
-import de.acagamics.framework.resourcemanagment.ResourceManager;
+import de.acagamics.framework.resources.DesignProperties;
+import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.ui.StateManager;
+import de.acagamics.framework.ui.elements.Button;
+import de.acagamics.framework.ui.elements.TextBox;
+import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
+import de.acagamics.framework.ui.interfaces.ALIGNMENT;
+import de.acagamics.framework.ui.interfaces.MenuState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 

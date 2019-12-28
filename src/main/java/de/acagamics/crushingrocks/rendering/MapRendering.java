@@ -9,8 +9,8 @@ import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.logic.Unit;
-import de.acagamics.framework.gui.interfaces.IDrawable;
-import de.acagamics.framework.resourcemanagment.ResourceManager;
+import de.acagamics.framework.resources.ResourceManager;
+import de.acagamics.framework.ui.interfaces.IDrawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

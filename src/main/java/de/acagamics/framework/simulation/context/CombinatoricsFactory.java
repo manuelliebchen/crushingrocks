@@ -2,8 +2,8 @@ package de.acagamics.framework.simulation.context;
 
 import java.util.List;
 
-import de.acagamics.framework.client.utility.StaticCombinationIterator;
 import de.acagamics.framework.types.GameContext;
+import de.acagamics.framework.util.StaticCombinationIterator;
 
 /**
  * Uses combinatorics (binomial) to create a very fair but computationally

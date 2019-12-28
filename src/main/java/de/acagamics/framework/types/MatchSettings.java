@@ -3,7 +3,7 @@ package de.acagamics.framework.types;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.framework.client.utility.BotClassLoader;
+import de.acagamics.framework.util.BotClassLoader;
 
 public final class MatchSettings<T> {
 	

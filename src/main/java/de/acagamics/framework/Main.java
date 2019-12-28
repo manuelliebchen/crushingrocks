@@ -7,8 +7,8 @@ import org.apache.logging.log4j.core.config.Configurator;
 
 import com.beust.jcommander.JCommander;
 
-import de.acagamics.framework.client.MainWindow;
 import de.acagamics.framework.types.CliArguments;
+import de.acagamics.framework.ui.MainWindow;
 import javafx.application.Application;
 
 /**
