@@ -1,9 +1,8 @@
-package de.acagamics.framework.types;
+package de.acagamics.crushingrocks;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.logic.Player;
 
 public final class GameStatistic {

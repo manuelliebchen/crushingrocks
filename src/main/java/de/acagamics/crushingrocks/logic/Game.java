@@ -8,10 +8,10 @@ import java.util.Optional;
 import java.util.Random;
 
 import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.GameStatistic;
 import de.acagamics.crushingrocks.RenderingProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.types.MatchSettings.GAMEMODE;
 import de.acagamics.framework.util.InputTracker;
 import javafx.event.EventHandler;

@@ -1,9 +1,9 @@
 package de.acagamics.crushingrocks.states;
 
+import de.acagamics.crushingrocks.GameStatistic;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.StateManager;
