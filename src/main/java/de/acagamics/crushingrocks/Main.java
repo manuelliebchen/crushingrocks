@@ -28,14 +28,13 @@ public final class Main {
 			return;
 		}
 
-		// enable debug mode
 		if (cliArg.isDebug()) {
 			Configurator.setRootLevel(Level.ALL);
 			LOG.info("Debug mode enabled!");
 		}
 
 		if (cliArg.showGui()) {
-			Application.launch(MainWindow.class);
+			Application.launch(MainWindow.class, cliArg.getStartupState());
 		}
 	}
 

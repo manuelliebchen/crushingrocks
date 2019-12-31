@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.beust.jcommander.Parameter;
 
+import de.acagamics.framework.resources.ClientProperties;
+import de.acagamics.framework.resources.ResourceManager;
+
 /**
  * Class for command-line parsing
  * @author Max Klockmann (max@acagamics.de)
  */
 public final class CliArguments {
-//	private static final Logger LOG = LogManager.getLogger(CliArguments.class.getName());
 	
 	@Parameter(names = {"-d", "--debug"}, description = "Debug mode")
 	private boolean debug = false;
@@ -20,7 +22,7 @@ public final class CliArguments {
 	@Parameter(names = {"-n", "--nogui"}, description = "Don't show Gui")
 	private boolean noGui = false;
 	@Parameter(names = {"-s", "--startup-state"}, description = "Name of the startup state")
-	private String startupState = "";
+	private String startupState = ResourceManager.getInstance().loadProperties(ClientProperties.class).getMainState();
 	@Parameter(names = {"-t", "--threads"}, description = "Number of Threads to be created")
 	private int threads = 1;
 	@Parameter(names = {"-c", "--count"}, description = "Number of Games")
@@ -41,6 +43,10 @@ public final class CliArguments {
 	
 	public boolean showGui() {
 		return !this.noGui;
+	}
+	
+	public String getStartupState() {
+		return startupState;
 	}
 	
 	public int numberOfTreads() {
