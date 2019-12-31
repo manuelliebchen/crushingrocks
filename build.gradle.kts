@@ -40,10 +40,10 @@ java {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "de.acagamics.framework.Main"
+        attributes["Main-Class"] = "de.acagamics.crushingrocks.Main"
     }
 }
 
 application {
-	mainClassName = "de.acagamics.framework.Main"
+	mainClassName = "de.acagamics.crushingrocks.Main"
 }
