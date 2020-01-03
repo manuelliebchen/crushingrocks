@@ -33,6 +33,8 @@ public final class Main {
 			LOG.info("Debug mode enabled!");
 		}
 
+		LOG.info("Starting with state: " + cliArg.getStartupState());
+		
 		if (cliArg.showGui()) {
 			Application.launch(MainWindow.class, cliArg.getStartupState());
 		}
