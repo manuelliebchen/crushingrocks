@@ -1,1 +1,4 @@
 
+[submodule "apcf"]
+	path = apcf
+	url = git@git.acagamics.de:wettbewerb_new/apcf.git
