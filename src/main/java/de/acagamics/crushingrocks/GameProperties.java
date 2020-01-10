@@ -1,22 +1,43 @@
 package de.acagamics.crushingrocks;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.acagamics.framework.resources.ResourceManager;
+import de.acagamics.framework.simulation.BlockingRejectedExecutionHandler;
 import de.acagamics.framework.types.Vec2f;
 
 /**
  * Class for various game relevant constants.
+ * 
  * @author Manuel Liebchen
  */
 public final class GameProperties {
 	
+	private static final Logger LOG = LogManager.getLogger(BlockingRejectedExecutionHandler.class.getName());
+	
 	public static GameProperties get() {
 		return ResourceManager.getInstance().loadProperties(GameProperties.class);
 	}
+
+	public static Object get(String variable_name) {
+		GameProperties gp = ResourceManager.getInstance().loadProperties(GameProperties.class);
+		try {
+			Field field = gp.getClass().getDeclaredField(variable_name);
+			field.setAccessible(true);
+			return field.get(gp);
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+		}
+		return null;
+	}
+
 	private GameProperties() {
 	}
-	
+
 	/**
 	 * Initial health points of the base.
 	 */
@@ -41,7 +62,7 @@ public final class GameProperties {
 	 * Maximal per step moving speed of a unit.
 	 */
 	private float max_unit_speed;
-	
+
 	private float cost_exponent;
 	private int const_multipier;
 
@@ -49,7 +70,7 @@ public final class GameProperties {
 	 * Number of mines on the map.
 	 */
 	private int number_of_mines = 7;
-	
+
 	/**
 	 * Maximum amount of units one can command.
 	 */
@@ -70,7 +91,7 @@ public final class GameProperties {
 	 * Capture radius for mines.
 	 */
 	private float mine_radius = 0.15f;
-	
+
 	/**
 	 * Initial creadit points a player has.
 	 */
@@ -81,16 +102,16 @@ public final class GameProperties {
 	 */
 	private float map_radius = 1f;
 
-
 	/**
 	 * Minimum distinct float difference.
 	 */
 	public final static float EPSILON = Float.MIN_VALUE * 100;
-	
-	
+
 	private List<Vec2f> player_base_position;
 
-	public static enum SITES{ YELLOW, BLUE}
+	public static enum SITES {
+		YELLOW, BLUE
+	}
 
 	public int getMatchFrameQuantity() {
 		return match_frame_quantity;
@@ -150,5 +171,5 @@ public final class GameProperties {
 
 	public List<Vec2f> getPlayerBasePosition() {
 		return player_base_position;
-	}; 
+	};
 }

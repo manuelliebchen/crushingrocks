@@ -3,7 +3,7 @@ base_hp: 20
 base_radius: 0.2
 unit_radius: 0.1
 max_unit_speed: 0.01
-cost_exponent: 0.6
+cost_exponent: 1.45
 const_multipier: 1000
 number_of_mines: 7
 max_units_per_player: 8

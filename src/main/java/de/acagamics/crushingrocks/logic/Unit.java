@@ -92,7 +92,7 @@ public final class Unit {
 	 * @return cost of unit with given strength
 	 */
 	public static int getUnitCost(int strength) {
-		return (int) (Math.pow(strength, GameProperties.get().getCostExponent())
+		return (int) (Math.pow(GameProperties.get().getCostExponent(), strength)
 				* GameProperties.get().getConstMultipier());
 	}
 }
