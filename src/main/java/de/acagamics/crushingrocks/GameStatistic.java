@@ -47,4 +47,13 @@ public final class GameStatistic {
 	public String getBaseHPString(int playerID) {
 		return String.valueOf(players.get(playerID).getBase().getHP());
 	}
+	
+	@Override
+	public String toString() {
+		String ret = "";
+		for(Player p : players) {
+			ret += p.toString() + "\n";
+		}
+		return ret;
+	}
 }

@@ -167,4 +167,11 @@ public final class Player {
 	public String getName() {
 		return controller.getClass().getSimpleName();
 	}
+	
+	@Override
+	public String toString() {
+		String ret = "";
+		ret += getName() + "\t" + base.getHP();
+		return ret;
+	}
 }

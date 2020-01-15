@@ -29,7 +29,7 @@ public final class CliArguments {
 	private int count = 1;
 	@Parameter(names = {"-m", "--mode"}, description = "Selected gamemode")
 	private String mode = "";
-	@Parameter(names = {"-b", "--bot"}, description = "Selected bot")
+	@Parameter(names = {"-b", "--bots"}, description = "Selected bots")
 	private List<String> bots = new ArrayList<>();
 	
 	
