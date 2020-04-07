@@ -21,7 +21,7 @@ public class StatisticState extends MenuState {
 			MatchSettings<IPlayerController> settings) {
 		super(manager, context);
 
-		clickable.add((Button) (new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
+		clickable.add((Button) (new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 		clickable.add((Button) (new Button(new Vec2f(-200, -125), BUTTON_TYPE.NORMAL, "Restart",
@@ -45,13 +45,13 @@ public class StatisticState extends MenuState {
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
 		
 		for(int i = 0; i < statistic.getPlayerAmount(); ++i) {			
-			drawables.add(new TextBox(new Vec2f(-500, 350 + i * 50), statistic.getSitesString(i)).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-500, 350.0f + i * 50), statistic.getSitesString(i)).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(-250, 350 + i * 50), statistic.getNameString(i)).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-250, 350.0f + i * 50), statistic.getNameString(i)).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(200, 350 + i * 50), statistic.getBaseHPString(i)).setTextAlignment(ALIGNMENT.RIGHT)
+			drawables.add(new TextBox(new Vec2f(200, 350.0f + i * 50), statistic.getBaseHPString(i)).setTextAlignment(ALIGNMENT.RIGHT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
-			drawables.add(new TextBox(new Vec2f(450, 350 + i * 50), statistic.getScoreString(i)).setTextAlignment(ALIGNMENT.RIGHT)
+			drawables.add(new TextBox(new Vec2f(450, 350.0f + i * 50), statistic.getScoreString(i)).setTextAlignment(ALIGNMENT.RIGHT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
 		}
 	}

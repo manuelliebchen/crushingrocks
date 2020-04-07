@@ -10,9 +10,9 @@ public final class GameStatistic {
 	List<Player> players;
 	boolean isDraw = false;
 	
-	public GameStatistic(List<Player> players_original) {
+	public GameStatistic(List<Player> playersOriginal) {
 		boolean hasWon = false;
-		this.players = new ArrayList<>(players_original);
+		this.players = new ArrayList<>(playersOriginal);
 		for(Player player : players) {
 			hasWon |= player.getBase().getHP() <= 0;
 		}

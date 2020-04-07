@@ -11,18 +11,6 @@ import de.acagamics.crushingrocks.logic.Player;
 public interface IPlayerController {
 	
 	/**
-	 * Returns the name of the author of this player controller.
-	 * @return A name of a human being.
-	 */
-	String getAuthor();
-	
-	/**
-	 * Returns the Matrikelnummer of the author of this controller.
-	 * @return A valid matrikelnummer for the evaluation of the programming competition.
-	 */
-	int getMatrikelnummer();
-	
-	/**
 	 * This method contains the actual AI/controlling.
 	 * It is called in every update step of the game as long as the player is alive.
 	 * @param mapInfo Map on witch is played.

@@ -11,6 +11,8 @@ import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.GameStatistic;
 import de.acagamics.crushingrocks.RenderingProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.types.MatchSettings;
+import de.acagamics.framework.types.Student;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.MatchSettings.GAMEMODE;
 import de.acagamics.framework.util.InputTracker;
@@ -28,7 +30,7 @@ import javafx.scene.input.InputEvent;
 public final class Game implements EventHandler<InputEvent> {
 	private List<Player> players;
 	private Map map;
-	private int frames_left;
+	private int framesLeft;
 
 	private InputTracker inputTracker;
 
@@ -37,17 +39,17 @@ public final class Game implements EventHandler<InputEvent> {
 	/**
 	 * Creates a new map with the given player controller and a map.
 	 * 
-	 * @param playerController A list of player controller.
-	 * @param gamemode         Mode in which to play.
+	 * @param settings Settings for the game.
 	 */
-	public Game(List<IPlayerController> playerController, GAMEMODE gamemode) {
-		assert (playerController != null);
+	public Game(MatchSettings<IPlayerController> settings) {
+		List<IPlayerController> playerController = settings.getControllers();
+		GAMEMODE gamemode = settings.getMode();
+
 		inputTracker = new InputTracker();
 
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
-			assert (playerController.get(i) != null);
-			players.add(new Player(playerController.get(i),
+			players.add(new Player(playerController.get(i), playerController.getClass().getAnnotation(Student.class),
 					ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(i),
 					i));
 		}
@@ -61,7 +63,7 @@ public final class Game implements EventHandler<InputEvent> {
 			}
 		}
 
-		frames_left = GameProperties.get().getMatchFrameQuantity();
+		framesLeft = GameProperties.get().getMatchFrameQuantity();
 	}
 
 	/**
@@ -81,10 +83,11 @@ public final class Game implements EventHandler<InputEvent> {
 	 * @return Player or null if the index is out of range
 	 */
 	public Player getPlayer(int index) {
-		assert (index >= 0);
-		for (Player player : players) {
-			if (index == player.getPlayerID()) {
-				return player;
+		if(index >= 0) {
+			for (Player player : players) {
+				if (index == player.getPlayerID()) {
+					return player;
+				}
 			}
 		}
 		return null;
@@ -105,7 +108,7 @@ public final class Game implements EventHandler<InputEvent> {
 	 * @return Frame counter.
 	 */
 	public int getFramesLeft() {
-		return frames_left;
+		return framesLeft;
 	}
 
 	/**
@@ -114,8 +117,8 @@ public final class Game implements EventHandler<InputEvent> {
 	 * @return if the game is over it returns a gamestatistic, else null.
 	 */
 	public GameStatistic tick() {
-		--frames_left;
-		if (frames_left <= 0) {
+		--framesLeft;
+		if (framesLeft <= 0) {
 			return new GameStatistic(new ArrayList<Player>(players));
 		}
 
@@ -133,7 +136,7 @@ public final class Game implements EventHandler<InputEvent> {
 		// Apply orders (move Units).
 		Collections.shuffle(allUnits);
 		for (Unit unit : allUnits) {
-			unit.updatePosition(allUnits);
+			unit.updatePosition();
 		}
 
 		// Update Mines (ownership)
@@ -148,10 +151,9 @@ public final class Game implements EventHandler<InputEvent> {
 
 		GameStatistic statistic = null;
 		for (Base base : map.getBases()) {
-			if (base.getHP() <= 0) {
-				if (statistic == null) {
-					statistic = new GameStatistic(new ArrayList<Player>(players));
-				}
+			if (base.getHP() <= 0 && statistic == null) {
+				statistic = new GameStatistic(new ArrayList<Player>(players));
+				break;
 			}
 		}
 
@@ -161,7 +163,7 @@ public final class Game implements EventHandler<InputEvent> {
 		for (Unit unit : allUnits) {
 			Optional<Unit> posibleAttacker = allUnits
 					.stream().filter(
-							(e) -> unit.getPosition().distance(e.getPosition()) < 2
+							e -> unit.getPosition().distance(e.getPosition()) < 2
 									* GameProperties.get().getUnitRadius() && unit.getOwner() != e.getOwner())
 					.sorted((e1, e2) -> e1.getPosition().distance(unit.getPosition())
 							- e2.getPosition().distance(unit.getPosition()) > 0 ? 1 : -1)

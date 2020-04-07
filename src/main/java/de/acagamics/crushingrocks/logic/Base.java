@@ -55,13 +55,13 @@ public final class Base {
 
 	void update(List<Unit> allUnits) {
 		List<Unit> unitsInBaseRadius = allUnits.stream()
-				.filter((u) -> position.distance(u.getPosition()) < GameProperties.get().getBaseRadius()
-						+ GameProperties.get().getUnitRadius() && u.getOwner() != owner)
+				.filter(unit -> position.distance(unit.getPosition()) < GameProperties.get().getBaseRadius()
+						+ GameProperties.get().getUnitRadius() && unit.getOwner() != owner)
 				.collect(Collectors.toList());
 		int unitsInAttackRadius = unitsInBaseRadius.stream()
-				.filter((u) -> position.distance(u.getPosition()) < GameProperties.get().getBaseRadius()
+				.filter(unit -> position.distance(unit.getPosition()) < GameProperties.get().getBaseRadius()
 						+ GameProperties.get().getUnitRadius())
-				.mapToInt((u) -> u.getStrength()).sum();
+				.mapToInt(Unit::getStrength).sum();
 
 		for (int i = 0; i < unitsInBaseRadius.size(); i++) {
 			unitsInBaseRadius.get(i).attackBy(1);

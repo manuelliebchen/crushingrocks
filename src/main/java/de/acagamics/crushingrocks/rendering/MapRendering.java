@@ -42,6 +42,7 @@ public final class MapRendering implements IDrawable {
 	 * Updates the map rendering. E.g. animated sprites.
 	 */
 	public void update() {
+		// Currently unused because there are no animated sprites.
 	}
 
 	/**
@@ -77,7 +78,7 @@ public final class MapRendering implements IDrawable {
 		Image unitTexture1 = ResourceManager.getInstance().loadImage("Unit1.png");
 		Image unitTexture2 = ResourceManager.getInstance().loadImage("Unit2.png");
 		Image unitTexture3 = ResourceManager.getInstance().loadImage("Unit3.png");
-		Image untiTexture = unitTexture1;
+		Image untiTexture;
 		for (Player player : players) {
 			for (Unit unit : player.getUnits()) {
 				if (unit.getStrength() <= 1) {

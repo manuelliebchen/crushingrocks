@@ -5,8 +5,11 @@ import java.util.List;
 
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.types.Student;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.paint.Color;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
@@ -15,7 +18,10 @@ import javafx.scene.paint.Color;
  *
  */
 public final class Player {
+	private static final Logger LOG = LogManager.getLogger(Player.class.getName());
+
 	private IPlayerController controller;
+	private Student student;
 	private int score;
 	private int creditPoints;
 
@@ -27,8 +33,9 @@ public final class Player {
 
 	private int unitCreationOrder;
 
-	Player(IPlayerController controller, Color color, int playerID) {
+	Player(IPlayerController controller, Student student, Color color, int playerID) {
 		this.controller = controller;
+		this.student = student;
 		this.color = color;
 		this.playerID = playerID;
 		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());
@@ -52,11 +59,9 @@ public final class Player {
 		try {
 			controller.think(mapInfo, this, enemyInfos);
 		} catch (Exception e) {
-			System.err.println(controller.getClass().getSimpleName() + " through an unhandled exception!");
-			System.err.println(e);
-			for (StackTraceElement t : e.getStackTrace()) {
-				System.err.println(t);
-			}
+			LOG.error(String.format("%s through an unhandled exception!",controller.getClass().getSimpleName()));
+			LOG.error(e.toString());
+			LOG.error(e.getStackTrace()[0].toString());
 		}
 
 		int cost = Unit.getUnitCost(unitCreationOrder);
@@ -77,14 +82,10 @@ public final class Player {
 		return controller;
 	}
 
+	Student getStudent() {return student;}
+
 	void removeDeath() {
 		units.removeIf(u -> u.getStrength() <= 0);
-	}
-
-	@Override
-	public int hashCode() {
-		return controller.getAuthor().hashCode() + controller.getClass().getSimpleName().hashCode()
-				+ controller.getMatrikelnummer();
 	}
 
 	/**

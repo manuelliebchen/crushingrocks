@@ -1,13 +1,11 @@
 title: Crushing Rocks!
 version: "1.3.0"
 
-main_state: de.acagamics.crushingrocks.states.MainMenuState
-
-screen_width: 1280
-screen_height: 720
+screenWidth: 1280
+screenHeight: 720
 
 framerate: 60
 
-news_url: https://wettbewerb.acagamics.de/downloads/news/
-version_url: https://wettbewerb.acagamics.de/downloads/changelog/
+newsURL: https://wettbewerb.acagamics.de/downloads/news/
+versionURL: https://wettbewerb.acagamics.de/downloads/changelog/
 

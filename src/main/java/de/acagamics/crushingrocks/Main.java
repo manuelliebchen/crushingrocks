@@ -8,16 +8,16 @@ import org.apache.logging.log4j.core.config.Configurator;
 import com.beust.jcommander.JCommander;
 
 import de.acagamics.framework.ui.MainWindow;
-import javafx.application.Application;
+
+import de.acagamics.crushingrocks.states.MainMenuState;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
- *
  */
 public final class Main {
 	private static final Logger LOG = LogManager.getLogger(Main.class.getName());
 
-	public static void main(String... args) throws Exception {
+	public static void main(String... args) {
 		// Parse command line arguments
 		CliArguments cliArg = new CliArguments();
 		JCommander jcom = JCommander.newBuilder().addObject(cliArg).build();
@@ -34,7 +34,7 @@ public final class Main {
 		}
 
 		if (cliArg.showGui()) {
-			Application.launch(MainWindow.class, cliArg.getStartupState());
+			MainWindow.launch(MainMenuState.class);
 		}
 	}
 

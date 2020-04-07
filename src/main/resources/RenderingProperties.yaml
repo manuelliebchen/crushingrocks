@@ -1,14 +1,14 @@
-base_rendering_multiplier: 2.0
-unit_rendering_multiplier: 2.0
+baseRenderingMultiplier: 2.0
+unitRenderingMultiplier: 2.0
 
-player_colors:
+playerColors:
    - [ 0.925, 0.741, 0.192, 1]
    - [ 0.18, 0.314, 0.62, 1]
    
 
-background_color: "#82BB0F"
-overlay_line_width: 0.005
+backgroundColor: "#82BB0F"
+overlayLineWidth: 0.005
 
-health_foreground: [ 0.635, 0.863, 0.18, 1]
+healthForeground: [ 0.635, 0.863, 0.18, 1]
 
-health_background: [ 0.741, 0.153, 0.486, 1]
+healthBackground: [ 0.741, 0.153, 0.486, 1]

@@ -11,6 +11,7 @@ import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.MenuState;
+import de.acagamics.framework.web.News;
 import de.acagamics.framework.web.Version;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -43,7 +44,7 @@ public class MainMenuState extends MenuState {
 		clickable.add((Button) (new Button(new Vec2f(0, 425), BUTTON_TYPE.WIDE, "Show Credits",
 				() -> manager.push(new CreditsState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
 						.setHorizontalAlignment(ALIGNMENT.TOP)));
-		clickable.add((Button) (new Button(new Vec2f(0, -100), BUTTON_TYPE.WIDE, "Exit Game", () -> manager.pop())
+		clickable.add((Button) (new Button(new Vec2f(0, -100), BUTTON_TYPE.WIDE, "Exit Game", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.CENTER)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 		drawables.addAll(clickable);
@@ -58,20 +59,4 @@ public class MainMenuState extends MenuState {
 				.setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSmallFont())
 				.setVerticalAlignment(ALIGNMENT.BOTTOM).setHorizontalAlignment(ALIGNMENT.RIGHT));
 	}
-
-//	private String checkVersion() {
-//		String versionText = "version: " + ClientConstants.VERSION;
-//		if (Version.isUpToDate()) {
-//			versionText += " - up to date!";
-//			context.setFill(Color.WHITE);
-//		} else {
-//			versionText += " - out of date!";
-//			context.setFill(Color.BLUE);
-//		}
-//		return versionText;
-//	}
-//
-//	private String checkNews() {
-//		return "news: " + News.getNews();
-//	}
 }

@@ -20,135 +20,135 @@ public final class GameProperties {
 	/**
 	 * Initial health points of the base.
 	 */
-	private int match_frame_quantity;
+	private int matchFrameQuantity;
 
 	/**
 	 * Initial health points of the base.
 	 */
-	private int base_hp;
+	private int baseHP;
 
 	/**
 	 * Attack radius of the Base.
 	 */
-	private float base_radius;
+	private float baseRadius;
 
 	/**
 	 * Radius a unit can attack.
 	 */
-	private float unit_radius;
+	private float unitRadius;
 
 	/**
 	 * Maximal per step moving speed of a unit.
 	 */
-	private float max_unit_speed;
+	private float maxUnitSpeed;
 	
-	private float cost_exponent;
-	private int const_multipier;
+	private float costExponent;
+	private int constMultipier;
 
 	/**
 	 * Number of mines on the map.
 	 */
-	private int number_of_mines = 7;
+	private int numberOfMines = 7;
 	
 	/**
 	 * Maximum amount of units one can command.
 	 */
-	private int max_units_per_player = 8;
+	private int maxUnitsPerPlayer = 8;
 
 	/**
 	 * Income per owned mine per tick.
 	 */
-	private int per_mine_income = 10;
+	private int perMineIncome = 10;
 
 	/**
 	 * Ticks it takes to capture a mine;
 	 */
 
-	private float mine_capturing_per_frame = 0.005f;
+	private float mineCapturingPerFrame = 0.005f;
 
 	/**
 	 * Capture radius for mines.
 	 */
-	private float mine_radius = 0.15f;
+	private float mineRadius = 0.15f;
 	
 	/**
 	 * Initial creadit points a player has.
 	 */
-	private int initial_resources;
+	private int initialResources;
 
 	/**
 	 * Radius of the in game map.
 	 */
-	private float map_radius = 1f;
+	private float mapRadius = 1f;
 
 
 	/**
 	 * Minimum distinct float difference.
 	 */
-	public final static float EPSILON = Float.MIN_VALUE * 100;
+	public static final float EPSILON = Float.MIN_VALUE * 100;
 	
 	
-	private List<Vec2f> player_base_position;
+	private List<Vec2f> playerBasePosition;
 
-	public static enum SITES{ YELLOW, BLUE}
+	public enum SITES{ YELLOW, BLUE}
 
 	public int getMatchFrameQuantity() {
-		return match_frame_quantity;
+		return matchFrameQuantity;
 	}
 
 	public int getBaseHP() {
-		return base_hp;
+		return baseHP;
 	}
 
 	public float getBaseRadius() {
-		return base_radius;
+		return baseRadius;
 	}
 
 	public float getUnitRadius() {
-		return unit_radius;
+		return unitRadius;
 	}
 
 	public float getMaxUnitSpeed() {
-		return max_unit_speed;
+		return maxUnitSpeed;
 	}
 
 	public float getCostExponent() {
-		return cost_exponent;
+		return costExponent;
 	}
 
 	public int getConstMultipier() {
-		return const_multipier;
+		return constMultipier;
 	}
 
 	public int getNumberOfMines() {
-		return number_of_mines;
+		return numberOfMines;
 	}
 
 	public int getMaxUnitsPerPlayer() {
-		return max_units_per_player;
+		return maxUnitsPerPlayer;
 	}
 
 	public int getPerMineIncome() {
-		return per_mine_income;
+		return perMineIncome;
 	}
 
 	public float getMineCapturingPerFrame() {
-		return mine_capturing_per_frame;
+		return mineCapturingPerFrame;
 	}
 
 	public float getMineRadius() {
-		return mine_radius;
+		return mineRadius;
 	}
 
 	public int getInitialResources() {
-		return initial_resources;
+		return initialResources;
 	}
 
 	public float getMapRadius() {
-		return map_radius;
+		return mapRadius;
 	}
 
 	public List<Vec2f> getPlayerBasePosition() {
-		return player_base_position;
-	}; 
+		return playerBasePosition;
+	}
 }

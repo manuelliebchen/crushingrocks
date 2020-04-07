@@ -99,8 +99,10 @@ public final class Mine {
 		for(float owner : ownership) {
 			sum += owner;
 		}
-		for(int i = 0; i < count.length; ++i) {
-			ownership[i] /= sum;
+		if(sum > 0){
+			for(int i = 0; i < count.length; ++i) {
+				ownership[i] /= sum;
+			}
 		}
 		
 		for(int i = 0; i < ownership.length; ++i) {

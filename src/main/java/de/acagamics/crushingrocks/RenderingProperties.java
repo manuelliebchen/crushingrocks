@@ -6,45 +6,45 @@ import javafx.scene.paint.Color;
 
 public class RenderingProperties {
 
-	private float base_rendering_multiplier;
+	private float baseRenderingMultiplier;
 	
-	private float unit_rendering_multiplier;
+	private float unitRenderingMultiplier;
 
-	private String background_color;
+	private String backgroundColor;
 	
-	private List<Color> player_colors;
+	private List<Color> playerColors;
 
-	private float overlay_line_width;
+	private float overlayLineWidth;
 
-	private Color health_foreground;
+	private Color healthForeground;
 
-	private Color health_background;
+	private Color healthBackground;
 
 	public float getBaseRenderingMultiplier() {
-		return base_rendering_multiplier;
+		return baseRenderingMultiplier;
 	}
 
 	public float getUnitRenderingMultiplier() {
-		return unit_rendering_multiplier;
+		return unitRenderingMultiplier;
 	}
 
 	public String getBackgroundColor() {
-		return background_color;
+		return backgroundColor;
 	}
 
 	public List<Color> getPlayerColors() {
-		return player_colors;
+		return playerColors;
 	}
 
 	public float getOverlayLineWidth() {
-		return overlay_line_width;
+		return overlayLineWidth;
 	}
 	
 	public Color getHealthForeground() {
-		return health_foreground;
+		return healthForeground;
 	}
 
 	public Color getHealthBackground() {
-		return health_background;
+		return healthBackground;
 	}
 }

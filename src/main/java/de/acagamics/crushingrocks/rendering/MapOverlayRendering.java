@@ -60,8 +60,8 @@ public final class MapOverlayRendering implements IDrawable {
 					base.getPosition().getY() - gameProperties.getBaseRadius(), 2 * gameProperties.getBaseRadius(),
 					2 * gameProperties.getBaseRadius(),
 					(float) (gameProperties.getPlayerBasePosition().get(base.getOwner().getPlayerID()).getAngle() * 360
-							/ (Math.PI * 2) - (180 * base.getHP() / gameProperties.getBaseHP())),
-					(float) (360 * base.getHP() / gameProperties.getBaseHP()), ArcType.OPEN);
+							/ (Math.PI * 2) - ((double) 180 * base.getHP() / gameProperties.getBaseHP())),
+					(float) ((double) 360 * base.getHP() / gameProperties.getBaseHP()), ArcType.OPEN);
 		}
 
 		for (Mine mine : mines) {
@@ -74,7 +74,7 @@ public final class MapOverlayRendering implements IDrawable {
 						2 * gameProperties.getMineRadius(),
 						(float) (gameProperties.getPlayerBasePosition().get(i).getAngle() * 360 / (Math.PI * 2)
 								- ownership[i] * 180),
-						(float) (ownership[i] * 360), ArcType.OPEN);
+						ownership[i] * 360, ArcType.OPEN);
 			}
 		}
 

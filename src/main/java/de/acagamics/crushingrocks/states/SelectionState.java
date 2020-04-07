@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.controller.builtIn.BotyMcBotface;
-import de.acagamics.crushingrocks.controller.builtIn.EmptyBotyMcBotface;
-import de.acagamics.crushingrocks.controller.builtIn.EvilSanta;
-import de.acagamics.crushingrocks.controller.builtIn.HumanBot;
+import de.acagamics.crushingrocks.controller.builtin.BotyMcBotface;
+import de.acagamics.crushingrocks.controller.builtin.EmptyBotyMcBotface;
+import de.acagamics.crushingrocks.controller.builtin.EvilSanta;
+import de.acagamics.crushingrocks.controller.builtin.HumanBot;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.MatchSettings;
@@ -20,6 +20,7 @@ import de.acagamics.framework.ui.elements.Selector;
 import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
+import de.acagamics.framework.ui.interfaces.IDrawable;
 import de.acagamics.framework.ui.interfaces.MenuState;
 import de.acagamics.framework.util.BotClassLoader;
 import de.acagamics.framework.types.Vec2f;
@@ -38,18 +39,18 @@ public class SelectionState extends MenuState {
 
 	public SelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		List<Class<?>> buildin = Arrays.asList(new Class<?>[]{ BotyMcBotface.class, EmptyBotyMcBotface.class,
-				HumanBot.class, EvilSanta.class });
-		playerLoader = new BotClassLoader<IPlayerController>(IPlayerController.class, buildin);
+		List<Class<?>> buildin = Arrays.asList(BotyMcBotface.class, EmptyBotyMcBotface.class,
+				HumanBot.class, EvilSanta.class);
+		playerLoader = new BotClassLoader<>(IPlayerController.class, buildin);
 		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
 		bots = playerLoader.getLoadedBots();
 
-		drawables.add(new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
+		drawables.add((IDrawable) new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
 
-		drawables.add(new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
+		drawables.add((IDrawable) new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
 		modeSelector = new Selector(new Vec2f(0, 300), 200, 0, GAMEMODE.values().length - 1,
-				(i) -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
+				i -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(modeSelector);
 
 		Button startbutton = (Button) (new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
@@ -57,25 +58,25 @@ public class SelectionState extends MenuState {
 						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.BOTTOM));
 		clickable.add(startbutton);
 
-		clickable.add((Button) (new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", () -> manager.pop())
+		clickable.add((Button) (new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
 
 
-		drawables.add(new TextBox(new Vec2f(-350, 400), "Bots:").setVerticalAlignment(ALIGNMENT.CENTER));
+		drawables.add((IDrawable) new TextBox(new Vec2f(-350, 400), "Bots:").setVerticalAlignment(ALIGNMENT.CENTER));
 		if (!bots.isEmpty()) {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
-				botSelectors[i] = new Selector(new Vec2f(0, 400 + i * 100), 200, 0, bots.size() - 1,
-						(i2) -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALIGNMENT.CENTER);
+				botSelectors[i] = new Selector(new Vec2f(0, 400.0f + i * 100), 200, 0, bots.size() - 1,
+						i2 -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALIGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}
 		} else {
 			startbutton.setEnabled(false);
 		}
 
-		drawables.add(new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.BOTTOM));
-		speedSelectors = new Selector(new Vec2f(200, -120), 100, 1, 16, (i) -> i + "x")
+		drawables.add((IDrawable) new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.BOTTOM));
+		speedSelectors = new Selector(new Vec2f(200, -120), 100, 1, 16, i -> i + "x")
 				.setHorizontalAlignment(ALIGNMENT.BOTTOM);
 		clickable.add(speedSelectors);
 
@@ -91,7 +92,7 @@ public class SelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()).getName());
 			names.add(EvilSanta.class.getName());
 		}
-		return new MatchSettings<IPlayerController>(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
+		return new MatchSettings<>(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
 				speedSelectors.getValue());
 	}
 }

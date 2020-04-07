@@ -57,7 +57,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		
 		background = new Background(50);
 		
-		game = new Game(settings.getControllers(), settings.getMode());
+		game = new Game(settings);
 
 		mapRenderer = new MapRendering(game.getMap());
 		mapOverlayRenderer = new MapOverlayRendering(game.getMap());	
@@ -79,9 +79,9 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(
-				Duration.millis(ResourceManager.getInstance().loadProperties(ClientProperties.class).getMilisPerFrame() / settings.getSpeedMultiplier()), (event) -> {
-					frame();
-				});
+				Duration.millis((double) ResourceManager.getInstance().loadProperties(ClientProperties.class).getMilisPerFrame() / settings.getSpeedMultiplier()), event ->
+					frame()
+				);
 
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
@@ -171,7 +171,8 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			case 3: 
 				unitText = "III";
 				break;
-			
+			default:
+				unitText = "";
 			}
 			Text text = new Text(unitText);
 			text.setFont(designProperties.getSmallFont());
@@ -192,13 +193,11 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			KeyEvent keyEvent = (KeyEvent) event;
 			if (keyEvent.getCode() == KeyCode.ESCAPE) {
 				manager.pop();
-			} else if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED)) {
-				if (keyEvent.getCharacter().equals("p")) {
-					if (timeline.getStatus() == Status.RUNNING) {
-						timeline.stop();
-					} else {
-						timeline.play();
-					}
+			} else if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && keyEvent.getCharacter().equals("p")) {
+				if (timeline.getStatus() == Status.RUNNING) {
+					timeline.stop();
+				} else {
+					timeline.play();
 				}
 			}
 		}

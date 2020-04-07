@@ -1,7 +1,5 @@
 package de.acagamics.crushingrocks.logic;
 
-import java.util.List;
-
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.types.Vec2f;
@@ -58,23 +56,14 @@ public final class Unit {
 		}
 	}
 
-	Vec2f updatePosition(List<Unit> allUnits) {
+	Vec2f updatePosition() {
 		if (orderedDirection != null) {
 			if (orderedDirection.length() > GameProperties.get().getMaxUnitSpeed()) {
 				orderedDirection = orderedDirection.getNormalized().mult(GameProperties.get().getMaxUnitSpeed());
 			}
-			Vec2f targetPosition = position.add(orderedDirection);
-			boolean hit = false;
-			for (int i = 0; i < allUnits.size(); i++) {
-//				if (allUnits.get(i) != this && allUnits.get(i).position.sub(targetPosition).length() < GameConstants.UNIT_BODY_RADIUS) {
-//					hit = true;
-//					break;
-//				}
-			}
-			if (!hit) {
-				position = targetPosition;
-			}
+			position = position.add(orderedDirection);
 			orderedDirection = null;
+			//TODO: make shure units can't walk out of the map!
 //			position = new Vector(Math.min(1, Math.max(-1, position.getX())),
 //					Math.min(1, Math.max(-1, position.getY())));
 		}
