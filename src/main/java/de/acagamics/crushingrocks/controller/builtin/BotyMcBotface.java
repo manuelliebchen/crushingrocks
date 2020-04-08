@@ -5,11 +5,11 @@ import java.util.Random;
 
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.framework.types.Student;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.logic.Unit;
+import de.acagamics.framework.types.Student;
 
 /**
  * Simplistic sample bot.
