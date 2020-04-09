@@ -11,7 +11,6 @@ import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.MenuState;
-import de.acagamics.framework.web.News;
 import de.acagamics.framework.web.Version;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;

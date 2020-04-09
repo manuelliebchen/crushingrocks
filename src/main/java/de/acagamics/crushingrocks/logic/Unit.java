@@ -63,9 +63,17 @@ public final class Unit {
 			}
 			position = position.add(orderedDirection);
 			orderedDirection = null;
-			//TODO: make shure units can't walk out of the map!
-//			position = new Vector(Math.min(1, Math.max(-1, position.getX())),
-//					Math.min(1, Math.max(-1, position.getY())));
+			float mapradius = GameProperties.get().getMapRadius();
+			if(position.getX() > mapradius) {
+				position = new Vec2f(mapradius, position.getY());
+			} else if(position.getX() < - mapradius){
+				position = new Vec2f(-mapradius, position.getY());
+			}
+			if(position.getY() > mapradius) {
+				position = new Vec2f(position.getX(), mapradius);
+			} else if(position.getY() < - mapradius){
+				position = new Vec2f(position.getX(), -mapradius);
+			}
 		}
 		return position;
 	}

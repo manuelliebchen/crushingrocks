@@ -151,12 +151,24 @@ public final class Game implements EventHandler<InputEvent> {
 
 		GameStatistic statistic = null;
 		for (Base base : map.getBases()) {
-			if (base.getHP() <= 0 && statistic == null) {
+			if (base.getHP() <= 0) {
 				statistic = new GameStatistic(new ArrayList<Player>(players));
 				break;
 			}
 		}
 
+		updateUnits(allUnits);
+
+		// Remove Death Units
+		for (Player player : players) {
+			player.removeDeath();
+		}
+
+		inputTracker.updateTables();
+		return statistic;
+	}
+
+	private void updateUnits(List<Unit> allUnits) {
 		// Update Unit hp by attack.
 		java.util.Map<Unit, Integer> inflictedDamage = new HashMap<>();
 
@@ -178,14 +190,6 @@ public final class Game implements EventHandler<InputEvent> {
 			}
 		}
 		inflictedDamage.forEach((u, i) -> u.attackBy(i));
-
-		// Remove Death Units
-		for (Player player : players) {
-			player.removeDeath();
-		}
-
-		inputTracker.updateTables();
-		return statistic;
 	}
 
 	@Override

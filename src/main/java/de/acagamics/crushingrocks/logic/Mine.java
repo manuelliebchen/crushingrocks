@@ -71,20 +71,8 @@ public final class Mine {
 	}
 
 	void update(List<Player> players, List<Unit> allUnits) {
-		float[] count = new float[players.size()];
-		for(Unit unit : allUnits) {
-			if(position.distance(unit.getPosition()) < GameProperties.get().getMineRadius()) {
-				count[unit.getOwner().getPlayerID()] += unit.getStrength();
-			}
-		}
-		float sum = 0;
-		for(int i = 0; i < count.length; ++i) {
-			sum += count[i];
-		}
-		if(sum == 0) {
-			return;
-		}
-		
+		float[] count = getUnitComposition(allUnits, players.size());
+
 		for(int i = 0; i < ownership.length; ++i) {
 			float negativSum = 0;
 			for(int j = 0; j < count.length; ++j) {
@@ -95,7 +83,7 @@ public final class Mine {
 			ownership[i] += (count[i] - negativSum) * GameProperties.get().getMineCapturingPerFrame();
 		}
 		
-		sum = 0;
+		float sum = 0;
 		for(float owner : ownership) {
 			sum += owner;
 		}
@@ -108,5 +96,23 @@ public final class Mine {
 		for(int i = 0; i < ownership.length; ++i) {
 			ownership[i] = Math.min(1, Math.max(0, ownership[i]));
 		}
+	}
+
+	private float[] getUnitComposition(List<Unit> allUnits, int playersSize) {
+		float[] count = new float[playersSize];
+
+		for(Unit unit : allUnits) {
+			if(position.distance(unit.getPosition()) < GameProperties.get().getMineRadius()) {
+				count[unit.getOwner().getPlayerID()] += unit.getStrength();
+			}
+		}
+		float sum = 0;
+		for(int i = 0; i < count.length; ++i) {
+			sum += count[i];
+		}
+		if(sum == 0) {
+			return count;
+		}
+		return count;
 	}
 }
