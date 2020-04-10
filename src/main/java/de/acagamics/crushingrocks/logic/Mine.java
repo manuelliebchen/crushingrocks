@@ -66,17 +66,26 @@ public final class Mine {
 		this.ownership = ownership;
 	}
 
-	void update(List<Unit> allUnits) {
-		float[] count = getUnitComposition(allUnits);
+	void update(List<Unit> unitsInRange) {
+		float[] count = new float[numberOfPlayer];
+
+		for(Unit unit : unitsInRange) {
+			count[unit.getOwner().getPlayerID()] += unit.getStrength();
+		}
+
+		float captureSpeed = GameProperties.get().getMineCapturingPerFrame();
 
 		float avrage = 0;
 		for(int i = 0; i < numberOfPlayer; ++i) {
 			avrage += count[i];
+			if(ownership[i] < 0.5f && count[i] > unitsInRange.size()/2){
+				captureSpeed *= GameProperties.get().getMineRecapturingMultiplier();
+			}
 		}
 		avrage /= numberOfPlayer;
 
 		for(int i = 0; i < numberOfPlayer; ++i) {
-			ownership[i] += (count[i] - avrage) * GameProperties.get().getMineCapturingPerFrame();
+			ownership[i] += (count[i] - avrage) * captureSpeed;
 		}
 		
 		float sum = 0;
@@ -85,23 +94,12 @@ public final class Mine {
 		}
 		if(Math.abs(sum - 1) > GameProperties.EPSILON && Math.abs(sum) > GameProperties.EPSILON){
 			for(int i = 0; i < numberOfPlayer; ++i) {
-				ownership[i] /= sum;
+				ownership[i] /= sum; //NOSONAR Cant be zero!
 			}
 		}
 		
 		for(int i = 0; i < numberOfPlayer; ++i) {
 			ownership[i] = Math.min(1, Math.max(0, ownership[i]));
 		}
-	}
-
-	private float[] getUnitComposition(List<Unit> allUnits) {
-		float[] count = new float[numberOfPlayer];
-
-		for(Unit unit : allUnits) {
-			if(position.distance(unit.getPosition()) < GameProperties.get().getMineRadius()) {
-				count[unit.getOwner().getPlayerID()] += unit.getStrength();
-			}
-		}
-		return count;
 	}
 }

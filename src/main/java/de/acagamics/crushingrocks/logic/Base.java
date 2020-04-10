@@ -39,7 +39,7 @@ public final class Base {
 
 	/**
 	 * Get the position of this coin.
-	 * 
+	 *
 	 * @return position
 	 */
 	public Vec2f getPosition() {
@@ -53,21 +53,7 @@ public final class Base {
 		return hp;
 	}
 
-	void update(List<Unit> allUnits) {
-		List<Unit> unitsInBaseRadius = allUnits.stream()
-				.filter(unit -> position.distance(unit.getPosition()) < GameProperties.get().getBaseRadius()
-						+ GameProperties.get().getUnitRadius() && unit.getOwner() != owner)
-				.collect(Collectors.toList());
-		int unitsInAttackRadius = unitsInBaseRadius.stream()
-				.filter(unit -> position.distance(unit.getPosition()) < GameProperties.get().getBaseRadius()
-						+ GameProperties.get().getUnitRadius())
-				.mapToInt(Unit::getStrength).sum();
-
-		for (int i = 0; i < unitsInBaseRadius.size(); i++) {
-			unitsInBaseRadius.get(i).attack(1);
-		}
-
-		hp -= unitsInAttackRadius;
-		hp = Math.max(hp, 0);
+	void attack(int damage) {
+		hp -= damage;
 	}
 }

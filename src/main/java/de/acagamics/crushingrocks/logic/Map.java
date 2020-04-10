@@ -1,6 +1,7 @@
 package de.acagamics.crushingrocks.logic;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.framework.types.Vec2f;
@@ -180,44 +181,74 @@ public final class Map {
 
 		// Update Mines (ownership)
 		for (Mine mine : this.getMines()) {
-			mine.update(allUnits);
+			List<Unit> units = allUnits.stream().filter(u-> mine.getPosition().distance(u.getPosition()) < GameProperties.get().getMineRadius()).collect(Collectors.toList());
+			mine.update(units);
 		}
 
-		// Update Bases (Attack by Units)
-		for (Base base : this.getBases()) {
-			base.update(allUnits);
-		}
-
-		updateUnits();
+		attackUnits();
+		attackBases();
+		allUnits.removeIf(Unit::removeIfDeath);
 	}
 
 
-	private void updateUnits() {
-		// Update Unit hp by attack.
-		java.util.Map<Unit, Integer> inflictedDamage = new HashMap<>();
+	private void attackUnits() {
+		java.util.Map<Unit, Integer> attackUnits = new HashMap<>();
+		java.util.Map<Base, Integer> attackBases = new HashMap<>();
 
 		for (Unit unit : allUnits) {
-			Optional<Unit> posibleAttacker = allUnits
+			Optional<Base> posibleBase = bases
 					.stream().filter(
-							e -> unit.getPosition().distance(e.getPosition()) < (2
-									* GameProperties.get().getUnitRadius()) && unit.getOwner() != e.getOwner())
-					.sorted((e1, e2) -> (int) (e1.getPosition().distance(unit.getPosition())
-							- e2.getPosition().distance(unit.getPosition())))
+							e -> unit.getPosition().distance(e.getPosition()) < GameProperties.get().getUnitRadius() && unit.getOwner() != e.getOwner())
 					.findFirst();
-			if (posibleAttacker.isPresent()) {
-				Unit attacked = posibleAttacker.get();
-				if (inflictedDamage.containsKey(attacked)) {
-					inflictedDamage.put(attacked,
-							inflictedDamage.get(attacked) + unit.getStrength());
+			if(posibleBase.isPresent()){
+				Base attacked = posibleBase.get();
+				if (attackUnits.containsKey(attacked)) {
+					attackBases.put(attacked,
+							attackUnits.get(attacked) + unit.getStrength());
 				} else {
-					inflictedDamage.put(attacked, unit.getStrength());
+					attackBases.put(attacked, unit.getStrength());
 				}
 				unit.addSpeedup();
+			} else {
+				Optional<Unit> posibleUnit = allUnits
+						.stream().filter(
+								e -> unit.getPosition().distance(e.getPosition()) < GameProperties.get().getUnitRadius() && unit.getOwner() != e.getOwner())
+						.sorted((e1, e2) -> (int) (e1.getPosition().distance(unit.getPosition())
+								- e2.getPosition().distance(unit.getPosition())))
+						.findFirst();
+				if (posibleUnit.isPresent()) {
+					Unit attacked = posibleUnit.get();
+					if (attackUnits.containsKey(attacked)) {
+						attackUnits.put(attacked,
+								attackUnits.get(attacked) + unit.getStrength());
+					} else {
+						attackUnits.put(attacked, unit.getStrength());
+					}
+					unit.addSpeedup();
+				}
 			}
 		}
-		inflictedDamage.forEach((u, i) -> u.attack(i));
+		attackUnits.forEach((u, i) -> u.attack(i));
+		attackBases.forEach((b, i) -> b.attack(i));
+	}
 
-		allUnits.removeIf( u -> u.removeIfDeath());
+	private void attackBases() {
+		java.util.Map<Unit, Integer> attackUnits = new HashMap<>();
+		for (Base base : bases) {
+			List<Unit> unitsInRange = allUnits
+					.stream().filter(
+							e -> base.getPosition().distance(e.getPosition()) < GameProperties.get().getUnitRadius() && base.getOwner() != e.getOwner())
+					.collect(Collectors.toList());
+			for(Unit attacked:unitsInRange) {
+				if (attackUnits.containsKey(attacked)) {
+					attackUnits.put(attacked,
+							attackUnits.get(attacked) + GameProperties.get().getBaseAttack());
+				} else {
+					attackUnits.put(attacked, GameProperties.get().getBaseAttack());
+				}
+			}
+		}
+		attackUnits.forEach((u, i) -> u.attack(i));
 	}
 
 	void addUnit(Unit unit) {

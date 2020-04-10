@@ -7,7 +7,6 @@ import de.acagamics.crushingrocks.RenderingProperties;
 import de.acagamics.crushingrocks.logic.Base;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
-import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.logic.Unit;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.ui.interfaces.IDrawable;

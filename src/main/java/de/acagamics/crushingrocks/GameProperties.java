@@ -11,6 +11,7 @@ import de.acagamics.framework.types.Vec2f;
  */
 public final class GameProperties {
 
+
 	private GameProperties() {
 	}
 
@@ -27,6 +28,11 @@ public final class GameProperties {
 	 * Initial health points of the base.
 	 */
 	private int baseHP;
+
+	/**
+	 * Attack damage a base inflicts on all enemy units in range.
+	 */
+	private int baseAttack;
 
 	/**
 	 * Attack radius of the Base.
@@ -73,8 +79,12 @@ public final class GameProperties {
 	/**
 	 * Ticks it takes to capture a mine;
 	 */
-
 	private float mineCapturingPerFrame = 0.005f;
+
+	/**
+	 * Multiplier a capturing unit gets when recapturing.
+	 */
+	private float mineRecapturingMultiplier = 2;
 
 	/**
 	 * Capture radius for mines.
@@ -102,6 +112,14 @@ public final class GameProperties {
 
 	public float getSpeedUp() {
 		return speedUp;
+	}
+
+	public int getBaseAttack() {
+		return baseAttack;
+	}
+
+	public float getMineRecapturingMultiplier() {
+		return mineRecapturingMultiplier;
 	}
 
 	public enum SITES{ YELLOW, BLUE}
