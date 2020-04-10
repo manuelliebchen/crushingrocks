@@ -19,10 +19,7 @@ import de.acagamics.framework.types.Vec2f;
  */
 @Student(name = "Manuel Liebchen", matrikelnummer = -1)
 public final class BotyMcBotface implements IPlayerController {
-	Random random = new Random();
-	
-//	int nextUnit = random.nextInt(3)+1;
-	int nextUnit = 1;
+	int nextUnit = new Random().nextInt(3)+1;
 	
 	@Override
 	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
@@ -39,10 +36,10 @@ public final class BotyMcBotface implements IPlayerController {
 		}
 		if(ownPlayer.hasHero()){
 			Unit hero = ownPlayer.getHero();
-			Vec2f order = hero.getPosition().sub(enemyPlayerInfo.getBase().getPosition());
+			Vec2f order = enemyPlayerInfo.getBase().getPosition().sub(hero.getPosition());
 			hero.setOrder(this, order);
 		}
-		if(units.size() < 1){
+		if(units.size() < GameProperties.get().getMaxUnitsPerPlayer()/2){
 			ownPlayer.setUnitCreationOrder(this, nextUnit);
 		}
 		ownPlayer.setHeroCreationOrder(this);

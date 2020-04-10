@@ -110,10 +110,6 @@ public final class GameProperties {
 	
 	private List<Vec2f> playerBasePosition;
 
-	public float getSpeedUp() {
-		return speedUp;
-	}
-
 	public int getBaseAttack() {
 		return baseAttack;
 	}
@@ -140,16 +136,19 @@ public final class GameProperties {
 		return unitRadius;
 	}
 
-	public float getMaxUnitSpeed() {
-		return maxUnitSpeed;
+	public float getMaxUnitSpeed(int speedup) {
+		return maxUnitSpeed + speedup * this.speedUp;
 	}
 
-	public float getCostExponent() {
-		return costExponent;
-	}
-
-	public int getConstMultipier() {
-		return constMultipier;
+	/**
+	 * Calculates the cost of an Unit with given strength.
+	 *
+	 * @param strength of the unit in question
+	 * @return cost of unit with given strength
+	 */
+	public int getUnitCost(int strength) {
+		return (int) (Math.pow(strength, costExponent)
+				* constMultipier);
 	}
 
 	public int getNumberOfMines() {

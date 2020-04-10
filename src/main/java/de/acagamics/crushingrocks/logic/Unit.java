@@ -14,8 +14,9 @@ public final class Unit {
 	private Vec2f position;
 	private Player owner;
 	private int strength;
-	private int speedup;
 	private boolean isHero;
+
+	private int speedup;
 
 	private Vec2f orderedDirection;
 
@@ -68,14 +69,13 @@ public final class Unit {
 
 	Vec2f updatePosition(Map mapinfo) {
 		if (orderedDirection != null) {
-			float currentMaxSpeed = GameProperties.get().getMaxUnitSpeed() + speedup * GameProperties.get().getSpeedUp();
+			float currentMaxSpeed = GameProperties.get().getMaxUnitSpeed(speedup);
 			if (orderedDirection.length() > currentMaxSpeed) {
 				orderedDirection = orderedDirection.getNormalized().mult(currentMaxSpeed);
 			}
-			position = position.add(orderedDirection);
-			orderedDirection = null;
+			position = mapinfo.boundInMap(position.add(orderedDirection));
 
-			position = mapinfo.boundInMap(position);
+			orderedDirection = null;
 		}
 		return position;
 	}
@@ -88,7 +88,7 @@ public final class Unit {
 	 * Increases speedup by one.
 	 * {@link GameProperties#getSpeedUp()}
 	 */
-	void addSpeedup() {
+	protected void addSpeedup() {
 		speedup += 1;
 	}
 
@@ -106,16 +106,5 @@ public final class Unit {
 	 */
 	public int getSpeedup() {
 		return speedup;
-	}
-
-	/**
-	 * Calculates the cost of an Unit with given strength.
-	 * 
-	 * @param strength of the unit in question
-	 * @return cost of unit with given strength
-	 */
-	public static int getUnitCost(int strength) {
-		return (int) (Math.pow(strength, GameProperties.get().getCostExponent())
-				* GameProperties.get().getConstMultipier());
 	}
 }

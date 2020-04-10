@@ -113,7 +113,7 @@ public final class Game implements EventHandler<InputEvent> {
 	 * @return if the game is over it returns a gamestatistic, else null.
 	 */
 	public GameStatistic tick() {
-		--framesLeft;
+		framesLeft -= 1;
 		if (framesLeft <= 0) {
 			return new GameStatistic(new ArrayList<Player>(players));
 		}
@@ -147,7 +147,6 @@ public final class Game implements EventHandler<InputEvent> {
 		for (Player player : players) {
 			IPlayerController controller = player.getController();
 			if (controller instanceof EventHandler) {
-
 				@SuppressWarnings("unchecked")
 				EventHandler<InputEvent> handler = ((EventHandler<InputEvent>) controller);
 

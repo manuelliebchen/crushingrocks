@@ -14,11 +14,11 @@ import de.acagamics.framework.types.Vec2f;
  */
 public final class Map {
 
+	private int playerSize;
+
 	private List<Base> bases;
 	private List<Mine> mines;
 	private List<Unit> allUnits;
-
-	private int playerSize;
 
 	private Random random;
 

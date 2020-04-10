@@ -1,8 +1,5 @@
 package de.acagamics.crushingrocks.logic;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.framework.types.Vec2f;
 
@@ -55,5 +52,6 @@ public final class Base {
 
 	void attack(int damage) {
 		hp -= damage;
+		hp = Math.max(0,hp);
 	}
 }

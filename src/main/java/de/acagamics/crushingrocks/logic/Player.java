@@ -29,6 +29,7 @@ public final class Player {
 	private int playerID;
 
 	private Base base;
+
 	private List<Unit> units;
 	private int unitCreationOrder;
 
@@ -70,7 +71,7 @@ public final class Player {
 
 	void executeOrders(Map mapInfo) {
 		if(heroCreationOrder && hero == null){
-			int cost = Unit.getUnitCost(GameProperties.get().getHeroStrength());
+			int cost = GameProperties.get().getUnitCost(GameProperties.get().getHeroStrength());
 			if(creditPoints >= cost) {
 				hero = new Unit(GameProperties.get().getHeroStrength(), this, base.getPosition(), true);
 				mapInfo.addUnit(hero);
@@ -81,7 +82,7 @@ public final class Player {
 
 		if (unitCreationOrder > 0
 				&& units.size() <= GameProperties.get().getMaxUnitsPerPlayer()) {
-			int cost = Unit.getUnitCost(unitCreationOrder);
+			int cost = GameProperties.get().getUnitCost(unitCreationOrder);
 			if(creditPoints >= cost){
 				Unit unit = new Unit(unitCreationOrder, this, base.getPosition(),false);
 				units.add(unit);
@@ -92,8 +93,9 @@ public final class Player {
 		unitCreationOrder = 0;
 
 		for (Mine mine : mapInfo.getMines()) {
-			creditPoints += mine.getOwnership()[playerID] * GameProperties.get().getPerMineIncome();
-			score += mine.getOwnership()[playerID] * GameProperties.get().getPerMineIncome();
+			float income = mine.getOwnership()[playerID] * GameProperties.get().getPerMineIncome();
+			creditPoints += income;
+			score += income;
 		}
 	}
 
@@ -103,15 +105,12 @@ public final class Player {
 
 	Student getStudent() {return student;}
 
-	void removeDeath() {
-		if(hero != null && hero.getStrength() <= 0){
-			hero = null;
-		}
-		units.removeIf(u -> u.getStrength() <= 0);
-	}
-
 	void remove(Unit unit) {
-		units.remove(unit);
+		if(unit.isHero()){
+			hero = null;
+		} else {
+			units.remove(unit);
+		}
 	}
 
 	/**
@@ -123,7 +122,7 @@ public final class Player {
 	 */
 	public int setUnitCreationOrder(IPlayerController controller, int strength) {
 		if (controller == this.controller && strength > 0 && strength <= GameProperties.get().getMaxUnitStrength()) {
-			int cost = Unit.getUnitCost(strength);
+			int cost = GameProperties.get().getUnitCost(strength);
 			if (creditPoints >= cost) {
 				unitCreationOrder = strength;
 				return cost;
@@ -132,9 +131,14 @@ public final class Player {
 		return 0;
 	}
 
+	/**
+	 * Sets the order to create a Hero
+	 * @param controller of the owner of the player. This is mostly just 'this'.
+	 * @return the cost of the unit. Zero if none created.
+	 */
 	public int setHeroCreationOrder(IPlayerController controller) {
 		if (controller == this.controller) {
-			int cost = Unit.getUnitCost(GameProperties.get().getHeroStrength());
+			int cost = GameProperties.get().getUnitCost(GameProperties.get().getHeroStrength());
 			if (creditPoints >= cost) {
 				heroCreationOrder = true;
 				return cost;
