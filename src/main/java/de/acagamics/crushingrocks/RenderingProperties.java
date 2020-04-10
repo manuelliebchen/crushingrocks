@@ -10,6 +10,8 @@ public class RenderingProperties {
 	
 	private float unitRenderingMultiplier;
 
+	private float unitSpeedupSize;
+
 	private String backgroundColor;
 	
 	private List<Color> playerColors;
@@ -26,6 +28,10 @@ public class RenderingProperties {
 
 	public float getUnitRenderingMultiplier() {
 		return unitRenderingMultiplier;
+	}
+
+	public float getUnitSpeedupSize() {
+		return unitSpeedupSize;
 	}
 
 	public String getBackgroundColor() {

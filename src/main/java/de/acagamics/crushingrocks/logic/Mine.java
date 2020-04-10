@@ -15,17 +15,13 @@ public final class Mine {
 	private final int mineid;
 	
 	private Vec2f position;
+	private int numberOfPlayer;
 	private float[] ownership;
-	
-	Mine(Mine copy){
-		this.mineid = copy.mineid;
-		this.position = new Vec2f(copy.position);
-		this.ownership = copy.ownership;
-	}
 	
 	Mine(Vec2f position, int mineid, int numberOfPlayer){
 		this.mineid = mineid;
 		this.position = position;
+		this.numberOfPlayer = numberOfPlayer;
 		ownership = new float[numberOfPlayer];
 		for(int i = 0; i < numberOfPlayer; ++i) {
 			ownership[i] = 1 / (float) numberOfPlayer;
@@ -70,48 +66,41 @@ public final class Mine {
 		this.ownership = ownership;
 	}
 
-	void update(List<Player> players, List<Unit> allUnits) {
-		float[] count = getUnitComposition(allUnits, players.size());
+	void update(List<Unit> allUnits) {
+		float[] count = getUnitComposition(allUnits);
 
-		for(int i = 0; i < ownership.length; ++i) {
-			float negativSum = 0;
-			for(int j = 0; j < count.length; ++j) {
-				if(i != j) {
-					negativSum += count[j];
-				}
-			}
-			ownership[i] += (count[i] - negativSum) * GameProperties.get().getMineCapturingPerFrame();
+		float avrage = 0;
+		for(int i = 0; i < numberOfPlayer; ++i) {
+			avrage += count[i];
+		}
+		avrage /= numberOfPlayer;
+
+		for(int i = 0; i < numberOfPlayer; ++i) {
+			ownership[i] += (count[i] - avrage) * GameProperties.get().getMineCapturingPerFrame();
 		}
 		
 		float sum = 0;
 		for(float owner : ownership) {
 			sum += owner;
 		}
-		if(sum > 0){
-			for(int i = 0; i < count.length; ++i) {
+		if(Math.abs(sum - 1) > GameProperties.EPSILON && Math.abs(sum) > GameProperties.EPSILON){
+			for(int i = 0; i < numberOfPlayer; ++i) {
 				ownership[i] /= sum;
 			}
 		}
 		
-		for(int i = 0; i < ownership.length; ++i) {
+		for(int i = 0; i < numberOfPlayer; ++i) {
 			ownership[i] = Math.min(1, Math.max(0, ownership[i]));
 		}
 	}
 
-	private float[] getUnitComposition(List<Unit> allUnits, int playersSize) {
-		float[] count = new float[playersSize];
+	private float[] getUnitComposition(List<Unit> allUnits) {
+		float[] count = new float[numberOfPlayer];
 
 		for(Unit unit : allUnits) {
 			if(position.distance(unit.getPosition()) < GameProperties.get().getMineRadius()) {
 				count[unit.getOwner().getPlayerID()] += unit.getStrength();
 			}
-		}
-		float sum = 0;
-		for(int i = 0; i < count.length; ++i) {
-			sum += count[i];
-		}
-		if(sum == 0) {
-			return count;
 		}
 		return count;
 	}

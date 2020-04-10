@@ -24,7 +24,6 @@ public final class MapOverlayRendering implements IDrawable {
 
 	private List<Base> bases;
 	private List<Mine> mines;
-	private List<Player> players;
 
 	/**
 	 * Used to render the game map.
@@ -35,7 +34,6 @@ public final class MapOverlayRendering implements IDrawable {
 		gameMap = inGameMap;
 		mines = gameMap.getMines();
 		bases = gameMap.getBases();
-		players = gameMap.getPlayers();
 	}
 
 	/**
@@ -68,7 +66,7 @@ public final class MapOverlayRendering implements IDrawable {
 			float[] ownership = mine.getOwnership();
 
 			for (int i = 0; i < ownership.length; ++i) {
-				context.setStroke(players.get(i).getColor());
+				context.setStroke(renderingProperties.getPlayerColors().get(i));
 				context.strokeArc(mine.getPosition().getX() - gameProperties.getMineRadius(),
 						mine.getPosition().getY() - gameProperties.getMineRadius(), 2 * gameProperties.getMineRadius(),
 						2 * gameProperties.getMineRadius(),
@@ -78,13 +76,11 @@ public final class MapOverlayRendering implements IDrawable {
 			}
 		}
 
-		for (Player player : players) {
-			context.setStroke(player.getColor());
-			for (Unit unit : player.getUnits()) {
-				context.strokeOval(unit.getPosition().getX() - gameProperties.getUnitRadius(),
-						unit.getPosition().getY() - gameProperties.getUnitRadius(), 2 * gameProperties.getUnitRadius(),
-						2 * gameProperties.getUnitRadius());
-			}
+		for (Unit unit : gameMap.getAllUnits()) {
+			context.setStroke(renderingProperties.getPlayerColors().get(unit.getOwner().getPlayerID()));
+			context.strokeOval(unit.getPosition().getX() - gameProperties.getUnitRadius(),
+					unit.getPosition().getY() - gameProperties.getUnitRadius(), 2 * gameProperties.getUnitRadius(),
+					2 * gameProperties.getUnitRadius());
 		}
 	}
 

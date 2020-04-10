@@ -24,7 +24,6 @@ public final class MapRendering implements IDrawable {
 
 	private List<Base> bases;
 	private List<Mine> mines;
-	private List<Player> players;
 
 	/**
 	 * Used to render the game map.
@@ -35,7 +34,6 @@ public final class MapRendering implements IDrawable {
 		gameMap = inGameMap;
 		mines = gameMap.getMines();
 		bases = gameMap.getBases();
-		players = gameMap.getPlayers();
 	}
 
 	/**
@@ -78,24 +76,23 @@ public final class MapRendering implements IDrawable {
 		Image unitTexture1 = ResourceManager.getInstance().loadImage("Unit1.png");
 		Image unitTexture2 = ResourceManager.getInstance().loadImage("Unit2.png");
 		Image unitTexture3 = ResourceManager.getInstance().loadImage("Unit3.png");
-		Image untiTexture;
-		for (Player player : players) {
-			for (Unit unit : player.getUnits()) {
-				if (unit.getStrength() <= 1) {
-					untiTexture = unitTexture1;
-				} else if (unit.getStrength() <= 2) {
-					untiTexture = unitTexture2;
-				} else {
-					untiTexture = unitTexture3;
-				}
-				context.drawImage(untiTexture,
-						unit.getPosition().getX()
-								- gameProperties.getUnitRadius() * renderingProperties.getUnitRenderingMultiplier(),
-						unit.getPosition().getY()
-								- gameProperties.getUnitRadius() * renderingProperties.getUnitRenderingMultiplier(),
-						2 * renderingProperties.getUnitRenderingMultiplier() * gameProperties.getUnitRadius(),
-						2 * renderingProperties.getUnitRenderingMultiplier() * gameProperties.getUnitRadius());
+		for (Unit unit : gameMap.getAllUnits()) {
+			Image untiTexture;
+			float size = gameProperties.getUnitRadius() * renderingProperties.getUnitRenderingMultiplier() + unit.getSpeedup() * renderingProperties.getUnitSpeedupSize();
+			if (unit.getStrength() >= 3) {
+				untiTexture = unitTexture3;
+			} else if (unit.getStrength() >= 2) {
+				untiTexture = unitTexture2;
+			} else {
+				untiTexture = unitTexture1;
 			}
+			context.drawImage(untiTexture,
+					unit.getPosition().getX()
+							- size,
+					unit.getPosition().getY()
+							- size,
+					2 * size,
+					2 * size);
 		}
 	}
 

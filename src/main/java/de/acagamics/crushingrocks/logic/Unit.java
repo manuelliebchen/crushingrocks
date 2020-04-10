@@ -14,13 +14,16 @@ public final class Unit {
 	private Vec2f position;
 	private Player owner;
 	private int strength;
+	private int speedup;
+	private boolean isHero;
 
 	private Vec2f orderedDirection;
 
-	Unit(int strength, Player owner, Vec2f position) {
+	Unit(int strength, Player owner, Vec2f position, boolean isHero) {
 		this.strength = strength;
 		this.owner = owner;
 		this.position = position;
+		this.isHero = isHero;
 	}
 
 	/**
@@ -45,6 +48,13 @@ public final class Unit {
 	}
 
 	/**
+	 * Whether or not a unit is a hero unit.
+	 */
+	public boolean isHero() {
+		return isHero;
+	}
+
+	/**
 	 * Sets the order for this unit for in current frame.
 	 * 
 	 * @param controller of the owner of the unit for verification.
@@ -56,30 +66,46 @@ public final class Unit {
 		}
 	}
 
-	Vec2f updatePosition() {
+	Vec2f updatePosition(Map mapinfo) {
 		if (orderedDirection != null) {
-			if (orderedDirection.length() > GameProperties.get().getMaxUnitSpeed()) {
-				orderedDirection = orderedDirection.getNormalized().mult(GameProperties.get().getMaxUnitSpeed());
+			float currentMaxSpeed = GameProperties.get().getMaxUnitSpeed() + speedup * GameProperties.get().getSpeedUp();
+			if (orderedDirection.length() > currentMaxSpeed) {
+				orderedDirection = orderedDirection.getNormalized().mult(currentMaxSpeed);
 			}
 			position = position.add(orderedDirection);
 			orderedDirection = null;
-			float mapradius = GameProperties.get().getMapRadius();
-			if(position.getX() > mapradius) {
-				position = new Vec2f(mapradius, position.getY());
-			} else if(position.getX() < - mapradius){
-				position = new Vec2f(-mapradius, position.getY());
-			}
-			if(position.getY() > mapradius) {
-				position = new Vec2f(position.getX(), mapradius);
-			} else if(position.getY() < - mapradius){
-				position = new Vec2f(position.getX(), -mapradius);
-			}
+
+			position = mapinfo.boundInMap(position);
 		}
 		return position;
 	}
 
-	void attackBy(int damage) {
+	void attack(int damage) {
 		strength -= damage;
+	}
+
+	/**
+	 * Increases speedup by one.
+	 * {@link GameProperties#getSpeedUp()}
+	 */
+	void addSpeedup() {
+		speedup += 1;
+	}
+
+	boolean removeIfDeath() {
+		if(strength <= 0) {
+			owner.remove(this);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Speedup multiplier a unit has. Will be multiplied by {@link GameProperties#getSpeedUp()} to get actual speedup
+	 * @return The speedup a unit gets. speedup >= 0
+	 */
+	public int getSpeedup() {
+		return speedup;
 	}
 
 	/**

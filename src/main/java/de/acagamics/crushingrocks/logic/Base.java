@@ -64,7 +64,7 @@ public final class Base {
 				.mapToInt(Unit::getStrength).sum();
 
 		for (int i = 0; i < unitsInBaseRadius.size(); i++) {
-			unitsInBaseRadius.get(i).attackBy(1);
+			unitsInBaseRadius.get(i).attack(1);
 		}
 
 		hp -= unitsInAttackRadius;

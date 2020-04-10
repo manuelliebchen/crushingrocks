@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
  * @author Max
  *
  */
-@Student(name="Max")
+@Student(name="Max", matrikelnummer = -1)
 public final class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 
 	private int mineOrder;

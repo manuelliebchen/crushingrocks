@@ -1,8 +1,6 @@
 package de.acagamics.crushingrocks.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.framework.types.Vec2f;
@@ -17,25 +15,33 @@ public final class Map {
 
 	private List<Base> bases;
 	private List<Mine> mines;
-	private List<Player> players;
+	private List<Unit> allUnits;
+
+	private int playerSize;
 
 	private Random random;
 
-	Map(Random random, List<Player> player) {
+	Map(Random random, List<Player> players) {
 		this.random = random;
 
-		bases = new ArrayList<>(player.size());
-		this.players = player;
+		bases = new ArrayList<>(players.size());
+		allUnits = new ArrayList<>();
+		playerSize = players.size();
 
-		for (int i = 0; i < player.size(); i++) {
-			bases.add(new Base(player.get(i), GameProperties.get().getPlayerBasePosition().get(i)));
-			this.players.get(i).setBase(bases.get(i));
+		for (int i = 0; i < playerSize; i++) {
+			Base base = new Base(players.get(i), GameProperties.get().getPlayerBasePosition().get(i));
+			bases.add(base);
+			players.get(i).setBase(base);
+			allUnits.addAll(players.get(i).getUnits());
+			if(players.get(i).hasHero()){
+				allUnits.add(players.get(i).getHero());
+			}
 		}
 
 		List<Vec2f> minePositions = generateMinePositions();
 		mines = new ArrayList<>(GameProperties.get().getNumberOfMines());
 		for (int i = 0; i < GameProperties.get().getNumberOfMines(); ++i) {
-			mines.add(new Mine(minePositions.get(i), i, player.size()));
+			mines.add(new Mine(minePositions.get(i), i, players.size()));
 		}
 		mines.sort((m, n) -> (int) (1000 * (m.getPosition().getY() - n.getPosition().getY())));
 	}
@@ -56,7 +62,7 @@ public final class Map {
 			}
 
 			for(Vec2f mineposition : minePositions) {
-				overlap |= checkPosition(mineposition, minePositions);
+				overlap |= checkMinePosition(mineposition, minePositions);
 			}
 		} while(overlap);
 		return minePositions;
@@ -64,7 +70,7 @@ public final class Map {
 
 	private List<Vec2f> generationStep(List<Vec2f> minePositions){
 		float distSum = 0;
-		float[] dists = new float[players.size()];
+		float[] dists = new float[playerSize];
 		// Data aquisition
 		for (int j = 0; j < GameProperties.get().getNumberOfMines(); ++j) {
 			for (int k = 0; k < bases.size(); ++k) {
@@ -97,7 +103,7 @@ public final class Map {
 		return minePositions;
 	}
 
-	private boolean checkPosition(Vec2f mineposition, List<Vec2f> minePositions) {
+	private boolean checkMinePosition(Vec2f mineposition, List<Vec2f> minePositions) {
 		if(mineposition.getX() > GameProperties.get().getMapRadius() || mineposition.getX() < -GameProperties.get().getMapRadius() || mineposition.getY() > GameProperties.get().getMapRadius() || mineposition.getY() < -GameProperties.get().getMapRadius()) {
 			return true;
 		}
@@ -134,25 +140,87 @@ public final class Map {
 	public List<Mine> getMines() {
 		return new ArrayList<>(mines);
 	}
-
-	/**
-	 * Get all players in this map.
-	 * 
-	 * @return players in this map
-	 */
-	public List<Player> getPlayers() {
-		return new ArrayList<>(players);
-	}
 	
 	/**
 	 * Get all Units on the map.
 	 * @return List of Units.
 	 */
 	public List<Unit> getAllUnits() {
-		List<Unit> allUnits = new ArrayList<>();
-		for(Player player : players) {
-			allUnits.addAll(player.getUnits());
+		List<Unit> units = new ArrayList<>(this.allUnits);
+		Collections.shuffle(units);
+		return units;
+	}
+
+
+	/**
+	 * Returns a Vec2f that is in the map boundaries.
+	 * @param pos vector to be checked.
+	 * @return Bound vector.
+	 */
+	public Vec2f boundInMap(Vec2f pos) {
+		float mapradius = GameProperties.get().getMapRadius();
+		if(pos.getX() > mapradius) {
+			pos = new Vec2f(mapradius, pos.getY());
+		} else if(pos.getX() < - mapradius){
+			pos = new Vec2f(-mapradius, pos.getY());
 		}
-		return allUnits;
+		if(pos.getY() > mapradius) {
+			pos = new Vec2f(pos.getX(), mapradius);
+		} else if(pos.getY() < - mapradius){
+			pos = new Vec2f(pos.getX(), -mapradius);
+		}
+		return pos;
+	}
+
+	void update() {
+		// Apply orders (move Units).
+		for (Unit unit : allUnits) {
+			unit.updatePosition(this);
+		}
+
+		// Update Mines (ownership)
+		for (Mine mine : this.getMines()) {
+			mine.update(allUnits);
+		}
+
+		// Update Bases (Attack by Units)
+		for (Base base : this.getBases()) {
+			base.update(allUnits);
+		}
+
+		updateUnits();
+	}
+
+
+	private void updateUnits() {
+		// Update Unit hp by attack.
+		java.util.Map<Unit, Integer> inflictedDamage = new HashMap<>();
+
+		for (Unit unit : allUnits) {
+			Optional<Unit> posibleAttacker = allUnits
+					.stream().filter(
+							e -> unit.getPosition().distance(e.getPosition()) < (2
+									* GameProperties.get().getUnitRadius()) && unit.getOwner() != e.getOwner())
+					.sorted((e1, e2) -> (int) (e1.getPosition().distance(unit.getPosition())
+							- e2.getPosition().distance(unit.getPosition())))
+					.findFirst();
+			if (posibleAttacker.isPresent()) {
+				Unit attacked = posibleAttacker.get();
+				if (inflictedDamage.containsKey(attacked)) {
+					inflictedDamage.put(attacked,
+							inflictedDamage.get(attacked) + unit.getStrength());
+				} else {
+					inflictedDamage.put(attacked, unit.getStrength());
+				}
+				unit.addSpeedup();
+			}
+		}
+		inflictedDamage.forEach((u, i) -> u.attack(i));
+
+		allUnits.removeIf( u -> u.removeIfDeath());
+	}
+
+	void addUnit(Unit unit) {
+		allUnits.add(unit);
 	}
 }

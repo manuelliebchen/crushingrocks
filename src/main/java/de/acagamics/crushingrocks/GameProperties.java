@@ -10,11 +10,12 @@ import de.acagamics.framework.types.Vec2f;
  * @author Manuel Liebchen
  */
 public final class GameProperties {
-	
+
+	private GameProperties() {
+	}
+
 	public static GameProperties get() {
 		return ResourceManager.getInstance().loadProperties(GameProperties.class);
-	}
-	private GameProperties() {
 	}
 	
 	/**
@@ -41,6 +42,11 @@ public final class GameProperties {
 	 * Maximal per step moving speed of a unit.
 	 */
 	private float maxUnitSpeed;
+
+	/**
+	 * Speedup a unit gets after a fight
+	 */
+	private float speedUp;
 	
 	private float costExponent;
 	private int constMultipier;
@@ -54,6 +60,10 @@ public final class GameProperties {
 	 * Maximum amount of units one can command.
 	 */
 	private int maxUnitsPerPlayer = 8;
+
+	private int maxUnitStrength = 10;
+
+	private int heroStrength = 10;
 
 	/**
 	 * Income per owned mine per tick.
@@ -89,6 +99,10 @@ public final class GameProperties {
 	
 	
 	private List<Vec2f> playerBasePosition;
+
+	public float getSpeedUp() {
+		return speedUp;
+	}
 
 	public enum SITES{ YELLOW, BLUE}
 
@@ -126,6 +140,14 @@ public final class GameProperties {
 
 	public int getMaxUnitsPerPlayer() {
 		return maxUnitsPerPlayer;
+	}
+
+	public int getMaxUnitStrength() {
+		return maxUnitStrength;
+	}
+
+	public int getHeroStrength() {
+		return heroStrength;
 	}
 
 	public int getPerMineIncome() {

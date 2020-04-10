@@ -160,20 +160,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		for(Unit unit : game.getMap().getAllUnits()) {
 			Point2D position = unit.getPosition().add(0, gameProperties.getUnitRadius()).getPoint2D();
 			position = transformation.transform(position);
-			String unitText = "";
-			switch(unit.getStrength()) {
-			case 1: 
-				unitText = "I";
-				break;
-			case 2: 
-				unitText = "II";
-				break;
-			case 3: 
-				unitText = "III";
-				break;
-			default:
-				unitText = "";
-			}
+			String unitText = getRoman(unit.getStrength());
 			Text text = new Text(unitText);
 			text.setFont(designProperties.getSmallFont());
 			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
@@ -185,6 +172,33 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		}
 		
 		drawables.draw(context);
+	}
+
+	private String getRoman(int number ){
+		switch(number) {
+			case 1:
+				return "I";
+			case 2:
+				return "II";
+			case 3:
+				return "III";
+			case 4:
+				return "IV";
+			case 5:
+				return "V";
+			case 6:
+				return "VI";
+			case 7:
+				return "VII";
+			case 8:
+				return "VIII";
+			case 9:
+				return "IX";
+			case 10:
+				return "X";
+			default:
+				return String.valueOf(number);
+		}
 	}
 
 	@Override

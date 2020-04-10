@@ -30,12 +30,15 @@ public final class Player {
 
 	private Base base;
 	private List<Unit> units;
-
 	private int unitCreationOrder;
 
-	Player(IPlayerController controller, Student student, Color color, int playerID) {
+	private Unit hero;
+	private boolean heroCreationOrder;
+
+
+	Player(IPlayerController controller, Color color, int playerID) {
 		this.controller = controller;
-		this.student = student;
+		this.student = controller.getClass().getAnnotation(Student.class);
 		this.color = color;
 		this.playerID = playerID;
 		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());
@@ -63,12 +66,28 @@ public final class Player {
 			LOG.error(e.toString());
 			LOG.error(e.getStackTrace()[0].toString());
 		}
+	}
 
-		int cost = Unit.getUnitCost(unitCreationOrder);
-		if (unitCreationOrder > 0 && creditPoints >= cost
+	void executeOrders(Map mapInfo) {
+		if(heroCreationOrder && hero == null){
+			int cost = Unit.getUnitCost(GameProperties.get().getHeroStrength());
+			if(creditPoints >= cost) {
+				hero = new Unit(GameProperties.get().getHeroStrength(), this, base.getPosition(), true);
+				mapInfo.addUnit(hero);
+				creditPoints -= cost;
+			}
+		}
+		heroCreationOrder = false;
+
+		if (unitCreationOrder > 0
 				&& units.size() <= GameProperties.get().getMaxUnitsPerPlayer()) {
-			units.add(new Unit(unitCreationOrder, this, base.getPosition()));
-			creditPoints -= cost;
+			int cost = Unit.getUnitCost(unitCreationOrder);
+			if(creditPoints >= cost){
+				Unit unit = new Unit(unitCreationOrder, this, base.getPosition(),false);
+				units.add(unit);
+				mapInfo.addUnit(unit);
+				creditPoints -= cost;
+			}
 		}
 		unitCreationOrder = 0;
 
@@ -85,7 +104,14 @@ public final class Player {
 	Student getStudent() {return student;}
 
 	void removeDeath() {
+		if(hero != null && hero.getStrength() <= 0){
+			hero = null;
+		}
 		units.removeIf(u -> u.getStrength() <= 0);
+	}
+
+	void remove(Unit unit) {
+		units.remove(unit);
 	}
 
 	/**
@@ -96,10 +122,21 @@ public final class Player {
 	 * @return the cost of the unit. Zero if none created.
 	 */
 	public int setUnitCreationOrder(IPlayerController controller, int strength) {
-		if (controller == this.controller && strength > 0 && strength <= 3) {
+		if (controller == this.controller && strength > 0 && strength <= GameProperties.get().getMaxUnitStrength()) {
 			int cost = Unit.getUnitCost(strength);
 			if (creditPoints >= cost) {
 				unitCreationOrder = strength;
+				return cost;
+			}
+		}
+		return 0;
+	}
+
+	public int setHeroCreationOrder(IPlayerController controller) {
+		if (controller == this.controller) {
+			int cost = Unit.getUnitCost(GameProperties.get().getHeroStrength());
+			if (creditPoints >= cost) {
+				heroCreationOrder = true;
 				return cost;
 			}
 		}
@@ -115,6 +152,9 @@ public final class Player {
 	public void setAllUnitsOrder(IPlayerController controller, Vec2f position) {
 		for (Unit unit : units) {
 			unit.setOrder(controller, position.sub(unit.getPosition()));
+		}
+		if(hero != null) {
+			hero.setOrder(controller, position.sub(hero.getPosition()));
 		}
 	}
 
@@ -156,14 +196,28 @@ public final class Player {
 	}
 
 	/**
-	 * @return a list of all units the player has under his controll.
+	 * @return a list of all units the player has under his control.
 	 */
 	public List<Unit> getUnits() {
 		return new ArrayList<>(units);
 	}
 
 	/**
-	 * @return the name of the player.s
+	 * @return Whether or not the player has an hero.
+	 */
+	public boolean hasHero() {
+		return hero != null;
+	}
+
+	/**
+	 * @return Gets the players hero unit.
+	 */
+	public Unit getHero() {
+		return hero;
+	}
+
+	/**
+	 * @return the name of the player.
 	 */
 	public String getName() {
 		return controller.getClass().getSimpleName();
