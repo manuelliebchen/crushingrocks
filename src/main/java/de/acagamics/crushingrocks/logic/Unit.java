@@ -50,6 +50,7 @@ public final class Unit {
 
 	/**
 	 * Whether or not a unit is a hero unit.
+	 * @return Whether or not a unit is a hero unit.
 	 */
 	public boolean isHero() {
 		return isHero;
@@ -86,7 +87,6 @@ public final class Unit {
 
 	/**
 	 * Increases speedup by one.
-	 * {@link GameProperties#getSpeedUp()}
 	 */
 	protected void addSpeedup() {
 		speedup += 1;
@@ -101,8 +101,8 @@ public final class Unit {
 	}
 
 	/**
-	 * Speedup multiplier a unit has. Will be multiplied by {@link GameProperties#getSpeedUp()} to get actual speedup
-	 * @return The speedup a unit gets. speedup >= 0
+	 * Speedup multiplier a unit has. Will be multiplied by to get actual speedup
+	 * @return The speedup a unit gets.
 	 */
 	public int getSpeedup() {
 		return speedup;

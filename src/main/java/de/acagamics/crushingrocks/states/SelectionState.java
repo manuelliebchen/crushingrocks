@@ -39,10 +39,8 @@ public class SelectionState extends MenuState {
 
 	public SelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		List<Class<?>> buildin = Arrays.asList(BotyMcBotface.class, EmptyBotyMcBotface.class,
-				HumanBot.class, EvilSanta.class);
-		playerLoader = new BotClassLoader<>(IPlayerController.class, buildin);
-		playerLoader.loadControllerFromDirectory(FileSystems.getDefault().getPath("").toAbsolutePath().toString());
+		playerLoader = new BotClassLoader<>(IPlayerController.class);
+		playerLoader.loadControllerFromDirectory();
 		bots = playerLoader.getLoadedBots();
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
