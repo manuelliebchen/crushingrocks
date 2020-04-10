@@ -44,7 +44,7 @@ public final class Map {
 		for (int i = 0; i < GameProperties.get().getNumberOfMines(); ++i) {
 			mines.add(new Mine(minePositions.get(i), i, players.size()));
 		}
-		mines.sort((m, n) -> (int) (1000 * (m.getPosition().getY() - n.getPosition().getY())));
+		mines.sort((m, n) -> m.getPosition().getY() - n.getPosition().getY()> 0 ? 1 : -1);
 	}
 
 	private List<Vec2f> generateMinePositions() {
@@ -213,8 +213,8 @@ public final class Map {
 				Optional<Unit> posibleUnit = allUnits
 						.stream().filter(
 								e -> unit.getPosition().distance(e.getPosition()) < GameProperties.get().getUnitRadius() && unit.getOwner() != e.getOwner())
-						.sorted((e1, e2) -> (int) (e1.getPosition().distance(unit.getPosition())
-								- e2.getPosition().distance(unit.getPosition())))
+						.sorted((e1, e2) -> (e1.getPosition().distance(unit.getPosition())
+								- e2.getPosition().distance(unit.getPosition())) > 0 ? 1 : -1)
 						.findFirst();
 				if (posibleUnit.isPresent()) {
 					Unit attacked = posibleUnit.get();

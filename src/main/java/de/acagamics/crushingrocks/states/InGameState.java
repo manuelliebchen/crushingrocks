@@ -48,10 +48,10 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	
 	Timeline timeline;
 
-	private MatchSettings<IPlayerController> settings;
+	private MatchSettings settings;
 	private Background background;
 
-	public InGameState(StateManager manager, GraphicsContext context, MatchSettings<IPlayerController> settings) {
+	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings) {
 		super(manager, context);
 		this.settings = settings;
 		

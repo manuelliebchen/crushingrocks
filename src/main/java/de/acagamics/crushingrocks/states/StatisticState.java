@@ -18,7 +18,7 @@ import javafx.scene.input.KeyCode;
 public class StatisticState extends MenuState {
 
 	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic,
-			MatchSettings<IPlayerController> settings) {
+			MatchSettings settings) {
 		super(manager, context);
 
 		clickable.add((Button) (new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", manager::pop)

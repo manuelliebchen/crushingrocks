@@ -1,19 +1,16 @@
 package de.acagamics.crushingrocks.states;
 
-import java.nio.file.FileSystems;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import io.github.classgraph.*;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.controller.builtin.BotyMcBotface;
-import de.acagamics.crushingrocks.controller.builtin.EmptyBotyMcBotface;
 import de.acagamics.crushingrocks.controller.builtin.EvilSanta;
-import de.acagamics.crushingrocks.controller.builtin.HumanBot;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.types.MatchSettings.GAMEMODE;
+import de.acagamics.framework.types.Student;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.Selector;
@@ -22,7 +19,6 @@ import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.IDrawable;
 import de.acagamics.framework.ui.interfaces.MenuState;
-import de.acagamics.framework.util.BotClassLoader;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -30,7 +26,6 @@ import javafx.scene.input.KeyCode;
 public class SelectionState extends MenuState {
 
 	private Selector[] botSelectors;
-	private BotClassLoader<IPlayerController> playerLoader;
 	private List<Class<?>> bots;
 
 	private Selector modeSelector;
@@ -39,9 +34,10 @@ public class SelectionState extends MenuState {
 
 	public SelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		playerLoader = new BotClassLoader<>(IPlayerController.class);
-		playerLoader.loadControllerFromDirectory();
-		bots = playerLoader.getLoadedBots();
+		try (ScanResult scanResult = new ClassGraph().enableAnnotationInfo().blacklistPackages("java", "javafx", "org.apache")
+				.scan()) {
+			bots = scanResult.getClassesImplementing(IPlayerController.class.getName()).filter( classInfo -> classInfo.hasAnnotation(Student.class.getName())).loadClasses();
+		}
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.TOP));
@@ -80,17 +76,17 @@ public class SelectionState extends MenuState {
 
 	}
 
-	private MatchSettings<IPlayerController> generateSettings() {
-		List<String> names = new ArrayList<>(2);
+	private MatchSettings generateSettings() {
+		List<Class<?>> names = new ArrayList<>(2);
 		if (GAMEMODE.values()[modeSelector.getValue()] == GAMEMODE.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
-				names.add(bots.get(botSelectors[i].getValue()).getName());
+				names.add(bots.get(botSelectors[i].getValue()));
 			}
 		} else if (GAMEMODE.values()[modeSelector.getValue()] == GAMEMODE.XMAS_CHALLENGE) {
-			names.add(bots.get(botSelectors[0].getValue()).getName());
-			names.add(EvilSanta.class.getName());
+			names.add(bots.get(botSelectors[0].getValue()));
+			names.add(EvilSanta.class);
 		}
-		return new MatchSettings<>(GAMEMODE.values()[modeSelector.getValue()], playerLoader, names,
+		return new MatchSettings(GAMEMODE.values()[modeSelector.getValue()], names,
 				speedSelectors.getValue());
 	}
 }

@@ -1,5 +1,6 @@
 package de.acagamics.crushingrocks.logic;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,12 @@ public final class Player {
 	private boolean heroCreationOrder;
 
 
-	Player(IPlayerController controller, Color color, int playerID) {
-		this.controller = controller;
+	Player(Class<?> controller, Color color, int playerID) {
+		try {
+			this.controller = (IPlayerController) controller.getDeclaredConstructor().newInstance();
+		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			LOG.error(e);
+		}
 		this.student = controller.getClass().getAnnotation(Student.class);
 		this.color = color;
 		this.playerID = playerID;

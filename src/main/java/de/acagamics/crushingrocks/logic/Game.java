@@ -37,17 +37,16 @@ public final class Game implements EventHandler<InputEvent> {
 	 * 
 	 * @param settings Settings for the game.
 	 */
-	public Game(MatchSettings<IPlayerController> settings) {
-		List<IPlayerController> playerController = settings.getControllers();
+	public Game(MatchSettings settings) {
 		GAMEMODE gamemode = settings.getMode();
 
 		inputTracker = new InputTracker();
 
-		RenderingProperties renderingProperties = ResourceManager.getInstance().loadProperties(RenderingProperties.class);
+		List<Class<?>> playerController = settings.getControllers();
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
 			players.add(new Player(playerController.get(i),
-					renderingProperties.getPlayerColors().get(i),
+					ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(i),
 					i));
 		}
 

@@ -17,6 +17,8 @@ dependencies {
 	implementation("org.apache.logging.log4j:log4j-core:2.13.0")
 	implementation("org.apache.logging.log4j:log4j-api:2.13.0")
 
+    implementation("io.github.classgraph:classgraph:4.8.67")
+
 	implementation("com.beust:jcommander:1.78")
 }
 
