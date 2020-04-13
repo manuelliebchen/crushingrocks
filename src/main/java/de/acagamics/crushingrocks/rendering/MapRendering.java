@@ -4,10 +4,7 @@ import java.util.List;
 
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.RenderingProperties;
-import de.acagamics.crushingrocks.logic.Base;
-import de.acagamics.crushingrocks.logic.Map;
-import de.acagamics.crushingrocks.logic.Mine;
-import de.acagamics.crushingrocks.logic.Unit;
+import de.acagamics.crushingrocks.logic.*;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.ui.interfaces.IDrawable;
 import javafx.scene.canvas.GraphicsContext;
@@ -52,6 +49,13 @@ public final class MapRendering implements IDrawable {
 		RenderingProperties renderingProperties = ResourceManager.getInstance()
 				.loadProperties(RenderingProperties.class);
 		GameProperties gameProperties = ResourceManager.getInstance().loadProperties(GameProperties.class);
+
+		for(Flavor flavor : gameMap.getFlavors()){
+			Image flavortexture = ResourceManager.getInstance().loadImage(flavor.getTexture());
+			context.drawImage(flavortexture, flavor.getPosition().getX() - flavor.getRadius(),
+					flavor.getPosition().getY() - flavor.getRadius(), 2 * flavor.getRadius(),
+					2 * flavor.getRadius());
+		}
 
 		for (Base base : bases) {
 			Image baseTexture = ResourceManager.getInstance()

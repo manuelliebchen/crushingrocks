@@ -1,6 +1,4 @@
 plugins {
-	application
-	
     `java-library`
     `java-library-distribution`
 	
@@ -25,6 +23,7 @@ dependencies {
 javafx {
     version = "11"
     modules("javafx.controls", "javafx.fxml")
+    configuration = "compileOnly"
 }
 
 java {
@@ -36,14 +35,4 @@ java {
     
     withJavadocJar()
     withSourcesJar()
-}
-
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "de.acagamics.crushingrocks.Main"
-    }
-}
-
-application {
-	mainClassName = "de.acagamics.crushingrocks.Main"
 }

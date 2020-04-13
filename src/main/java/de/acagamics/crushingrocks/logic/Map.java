@@ -20,10 +20,17 @@ public final class Map {
 	private List<Mine> mines;
 	private List<Unit> allUnits;
 
+	private List<Flavor> flavors;
+
 	private Random random;
 
 	Map(Random random, List<Player> players) {
 		this.random = random;
+
+		flavors = new ArrayList<>();
+		float mapRadius = GameProperties.get().getMapRadius();
+		flavors.addAll(Flavor.createFlavors(1000, v -> v.getY() > -mapRadius && v.length() > mapRadius, 3 * mapRadius, "Ressource.png", 0.05f, random));
+
 
 		bases = new ArrayList<>(players.size());
 		allUnits = new ArrayList<>();
@@ -253,5 +260,9 @@ public final class Map {
 
 	void addUnit(Unit unit) {
 		allUnits.add(unit);
+	}
+
+	public List<Flavor> getFlavors() {
+		return flavors;
 	}
 }
