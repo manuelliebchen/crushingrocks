@@ -64,18 +64,18 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		drawables = new RenderingLayer();
 		drawables.add(new DynamicTextBox(new Vec2f(0, 30), () -> String.valueOf(game.getFramesLeft()))
-				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.TOP));
+				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new DynamicTextBox(new Vec2f(100, 30), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
 				.setTextAlignment(ALIGNMENT.LEFT).setTextColor(game.getPlayer(0).getColor())
-				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.TOP));
+				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new ImageElement(new Vec2f(70, 30), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.LEFT)
-				.setHorizontalAlignment(ALIGNMENT.TOP));
+				.setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new DynamicTextBox(new Vec2f(-100, 30), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
 				.setTextAlignment(ALIGNMENT.RIGHT).setTextColor(game.getPlayer(1).getColor())
-				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.TOP));
+				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new ImageElement(new Vec2f(-70, 30), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.TOP));
-		
+				.setHorizontalAlignment(ALIGNMENT.UPPER));
+
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(
@@ -119,7 +119,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		}
 		background.draw(context);
 		Canvas canvas = context.getCanvas();
-		
+
 		context.save();
 
 		Affine transformation = new Affine();
@@ -142,7 +142,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		context.restore();
 
 		DesignProperties designProperties = ResourceManager.getInstance().loadProperties(DesignProperties.class);
-		
+
 		for (Mine mine : game.getMap().getMines()) {
 			Point2D position = mine.getPosition().add(0, gameProperties.getMineRadius()).getPoint2D();
 			position = transformation.transform(position);
@@ -156,7 +156,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			context.setFont(designProperties.getSmallFont());
 			context.fillText(mineText, position.getX(), position.getY());
 		}
-		
+
 		for(Unit unit : game.getMap().getAllUnits()) {
 			Point2D position = unit.getPosition().add(0, gameProperties.getUnitRadius()).getPoint2D();
 			position = transformation.transform(position);
@@ -165,12 +165,12 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			text.setFont(designProperties.getSmallFont());
 			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
 			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
-	
+
 			context.setFill(designProperties.getForegroundColor());
 			context.setFont(designProperties.getSmallFont());
 			context.fillText(unitText, position.getX(), position.getY());
 		}
-		
+
 		drawables.draw(context);
 	}
 

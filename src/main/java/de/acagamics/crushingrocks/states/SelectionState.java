@@ -40,7 +40,7 @@ public class SelectionState extends MenuState {
 		}
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
-				.setHorizontalAlignment(ALIGNMENT.TOP));
+				.setHorizontalAlignment(ALIGNMENT.UPPER));
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
 		modeSelector = new Selector(new Vec2f(0, 300), 200, 0, GAMEMODE.values().length - 1,
@@ -49,12 +49,12 @@ public class SelectionState extends MenuState {
 
 		Button startbutton = (Button) (new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
 				() -> manager.push(new InGameState(manager, context, generateSettings()))).setKeyCode(KeyCode.ENTER)
-						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.BOTTOM));
+						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER));
 		clickable.add(startbutton);
 
 		clickable.add((Button) (new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
+				.setHorizontalAlignment(ALIGNMENT.LOWER)));
 
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(-350, 400), "Bots:").setVerticalAlignment(ALIGNMENT.CENTER));
@@ -69,9 +69,9 @@ public class SelectionState extends MenuState {
 			startbutton.setEnabled(false);
 		}
 
-		drawables.add((IDrawable) new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.BOTTOM));
+		drawables.add((IDrawable) new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.LOWER));
 		speedSelectors = new Selector(new Vec2f(200, -120), 100, 1, 16, i -> i + "x")
-				.setHorizontalAlignment(ALIGNMENT.BOTTOM);
+				.setHorizontalAlignment(ALIGNMENT.LOWER);
 		clickable.add(speedSelectors);
 
 	}

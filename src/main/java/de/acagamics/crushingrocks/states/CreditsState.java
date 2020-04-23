@@ -30,10 +30,10 @@ public class CreditsState extends MenuState {
 		drawables.add(new TextBox(new Vec2f(0, 200), "\nManuel Liebchen\nAnja Kaminski\nMichl Steglich").setVerticalAlignment(ALIGNMENT.CENTER));
 		clickable.add((Button) (new Button(new Vec2f(200, 125), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
+				.setHorizontalAlignment(ALIGNMENT.LOWER)));
 
 		clickable.add((Button) (new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.BOTTOM)));
+				.setHorizontalAlignment(ALIGNMENT.LOWER)));
 	}
 }
