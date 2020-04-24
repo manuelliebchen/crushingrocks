@@ -40,9 +40,12 @@ public class MainMenuState extends MenuState {
 		clickable.add((Button) (new Button(new Vec2f(0, 350), BUTTON_TYPE.WIDE, "Start Game",
 				() -> manager.push(new SelectionState(manager, context))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER)));
-		clickable.add((Button) (new Button(new Vec2f(0, 425), BUTTON_TYPE.WIDE, "Show Credits",
-				() -> manager.push(new CreditsState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
+		clickable.add((Button) (new Button(new Vec2f(0, 425), BUTTON_TYPE.WIDE, "Simulation",
+				() -> manager.push(new SimulationSelectionState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
 						.setHorizontalAlignment(ALIGNMENT.UPPER)));
+		clickable.add((Button) (new Button(new Vec2f(0, 500), BUTTON_TYPE.WIDE, "Show Credits",
+				() -> manager.push(new CreditsState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
+				.setHorizontalAlignment(ALIGNMENT.UPPER)));
 		clickable.add((Button) (new Button(new Vec2f(0, -100), BUTTON_TYPE.WIDE, "Exit Game", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.CENTER)
 				.setHorizontalAlignment(ALIGNMENT.LOWER)));

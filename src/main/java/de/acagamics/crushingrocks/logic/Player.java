@@ -231,4 +231,11 @@ public final class Player {
 	public String getName() {
 		return controller.getClass().getSimpleName();
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(GameProperties.SITES.values()[playerID]) + "\t" +
+//				student.name() + ":" + student.matrikelnummer() + " - " +
+				getName();
+	}
 }

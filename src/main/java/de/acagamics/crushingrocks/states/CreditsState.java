@@ -28,12 +28,12 @@ public class CreditsState extends MenuState {
 		super(manager, context);
 		drawables.add(new TextBox(new Vec2f(0, 50), "Credits:").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.CENTER));
 		drawables.add(new TextBox(new Vec2f(0, 200), "\nManuel Liebchen\nAnja Kaminski\nMichl Steglich").setVerticalAlignment(ALIGNMENT.CENTER));
-		clickable.add((Button) (new Button(new Vec2f(200, 125), BUTTON_TYPE.NORMAL, "Back", manager::pop)
-				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.LOWER)));
 
-		clickable.add((Button) (new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", manager::pop)
+		clickable.add(new Button(new Vec2f(200, 125), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.LOWER)));
+				.setHorizontalAlignment(ALIGNMENT.LOWER));
+		clickable.add(new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", manager::pop)
+				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
+				.setHorizontalAlignment(ALIGNMENT.LOWER));
 	}
 }

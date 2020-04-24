@@ -1,8 +1,7 @@
 package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.GameProperties;
-import de.acagamics.crushingrocks.GameStatistic;
-import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.crushingrocks.logic.Game;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Unit;
@@ -51,7 +50,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	private MatchSettings settings;
 	private Background background;
 
-	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings) {
+	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings, int speedMultiplier) {
 		super(manager, context);
 		this.settings = settings;
 		
@@ -79,7 +78,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(
-				Duration.millis((double) ResourceManager.getInstance().loadProperties(ClientProperties.class).getMilisPerFrame() / settings.getSpeedMultiplier()), event ->
+				Duration.millis((double) ResourceManager.getInstance().loadProperties(ClientProperties.class).getMilisPerFrame() / speedMultiplier), event ->
 					frame()
 				);
 

@@ -30,7 +30,7 @@ javafx {
 
 java {
     group = "de.acagamics"
-	version = "1.4.0"
+	version = "1.5.0"
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11

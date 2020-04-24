@@ -75,3 +75,4 @@ src/extrenaltestbots/*
 
 .gradle
 build
+simulation_data.csv

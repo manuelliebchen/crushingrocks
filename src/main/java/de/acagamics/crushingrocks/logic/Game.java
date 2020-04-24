@@ -3,14 +3,16 @@ package de.acagamics.crushingrocks.logic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
+import de.acagamics.crushingrocks.GAMEMODE;
 import de.acagamics.crushingrocks.GameProperties;
-import de.acagamics.crushingrocks.GameStatistic;
+import de.acagamics.framework.simulation.Simulatable;
+import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.crushingrocks.RenderingProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.MatchSettings.GAMEMODE;
 import de.acagamics.framework.util.InputTracker;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
@@ -23,7 +25,7 @@ import javafx.scene.input.InputEvent;
  * @author Manuel Liebchen
  * 
  */
-public final class Game implements EventHandler<InputEvent> {
+public final class Game implements EventHandler<InputEvent>, Simulatable {
 	private List<Player> players;
 	private Map map;
 	private int framesLeft;
@@ -37,7 +39,7 @@ public final class Game implements EventHandler<InputEvent> {
 	 * 
 	 * @param settings Settings for the game.
 	 */
-	public Game(MatchSettings settings) {
+	public Game(MatchSettings<GAMEMODE> settings) {
 		GAMEMODE gamemode = settings.getMode();
 
 		inputTracker = new InputTracker();
@@ -111,10 +113,11 @@ public final class Game implements EventHandler<InputEvent> {
 	 * Perform a single step in the game. Updates Players and Map.
 	 * @return if the game is over it returns a gamestatistic, else null.
 	 */
+	@Override
 	public GameStatistic tick() {
 		framesLeft -= 1;
 		if (framesLeft <= 0) {
-			return new GameStatistic(new ArrayList<Player>(players));
+			return generateStatistic();
 		}
 
 		// Update Player.
@@ -132,13 +135,28 @@ public final class Game implements EventHandler<InputEvent> {
 		GameStatistic statistic = null;
 		for (Base base : map.getBases()) {
 			if (base.getHP() <= 0) {
-				statistic = new GameStatistic(new ArrayList<Player>(players));
+				statistic = generateStatistic();
 				break;
 			}
 		}
 
 		inputTracker.updateTables();
 		return statistic;
+	}
+
+	private GameStatistic generateStatistic(){
+		boolean hasWon = false;
+		for(Player player : players) {
+			hasWon |= player.getBase().getHP() <= 0;
+		}
+		if(hasWon) {
+			players.sort( (p1, p2) -> p2.getBase().getHP() - p1.getBase().getHP());
+		} else {
+			players.sort( (p1, p2) -> p2.getScore() - p1.getScore());
+		}
+
+		List<Class<?>> controllers = players.stream().map(p -> p.getController().getClass()).collect(Collectors.toList());
+		return new GameStatistic(!hasWon && players.get(0).getScore() == players.get(1).getScore(), controllers);
 	}
 
 	@Override
