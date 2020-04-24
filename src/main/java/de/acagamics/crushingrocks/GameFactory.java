@@ -1,9 +1,11 @@
 package de.acagamics.crushingrocks;
 
 import de.acagamics.crushingrocks.logic.Game;
+import de.acagamics.framework.simulation.Factory;
 import de.acagamics.framework.types.MatchSettings;
 
-public class GameFactory implements de.acagamics.framework.simulation.GameFactory<Game> {
+
+public class GameFactory implements Factory<Game> {
 
     private MatchSettings settings;
 
@@ -12,7 +14,7 @@ public class GameFactory implements de.acagamics.framework.simulation.GameFactor
     }
 
     @Override
-    public Game generateGame() {
+    public Game create() {
         return new Game(settings);
     }
 }

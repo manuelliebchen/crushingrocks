@@ -1,6 +1,6 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.GAMEMODE;
+import de.acagamics.crushingrocks.GameMode;
 import de.acagamics.crushingrocks.GameFactory;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.DesignProperties;
@@ -39,7 +39,7 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 
 	private Simulator simulator;
 
-	public SimulationState(StateManager manager, GraphicsContext context, SimulationSettings<GAMEMODE> settings) {
+	public SimulationState(StateManager manager, GraphicsContext context, SimulationSettings<GameMode> settings) {
 		super(manager, context);
 
 		this.simulator = new Simulator(settings, new GameFactory(settings.getMatchSettings()));

@@ -1,5 +1,5 @@
 package de.acagamics.crushingrocks;
 
-public enum  GAMEMODE {
+public enum GameMode {
     NORMAL, XMAS_CHALLENGE
 }

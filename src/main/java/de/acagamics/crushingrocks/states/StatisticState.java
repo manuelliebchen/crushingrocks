@@ -22,12 +22,12 @@ public class StatisticState extends MenuState {
 			MatchSettings settings) {
 		super(manager, context);
 
-		clickable.add((Button) (new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", manager::pop)
+		clickable.add(new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.LOWER)));
-		clickable.add((Button) (new Button(new Vec2f(-200, -125), BUTTON_TYPE.NORMAL, "Restart",
+				.setHorizontalAlignment(ALIGNMENT.LOWER));
+		clickable.add(new Button(new Vec2f(-200, -125), BUTTON_TYPE.NORMAL, "Restart",
 				() -> manager.switchCurrentState(new InGameState(manager, context, settings, 1))).setKeyCode(KeyCode.ENTER)
-						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER)));
+						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER));
 
 		drawables.add(new TextBox(new Vec2f(200, 50), "Statistics").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));

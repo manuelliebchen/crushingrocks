@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import de.acagamics.crushingrocks.GAMEMODE;
+import de.acagamics.crushingrocks.GameMode;
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.framework.simulation.Simulatable;
 import de.acagamics.framework.types.GameStatistic;
@@ -39,8 +39,8 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 	 * 
 	 * @param settings Settings for the game.
 	 */
-	public Game(MatchSettings<GAMEMODE> settings) {
-		GAMEMODE gamemode = settings.getMode();
+	public Game(MatchSettings<GameMode> settings) {
+		GameMode gamemode = settings.getMode();
 
 		inputTracker = new InputTracker();
 
@@ -54,7 +54,7 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 
 		this.random = new Random();
 		map = new Map(this.random, players);
-		if (gamemode == GAMEMODE.XMAS_CHALLENGE) {
+		if (gamemode == GameMode.XMAS_CHALLENGE) {
 			List<Mine> mines = map.getMines();
 			for (Mine mine : mines) {
 				mine.setOwnership(new float[] { 0, 1 });

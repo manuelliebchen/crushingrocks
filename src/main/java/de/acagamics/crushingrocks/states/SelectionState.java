@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.states;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.crushingrocks.GAMEMODE;
+import de.acagamics.crushingrocks.GameMode;
 import io.github.classgraph.*;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
@@ -44,18 +44,18 @@ public class SelectionState extends MenuState {
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
-		modeSelector = new Selector(new Vec2f(0, 300), 200, 0, GAMEMODE.values().length - 1,
-				i -> GAMEMODE.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
+		modeSelector = new Selector(new Vec2f(0, 300), 200, 0, GameMode.values().length - 1,
+				i -> GameMode.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(modeSelector);
 
-		Button startbutton = (Button) (new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
+		Button startbutton = new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
 				() -> manager.push(new InGameState(manager, context, generateSettings(), speedSelectors.getValue()))).setKeyCode(KeyCode.ENTER)
-						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER));
+						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER);
 		clickable.add(startbutton);
 
-		clickable.add((Button) (new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", manager::pop)
+		clickable.add(new Button(new Vec2f(-325, -120), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
-				.setHorizontalAlignment(ALIGNMENT.LOWER)));
+				.setHorizontalAlignment(ALIGNMENT.LOWER));
 
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(-350, 400), "Bots:").setVerticalAlignment(ALIGNMENT.CENTER));
@@ -79,14 +79,14 @@ public class SelectionState extends MenuState {
 
 	private MatchSettings generateSettings() {
 		List<Class<?>> names = new ArrayList<>(2);
-		if (GAMEMODE.values()[modeSelector.getValue()] == GAMEMODE.NORMAL) {
+		if (GameMode.values()[modeSelector.getValue()] == GameMode.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
 				names.add(bots.get(botSelectors[i].getValue()));
 			}
-		} else if (GAMEMODE.values()[modeSelector.getValue()] == GAMEMODE.XMAS_CHALLENGE) {
+		} else if (GameMode.values()[modeSelector.getValue()] == GameMode.XMAS_CHALLENGE) {
 			names.add(bots.get(botSelectors[0].getValue()));
 			names.add(EvilSanta.class);
 		}
-		return new MatchSettings(GAMEMODE.values()[modeSelector.getValue()], names);
+		return new MatchSettings(GameMode.values()[modeSelector.getValue()], names);
 	}
 }
