@@ -3,24 +3,25 @@ package de.acagamics.crushingrocks.logic;
 import java.util.List;
 
 import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.ui.interfaces.GameObject;
 
 /**
  * Coins can be collected by Players for increasing their score.
  * @author Manuel Liebchen
  *
  */
-public final class Mine {
+public final class Mine extends GameObject {
 	
 	private final int mineid;
-	
-	private Vec2f position;
+
 	private int numberOfPlayer;
 	private float[] ownership;
 	
 	Mine(Vec2f position, int mineid, int numberOfPlayer){
+		super(position);
 		this.mineid = mineid;
-		this.position = position;
 		this.numberOfPlayer = numberOfPlayer;
 		ownership = new float[numberOfPlayer];
 		for(int i = 0; i < numberOfPlayer; ++i) {
@@ -37,14 +38,10 @@ public final class Mine {
 		return mineid;
 	}
 
-	/**
-	 * Get the position of this coin.
-	 * @return position
-	 */
-	public Vec2f getPosition() {
-		return position.copy();
+	public float getRadius() {
+		return ResourceManager.getInstance().loadProperties(GameProperties.class).getMapRadius();
 	}
-	
+
 	/**
 	 * Owner of the Mine.
 	 * @param player of which the ownership is returned

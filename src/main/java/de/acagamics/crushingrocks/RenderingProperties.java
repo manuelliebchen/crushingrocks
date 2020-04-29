@@ -2,9 +2,12 @@ package de.acagamics.crushingrocks;
 
 import java.util.List;
 
+import de.acagamics.framework.resources.ResourceManager;
 import javafx.scene.paint.Color;
 
 public class RenderingProperties {
+
+	GameProperties gameProperties = ResourceManager.getInstance().loadProperties(GameProperties.class);
 
 	private float baseRenderingMultiplier;
 	
@@ -22,12 +25,14 @@ public class RenderingProperties {
 
 	private Color healthBackground;
 
-	public float getBaseRenderingMultiplier() {
-		return baseRenderingMultiplier;
+	private float minVisibleMapRadius;
+
+	public float getBaseRenderingRadius() {
+		return gameProperties.getBaseRadius() * baseRenderingMultiplier;
 	}
 
-	public float getUnitRenderingMultiplier() {
-		return unitRenderingMultiplier;
+	public float getUnitRenderingRadius() {
+		return gameProperties.getUnitRadius() *  unitRenderingMultiplier;
 	}
 
 	public float getUnitSpeedupSize() {
@@ -52,5 +57,9 @@ public class RenderingProperties {
 
 	public Color getHealthBackground() {
 		return healthBackground;
+	}
+
+	public float getMinVisibleMapRadius() {
+		return minVisibleMapRadius;
 	}
 }

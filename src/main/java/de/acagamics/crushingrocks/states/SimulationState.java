@@ -63,10 +63,11 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 
 		drawables.add( new DynamicTextBox(new Vec2f(-150, 50), () -> "Draws:" + simulator.getStatistics().getDraws()).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add( new DynamicTextBox(new Vec2f(-300, 50), () -> String.format("Runs: %7d", simulator.getStatistics().getWons().values().stream().reduce(0,Integer::sum))).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
-		drawables.add( new DynamicTextBox(new Vec2f(-500, 50), () -> String.format("Time: %7.2f", simulator.getTimeElapsed())).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
+		drawables.add( new DynamicTextBox(new Vec2f(-500, 50), () -> String.format("Progress: %3.0f%%", simulator.getProgress() * 100)).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
+		drawables.add( new DynamicTextBox(new Vec2f(-700, 50), () -> String.format("Time: %7.2f", simulator.getTimeElapsed())).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 
 		List<Class<?>> controllers = settings.getControllers();
-		Map scroes = simulator.getStatistics().getWons();
+		Map<Class<?>, Integer> scroes = simulator.getStatistics().getWons();
 		for(int i = 0; i < controllers.size(); ++i) {
 			float y = 350.0f + i * 50;
 			Class<?> controller = controllers.get(i);

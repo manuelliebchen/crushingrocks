@@ -2,16 +2,17 @@ package de.acagamics.crushingrocks.logic;
 
 import de.acagamics.crushingrocks.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.ui.interfaces.GameObject;
 
 /**
  * Unit of the Player to be controlled.
  * 
  * @author Manuel Liebchen
  */
-public final class Unit {
+public final class Unit extends GameObject {
 
-	private Vec2f position;
 	private Player owner;
 	private int strength;
 	private boolean isHero;
@@ -21,9 +22,9 @@ public final class Unit {
 	private Vec2f orderedDirection;
 
 	Unit(int strength, Player owner, Vec2f position, boolean isHero) {
+		super(position);
 		this.strength = strength;
 		this.owner = owner;
-		this.position = position;
 		this.isHero = isHero;
 	}
 
@@ -34,11 +35,8 @@ public final class Unit {
 		return owner;
 	}
 
-	/**
-	 * @return Position of this unit on the map.
-	 */
-	public Vec2f getPosition() {
-		return position.copy();
+	public float getRadius() {
+		return ResourceManager.getInstance().loadProperties(GameProperties.class).getUnitRadius();
 	}
 
 	/**

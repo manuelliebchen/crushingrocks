@@ -1,5 +1,6 @@
 package de.acagamics.crushingrocks.states;
 
+import de.acagamics.crushingrocks.GameMode;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
@@ -19,7 +20,7 @@ import java.util.List;
 public class StatisticState extends MenuState {
 
 	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic,
-			MatchSettings settings) {
+			MatchSettings<GameMode> settings) {
 		super(manager, context);
 
 		clickable.add(new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", manager::pop)

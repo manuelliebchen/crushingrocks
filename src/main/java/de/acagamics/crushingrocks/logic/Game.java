@@ -39,7 +39,7 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 	 * 
 	 * @param settings Settings for the game.
 	 */
-	public Game(MatchSettings<GameMode> settings) {
+	public Game(MatchSettings<GameMode> settings, Random random) {
 		GameMode gamemode = settings.getMode();
 
 		inputTracker = new InputTracker();
@@ -52,7 +52,7 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 					i));
 		}
 
-		this.random = new Random();
+		this.random = random;
 		map = new Map(this.random, players);
 		if (gamemode == GameMode.XMAS_CHALLENGE) {
 			List<Mine> mines = map.getMines();

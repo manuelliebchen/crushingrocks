@@ -2,6 +2,8 @@ baseRenderingMultiplier: 2.0
 unitRenderingMultiplier: 2.0
 unitSpeedupSize: 0.02
 
+minVisibleMapRadius: 2.5
+
 playerColors:
    - [ 0.925, 0.741, 0.192, 1]
    - [ 0.18, 0.314, 0.62, 1]

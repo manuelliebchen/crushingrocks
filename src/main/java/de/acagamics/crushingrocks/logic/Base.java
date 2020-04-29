@@ -1,15 +1,16 @@
 package de.acagamics.crushingrocks.logic;
 
 import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.ui.interfaces.GameObject;
 
 /**
  * A Class for the Base of a Player.
  * 
  * @author Manuel Liebchen
  */
-public final class Base {
-	private Vec2f position;
+public final class Base extends GameObject {
 	private Player owner;
 	private int hp;
 
@@ -20,8 +21,8 @@ public final class Base {
 	 * @param position
 	 */
 	Base(Player owner, Vec2f position) {
+		super(position);
 		this.owner = owner;
-		this.position = position;
 		hp = GameProperties.get().getBaseHP();
 	}
 
@@ -39,8 +40,13 @@ public final class Base {
 	 *
 	 * @return position
 	 */
+	@Override
 	public Vec2f getPosition() {
 		return position.copy();
+	}
+
+	public float getRadius() {
+		return ResourceManager.getInstance().loadProperties(GameProperties.class).getBaseRadius();
 	}
 
 	/**

@@ -1,14 +1,10 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.GameMode;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.crushingrocks.logic.Game;
-import de.acagamics.crushingrocks.logic.Mine;
-import de.acagamics.crushingrocks.logic.Unit;
-import de.acagamics.crushingrocks.rendering.MapOverlayRendering;
 import de.acagamics.crushingrocks.rendering.MapRendering;
 import de.acagamics.framework.resources.ClientProperties;
-import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
@@ -24,42 +20,44 @@ import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Affine;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
  * @author Manuel Liebchen
  */
 public final class InGameState extends GameState implements ISelfUpdating {
-
 	private Game game;
 	private MapRendering mapRenderer;
-	private MapOverlayRendering mapOverlayRenderer;
 	private RenderingLayer drawables;
 	
 	Timeline timeline;
 
-	private MatchSettings settings;
+	private MatchSettings<GameMode> settings;
 	private Background background;
 
-	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings, int speedMultiplier) {
+	private List<KeyCode> input;
+
+
+	public InGameState(StateManager manager, GraphicsContext context, MatchSettings<GameMode> settings, int speedMultiplier) {
+
 		super(manager, context);
 		this.settings = settings;
 		
 		background = new Background(50);
-		
-		game = new Game(settings);
+
+		game = new Game(settings, new Random());
 
 		mapRenderer = new MapRendering(game.getMap());
-		mapOverlayRenderer = new MapOverlayRendering(game.getMap());	
 
 		drawables = new RenderingLayer();
 		drawables.add(new DynamicTextBox(new Vec2f(0, 30), () -> String.valueOf(game.getFramesLeft()))
@@ -84,6 +82,8 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
+
+		input = new ArrayList<>();
 	}
 
 	@Override
@@ -105,7 +105,6 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		if (statistic != null) {
 			manager.switchCurrentState(new StatisticState(manager, context, statistic, settings));
 		}
-		mapRenderer.update();
 	}
 
 	/**
@@ -117,87 +116,9 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			return;
 		}
 		background.draw(context);
-		Canvas canvas = context.getCanvas();
-
-		context.save();
-
-		Affine transformation = new Affine();
-		GameProperties gameProperties = ResourceManager.getInstance().loadProperties(GameProperties.class);
-		transformation.appendTranslation(canvas.getWidth() / 2, canvas.getHeight() / 2);
-		if (canvas.getHeight() > canvas.getWidth()) {
-			transformation.appendScale(canvas.getWidth() / (gameProperties.getMapRadius() * 2.5),
-					canvas.getWidth() / (gameProperties.getMapRadius() * 2.5));
-		} else {
-			transformation.appendScale(canvas.getHeight() / (gameProperties.getMapRadius() * 2.5),
-					canvas.getHeight() / (gameProperties.getMapRadius() * 2.5));
-		}
-
-		context.setTransform(transformation);
 
 		mapRenderer.draw(context);
-
-		mapOverlayRenderer.draw(context);
-
-		context.restore();
-
-		DesignProperties designProperties = ResourceManager.getInstance().loadProperties(DesignProperties.class);
-
-		for (Mine mine : game.getMap().getMines()) {
-			Point2D position = mine.getPosition().add(0, gameProperties.getMineRadius()).getPoint2D();
-			position = transformation.transform(position);
-			String mineText = String.valueOf(mine.getMineID());
-			Text text = new Text(mineText);
-			text.setFont(designProperties.getSmallFont());
-			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
-			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
-
-			context.setFill(designProperties.getForegroundColor());
-			context.setFont(designProperties.getSmallFont());
-			context.fillText(mineText, position.getX(), position.getY());
-		}
-
-		for(Unit unit : game.getMap().getAllUnits()) {
-			Point2D position = unit.getPosition().add(0, gameProperties.getUnitRadius()).getPoint2D();
-			position = transformation.transform(position);
-			String unitText = getRoman(unit.getStrength());
-			Text text = new Text(unitText);
-			text.setFont(designProperties.getSmallFont());
-			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
-			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
-
-			context.setFill(designProperties.getForegroundColor());
-			context.setFont(designProperties.getSmallFont());
-			context.fillText(unitText, position.getX(), position.getY());
-		}
-
 		drawables.draw(context);
-	}
-
-	private String getRoman(int number ){
-		switch(number) {
-			case 1:
-				return "I";
-			case 2:
-				return "II";
-			case 3:
-				return "III";
-			case 4:
-				return "IV";
-			case 5:
-				return "V";
-			case 6:
-				return "VI";
-			case 7:
-				return "VII";
-			case 8:
-				return "VIII";
-			case 9:
-				return "IX";
-			case 10:
-				return "X";
-			default:
-				return String.valueOf(number);
-		}
 	}
 
 	@Override
@@ -206,14 +127,35 @@ public final class InGameState extends GameState implements ISelfUpdating {
 			KeyEvent keyEvent = (KeyEvent) event;
 			if (keyEvent.getCode() == KeyCode.ESCAPE) {
 				manager.pop();
-			} else if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && keyEvent.getCharacter().equals("p")) {
-				if (timeline.getStatus() == Status.RUNNING) {
-					timeline.stop();
-				} else {
-					timeline.play();
+			} else if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED)) {
+				if(keyEvent.getCharacter().equals("p")){
+					if (timeline.getStatus() == Status.RUNNING) {
+						timeline.stop();
+					} else {
+						timeline.play();
+					}
+				}
+			} else if(keyEvent.getEventType().equals(KeyEvent.KEY_PRESSED)){
+				input.add(keyEvent.getCode());
+				if(lastInputIs(konami)) {
+					System.out.println("There is nothing here!"); //NOSONAR it's just an ester egg!
 				}
 			}
 		}
 		game.handle(event);
+	}
+
+
+	private final List<KeyCode> konami = Arrays.asList(KeyCode.UP, KeyCode.UP, KeyCode.DOWN, KeyCode.DOWN, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.LEFT, KeyCode.RIGHT, KeyCode.B, KeyCode.A);
+	private boolean lastInputIs(List<KeyCode> code){
+		if(code.size() > input.size()){
+			return false;
+		}
+		for(int i = 0; i < code.size(); i++) {
+			if(!code.get(code.size()-1-i).equals(input.get(input.size()-1-i))){
+				return false;
+			}
+		}
+		return true;
 	}
 }

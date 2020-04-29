@@ -77,7 +77,7 @@ public class SelectionState extends MenuState {
 
 	}
 
-	private MatchSettings generateSettings() {
+	private MatchSettings<GameMode> generateSettings() {
 		List<Class<?>> names = new ArrayList<>(2);
 		if (GameMode.values()[modeSelector.getValue()] == GameMode.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
@@ -87,6 +87,6 @@ public class SelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()));
 			names.add(EvilSanta.class);
 		}
-		return new MatchSettings(GameMode.values()[modeSelector.getValue()], names);
+		return new MatchSettings<>(GameMode.values()[modeSelector.getValue()], names);
 	}
 }
