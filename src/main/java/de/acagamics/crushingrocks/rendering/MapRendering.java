@@ -45,16 +45,19 @@ public final class MapRendering implements IDrawable {
 
 		textureMap = new java.util.HashMap<>();
 		textureMap.put("Log", new Texture(new Vec2f(0, -0.2f), "Log.png", 0.05f, false));
+		textureMap.put("!Log", new Texture(new Vec2f(0, -0.2f), "Log.png", 0.05f, true));
 		textureMap.put("Blumengras", new Texture(new Vec2f(0 , 0.1f), "Blumengras.png", 0.075f, false));
 		textureMap.put("!Blumengras", new Texture(new Vec2f(0 , 0.1f), "Blumengras.png", 0.075f, true));
 		textureMap.put("Blumengras2", new Texture(new Vec2f(0 , 0.1f), "Blumengras2.png", 0.075f, false));
 		textureMap.put("!Blumengras2", new Texture(new Vec2f(0 , 0.1f), "Blumengras2.png", 0.075f, true));
 		textureMap.put("Ressource", new Texture(new Vec2f(0, -0.1f), "Ressource.png", 0.025f, true));
-		textureMap.put("Stein", new Texture(new Vec2f(0, -0.1f), "Stein.png", 0.075f, true));
-		textureMap.put("Baum", new Texture(new Vec2f(0, -0.8f), "Baum.png", 0.1f, true));
+		textureMap.put("Stein", new Texture(new Vec2f(0, -0.1f), "Stein.png", 0.075f, false));
+		textureMap.put("!Stein", new Texture(new Vec2f(0, -0.1f), "Stein.png", 0.075f, true));
+		textureMap.put("Baum", new Texture(new Vec2f(0, -0.8f), "Baum.png", 0.1f, false));
+		textureMap.put("!Baum", new Texture(new Vec2f(0, -0.8f), "Baum.png", 0.1f, true));
 
-		textureMap.put("Base0", new Texture(new Vec2f(0, -0.25f), "Base0.png", renderingProperties.getBaseRenderingRadius(), true));
-		textureMap.put("Base1", new Texture(new Vec2f(0, -0.25f), "Base1.png", renderingProperties.getBaseRenderingRadius(), true));
+		textureMap.put("Base0", new Texture(new Vec2f(0, -0.4f), "Base0.png", renderingProperties.getBaseRenderingRadius(), true));
+		textureMap.put("Base1", new Texture(new Vec2f(0, -0.4f), "Base1.png", renderingProperties.getBaseRenderingRadius(), true));
 		textureMap.put("Mine", new Texture(new Vec2f(0, -0.5f), "Mine.png", gamePropertiese.getMineRadius() * 0.75f, true));
 		textureMap.put("Unit1", new Texture(new Vec2f(), "Unit1.png", renderingProperties.getUnitRenderingRadius(), true));
 		textureMap.put("Unit2", new Texture(new Vec2f(), "Unit2.png", renderingProperties.getUnitRenderingRadius(), true));
@@ -67,9 +70,9 @@ public final class MapRendering implements IDrawable {
 		textures = new ArrayList<>();
 		textures.addAll(Flavor.createFlavors(Arrays.asList("Blumengras","Blumengras2","!Blumengras","!Blumengras2"), 1000, v -> v.getY() > -mapRadius * 0.7, 1.5f * mapRadius, random));
 		textures.addAll(Flavor.createFlavors(Arrays.asList("Ressource"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f * mapRadius, random));
-		textures.addAll(Flavor.createFlavors(Arrays.asList("Log"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f * mapRadius, random));
-		textures.addAll(Flavor.createFlavors(Arrays.asList("Stein"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f *mapRadius, random));
-		textures.addAll(Flavor.createFlavors(Arrays.asList("Baum"), 2000, v -> v.getY() > -mapRadius * 0.7 && v.length() > mapRadius * 1.2, 3 * mapRadius, random));
+		textures.addAll(Flavor.createFlavors(Arrays.asList("Log", "!Log"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f * mapRadius, random));
+		textures.addAll(Flavor.createFlavors(Arrays.asList("Stein", "!Stein"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f *mapRadius, random));
+		textures.addAll(Flavor.createFlavors(Arrays.asList("Baum", "!Baum"), 2000, v -> v.getY() > -mapRadius * 0.7 && v.length() > mapRadius * 1.2, 3 * mapRadius, random));
 
 		textures.addAll(gameMap.getBases());
 		textures.addAll(gameMap.getMines());
