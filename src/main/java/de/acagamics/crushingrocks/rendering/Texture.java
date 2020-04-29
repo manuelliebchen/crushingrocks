@@ -19,9 +19,11 @@ public class Texture {
 
     void draw(GraphicsContext context, Vec2f position) {
         float flipFactor = flip ? 1 : -1;
-        context.drawImage(ResourceManager.getInstance().loadImage(file), position.getX() - (flipFactor * radius),
-                position.getY() - radius, 2 * flipFactor * radius,
-                2 * radius);
+        float renderRadius = radius
+                * ( 1 + position.getY() * 0.5f);
+        context.drawImage(ResourceManager.getInstance().loadImage(file), position.getX() + offset.getX() * renderRadius - (flipFactor * renderRadius),
+                position.getY() + offset.getY() * renderRadius - renderRadius, 2 * flipFactor * renderRadius,
+                2 * renderRadius);
     }
 
 }

@@ -26,7 +26,7 @@ public class Flavor extends GameObject {
             Vec2f pos;
             do {
                 pos = new Vec2f(2 * distRadius * (random.nextFloat() * 2 - 1),
-                        2 * distRadius * (random.nextFloat() * 2 - 1));
+                        (2 * distRadius * ((float) Math.pow(random.nextFloat(), 2) * 2 - 1)));
             } while( !pred.test(pos));
             textures.add(new Flavor(texture.get(random.nextInt(texture.size())), pos));
         }
