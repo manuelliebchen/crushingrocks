@@ -2,6 +2,8 @@ package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.GameMode;
 import de.acagamics.crushingrocks.GameFactory;
+import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
@@ -25,8 +27,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -41,6 +45,8 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 
 	public SimulationState(StateManager manager, GraphicsContext context, SimulationSettings<GameMode> settings) {
 		super(manager, context);
+
+		drawables.add(new Background(100, 0.2f, new de.acagamics.crushingrocks.logic.Map(new Random(), new ArrayList<Player>())));
 
 		this.simulator = new Simulator(settings, new GameFactory(settings.getMatchSettings()));
 

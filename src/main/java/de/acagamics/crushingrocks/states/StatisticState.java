@@ -1,6 +1,9 @@
 package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.GameMode;
+import de.acagamics.crushingrocks.logic.Map;
+import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
@@ -15,13 +18,17 @@ import de.acagamics.framework.ui.interfaces.MenuState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class StatisticState extends MenuState {
 
 	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic,
 			MatchSettings<GameMode> settings) {
 		super(manager, context);
+
+		drawables.add(new Background(100, 0.2f, new Map(new Random(), new ArrayList<Player>())));
 
 		clickable.add(new Button(new Vec2f(-350, -125), BUTTON_TYPE.NORMAL, "Back", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)

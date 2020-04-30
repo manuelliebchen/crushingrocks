@@ -1,6 +1,9 @@
 package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.GameMode;
+import de.acagamics.crushingrocks.logic.Map;
+import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.crushingrocks.rendering.MapOverlayRendering;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.crushingrocks.logic.Game;
 import de.acagamics.crushingrocks.rendering.MapRendering;
@@ -9,7 +12,7 @@ import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.StateManager;
-import de.acagamics.framework.ui.elements.Background;
+import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.ui.elements.DynamicTextBox;
 import de.acagamics.framework.ui.elements.ImageElement;
 import de.acagamics.framework.ui.elements.RenderingLayer;
@@ -37,7 +40,7 @@ import java.util.Random;
  */
 public final class InGameState extends GameState implements ISelfUpdating {
 	private Game game;
-	private MapRendering mapRenderer;
+	private MapOverlayRendering mapOverlayRenderer;
 	private RenderingLayer drawables;
 	
 	Timeline timeline;
@@ -52,12 +55,12 @@ public final class InGameState extends GameState implements ISelfUpdating {
 
 		super(manager, context);
 		this.settings = settings;
-		
-		background = new Background(50);
 
-		game = new Game(settings, new Random());
 
-		mapRenderer = new MapRendering(game.getMap());
+		game = new Game(settings);
+
+		background = new Background(50, 0.2f, game.getMap());
+		mapOverlayRenderer = new MapOverlayRendering(game.getMap());
 
 		drawables = new RenderingLayer();
 		drawables.add(new DynamicTextBox(new Vec2f(0, 30), () -> String.valueOf(game.getFramesLeft()))
@@ -117,7 +120,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 		}
 		background.draw(context);
 
-		mapRenderer.draw(context);
+		mapOverlayRenderer.draw(context, background.getMapRendering().calcultateTransformation(context.getCanvas()));
 		drawables.draw(context);
 	}
 

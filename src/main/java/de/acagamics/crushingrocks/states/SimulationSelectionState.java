@@ -2,7 +2,10 @@ package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.GameMode;
 import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.controller.builtin.EvilSanta;
+import de.acagamics.crushingrocks.controller.sample.EvilSanta;
+import de.acagamics.crushingrocks.logic.Map;
+import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.SimulationSettings;
@@ -23,6 +26,7 @@ import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SimulationSelectionState extends MenuState {
 
@@ -36,6 +40,9 @@ public class SimulationSelectionState extends MenuState {
 
 	public SimulationSelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
+
+		drawables.add(new Background(100,  0.2f, new Map(new Random(), new ArrayList<Player>())));
+
 		try (ScanResult scanResult = new ClassGraph().enableAnnotationInfo().blacklistPackages("java", "javafx", "org.apache")
 				.scan()) {
 			bots = scanResult.getClassesImplementing(IPlayerController.class.getName()).filter( classInfo -> classInfo.hasAnnotation(Student.class.getName())).loadClasses();

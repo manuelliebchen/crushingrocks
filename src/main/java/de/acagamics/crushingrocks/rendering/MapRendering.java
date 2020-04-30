@@ -27,8 +27,6 @@ public final class MapRendering implements IDrawable {
 
 	private List<GameObject> textures;
 
-	private MapOverlayRendering mapOverlayRenderer;
-
 	private java.util.Map<String, Texture> textureMap;
 
 	/**
@@ -46,30 +44,33 @@ public final class MapRendering implements IDrawable {
 		textureMap = new java.util.HashMap<>();
 		textureMap.put("Log", new Texture(new Vec2f(0, -0.2f), "Log.png", 0.05f, false));
 		textureMap.put("!Log", new Texture(new Vec2f(0, -0.2f), "Log.png", 0.05f, true));
-		textureMap.put("Blumengras", new Texture(new Vec2f(0 , 0.1f), "Blumengras.png", 0.075f, false));
-		textureMap.put("!Blumengras", new Texture(new Vec2f(0 , 0.1f), "Blumengras.png", 0.075f, true));
-		textureMap.put("Blumengras2", new Texture(new Vec2f(0 , 0.1f), "Blumengras2.png", 0.075f, false));
-		textureMap.put("!Blumengras2", new Texture(new Vec2f(0 , 0.1f), "Blumengras2.png", 0.075f, true));
+		textureMap.put("Blumengras", new Texture(new Vec2f(0 , 0.1f), "Blumengras.png", 0.025f, false));
+		textureMap.put("!Blumengras", new Texture(new Vec2f(0 , 0.1f), "Blumengras.png", 0.025f, true));
+		textureMap.put("Blumengras2", new Texture(new Vec2f(0 , 0.1f), "Blumengras2.png", 0.025f, false));
+		textureMap.put("!Blumengras2", new Texture(new Vec2f(0 , 0.1f), "Blumengras2.png", 0.025f, true));
 		textureMap.put("Ressource", new Texture(new Vec2f(0, -0.1f), "Ressource.png", 0.025f, true));
-		textureMap.put("Stein", new Texture(new Vec2f(0, -0.1f), "Stein.png", 0.075f, false));
-		textureMap.put("!Stein", new Texture(new Vec2f(0, -0.1f), "Stein.png", 0.075f, true));
+		textureMap.put("Stein", new Texture(new Vec2f(0, -0.1f), "Stein.png", 0.05f, false));
+		textureMap.put("!Stein", new Texture(new Vec2f(0, -0.1f), "Stein.png", 0.05f, true));
 		textureMap.put("Baum", new Texture(new Vec2f(0, -0.8f), "Baum.png", 0.1f, false));
 		textureMap.put("!Baum", new Texture(new Vec2f(0, -0.8f), "Baum.png", 0.1f, true));
 
 		textureMap.put("Base0", new Texture(new Vec2f(0, -0.4f), "Base0.png", renderingProperties.getBaseRenderingRadius(), true));
 		textureMap.put("Base1", new Texture(new Vec2f(0, -0.4f), "Base1.png", renderingProperties.getBaseRenderingRadius(), true));
 		textureMap.put("Mine", new Texture(new Vec2f(0, -0.5f), "Mine.png", gamePropertiese.getMineRadius() * 0.75f, true));
-		textureMap.put("Unit1", new Texture(new Vec2f(), "Unit1.png", renderingProperties.getUnitRenderingRadius(), true));
-		textureMap.put("Unit2", new Texture(new Vec2f(), "Unit2.png", renderingProperties.getUnitRenderingRadius(), true));
-		textureMap.put("Unit3", new Texture(new Vec2f(), "Unit3.png", renderingProperties.getUnitRenderingRadius(), true));
+		textureMap.put("Unit1", new Texture(new Vec2f(0, -0.2f), "Unit1.png", gamePropertiese.getUnitRadius(), false));
+		textureMap.put("!Unit1", new Texture(new Vec2f(0, -0.2f), "Unit1.png", gamePropertiese.getUnitRadius(), true));
+		textureMap.put("Unit2", new Texture(new Vec2f(0, -0.3f), "Unit2.png", gamePropertiese.getUnitRadius(), false));
+		textureMap.put("!Unit2", new Texture(new Vec2f(0, -0.3f), "Unit2.png", gamePropertiese.getUnitRadius(), true));
+		textureMap.put("Unit3", new Texture(new Vec2f(0, -0.8f), "Unit3.png", gamePropertiese.getUnitRadius(), false));
+		textureMap.put("!Unit3", new Texture(new Vec2f(0, -0.8f), "Unit3.png", gamePropertiese.getUnitRadius(), true));
+		textureMap.put("UnitH", new Texture(new Vec2f(0, -0.8f), "UnitH.png", renderingProperties.getUnitRenderingRadius(), true));
+		textureMap.put("!UnitH", new Texture(new Vec2f(0, -0.8f), "UnitH.png", renderingProperties.getUnitRenderingRadius(), false));
 
 		gameMap = inGameMap;
-		mapOverlayRenderer = new MapOverlayRendering(gameMap);
 
 		float mapRadius = GameProperties.get().getMapRadius();
 		textures = new ArrayList<>();
 		textures.addAll(Flavor.createFlavors(Arrays.asList("Blumengras","Blumengras2","!Blumengras","!Blumengras2"), 1000, v -> v.getY() > -mapRadius * 0.7, 1.5f * mapRadius, random));
-		textures.addAll(Flavor.createFlavors(Arrays.asList("Ressource"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f * mapRadius, random));
 		textures.addAll(Flavor.createFlavors(Arrays.asList("Log", "!Log"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f * mapRadius, random));
 		textures.addAll(Flavor.createFlavors(Arrays.asList("Stein", "!Stein"), 100, v -> v.getY() > -mapRadius * 0.7, 1.5f *mapRadius, random));
 		textures.addAll(Flavor.createFlavors(Arrays.asList("Baum", "!Baum"), 2000, v -> v.getY() > -mapRadius * 0.7 && v.length() > mapRadius * 1.2, 3 * mapRadius, random));
@@ -87,7 +88,7 @@ public final class MapRendering implements IDrawable {
 		context.save();
 
 		Affine transformation = calcultateTransformation(context.getCanvas());
-		context.setTransform(transformation);
+		context.transform(transformation);
 
 		List<GameObject> gameObjects = new ArrayList<>();
 		gameObjects.addAll(gameMap.getAllUnits());
@@ -107,12 +108,9 @@ public final class MapRendering implements IDrawable {
 		}
 
 		context.restore();
-
-
-		mapOverlayRenderer.draw(context, transformation);
 	}
 
-	Affine calcultateTransformation(Canvas canvas) {
+	public Affine calcultateTransformation(Canvas canvas) {
 		GameProperties gameProperties = ResourceManager.getInstance().loadProperties(GameProperties.class);
 		RenderingProperties renderingProperties = ResourceManager.getInstance().loadProperties(RenderingProperties.class);
 		Affine transformation = new Affine();
@@ -148,13 +146,20 @@ public final class MapRendering implements IDrawable {
 	String getTexture(GameObject object) {
 		if(object instanceof Unit){
 			Unit unit = (Unit) object;
-			if (unit.getStrength() >= 3) {
-				return "Unit3";
+			String type;
+			if (unit.getStrength() > 3) {
+				type = "UnitH";
+			} else if (unit.getStrength() >= 3) {
+				type = "Unit3";
 			} else if (unit.getStrength() >= 2) {
-				return "Unit2";
+				type = "Unit2";
 			} else {
-				return "Unit1";
+				type = "Unit1";
 			}
+			if(!unit.isWalkingRight()) {
+				type = "!" + type;
+			}
+			return type;
 		} else if(object instanceof Base) {
 			return "Base" + ((Base) object).getOwner().getPlayerID();
 		} else if(object instanceof Flavor) {

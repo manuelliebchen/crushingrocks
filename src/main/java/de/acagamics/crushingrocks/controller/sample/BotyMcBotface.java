@@ -10,6 +10,7 @@ import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.logic.Unit;
 import de.acagamics.framework.types.Student;
+import de.acagamics.framework.types.Vec2f;
 
 /**
  * Simplistic sample bot.
@@ -18,15 +19,13 @@ import de.acagamics.framework.types.Student;
  */
 @Student(name = "Manuel Liebchen", matrikelnummer = -1)
 public final class BotyMcBotface implements IPlayerController {
-	Random random = new Random();
-	
-	int nextUnit = random.nextInt(3)+1;
+	int nextUnit = new Random().nextInt(3)+1;
 	
 	@Override
 	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		List<Mine> mines = mapInfo.getMines();
 		List<Unit> units = ownPlayer.getUnits();
-		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 0.9f);
+		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 1 - GameProperties.EPSILON);
 		if(mines.isEmpty() || ownPlayer.getUnits().size() == GameProperties.get().getMaxUnitsPerPlayer()) {
 			ownPlayer.setAllUnitsOrder(this, enemyPlayerInfo.getBase().getPosition());
 		} else {
@@ -35,8 +34,14 @@ public final class BotyMcBotface implements IPlayerController {
 				unit.setOrder(this, mines.get(mines.size() -1).getPosition().sub(unit.getPosition()));
 			}
 		}
-		ownPlayer.setUnitCreationOrder(this, nextUnit);
+		if(ownPlayer.hasHero()){
+			Unit hero = ownPlayer.getHero();
+			Vec2f order = enemyPlayerInfo.getBase().getPosition().sub(hero.getPosition());
+			hero.setOrder(this, order);
+		}
+		if(units.size() < GameProperties.get().getMaxUnitsPerPlayer()/2){
+			ownPlayer.setUnitCreationOrder(this, nextUnit);
+		}
+		ownPlayer.setHeroCreationOrder(this);
 	}
-
 }
-

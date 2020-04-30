@@ -1,11 +1,13 @@
 package de.acagamics.crushingrocks.states;
 
+import de.acagamics.crushingrocks.logic.Map;
+import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.StateManager;
-import de.acagamics.framework.ui.elements.Background;
 import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
@@ -14,6 +16,9 @@ import de.acagamics.framework.ui.interfaces.MenuState;
 import de.acagamics.framework.web.Version;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
@@ -30,8 +35,8 @@ public class MainMenuState extends MenuState {
 	 */
 	public MainMenuState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
-		
-		background = new Background(150);
+
+		drawables.add(new Background(150, 0.2f, new Map(new Random(), new ArrayList<Player>())));
 		
 		drawables.add(new TextBox(new Vec2f(0, 60), "Crushing Rocks!")
 				.setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getTitleFont())

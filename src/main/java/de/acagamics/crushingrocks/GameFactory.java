@@ -17,6 +17,6 @@ public class GameFactory implements Factory<Game> {
 
     @Override
     public Game create() {
-        return new Game(settings, new Random());
+        return new Game(settings);
     }
 }

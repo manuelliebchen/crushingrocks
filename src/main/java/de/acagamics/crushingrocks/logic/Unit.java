@@ -21,6 +21,8 @@ public final class Unit extends GameObject {
 
 	private Vec2f orderedDirection;
 
+	private boolean walkingRight;
+
 	Unit(int strength, Player owner, Vec2f position, boolean isHero) {
 		super(position);
 		this.strength = strength;
@@ -66,12 +68,17 @@ public final class Unit extends GameObject {
 		}
 	}
 
+	public boolean isWalkingRight() {
+		return walkingRight;
+	}
+
 	Vec2f updatePosition(Map mapinfo) {
 		if (orderedDirection != null) {
 			float currentMaxSpeed = GameProperties.get().getMaxUnitSpeed(speedup);
 			if (orderedDirection.length() > currentMaxSpeed) {
 				orderedDirection = orderedDirection.getNormalized().mult(currentMaxSpeed);
 			}
+			walkingRight = orderedDirection.getX() > 0;
 			position = mapinfo.boundInMap(position.add(orderedDirection));
 
 			orderedDirection = null;

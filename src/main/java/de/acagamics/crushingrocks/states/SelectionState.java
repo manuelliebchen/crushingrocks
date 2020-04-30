@@ -2,12 +2,16 @@ package de.acagamics.crushingrocks.states;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import de.acagamics.crushingrocks.GameMode;
+import de.acagamics.crushingrocks.logic.Map;
+import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.crushingrocks.rendering.Background;
 import io.github.classgraph.*;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.controller.builtin.EvilSanta;
+import de.acagamics.crushingrocks.controller.sample.EvilSanta;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.MatchSettings;
@@ -26,6 +30,8 @@ import javafx.scene.input.KeyCode;
 
 public class SelectionState extends MenuState {
 
+	Random random;
+
 	private Selector[] botSelectors;
 	private List<Class<?>> bots;
 
@@ -35,6 +41,11 @@ public class SelectionState extends MenuState {
 
 	public SelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
+
+		this.random = new Random();
+
+		drawables.add(new Background(100, 0.2f, new Map(new Random(), new ArrayList<Player>())));
+
 		try (ScanResult scanResult = new ClassGraph().enableAnnotationInfo().blacklistPackages("java", "javafx", "org.apache")
 				.scan()) {
 			bots = scanResult.getClassesImplementing(IPlayerController.class.getName()).filter( classInfo -> classInfo.hasAnnotation(Student.class.getName())).loadClasses();
@@ -87,6 +98,6 @@ public class SelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()));
 			names.add(EvilSanta.class);
 		}
-		return new MatchSettings<>(GameMode.values()[modeSelector.getValue()], names);
+		return new MatchSettings<>(GameMode.values()[modeSelector.getValue()], names, random.nextLong());
 	}
 }

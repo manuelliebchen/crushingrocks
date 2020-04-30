@@ -3,10 +3,10 @@ package de.acagamics.crushingrocks.controller.sample;
 import java.util.Optional;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.types.Student;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Player;
-import de.acagamics.framework.types.Student;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
  * @author Max
  *
  */
-@Student(name = "Manuel Liebchen", matrikelnummer = -1)
+@Student(name="Max", matrikelnummer = -1)
 public final class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 
 	private int mineOrder;
@@ -25,7 +25,7 @@ public final class HumanBot implements IPlayerController, EventHandler<InputEven
 	@Override
 	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		if (mineOrder - 1 >= 0 && mineOrder - 1 < mapInfo.getMines().size()) {
-			Optional<Mine> order = mapInfo.getMines().stream().filter(m -> m.getMineID() == mineOrder-1).findFirst();
+			Optional<Mine> order = mapInfo.getMines().stream().filter(m-> m.getMineID() == mineOrder-1).findFirst();
 			if(order.isPresent()) {
 				ownPlayer.setAllUnitsOrder(this, order.get().getPosition());
 			}
@@ -39,12 +39,8 @@ public final class HumanBot implements IPlayerController, EventHandler<InputEven
 	public void handle(InputEvent event) {
 		if (event instanceof KeyEvent) {
 			KeyEvent keyEvent = (KeyEvent) event;
-			if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED)) {
-				try {
-					mineOrder = Integer.valueOf(keyEvent.getCharacter());
-				} catch (Exception e) {
-					// There is no error Handling.
-				}
+			if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED) && Character.isDigit(keyEvent.getCharacter().charAt(0))) {
+				mineOrder = Integer.valueOf(keyEvent.getCharacter());
 			}
 		}
 	}
