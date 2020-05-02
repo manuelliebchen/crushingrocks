@@ -1,6 +1,6 @@
 package de.acagamics.crushingrocks.logic;
 
-import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.interfaces.GameObject;

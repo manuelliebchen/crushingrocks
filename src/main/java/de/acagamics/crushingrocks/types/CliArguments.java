@@ -1,4 +1,4 @@
-package de.acagamics.crushingrocks;
+package de.acagamics.crushingrocks.types;
 
 import java.util.ArrayList;
 import java.util.List;

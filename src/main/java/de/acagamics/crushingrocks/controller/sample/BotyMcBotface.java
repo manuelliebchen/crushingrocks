@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.controller.sample;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;

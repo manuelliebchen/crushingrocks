@@ -1,6 +1,6 @@
 package de.acagamics.crushingrocks.logic;
 
-import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
@@ -68,6 +68,22 @@ public final class Unit extends GameObject {
 		}
 	}
 
+	/**
+	 * Speedup multiplier a unit has. Will be multiplied by to get actual speedup
+	 * @return The speedup a unit gets.
+	 */
+	public int getSpeedup() {
+		return speedup;
+	}
+
+	/**
+	 * @param strength
+	 * @return Cost of a unit with given strength
+	 */
+	public static int getUnitCost(int strength) {
+		return GameProperties.get().getUnitCost(strength);
+	}
+
 	public boolean isWalkingRight() {
 		return walkingRight;
 	}
@@ -103,13 +119,5 @@ public final class Unit extends GameObject {
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Speedup multiplier a unit has. Will be multiplied by to get actual speedup
-	 * @return The speedup a unit gets.
-	 */
-	public int getSpeedup() {
-		return speedup;
 	}
 }

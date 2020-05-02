@@ -1,15 +1,12 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.GameMode;
-import de.acagamics.crushingrocks.logic.Map;
-import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.rendering.MapOverlayRendering;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.crushingrocks.logic.Game;
-import de.acagamics.crushingrocks.rendering.MapRendering;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.MatchSettings;
+import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.crushingrocks.rendering.Background;
@@ -32,7 +29,6 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)
@@ -45,13 +41,13 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	
 	Timeline timeline;
 
-	private MatchSettings<GameMode> settings;
+	private MatchSettings settings;
 	private Background background;
 
 	private List<KeyCode> input;
 
 
-	public InGameState(StateManager manager, GraphicsContext context, MatchSettings<GameMode> settings, int speedMultiplier) {
+	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings, int speedMultiplier) {
 
 		super(manager, context);
 		this.settings = settings;
@@ -104,7 +100,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	 */
 	@Override
 	public void update() {
-		GameStatistic statistic = game.tick();
+		GameStatistic<IPlayerController> statistic = game.tick();
 		if (statistic != null) {
 			manager.switchCurrentState(new StatisticState(manager, context, statistic, settings));
 		}

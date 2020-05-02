@@ -1,6 +1,7 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.GameMode;
+import de.acagamics.crushingrocks.types.GameMode;
+import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.controller.sample.EvilSanta;
 import de.acagamics.crushingrocks.logic.Map;
@@ -9,7 +10,6 @@ import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.SimulationSettings;
-import de.acagamics.framework.types.Student;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
@@ -19,8 +19,6 @@ import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.IDrawable;
 import de.acagamics.framework.ui.interfaces.MenuState;
-import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ScanResult;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
@@ -43,10 +41,7 @@ public class SimulationSelectionState extends MenuState {
 
 		drawables.add(new Background(100,  0.2f, new Map(new Random(), new ArrayList<Player>())));
 
-		try (ScanResult scanResult = new ClassGraph().enableAnnotationInfo().blacklistPackages("java", "javafx", "org.apache")
-				.scan()) {
-			bots = scanResult.getClassesImplementing(IPlayerController.class.getName()).filter( classInfo -> classInfo.hasAnnotation(Student.class.getName())).loadClasses();
-		}
+		bots = ResourceManager.getInstance().loadContorller(IPlayerController.class);
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
@@ -57,7 +52,7 @@ public class SimulationSelectionState extends MenuState {
 		clickable.add(modeSelector);
 
 		Button startbutton = new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
-				() -> manager.push(new SimulationState(manager, context, generateSettings()))).setKeyCode(KeyCode.ENTER)
+				() -> manager.push(new SimulationState(manager, context, generateSettings(), generateMatchSettings()))).setKeyCode(KeyCode.ENTER)
 				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER);
 		clickable.add(startbutton);
 
@@ -88,7 +83,11 @@ public class SimulationSelectionState extends MenuState {
 
 	}
 
-	private SimulationSettings<GameMode> generateSettings() {
+	private SimulationSettings generateSettings() {
+		return new SimulationSettings(threadSelector.getValue(), (int) Math.pow(10, runsSelector.getValue()));
+	}
+
+	private MatchSettings generateMatchSettings() {
 		List<Class<?>> names = new ArrayList<>(2);
 		if (GameMode.values()[modeSelector.getValue()] == GameMode.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
@@ -98,6 +97,6 @@ public class SimulationSelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()));
 			names.add(EvilSanta.class);
 		}
-		return new SimulationSettings<>(GameMode.values()[modeSelector.getValue()], names, threadSelector.getValue(), (int) Math.pow(10, runsSelector.getValue()));
+		return new MatchSettings(GameMode.values()[modeSelector.getValue()], names, new Random().nextInt());
 	}
 }

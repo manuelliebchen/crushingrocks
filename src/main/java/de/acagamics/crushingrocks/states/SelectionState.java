@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.crushingrocks.GameMode;
+import de.acagamics.crushingrocks.types.GameMode;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
-import io.github.classgraph.*;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.controller.sample.EvilSanta;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.MatchSettings;
-import de.acagamics.framework.types.Student;
+import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.Selector;
@@ -46,10 +44,7 @@ public class SelectionState extends MenuState {
 
 		drawables.add(new Background(100, 0.2f, new Map(new Random(), new ArrayList<Player>())));
 
-		try (ScanResult scanResult = new ClassGraph().enableAnnotationInfo().blacklistPackages("java", "javafx", "org.apache")
-				.scan()) {
-			bots = scanResult.getClassesImplementing(IPlayerController.class.getName()).filter( classInfo -> classInfo.hasAnnotation(Student.class.getName())).loadClasses();
-		}
+		bots = ResourceManager.getInstance().loadContorller(IPlayerController.class);
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
@@ -88,7 +83,7 @@ public class SelectionState extends MenuState {
 
 	}
 
-	private MatchSettings<GameMode> generateSettings() {
+	private MatchSettings generateSettings() {
 		List<Class<?>> names = new ArrayList<>(2);
 		if (GameMode.values()[modeSelector.getValue()] == GameMode.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
@@ -98,6 +93,6 @@ public class SelectionState extends MenuState {
 			names.add(bots.get(botSelectors[0].getValue()));
 			names.add(EvilSanta.class);
 		}
-		return new MatchSettings<>(GameMode.values()[modeSelector.getValue()], names, random.nextLong());
+		return new MatchSettings(GameMode.values()[modeSelector.getValue()], names, random.nextLong());
 	}
 }

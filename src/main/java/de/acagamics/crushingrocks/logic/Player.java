@@ -1,10 +1,9 @@
 package de.acagamics.crushingrocks.logic;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.framework.types.Student;
 import de.acagamics.framework.types.Vec2f;
@@ -38,13 +37,9 @@ public final class Player {
 	private boolean heroCreationOrder;
 
 
-	Player(Class<?> controller, Color color, int playerID) {
-		try {
-			this.controller = (IPlayerController) controller.getDeclaredConstructor().newInstance();
-		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-			LOG.error(e);
-		}
-		this.student = controller.getClass().getAnnotation(Student.class);
+	Player(IPlayerController controller, Color color, int playerID) {
+		this.controller = controller;
+		this.student = this.controller.getClass().getAnnotation(Student.class);
 		this.color = color;
 		this.playerID = playerID;
 		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());

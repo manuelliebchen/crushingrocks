@@ -1,7 +1,7 @@
 package de.acagamics.crushingrocks.rendering;
 
-import de.acagamics.crushingrocks.GameProperties;
-import de.acagamics.crushingrocks.RenderingProperties;
+import de.acagamics.crushingrocks.types.GameProperties;
+import de.acagamics.crushingrocks.types.RenderingProperties;
 import de.acagamics.crushingrocks.logic.Base;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;

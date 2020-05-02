@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import de.acagamics.crushingrocks.GameMode;
-import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.types.GameMode;
+import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.framework.simulation.Simulatable;
 import de.acagamics.framework.types.GameStatistic;
-import de.acagamics.crushingrocks.RenderingProperties;
+import de.acagamics.crushingrocks.types.RenderingProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.framework.types.MatchSettings;
+import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.util.InputTracker;
 import javafx.event.EventHandler;
@@ -25,7 +25,7 @@ import javafx.scene.input.InputEvent;
  * @author Manuel Liebchen
  * 
  */
-public final class Game implements EventHandler<InputEvent>, Simulatable {
+public final class Game implements EventHandler<InputEvent>, Simulatable<IPlayerController> {
 	private List<Player> players;
 	private Map map;
 	private int framesLeft;
@@ -39,12 +39,12 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 	 * 
 	 * @param settings Settings for the game.
 	 */
-	public Game(MatchSettings<GameMode> settings) {
+	public Game(MatchSettings settings) {
 		GameMode gamemode = settings.getMode();
 
 		inputTracker = new InputTracker();
 
-		List<Class<?>> playerController = settings.getControllers();
+		List<IPlayerController> playerController = settings.getControllers();
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
 			players.add(new Player(playerController.get(i),
@@ -132,19 +132,16 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 
 		map.update();
 
-		GameStatistic statistic = null;
+		inputTracker.updateTables();
 		for (Base base : map.getBases()) {
 			if (base.getHP() <= 0) {
-				statistic = generateStatistic();
-				break;
+				return generateStatistic();
 			}
 		}
-
-		inputTracker.updateTables();
-		return statistic;
+		return null;
 	}
 
-	private GameStatistic generateStatistic(){
+	private GameStatistic<IPlayerController> generateStatistic(){
 		boolean hasWon = false;
 		for(Player player : players) {
 			hasWon |= player.getBase().getHP() <= 0;
@@ -155,8 +152,8 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 			players.sort( (p1, p2) -> p2.getScore() - p1.getScore());
 		}
 
-		List<Class<?>> controllers = players.stream().map(p -> p.getController().getClass()).collect(Collectors.toList());
-		return new GameStatistic(!hasWon && players.get(0).getScore() == players.get(1).getScore(), controllers);
+		List<IPlayerController> controllers = players.stream().map(Player::getController).collect(Collectors.toList());
+		return new GameStatistic<>(!hasWon && players.get(0).getScore() == players.get(1).getScore(), controllers);
 	}
 
 	@Override
@@ -164,10 +161,7 @@ public final class Game implements EventHandler<InputEvent>, Simulatable {
 		for (Player player : players) {
 			IPlayerController controller = player.getController();
 			if (controller instanceof EventHandler) {
-				@SuppressWarnings("unchecked")
-				EventHandler<InputEvent> handler = ((EventHandler<InputEvent>) controller);
-
-				handler.handle(event);
+				((EventHandler<InputEvent>) controller).handle(event);
 			}
 		}
 		inputTracker.handle(event);

@@ -42,16 +42,19 @@ public class MainMenuState extends MenuState {
 				.setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getTitleFont())
 				.setVerticalAlignment(ALIGNMENT.CENTER));
 
-		clickable.add(new Button(new Vec2f(0, 350), BUTTON_TYPE.WIDE, "Start Game",
+		clickable.add(new Button(new Vec2f(0, 325), BUTTON_TYPE.WIDE, "Start Game",
 				() -> manager.push(new SelectionState(manager, context))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
-		clickable.add(new Button(new Vec2f(0, 425), BUTTON_TYPE.WIDE, "Simulation",
+		clickable.add(new Button(new Vec2f(0, 400), BUTTON_TYPE.WIDE, "Simulation",
 				() -> manager.push(new SimulationSelectionState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
 						.setHorizontalAlignment(ALIGNMENT.UPPER));
-		clickable.add(new Button(new Vec2f(0, 500), BUTTON_TYPE.WIDE, "Show Credits",
+		clickable.add(new Button(new Vec2f(0, 475), BUTTON_TYPE.WIDE, "Tournament",
+				() -> manager.push(new TournamentSelectionState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
+				.setHorizontalAlignment(ALIGNMENT.UPPER));
+		clickable.add(new Button(new Vec2f(0, 550), BUTTON_TYPE.WIDE, "Show Credits",
 				() -> manager.push(new CreditsState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
-		clickable.add(new Button(new Vec2f(0, -100), BUTTON_TYPE.WIDE, "Exit Game", manager::pop)
+		clickable.add(new Button(new Vec2f(0, -75), BUTTON_TYPE.WIDE, "Exit Game", manager::pop)
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.CENTER)
 				.setHorizontalAlignment(ALIGNMENT.LOWER));
 		drawables.addAll(clickable);

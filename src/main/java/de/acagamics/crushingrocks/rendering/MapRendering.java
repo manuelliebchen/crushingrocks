@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import de.acagamics.crushingrocks.GameProperties;
-import de.acagamics.crushingrocks.RenderingProperties;
+import de.acagamics.crushingrocks.types.GameProperties;
+import de.acagamics.crushingrocks.types.RenderingProperties;
 import de.acagamics.crushingrocks.logic.*;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Box2f;

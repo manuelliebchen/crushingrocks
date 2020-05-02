@@ -1,13 +1,13 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.GameMode;
+import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.MatchSettings;
+import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
@@ -24,8 +24,8 @@ import java.util.Random;
 
 public class StatisticState extends MenuState {
 
-	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic,
-			MatchSettings<GameMode> settings) {
+	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic<IPlayerController> statistic,
+			MatchSettings settings) {
 		super(manager, context);
 
 		drawables.add(new Background(100, 0.2f, new Map(new Random(), new ArrayList<Player>())));
@@ -44,11 +44,11 @@ public class StatisticState extends MenuState {
 					.setHorizontalAlignment(ALIGNMENT.UPPER));
 		}
 
-		List<Class<?>> scores = statistic.getOrderedControllers();
+		List<IPlayerController> scores = statistic.getOrderedControllers();
 		for(int i = 0; i < statistic.getPlayerAmount(); ++i) {
 			drawables.add(new TextBox(new Vec2f(-300, 350.0f + i * 50), String.valueOf(i+1) + ".").setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
-			drawables.add(new TextBox(new Vec2f(-100, 350.0f + i * 50), scores.get(i).getSimpleName()).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-100, 350.0f + i * 50), scores.get(i).getClass().getSimpleName()).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 		}
 	}

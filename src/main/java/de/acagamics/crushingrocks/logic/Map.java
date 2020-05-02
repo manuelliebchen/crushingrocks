@@ -3,7 +3,7 @@ package de.acagamics.crushingrocks.logic;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import de.acagamics.crushingrocks.GameProperties;
+import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.framework.types.Vec2f;
 
 /**

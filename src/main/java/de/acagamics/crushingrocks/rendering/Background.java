@@ -1,16 +1,12 @@
 package de.acagamics.crushingrocks.rendering;
 
 import de.acagamics.crushingrocks.logic.Map;
-import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.ui.interfaces.IDrawable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Background implements IDrawable {
 
@@ -53,7 +49,7 @@ public class Background implements IDrawable {
 
 		if(mapRendering != null) {
 			context.save();
-			context.translate(0, pixelAbove - 50);
+			context.translate(0, (double) pixelAbove - 50);
 			mapRendering.draw(context);
 			context.restore();
 		}

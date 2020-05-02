@@ -1,5 +1,6 @@
 package de.acagamics.crushingrocks;
 
+import de.acagamics.crushingrocks.types.CliArguments;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
