@@ -1,16 +1,27 @@
 package de.acagamics.crushingrocks;
 
-import de.acagamics.crushingrocks.types.CliArguments;
-import org.apache.logging.log4j.Level;
+import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.crushingrocks.types.GameProperties;
+import de.acagamics.crushingrocks.types.RenderingProperties;
+import de.acagamics.framework.resources.ClientProperties;
+import de.acagamics.framework.types.CliArguments;
+import de.acagamics.crushingrocks.types.GameMode;
+import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.resources.ResourceManager;
+import de.acagamics.framework.simulation.Simulator;
+import de.acagamics.framework.simulation.Tournament;
+import de.acagamics.framework.types.SimulationSettings;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
-
-import com.beust.jcommander.JCommander;
 
 import de.acagamics.framework.ui.MainWindow;
 
-import de.acagamics.crushingrocks.states.MainMenuState;
+import de.acagamics.crushingrocks.states.MainState;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Max Klockmann (max@acagamics.de)
@@ -19,24 +30,55 @@ public final class Main {
 	private static final Logger LOG = LogManager.getLogger(Main.class.getName());
 
 	public static void main(String... args) {
-		// Parse command line arguments
-		CliArguments cliArg = new CliArguments();
-		JCommander jcom = JCommander.newBuilder().addObject(cliArg).build();
-		jcom.parse(args);
+		CliArguments cliArg = new CliArguments(args);
 
 		if (cliArg.showHelp()) {
-			jcom.usage();
+			cliArg.usage();
 			return;
 		}
 
-		if (cliArg.isDebug()) {
-			Configurator.setRootLevel(Level.ALL);
-			LOG.info("Debug mode enabled!");
+		if(cliArg.isVersion()) {
+			ClientProperties cliProp = ResourceManager.getInstance().loadProperties(ClientProperties.class);
+			System.out.println(cliProp.getTitle());
+			System.out.println(cliProp.getVersion());
+			return;
 		}
 
-		if (cliArg.showGui()) {
-			MainWindow.launch(MainMenuState.class);
+		ResourceManager.getInstance().loadProperties(GameProperties.class);
+		ResourceManager.getInstance().loadProperties(RenderingProperties.class);
+
+		List<Class<?>> loaded = ResourceManager.getInstance().loadContorller(IPlayerController.class);
+		if(cliArg.isTournament()) {
+			List<Class<?>> selected = loaded.stream().filter(c->!c.getPackageName().equals("de.acagamics.crushingrocks.controller.sample")).collect(Collectors.toList());
+			Tournament tournament = new Tournament(selected, (s, c1, c2) -> new MatchSettings(GameMode.NORMAL, s, Arrays.asList(c1,c2)), new Random().nextLong(), cliArg.numberOfTreads(), cliArg.numberOfGames());
+			tournament.run();
+			try(FileWriter myWriter = new FileWriter(cliArg.getOutputFile())) {
+				myWriter.write(tournament.getCSV());
+			} catch (IOException e) {
+				LOG.error("While writing .csv", e);
+			}
+			return;
 		}
+		if(cliArg.isSimulation()) {
+			List<String> names = cliArg.selectedBots();
+			List<Class<?>> selected = new ArrayList<>(names.size());
+			for(String name : names) {
+				Optional<Class<?>> opt =  loaded.stream().filter(c-> c.getSimpleName().equals(name)).findAny();
+				if(opt.isPresent()) {
+					selected.add((Class<IPlayerController>) opt.get());
+				}
+			}
+			Simulator simulator = new Simulator(new SimulationSettings(cliArg.numberOfTreads(),cliArg.numberOfGames()),new MatchSettings(GameMode.NORMAL, new Random().nextLong(), selected));
+			simulator.run();
+			try(FileWriter myWriter = new FileWriter(cliArg.getOutputFile())) {
+				myWriter.write(simulator.getCSV(selected));
+			} catch (IOException e) {
+				LOG.error("While writing .csv", e);
+			}
+			return;
+		}
+
+		MainWindow.launch(MainState.class);
 	}
 
 }

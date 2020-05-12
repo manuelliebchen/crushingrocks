@@ -1,6 +1,7 @@
 matchFrameQuantity: 5000
-baseHP: 20
-baseAttack: 1
+milliesPerThink: 32
+baseHP: 100
+baseAttack: 3
 baseRadius: 0.2
 unitRadius: 0.1
 maxUnitSpeed: 0.01

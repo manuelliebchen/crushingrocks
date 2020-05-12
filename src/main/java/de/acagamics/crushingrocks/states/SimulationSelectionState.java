@@ -25,11 +25,12 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class SimulationSelectionState extends MenuState {
 
 	private Selector[] botSelectors;
-	private List<Class<?>> bots;
+	private List<Class<IPlayerController>> bots;
 
 	private Selector modeSelector;
 
@@ -41,7 +42,7 @@ public class SimulationSelectionState extends MenuState {
 
 		drawables.add(new Background(100,  0.2f, new Map(new Random(), new ArrayList<Player>())));
 
-		bots = ResourceManager.getInstance().loadContorller(IPlayerController.class);
+		bots = ResourceManager.getInstance().loadContorller(IPlayerController.class).stream().map(c -> (Class<IPlayerController>) c).collect(Collectors.toList());
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(200, 50), "Bot Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
@@ -95,8 +96,8 @@ public class SimulationSelectionState extends MenuState {
 			}
 		} else if (GameMode.values()[modeSelector.getValue()] == GameMode.XMAS_CHALLENGE) {
 			names.add(bots.get(botSelectors[0].getValue()));
-			names.add(EvilSanta.class);
+			names.add((Class<IPlayerController>) EvilSanta.class.asSubclass(IPlayerController.class));
 		}
-		return new MatchSettings(GameMode.values()[modeSelector.getValue()], names, new Random().nextInt());
+		return new MatchSettings(GameMode.values()[modeSelector.getValue()], new Random().nextLong(), names);
 	}
 }

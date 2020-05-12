@@ -2,6 +2,8 @@ package de.acagamics.crushingrocks.types;
 
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Game;
+
+import de.acagamics.framework.simulation.Simulatable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,19 +13,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public final class MatchSettings implements Supplier<Game> {
+public class MatchSettings implements Supplier<Simulatable> {
 	private static final Logger LOG = LogManager.getLogger(MatchSettings.class.getName());
 
 	private GameMode mode;
 	private List<Class<?>> controllersClasses;
 	private Random random;
 
-	public MatchSettings(GameMode mode, List<Class<?>> controllersClasses, long seed) {
+	public MatchSettings(GameMode mode, long seed, List<Class<?>> controllersClasses) {
 		this.mode = mode;
 		this.controllersClasses = controllersClasses;
 		this.random = new Random(seed);
 	}
-	
+
 	public GameMode getMode() {
 		return mode;
 	}
@@ -49,7 +51,7 @@ public final class MatchSettings implements Supplier<Game> {
 	}
 
 	@Override
-	public Game get() {
+	public Simulatable get() {
 		return new Game(this);
 	}
 }

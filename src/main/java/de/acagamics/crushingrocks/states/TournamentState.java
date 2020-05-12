@@ -1,10 +1,12 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.Tournament;
+import de.acagamics.crushingrocks.types.GameMode;
+import de.acagamics.framework.simulation.Tournament;
 import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
+import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
@@ -30,12 +32,13 @@ import org.apache.logging.log4j.Logger;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class TournamentSelectionState extends MenuState implements ISelfUpdating {
-	private static final Logger LOG = LogManager.getLogger(TournamentSelectionState.class.getName());
+public class TournamentState extends MenuState implements ISelfUpdating {
+	private static final Logger LOG = LogManager.getLogger(TournamentState.class.getName());
 
 	private Timeline timeline;
 
@@ -48,7 +51,7 @@ public class TournamentSelectionState extends MenuState implements ISelfUpdating
 
 	private Tournament tournament;
 
-	public TournamentSelectionState(StateManager manager, GraphicsContext context) {
+	public TournamentState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
 
 
@@ -90,12 +93,13 @@ public class TournamentSelectionState extends MenuState implements ISelfUpdating
 	}
 
 	private void runTournament() {
-		tournament = new Tournament(bots, new Random().nextLong(),threadSelector.getValue(), (int) Math.pow(10, runsSelector.getValue()));
+		tournament = new Tournament(bots, ( s, c1,  c2) -> new MatchSettings(GameMode.NORMAL, s, Arrays.asList(c1, c2)), new Random().nextLong(),threadSelector.getValue(), (int) Math.pow(10, runsSelector.getValue()));
 
-		drawables.add( new DynamicTextBox(new Vec2f(-150, 50), () -> String.format("Progress: %3.0f%%", tournament.getProgress() * 100)).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
+		drawables.add( new DynamicTextBox(new Vec2f(-150, 50), () -> String.format("Progress: %3d%%", tournament.getProgress())).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add( new DynamicTextBox(new Vec2f(-450, 50), () -> String.format("Time: %7.2f", tournament.getTimeElapsed())).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 
-		tournament.start();
+		Thread runner = new Thread(tournament);
+		runner.start();
 	}
 
 	private void saveCSV() {

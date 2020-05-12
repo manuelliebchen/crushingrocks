@@ -22,6 +22,8 @@ public final class Map {
 
 	private Random random;
 
+
+
 	public Map(Random random, List<Player> players) {
 		this.random = random;
 
@@ -152,7 +154,6 @@ public final class Map {
 		Collections.shuffle(units);
 		return units;
 	}
-
 
 	/**
 	 * Returns a Vec2f that is in the map boundaries.

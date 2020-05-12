@@ -72,7 +72,7 @@ Thumbs.db
 src/extrenaltestbots/*
 *.xcf
 *_Original.png
+*.csv
 
 .gradle
 build
-simulation_data.csv

@@ -10,7 +10,7 @@ import de.acagamics.crushingrocks.logic.Player;
  * @author Manuel Liebchen
  *
  */
-@Student(name = "Manuel Liebchen", matrikelnummer = -1)
+@Student(author = "Manuel Liebchen", matrikelnummer = -1, name = "Empty")
 public final class EmptyBotyMcBotface implements IPlayerController {
 	
 	@Override

@@ -39,7 +39,7 @@ public final class MapOverlayRendering {
 
 	/**
 	 * Displays the map images etc.
-	 * 
+	 * @param transformation The affine transformation to map coordinates
 	 * @param context Context to draw on.
 	 */
 	public void draw(GraphicsContext context, Affine transformation) {
@@ -71,6 +71,16 @@ public final class MapOverlayRendering {
 					(float) (gameProperties.getPlayerBasePosition().get(base.getOwner().getPlayerID()).getAngle() * 360
 							/ (Math.PI * 2) - ((double) 180 * base.getHP() / gameProperties.getBaseHP())),
 					(float) ((double) 360 * base.getHP() / gameProperties.getBaseHP()), ArcType.OPEN);
+
+			position = position.add(0, renderingRadius);
+			String mineText = String.valueOf(base.getOwner().getName());
+			Text text = new Text(mineText);
+			text.setFont(font);
+			Point2D textSize = new Point2D(text.getLayoutBounds().getWidth(), text.getLayoutBounds().getHeight());
+			position = position.add(new Point2D(-0.5f * textSize.getX(), 1 * textSize.getY()));
+
+			context.setFill(designProperties.getForegroundColor());
+			context.fillText(mineText, position.getX(), position.getY());
 		}
 
 		for (Mine mine : gameMap.getMines()) {

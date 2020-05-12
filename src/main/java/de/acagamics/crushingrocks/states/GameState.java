@@ -1,6 +1,5 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.rendering.MapOverlayRendering;
 import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.crushingrocks.logic.Game;
@@ -14,7 +13,7 @@ import de.acagamics.framework.ui.elements.DynamicTextBox;
 import de.acagamics.framework.ui.elements.ImageElement;
 import de.acagamics.framework.ui.elements.RenderingLayer;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
-import de.acagamics.framework.ui.interfaces.GameState;
+import de.acagamics.framework.ui.interfaces.UIState;
 import de.acagamics.framework.ui.interfaces.ISelfUpdating;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
@@ -34,7 +33,7 @@ import java.util.List;
  * @author Claudius Grimm (claudius@acagamics.de)
  * @author Manuel Liebchen
  */
-public final class InGameState extends GameState implements ISelfUpdating {
+public final class GameState extends UIState implements ISelfUpdating {
 	private Game game;
 	private MapOverlayRendering mapOverlayRenderer;
 	private RenderingLayer drawables;
@@ -47,7 +46,7 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	private List<KeyCode> input;
 
 
-	public InGameState(StateManager manager, GraphicsContext context, MatchSettings settings, int speedMultiplier) {
+	public GameState(StateManager manager, GraphicsContext context, MatchSettings settings, int speedMultiplier) {
 
 		super(manager, context);
 		this.settings = settings;
@@ -100,9 +99,9 @@ public final class InGameState extends GameState implements ISelfUpdating {
 	 */
 	@Override
 	public void update() {
-		GameStatistic<IPlayerController> statistic = game.tick();
+		GameStatistic statistic = game.tick();
 		if (statistic != null) {
-			manager.switchCurrentState(new StatisticState(manager, context, statistic, settings));
+			manager.switchCurrentState(new GameStatisticState(manager, context, statistic, settings));
 		}
 	}
 

@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
  * @author Max
  *
  */
-@Student(name="Max", matrikelnummer = -1)
+@Student(author="Max", matrikelnummer = -1, name = "Human")
 public final class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 
 	private int mineOrder;
@@ -27,12 +27,12 @@ public final class HumanBot implements IPlayerController, EventHandler<InputEven
 		if (mineOrder - 1 >= 0 && mineOrder - 1 < mapInfo.getMines().size()) {
 			Optional<Mine> order = mapInfo.getMines().stream().filter(m-> m.getMineID() == mineOrder-1).findFirst();
 			if(order.isPresent()) {
-				ownPlayer.setAllUnitsOrder(this, order.get().getPosition());
+				ownPlayer.setAllUnitsOrder( order.get().getPosition());
 			}
 		} else if (mineOrder == 0) {
-			ownPlayer.setAllUnitsOrder(this, enemyPlayerInfo.getBase().getPosition());
+			ownPlayer.setAllUnitsOrder(enemyPlayerInfo.getBase().getPosition());
 		}
-		ownPlayer.setUnitCreationOrder(this, 1);
+		ownPlayer.setUnitCreationOrder(1);
 	}
 
 	@Override

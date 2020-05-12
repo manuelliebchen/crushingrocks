@@ -1,8 +1,6 @@
 package de.acagamics.crushingrocks.states;
 
 import de.acagamics.crushingrocks.types.MatchSettings;
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.logic.Game;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.resources.ClientProperties;
@@ -42,7 +40,7 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 
 	private Timeline timeline;
 
-	private Simulator<Game, IPlayerController> simulator;
+	private Simulator simulator;
 	private MatchSettings matchSettings;
 
 	public SimulationState(StateManager manager, GraphicsContext context, SimulationSettings settings, MatchSettings matchSettings) {
@@ -51,7 +49,7 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 
 		drawables.add(new Background(100, 0.2f, new de.acagamics.crushingrocks.logic.Map(new Random(), new ArrayList<Player>())));
 
-		this.simulator = new Simulator<> (settings, matchSettings);
+		this.simulator = new Simulator(settings, matchSettings);
 
 		clickable.add( new Button(new Vec2f(-175, -120), Button.BUTTON_TYPE.NORMAL, "Restart",
 				() -> manager.switchCurrentState(new SimulationState(manager, context, settings, matchSettings))).setKeyCode(KeyCode.ENTER)
@@ -76,13 +74,13 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 		drawables.add( new DynamicTextBox(new Vec2f(-700, 50), () -> String.format("Time: %7.2f", simulator.getTimeElapsed())).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 
 		List<Class<?>> controllers = matchSettings.getControllersClasses();
-		SimulationStatistic<IPlayerController> scroes = simulator.getStatistics();
+		SimulationStatistic scroes = simulator.getStatistics();
 		for(int i = 0; i < controllers.size(); ++i) {
 			float y = 350.0f + i * 50;
 			Class<?> controller = controllers.get(i);
 			drawables.add(new TextBox(new Vec2f(-300, y), String.valueOf(i+1) + ".").setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
-			drawables.add(new TextBox(new Vec2f(-250, y), controller.getAnnotation(Student.class).name()).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-250, y), controller.getAnnotation(Student.class).author()).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 			drawables.add(new TextBox(new Vec2f(0, y), controller.getSimpleName()).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
@@ -99,19 +97,13 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
-		simulator.start();
+		Thread runner = new Thread(simulator);
+		runner.start();
 	}
 
 	public void saveCSV(){
 		try(FileWriter myWriter = new FileWriter("simulation_data.csv", true)) {
-			StringBuilder bld = new StringBuilder();
-			bld.append(String.format("%8d, %8d, %8.3f, ", simulator.getSettings().getRuns(), simulator.getStatistics().getDraws(), simulator.getTimeElapsed()));
-			for(Class<?> entry : matchSettings.getControllersClasses()){
-				Student student = entry.getAnnotation(Student.class);
-				bld.append(String.format("%16d, %16s, %64s, %6d,", student.matrikelnummer(), student.name(), entry.getName(), simulator.getStatistics().getVictories(entry)));
-			}
-			bld.append("\n");
-			myWriter.write(bld.toString());
+			myWriter.write(simulator.getCSV(matchSettings.getControllersClasses()));
 		} catch (IOException e) {
 			LOG.error(e);
 		}

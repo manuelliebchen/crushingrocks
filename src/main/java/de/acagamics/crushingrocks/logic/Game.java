@@ -25,7 +25,7 @@ import javafx.scene.input.InputEvent;
  * @author Manuel Liebchen
  * 
  */
-public final class Game implements EventHandler<InputEvent>, Simulatable<IPlayerController> {
+public final class Game implements EventHandler<InputEvent>, Simulatable {
 	private List<Player> players;
 	private Map map;
 	private int framesLeft;
@@ -44,10 +44,10 @@ public final class Game implements EventHandler<InputEvent>, Simulatable<IPlayer
 
 		inputTracker = new InputTracker();
 
-		List<IPlayerController> playerController = settings.getControllers();
+		List<?> playerController = settings.getControllers();
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
-			players.add(new Player(playerController.get(i),
+			players.add(new Player((IPlayerController) playerController.get(i),
 					ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(i),
 					i));
 		}
@@ -141,7 +141,7 @@ public final class Game implements EventHandler<InputEvent>, Simulatable<IPlayer
 		return null;
 	}
 
-	private GameStatistic<IPlayerController> generateStatistic(){
+	private GameStatistic generateStatistic(){
 		boolean hasWon = false;
 		for(Player player : players) {
 			hasWon |= player.getBase().getHP() <= 0;
@@ -153,7 +153,7 @@ public final class Game implements EventHandler<InputEvent>, Simulatable<IPlayer
 		}
 
 		List<IPlayerController> controllers = players.stream().map(Player::getController).collect(Collectors.toList());
-		return new GameStatistic<>(!hasWon && players.get(0).getScore() == players.get(1).getScore(), controllers);
+		return new GameStatistic(!hasWon && players.get(0).getScore() == players.get(1).getScore(), controllers);
 	}
 
 	@Override

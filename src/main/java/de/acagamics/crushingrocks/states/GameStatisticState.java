@@ -1,6 +1,5 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
@@ -22,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class StatisticState extends MenuState {
+public class GameStatisticState extends MenuState {
 
-	public StatisticState(StateManager manager, GraphicsContext context, GameStatistic<IPlayerController> statistic,
-			MatchSettings settings) {
+	public GameStatisticState(StateManager manager, GraphicsContext context, GameStatistic statistic,
+							  MatchSettings settings) {
 		super(manager, context);
 
 		drawables.add(new Background(100, 0.2f, new Map(new Random(), new ArrayList<Player>())));
@@ -34,7 +33,7 @@ public class StatisticState extends MenuState {
 				.setKeyCode(KeyCode.ESCAPE).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.LOWER));
 		clickable.add(new Button(new Vec2f(-200, -125), BUTTON_TYPE.NORMAL, "Restart",
-				() -> manager.switchCurrentState(new InGameState(manager, context, settings, 1))).setKeyCode(KeyCode.ENTER)
+				() -> manager.switchCurrentState(new GameState(manager, context, settings, 1))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER));
 
 		drawables.add(new TextBox(new Vec2f(200, 50), "Statistics").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
@@ -44,7 +43,7 @@ public class StatisticState extends MenuState {
 					.setHorizontalAlignment(ALIGNMENT.UPPER));
 		}
 
-		List<IPlayerController> scores = statistic.getOrderedControllers();
+		List<Object> scores = statistic.getOrderedControllers();
 		for(int i = 0; i < statistic.getPlayerAmount(); ++i) {
 			drawables.add(new TextBox(new Vec2f(-300, 350.0f + i * 50), String.valueOf(i+1) + ".").setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));

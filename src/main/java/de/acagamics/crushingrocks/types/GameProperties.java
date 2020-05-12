@@ -24,6 +24,8 @@ public final class GameProperties {
 	 */
 	private int matchFrameQuantity;
 
+	private long milliesPerThink;
+
 	/**
 	 * Initial health points of the base.
 	 */
@@ -116,6 +118,10 @@ public final class GameProperties {
 
 	public float getMineRecapturingMultiplier() {
 		return mineRecapturingMultiplier;
+	}
+
+	public long getMillisPerThink() {
+		return milliesPerThink;
 	}
 
 	public enum SITES{ YELLOW, BLUE}

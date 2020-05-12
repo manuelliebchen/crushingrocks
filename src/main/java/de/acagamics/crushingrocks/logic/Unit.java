@@ -1,7 +1,7 @@
 package de.acagamics.crushingrocks.logic;
 
 import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.simulation.UnauthorizedAccessException;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.interfaces.GameObject;
@@ -58,13 +58,14 @@ public final class Unit extends GameObject {
 
 	/**
 	 * Sets the order for this unit for in current frame.
-	 * 
-	 * @param controller of the owner of the unit for verification.
+	 *
 	 * @param direction  in witch the unit should moves.
 	 */
-	public void setOrder(IPlayerController controller, Vec2f direction) {
-		if (controller == owner.getController()) {
-			orderedDirection = direction;
+	public void setOrder(Vec2f direction) {
+		if (!this.owner.isLocked()) {
+			orderedDirection = direction.sub(position);
+		} else {
+			throw new UnauthorizedAccessException();
 		}
 	}
 
@@ -77,7 +78,7 @@ public final class Unit extends GameObject {
 	}
 
 	/**
-	 * @param strength
+	 * @param strength The strength of the unit.
 	 * @return Cost of a unit with given strength
 	 */
 	public static int getUnitCost(int strength) {

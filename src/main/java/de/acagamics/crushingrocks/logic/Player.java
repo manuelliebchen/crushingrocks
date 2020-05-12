@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.simulation.UnauthorizedAccessException;
 import de.acagamics.framework.types.Student;
 import de.acagamics.framework.types.Vec2f;
 import javafx.scene.paint.Color;
@@ -36,6 +37,10 @@ public final class Player {
 	private Unit hero;
 	private boolean heroCreationOrder;
 
+	private boolean lock;
+
+	private int thinkCounter;
+
 
 	Player(IPlayerController controller, Color color, int playerID) {
 		this.controller = controller;
@@ -44,6 +49,7 @@ public final class Player {
 		this.playerID = playerID;
 		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());
 		creditPoints = GameProperties.get().getInitialResources();
+		this.lock = true;
 	}
 
 	void setBase(Base base) {
@@ -59,14 +65,14 @@ public final class Player {
 			enemyInfos = players.get(0);
 		}
 
-		// Think.
 		try {
+			this.lock = false;
 			controller.think(mapInfo, this, enemyInfos);
-		} catch (Exception e) {
-			LOG.error(String.format("%s through an unhandled exception!",controller.getClass().getSimpleName()));
-			LOG.error(e.toString());
-			LOG.error(e.getStackTrace()[0].toString());
+			this.lock = true;
+		} catch (Exception e){
+			LOG.error(String.format( "%s threw unhandlet exception: ", this.toString()) , e);
 		}
+		thinkCounter += 1;
 	}
 
 	void executeOrders(Map mapInfo) {
@@ -113,52 +119,67 @@ public final class Player {
 		}
 	}
 
+	boolean isLocked() {
+		return lock;
+	}
+
+	int getThinkCounter() {
+		return thinkCounter;
+	}
+
 	/**
 	 * Sets the order of which unit should be createt next frame.
-	 * 
-	 * @param controller of the owner of the player. This is mostly just 'this'.
+	 *
 	 * @param strength   of the unit to be created
 	 * @return the cost of the unit. Zero if none created.
 	 */
-	public int setUnitCreationOrder(IPlayerController controller, int strength) {
-		if (controller == this.controller && strength > 0 && strength <= GameProperties.get().getMaxUnitStrength()) {
-			int cost = GameProperties.get().getUnitCost(strength);
-			if (creditPoints >= cost) {
-				unitCreationOrder = strength;
-				return cost;
+	public int setUnitCreationOrder(int strength) {
+		if (!lock) {
+			if(strength > 0 && strength <= GameProperties.get().getMaxUnitStrength()) {
+				int cost = GameProperties.get().getUnitCost(strength);
+				if (creditPoints >= cost) {
+					unitCreationOrder = strength;
+					return cost;
+				}
 			}
+		} else {
+			throw new UnauthorizedAccessException();
 		}
 		return 0;
 	}
 
 	/**
 	 * Sets the order to create a Hero
-	 * @param controller of the owner of the player. This is mostly just 'this'.
 	 * @return the cost of the unit. Zero if none created.
 	 */
-	public int setHeroCreationOrder(IPlayerController controller) {
-		if (controller == this.controller) {
+	public int setHeroCreationOrder() {
+		if (!lock) {
 			int cost = GameProperties.get().getUnitCost(GameProperties.get().getHeroStrength());
 			if (creditPoints >= cost) {
 				heroCreationOrder = true;
 				return cost;
 			}
+		} else {
+			throw new UnauthorizedAccessException();
 		}
 		return 0;
 	}
 
 	/**
 	 * Sets the order for all units of the player for in current frame.
-	 * 
-	 * @param controller of the owner of the unit for verification.
+	 *
 	 * @param position   to which the unit should moves.
 	 */
-	public void setAllUnitsOrder(IPlayerController controller, Vec2f position) {
-		for (Unit unit : units) {
-			unit.setOrder(controller, position.sub(unit.getPosition()));
-		}
-		if(hero != null) {
-			hero.setOrder(controller, position.sub(hero.getPosition()));
+	public void setAllUnitsOrder(Vec2f position) {
+		if(!this.lock) {
+			for (Unit unit : units) {
+				unit.setOrder(position);
+			}
+			if(hero != null) {
+				hero.setOrder(position);
+			}
+		} else {
+			throw new UnauthorizedAccessException();
 		}
 	}
 
@@ -224,13 +245,16 @@ public final class Player {
 	 * @return the name of the player.
 	 */
 	public String getName() {
+		if(!student.name().isEmpty()){
+			return student.name();
+		}
 		return controller.getClass().getSimpleName();
 	}
 
 	@Override
 	public String toString() {
 		return String.valueOf(GameProperties.SITES.values()[playerID]) + "\t" +
-//				student.name() + ":" + student.matrikelnummer() + " - " +
+				student.author() + ":" + student.matrikelnummer() + " - " +
 				getName();
 	}
 }

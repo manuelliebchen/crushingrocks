@@ -10,38 +10,45 @@ import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.logic.Unit;
 import de.acagamics.framework.types.Student;
-import de.acagamics.framework.types.Vec2f;
 
 /**
  * Simplistic sample bot.
  * @author Manuel Liebchen
  *
  */
-@Student(name = "Manuel Liebchen", matrikelnummer = -1)
+@Student(author = "Manuel Liebchen", matrikelnummer = -1, name = "BotyMcBotface")
 public final class BotyMcBotface implements IPlayerController {
-	int nextUnit = new Random().nextInt(3)+1;
+	Random random = new Random();
+	int nextBot = random.nextInt(3) + 1;
 	
 	@Override
 	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		List<Mine> mines = mapInfo.getMines();
 		List<Unit> units = ownPlayer.getUnits();
+		ownPlayer.setAllUnitsOrder(enemyPlayerInfo.getBase().getPosition());
 		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 1 - GameProperties.EPSILON);
-		if(mines.isEmpty() || ownPlayer.getUnits().size() == GameProperties.get().getMaxUnitsPerPlayer()) {
-			ownPlayer.setAllUnitsOrder(this, enemyPlayerInfo.getBase().getPosition());
+		int ownedMines = mines.size();
+		if(mines.isEmpty()) {
+			ownPlayer.setAllUnitsOrder(enemyPlayerInfo.getBase().getPosition());
 		} else {
-			for(Unit unit: units) {
-				mines.sort((Mine m, Mine n) -> Math.round((n.getPosition().distanceSqr(unit.getPosition()) - m.getPosition().distanceSqr(unit.getPosition())) * 100));
-				unit.setOrder(this, mines.get(mines.size() -1).getPosition().sub(unit.getPosition()));
+			for(Unit unit : units){
+				if(!mines.isEmpty()) {
+					mines.sort((Mine m, Mine n) -> (n.getPosition().distanceSqr(unit.getPosition()) - m.getPosition().distanceSqr(unit.getPosition()) < 0 ? 1 : -1));
+					Mine target = mines.get(0);
+					unit.setOrder(target.getPosition());
+					mines.remove(target);
+				} else {
+					unit.setOrder(enemyPlayerInfo.getBase().getPosition());
+				}
 			}
 		}
 		if(ownPlayer.hasHero()){
 			Unit hero = ownPlayer.getHero();
-			Vec2f order = enemyPlayerInfo.getBase().getPosition().sub(hero.getPosition());
-			hero.setOrder(this, order);
+			hero.setOrder(enemyPlayerInfo.getBase().getPosition());
 		}
-		if(units.size() < GameProperties.get().getMaxUnitsPerPlayer()/2){
-			ownPlayer.setUnitCreationOrder(this, nextUnit);
+		if(ownedMines > GameProperties.get().getNumberOfMines() / 2 && ownPlayer.setUnitCreationOrder(nextBot) > 0)  {
+			nextBot = random.nextInt(3) + 1;
 		}
-		ownPlayer.setHeroCreationOrder(this);
+		ownPlayer.setHeroCreationOrder();
 	}
 }

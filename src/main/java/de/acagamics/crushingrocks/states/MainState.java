@@ -25,7 +25,7 @@ import java.util.Random;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
  *
  */
-public class MainMenuState extends MenuState {
+public class MainState extends MenuState {
 
 	/**
 	 * Creating new MainMenu.
@@ -33,7 +33,7 @@ public class MainMenuState extends MenuState {
 	 * @param manager The StateManager of the current Window
 	 * @param context GraphicsContext for rendering the state when active.
 	 */
-	public MainMenuState(StateManager manager, GraphicsContext context) {
+	public MainState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
 
 		drawables.add(new Background(150, 0.2f, new Map(new Random(), new ArrayList<Player>())));
@@ -43,13 +43,13 @@ public class MainMenuState extends MenuState {
 				.setVerticalAlignment(ALIGNMENT.CENTER));
 
 		clickable.add(new Button(new Vec2f(0, 325), BUTTON_TYPE.WIDE, "Start Game",
-				() -> manager.push(new SelectionState(manager, context))).setKeyCode(KeyCode.ENTER)
+				() -> manager.push(new GameSelectionState(manager, context))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 		clickable.add(new Button(new Vec2f(0, 400), BUTTON_TYPE.WIDE, "Simulation",
 				() -> manager.push(new SimulationSelectionState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
 						.setHorizontalAlignment(ALIGNMENT.UPPER));
 		clickable.add(new Button(new Vec2f(0, 475), BUTTON_TYPE.WIDE, "Tournament",
-				() -> manager.push(new TournamentSelectionState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
+				() -> manager.push(new TournamentState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
 		clickable.add(new Button(new Vec2f(0, 550), BUTTON_TYPE.WIDE, "Show Credits",
 				() -> manager.push(new CreditsState(manager, context))).setVerticalAlignment(ALIGNMENT.CENTER)

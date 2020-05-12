@@ -26,7 +26,7 @@ import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
-public class SelectionState extends MenuState {
+public class GameSelectionState extends MenuState {
 
 	Random random;
 
@@ -37,7 +37,7 @@ public class SelectionState extends MenuState {
 
 	private Selector speedSelectors;
 
-	public SelectionState(StateManager manager, GraphicsContext context) {
+	public GameSelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
 
 		this.random = new Random();
@@ -55,7 +55,7 @@ public class SelectionState extends MenuState {
 		clickable.add(modeSelector);
 
 		Button startbutton = new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
-				() -> manager.push(new InGameState(manager, context, generateSettings(), speedSelectors.getValue()))).setKeyCode(KeyCode.ENTER)
+				() -> manager.push(new GameState(manager, context, generateSettings(), speedSelectors.getValue()))).setKeyCode(KeyCode.ENTER)
 						.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER);
 		clickable.add(startbutton);
 
@@ -91,8 +91,8 @@ public class SelectionState extends MenuState {
 			}
 		} else if (GameMode.values()[modeSelector.getValue()] == GameMode.XMAS_CHALLENGE) {
 			names.add(bots.get(botSelectors[0].getValue()));
-			names.add(EvilSanta.class);
+			names.add((Class<IPlayerController>) EvilSanta.class.asSubclass(IPlayerController.class));
 		}
-		return new MatchSettings(GameMode.values()[modeSelector.getValue()], names, random.nextLong());
+		return new MatchSettings(GameMode.values()[modeSelector.getValue()], random.nextLong(), names);
 	}
 }
