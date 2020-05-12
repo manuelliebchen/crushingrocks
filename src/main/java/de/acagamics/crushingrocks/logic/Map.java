@@ -23,7 +23,6 @@ public final class Map {
 	private Random random;
 
 
-
 	public Map(Random random, List<Player> players) {
 		this.random = random;
 

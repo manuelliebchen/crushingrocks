@@ -23,6 +23,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.transform.Affine;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -115,7 +116,8 @@ public final class GameState extends UIState implements ISelfUpdating {
 		}
 		background.draw(context);
 
-		mapOverlayRenderer.draw(context, background.getMapRendering().calcultateTransformation(context.getCanvas()));
+		Affine transformation = background.getMapRendering().calcultateTransformation(context.getCanvas());
+		mapOverlayRenderer.draw(game, context, transformation);
 		drawables.draw(context);
 	}
 

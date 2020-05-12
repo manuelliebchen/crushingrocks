@@ -1,11 +1,8 @@
 package de.acagamics.crushingrocks.rendering;
 
+import de.acagamics.crushingrocks.logic.*;
 import de.acagamics.crushingrocks.types.GameProperties;
 import de.acagamics.crushingrocks.types.RenderingProperties;
-import de.acagamics.crushingrocks.logic.Base;
-import de.acagamics.crushingrocks.logic.Map;
-import de.acagamics.crushingrocks.logic.Mine;
-import de.acagamics.crushingrocks.logic.Unit;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import javafx.geometry.Point2D;
@@ -42,7 +39,7 @@ public final class MapOverlayRendering {
 	 * @param transformation The affine transformation to map coordinates
 	 * @param context Context to draw on.
 	 */
-	public void draw(GraphicsContext context, Affine transformation) {
+	public void draw(Game game, GraphicsContext context, Affine transformation) {
 
 		RenderingProperties renderingProperties = ResourceManager.getInstance()
 				.loadProperties(RenderingProperties.class);
@@ -132,6 +129,12 @@ public final class MapOverlayRendering {
 			context.setFill(designProperties.getForegroundColor());
 			context.fillText(unitText, position.getX(), position.getY());
 		}
+
+		context.save();
+		context.setTransform(transformation);
+		context.setLineWidth(renderingProperties.getOverlayLineWidth());
+		game.draw(context);
+		context.restore();
 	}
 
 	String getRoman(int number ){
