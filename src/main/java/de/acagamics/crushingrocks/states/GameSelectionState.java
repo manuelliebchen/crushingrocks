@@ -1,30 +1,30 @@
 package de.acagamics.crushingrocks.states;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import de.acagamics.crushingrocks.types.GameMode;
+import de.acagamics.crushingrocks.controllers.EvilSanta;
+import de.acagamics.crushingrocks.logic.GameMode;
+import de.acagamics.crushingrocks.logic.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
-
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.controller.sample.EvilSanta;
+import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.simulation.GameStatistic;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
+import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.elements.Selector;
 import de.acagamics.framework.ui.elements.TextBox;
-import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.IDrawable;
 import de.acagamics.framework.ui.interfaces.MenuState;
-import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class GameSelectionState extends MenuState {
 
@@ -69,7 +69,7 @@ public class GameSelectionState extends MenuState {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
 				botSelectors[i] = new Selector(new Vec2f(0, 400.0f + i * 100), 200, 0, bots.size() - 1,
-						i2 -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALIGNMENT.CENTER);
+						i2 -> GameStatistic.getName(bots.get(i2))).setVerticalAlignment(ALIGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}
 		} else {

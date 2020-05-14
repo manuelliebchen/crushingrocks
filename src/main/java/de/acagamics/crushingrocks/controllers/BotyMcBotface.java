@@ -1,35 +1,24 @@
-package de.acagamics.crushingrocks.controller.sample;
+package de.acagamics.crushingrocks.controllers;
+
+import de.acagamics.crushingrocks.logic.*;
+import de.acagamics.framework.geometry.Geometry2f;
+import de.acagamics.framework.geometry.Illustrator;
+import de.acagamics.framework.geometry.Line2f;
+import de.acagamics.framework.interfaces.IIllustrating;
+import de.acagamics.framework.interfaces.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.logic.Map;
-import de.acagamics.crushingrocks.logic.Mine;
-import de.acagamics.crushingrocks.logic.Player;
-import de.acagamics.crushingrocks.logic.Unit;
-import de.acagamics.crushingrocks.types.RenderingProperties;
-import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.Geometry2f;
-import de.acagamics.framework.types.Line2f;
-import de.acagamics.framework.types.Student;
-import de.acagamics.framework.types.Vec2f;
-import de.acagamics.framework.ui.IIllustrating;
-import de.acagamics.framework.ui.Illustrator;
-import de.acagamics.framework.ui.interfaces.IDrawable;
-import javafx.scene.canvas.GraphicsContext;
 
 /**
  * Simplistic sample bot.
  * @author Manuel Liebchen
  *
  */
-@Student(author = "Manuel Liebchen", matrikelnummer = -1, name = "BotyMcBotface")
+@Student(author = "Manuel Liebchen", matrikelnummer = -1, name = "BotyMcBotfaceName")
 public final class BotyMcBotface implements IPlayerController, IIllustrating {
 	Random random = new Random();
-	int nextBot = random.nextInt(3) + 1;
 
 	List<Geometry2f> draws;
 
@@ -40,16 +29,15 @@ public final class BotyMcBotface implements IPlayerController, IIllustrating {
 	@Override
 	public void think(Map mapInfo, Player ownPlayer, Player enemyPlayerInfo) {
 		List<Mine> mines = mapInfo.getMines();
-		List<Unit> units = ownPlayer.getUnits();
 		ownPlayer.setAllUnitsOrder(enemyPlayerInfo.getBase().getPosition());
 		mines.removeIf( m -> m.getOwnership(ownPlayer) >= 1 - GameProperties.EPSILON);
-		int ownedMines = mines.size();
+		int notOwnedMines = mines.size();
 		if(mines.isEmpty()) {
 			ownPlayer.setAllUnitsOrder(enemyPlayerInfo.getBase().getPosition());
 		} else {
-			for(Unit unit : units){
+			for(Unit unit : ownPlayer.getUnits()){
 				if(!mines.isEmpty()) {
-					mines.sort((Mine m, Mine n) -> (n.getPosition().distanceSqr(unit.getPosition()) - m.getPosition().distanceSqr(unit.getPosition()) < 0 ? 1 : -1));
+					mines.sort(unit.getPosition().sortDistanceTo());
 					Mine target = mines.get(0);
 					unit.setOrder(target.getPosition());
 					draws.add(new Line2f(unit.getPosition(), target.getPosition()));
@@ -67,10 +55,12 @@ public final class BotyMcBotface implements IPlayerController, IIllustrating {
 			hero.setOrder(enemyPlayerInfo.getBase().getPosition());
 			draws.add(new Line2f(hero.getPosition(), enemyPlayerInfo.getBase().getPosition()));
 		}
-		if(ownedMines > GameProperties.get().getNumberOfMines() / 2 && ownPlayer.setUnitCreationOrder(nextBot) > 0)  {
-			nextBot = random.nextInt(3) + 1;
+		int nextBot = 3 * (GameProperties.get().getNumberOfMines() - notOwnedMines) / GameProperties.get().getNumberOfMines() + 1;
+		if(notOwnedMines > 0)  {
+			ownPlayer.setUnitCreationOrder(nextBot);
+		} else {
+			ownPlayer.setHeroCreationOrder();
 		}
-		ownPlayer.setHeroCreationOrder();
 	}
 
 	@Override

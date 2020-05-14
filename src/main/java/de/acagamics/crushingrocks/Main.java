@@ -1,22 +1,21 @@
 package de.acagamics.crushingrocks;
 
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.crushingrocks.types.RenderingProperties;
-import de.acagamics.framework.resources.ClientProperties;
-import de.acagamics.framework.types.CliArguments;
-import de.acagamics.crushingrocks.types.GameMode;
+import de.acagamics.crushingrocks.controllers.BotyMcBotface;
+import de.acagamics.crushingrocks.logic.GameMode;
+import de.acagamics.crushingrocks.logic.GameProperties;
+import de.acagamics.crushingrocks.logic.IPlayerController;
+import de.acagamics.crushingrocks.rendering.RenderingProperties;
+import de.acagamics.crushingrocks.states.MainState;
 import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.ResourceManager;
+import de.acagamics.framework.simulation.SimulationSettings;
 import de.acagamics.framework.simulation.Simulator;
 import de.acagamics.framework.simulation.Tournament;
-import de.acagamics.framework.types.SimulationSettings;
+import de.acagamics.framework.ui.CliArguments;
+import de.acagamics.framework.ui.MainWindow;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import de.acagamics.framework.ui.MainWindow;
-
-import de.acagamics.crushingrocks.states.MainState;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,7 +48,7 @@ public final class Main {
 
 		List<Class<?>> loaded = ResourceManager.getInstance().loadContorller(IPlayerController.class);
 		if(cliArg.isTournament()) {
-			List<Class<?>> selected = loaded.stream().filter(c->!c.getPackageName().equals("de.acagamics.crushingrocks.controller.sample")).collect(Collectors.toList());
+			List<Class<?>> selected = loaded.stream().filter(c->!c.getPackageName().equals(BotyMcBotface.class.getPackageName())).collect(Collectors.toList());
 			Tournament tournament = new Tournament(selected, (s, c1, c2) -> new MatchSettings(GameMode.NORMAL, s, Arrays.asList(c1,c2)), new Random().nextLong(), cliArg.numberOfTreads(), cliArg.numberOfGames());
 			tournament.run();
 			try(FileWriter myWriter = new FileWriter(cliArg.getOutputFile())) {

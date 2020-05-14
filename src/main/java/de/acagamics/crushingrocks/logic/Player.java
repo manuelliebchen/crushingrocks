@@ -1,16 +1,15 @@
 package de.acagamics.crushingrocks.logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.framework.geometry.Vec2f;
+import de.acagamics.framework.interfaces.Student;
+import de.acagamics.framework.simulation.GameStatistic;
 import de.acagamics.framework.simulation.UnauthorizedAccessException;
-import de.acagamics.framework.types.Student;
-import de.acagamics.framework.types.Vec2f;
 import javafx.scene.paint.Color;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
@@ -98,11 +97,9 @@ public final class Player {
 		}
 		unitCreationOrder = 0;
 
-		for (Mine mine : mapInfo.getMines()) {
-			float income = mine.getOwnership()[playerID] * GameProperties.get().getPerMineIncome();
-			creditPoints += income;
-			score += income;
-		}
+		int income = mapInfo.getMineIncome(this);
+		creditPoints += income;
+		score += income;
 	}
 
 	IPlayerController getController() {
@@ -123,7 +120,11 @@ public final class Player {
 		return lock;
 	}
 
-	int getThinkCounter() {
+	/**
+	 * The quantity the think method has been called.
+	 * @return The quantity the think method has been called.
+	 */
+	public int getThinkCounter() {
 		return thinkCounter;
 	}
 
@@ -134,16 +135,15 @@ public final class Player {
 	 * @return the cost of the unit. Zero if none created.
 	 */
 	public int setUnitCreationOrder(int strength) {
-		if (!lock) {
-			if(strength > 0 && strength <= GameProperties.get().getMaxUnitStrength()) {
-				int cost = GameProperties.get().getUnitCost(strength);
-				if (creditPoints >= cost) {
-					unitCreationOrder = strength;
-					return cost;
-				}
-			}
-		} else {
+		if(this.lock) {
 			throw new UnauthorizedAccessException();
+		}
+		if(strength > 0 && strength <= GameProperties.get().getMaxUnitStrength()) {
+			int cost = GameProperties.get().getUnitCost(strength);
+			if (creditPoints >= cost) {
+				unitCreationOrder = strength;
+				return cost;
+			}
 		}
 		return 0;
 	}
@@ -153,14 +153,13 @@ public final class Player {
 	 * @return the cost of the unit. Zero if none created.
 	 */
 	public int setHeroCreationOrder() {
-		if (!lock) {
-			int cost = GameProperties.get().getUnitCost(GameProperties.get().getHeroStrength());
-			if (creditPoints >= cost) {
-				heroCreationOrder = true;
-				return cost;
-			}
-		} else {
+		if(this.lock) {
 			throw new UnauthorizedAccessException();
+		}
+		int cost = GameProperties.get().getUnitCost(GameProperties.get().getHeroStrength());
+		if (creditPoints >= cost) {
+			heroCreationOrder = true;
+			return cost;
 		}
 		return 0;
 	}
@@ -171,15 +170,14 @@ public final class Player {
 	 * @param position   to which the unit should moves.
 	 */
 	public void setAllUnitsOrder(Vec2f position) {
-		if(!this.lock) {
-			for (Unit unit : units) {
-				unit.setOrder(position);
-			}
-			if(hero != null) {
-				hero.setOrder(position);
-			}
-		} else {
+		if(this.lock) {
 			throw new UnauthorizedAccessException();
+		}
+		for (Unit unit : units) {
+			unit.setOrder(position);
+		}
+		if(hero != null) {
+			hero.setOrder(position);
 		}
 	}
 
@@ -245,10 +243,7 @@ public final class Player {
 	 * @return the name of the player.
 	 */
 	public String getName() {
-		if(!student.name().isEmpty()){
-			return student.name();
-		}
-		return controller.getClass().getSimpleName();
+		return GameStatistic.getName(controller.getClass());
 	}
 
 	@Override

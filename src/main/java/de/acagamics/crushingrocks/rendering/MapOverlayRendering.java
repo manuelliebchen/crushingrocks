@@ -1,8 +1,6 @@
 package de.acagamics.crushingrocks.rendering;
 
 import de.acagamics.crushingrocks.logic.*;
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.crushingrocks.types.RenderingProperties;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import javafx.geometry.Point2D;
@@ -36,6 +34,7 @@ public final class MapOverlayRendering {
 
 	/**
 	 * Displays the map images etc.
+	 * @param game for drawing oferlay from bots
 	 * @param transformation The affine transformation to map coordinates
 	 * @param context Context to draw on.
 	 */

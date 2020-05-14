@@ -1,6 +1,6 @@
 package de.acagamics.crushingrocks.rendering;
 
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.ui.interfaces.GameObject;
 
 import java.util.ArrayList;

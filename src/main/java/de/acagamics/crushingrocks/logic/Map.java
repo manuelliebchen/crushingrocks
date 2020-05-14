@@ -1,10 +1,11 @@
 package de.acagamics.crushingrocks.logic;
 
+import de.acagamics.framework.geometry.Box2f;
+import de.acagamics.framework.geometry.Vec2f;
+import de.acagamics.framework.geometry.Volume2f;
+
 import java.util.*;
 import java.util.stream.Collectors;
-
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.framework.types.Vec2f;
 
 /**
  * A map has a certain size and contains items like coins.
@@ -107,11 +108,11 @@ public final class Map {
 	}
 
 	private boolean checkMinePosition(Vec2f mineposition, List<Vec2f> minePositions) {
-		if(mineposition.getX() > GameProperties.get().getMapRadius() || mineposition.getX() < -GameProperties.get().getMapRadius() || mineposition.getY() > GameProperties.get().getMapRadius() || mineposition.getY() < -GameProperties.get().getMapRadius()) {
+		if(!getBoundary().isInside(mineposition)) {
 			return true;
 		}
 		for(Vec2f minepositiontwo : minePositions) {
-			if(mineposition.distance(minepositiontwo) < GameProperties.EPSILON) {
+			if(mineposition.equals(minepositiontwo)) {
 				continue;
 			}
 			if(mineposition.distance(minepositiontwo) < 2 * GameProperties.get().getMineRadius()) {
@@ -143,6 +144,20 @@ public final class Map {
 	public List<Mine> getMines() {
 		return new ArrayList<>(mines);
 	}
+
+
+	/**
+	 * Returns the income of the player.
+	 * @param player of which income will be returned
+	 * @return the income of the player
+	 */
+	public int getMineIncome(Player player){
+		float income = 0;
+		for (Mine mine : mines) {
+			income += mine.getOwnership(player) * GameProperties.get().getPerMineIncome();
+		}
+		return Math.round(income);
+	}
 	
 	/**
 	 * Get all Units on the map.
@@ -155,23 +170,12 @@ public final class Map {
 	}
 
 	/**
-	 * Returns a Vec2f that is in the map boundaries.
-	 * @param pos vector to be checked.
-	 * @return Bound vector.
+	 * The boundary of the map.
+	 * @return the boundary of the map.
 	 */
-	public Vec2f boundInMap(Vec2f pos) {
-		float mapradius = GameProperties.get().getMapRadius();
-		if(pos.getX() > mapradius) {
-			pos = new Vec2f(mapradius, pos.getY());
-		} else if(pos.getX() < - mapradius){
-			pos = new Vec2f(-mapradius, pos.getY());
-		}
-		if(pos.getY() > mapradius) {
-			pos = new Vec2f(pos.getX(), mapradius);
-		} else if(pos.getY() < - mapradius){
-			pos = new Vec2f(pos.getX(), -mapradius);
-		}
-		return pos;
+	public Volume2f getBoundary() {
+		float mapRadius = GameProperties.get().getMapRadius();
+		return new Box2f(new Vec2f(-mapRadius, -mapRadius), mapRadius * 2, mapRadius * 2);
 	}
 
 	void update() {
@@ -182,7 +186,8 @@ public final class Map {
 
 		// Update Mines (ownership)
 		for (Mine mine : this.getMines()) {
-			List<Unit> units = allUnits.stream().filter(u-> mine.getPosition().distance(u.getPosition()) < GameProperties.get().getMineRadius()).collect(Collectors.toList());
+			Volume2f boudery = mine.getBoundary();
+			List<Unit> units = allUnits.stream().filter(u -> boudery.isInside(u.getPosition())).collect(Collectors.toList());
 			mine.update(units);
 		}
 
@@ -199,32 +204,29 @@ public final class Map {
 		for (Unit unit : allUnits) {
 			Optional<Base> posibleBase = bases
 					.stream().filter(
-							e -> unit.getPosition().distance(e.getPosition()) < GameProperties.get().getUnitRadius() && unit.getOwner() != e.getOwner())
+							b -> b.getBoundary().isInside(unit.getPosition()) && unit.getOwner() != b.getOwner())
 					.findFirst();
 			if(posibleBase.isPresent()){
 				Base attacked = posibleBase.get();
+				int newValue = unit.getStrength();
 				if (attackBases.containsKey(attacked)) {
-					attackBases.put(attacked,
-							attackBases.get(attacked) + unit.getStrength());
-				} else {
-					attackBases.put(attacked, unit.getStrength());
+					newValue += attackBases.get(attacked);
 				}
+				attackBases.put(attacked, newValue);
 				unit.addSpeedup();
 			} else {
 				Optional<Unit> posibleUnit = allUnits
 						.stream().filter(
-								e -> unit.getPosition().distance(e.getPosition()) < GameProperties.get().getUnitRadius() && unit.getOwner() != e.getOwner())
-						.sorted((e1, e2) -> (e1.getPosition().distance(unit.getPosition())
-								- e2.getPosition().distance(unit.getPosition())) > 0 ? 1 : -1)
+								e -> unit.getBoundary().isInside(e.getPosition()) && unit.getOwner() != e.getOwner())
+						.sorted(unit.getPosition().sortDistanceTo())
 						.findFirst();
 				if (posibleUnit.isPresent()) {
 					Unit attacked = posibleUnit.get();
+					int newValue = unit.getStrength();
 					if (attackUnits.containsKey(attacked)) {
-						attackUnits.put(attacked,
-								attackUnits.get(attacked) + unit.getStrength());
-					} else {
-						attackUnits.put(attacked, unit.getStrength());
+						newValue += attackUnits.get(attacked);
 					}
+					attackUnits.put(attacked, newValue);
 					unit.addSpeedup();
 				}
 			}
@@ -238,15 +240,14 @@ public final class Map {
 		for (Base base : bases) {
 			List<Unit> unitsInRange = allUnits
 					.stream().filter(
-							e -> base.getPosition().distance(e.getPosition()) < GameProperties.get().getUnitRadius() && base.getOwner() != e.getOwner())
+							e -> base.getBoundary().isInside(e.getPosition()) && base.getOwner() != e.getOwner())
 					.collect(Collectors.toList());
 			for(Unit attacked:unitsInRange) {
+				int newValue = GameProperties.get().getBaseAttack();
 				if (attackUnits.containsKey(attacked)) {
-					attackUnits.put(attacked,
-							attackUnits.get(attacked) + GameProperties.get().getBaseAttack());
-				} else {
-					attackUnits.put(attacked, GameProperties.get().getBaseAttack());
+					newValue += attackUnits.get(attacked);
 				}
+				attackUnits.put(attacked, newValue);
 			}
 		}
 		attackUnits.forEach((u, i) -> u.attack(i));

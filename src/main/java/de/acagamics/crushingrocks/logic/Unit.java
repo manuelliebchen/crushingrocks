@@ -1,9 +1,9 @@
 package de.acagamics.crushingrocks.logic;
 
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.framework.simulation.UnauthorizedAccessException;
+import de.acagamics.framework.geometry.Circle2f;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.simulation.UnauthorizedAccessException;
 import de.acagamics.framework.ui.interfaces.GameObject;
 
 /**
@@ -19,7 +19,7 @@ public final class Unit extends GameObject {
 
 	private int speedup;
 
-	private Vec2f orderedDirection;
+	private Vec2f order;
 
 	private boolean walkingRight;
 
@@ -41,6 +41,10 @@ public final class Unit extends GameObject {
 		return ResourceManager.getInstance().loadProperties(GameProperties.class).getUnitRadius();
 	}
 
+	public Circle2f getBoundary() {
+		return new Circle2f(position, getRadius());
+	}
+
 	/**
 	 * @return strenght of this unit.
 	 */
@@ -58,15 +62,24 @@ public final class Unit extends GameObject {
 
 	/**
 	 * Sets the order for this unit for in current frame.
-	 *
-	 * @param direction  in witch the unit should moves.
+	 * @param target where the unit should move.
 	 */
-	public void setOrder(Vec2f direction) {
-		if (!this.owner.isLocked()) {
-			orderedDirection = direction.sub(position);
-		} else {
+	public void setOrder(Vec2f target) {
+		if(this.owner.isLocked()) {
 			throw new UnauthorizedAccessException();
 		}
+		order = target;
+	}
+
+	/**
+	 * Returns the order of the unit.
+	 * @return the order of the unit.
+	 */
+	public Vec2f getOrder(){
+		if(this.owner.isLocked()) {
+			throw new UnauthorizedAccessException();
+		}
+		return order;
 	}
 
 	/**
@@ -90,15 +103,14 @@ public final class Unit extends GameObject {
 	}
 
 	Vec2f updatePosition(Map mapinfo) {
-		if (orderedDirection != null) {
-			float currentMaxSpeed = GameProperties.get().getMaxUnitSpeed(speedup);
-			if (orderedDirection.length() > currentMaxSpeed) {
-				orderedDirection = orderedDirection.getNormalized().mult(currentMaxSpeed);
-			}
-			walkingRight = orderedDirection.getX() > 0;
-			position = mapinfo.boundInMap(position.add(orderedDirection));
+		if (order != null) {
+			Vec2f orderDirection = order.sub(position).clipLenght(GameProperties.get().getMaxUnitSpeed(speedup));
+			walkingRight = orderDirection.getX() > 0;
+			position = mapinfo.getBoundary().clip(position.add(orderDirection));
 
-			orderedDirection = null;
+			if(order.distance(position) <= GameProperties.EPSILON) {
+				order = null;
+			}
 		}
 		return position;
 	}

@@ -1,7 +1,7 @@
 package de.acagamics.crushingrocks.rendering;
 
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.Vec2f;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 

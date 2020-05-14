@@ -1,8 +1,8 @@
 package de.acagamics.crushingrocks.types;
 
-import de.acagamics.crushingrocks.controller.IPlayerController;
 import de.acagamics.crushingrocks.logic.Game;
-
+import de.acagamics.crushingrocks.logic.GameMode;
+import de.acagamics.crushingrocks.logic.IPlayerController;
 import de.acagamics.framework.simulation.Simulatable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

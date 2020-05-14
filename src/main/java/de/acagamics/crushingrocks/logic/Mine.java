@@ -1,11 +1,11 @@
 package de.acagamics.crushingrocks.logic;
 
-import java.util.List;
-
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.geometry.Circle2f;
+import de.acagamics.framework.geometry.Vec2f;
+import de.acagamics.framework.geometry.Volume2f;
 import de.acagamics.framework.ui.interfaces.GameObject;
+
+import java.util.List;
 
 /**
  * Coins can be collected by Players for increasing their score.
@@ -38,8 +38,20 @@ public final class Mine extends GameObject {
 		return mineid;
 	}
 
+	/**
+	 *
+	 * @return the radius of the mine.
+	 */
 	public float getRadius() {
-		return ResourceManager.getInstance().loadProperties(GameProperties.class).getMapRadius();
+		return GameProperties.get().getMineRadius();
+	}
+
+	/**
+	 *
+	 * @return the boundary of the mine, beeing a Circle2f.
+	 */
+	public Volume2f getBoundary() {
+		return new Circle2f(position, getRadius());
 	}
 
 	/**

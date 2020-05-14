@@ -1,8 +1,8 @@
 package de.acagamics.crushingrocks.logic;
 
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.geometry.Circle2f;
+import de.acagamics.framework.geometry.Vec2f;
+import de.acagamics.framework.geometry.Volume2f;
 import de.acagamics.framework.ui.interfaces.GameObject;
 
 /**
@@ -14,12 +14,6 @@ public final class Base extends GameObject {
 	private Player owner;
 	private int hp;
 
-	/**
-	 * Constructor that takes the owner and the position.
-	 * 
-	 * @param owner
-	 * @param position
-	 */
 	Base(Player owner, Vec2f position) {
 		super(position);
 		this.owner = owner;
@@ -45,8 +39,21 @@ public final class Base extends GameObject {
 		return position.copy();
 	}
 
+
+	/**
+	 *
+	 * @return the radius of the base
+	 */
 	public float getRadius() {
-		return ResourceManager.getInstance().loadProperties(GameProperties.class).getBaseRadius();
+		return GameProperties.get().getBaseRadius();
+	}
+
+	/**
+	 *
+	 * @return the boundary of the base. It is a Circle2f.
+	 */
+	public Volume2f getBoundary() {
+		return new Circle2f(position, getRadius());
 	}
 
 	/**

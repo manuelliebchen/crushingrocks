@@ -1,25 +1,22 @@
 package de.acagamics.crushingrocks.logic;
 
+import de.acagamics.crushingrocks.rendering.RenderingProperties;
+import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.geometry.Illustrator;
+import de.acagamics.framework.interfaces.IIllustrating;
+import de.acagamics.framework.resources.InputTracker;
+import de.acagamics.framework.resources.ResourceManager;
+import de.acagamics.framework.simulation.GameStatistic;
+import de.acagamics.framework.simulation.Simulatable;
+import de.acagamics.framework.ui.interfaces.IDrawable;
+import javafx.event.EventHandler;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.InputEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
-import de.acagamics.crushingrocks.types.GameMode;
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.framework.simulation.Simulatable;
-import de.acagamics.framework.types.GameStatistic;
-import de.acagamics.crushingrocks.types.RenderingProperties;
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.types.MatchSettings;
-import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.ui.IIllustrating;
-import de.acagamics.framework.ui.Illustrator;
-import de.acagamics.framework.ui.interfaces.IDrawable;
-import de.acagamics.framework.util.InputTracker;
-import javafx.event.EventHandler;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.InputEvent;
 
 /**
  * MainClass for the GameSide. EntrancePoint for communication with ClientSide.

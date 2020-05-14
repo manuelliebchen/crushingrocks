@@ -1,9 +1,10 @@
-package de.acagamics.crushingrocks.types;
+package de.acagamics.crushingrocks.rendering;
 
-import java.util.List;
-
+import de.acagamics.crushingrocks.logic.GameProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import javafx.scene.paint.Color;
+
+import java.util.List;
 
 public class RenderingProperties {
 

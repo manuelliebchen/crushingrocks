@@ -1,16 +1,17 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.types.GameMode;
-import de.acagamics.framework.simulation.Tournament;
-import de.acagamics.crushingrocks.controller.IPlayerController;
+import de.acagamics.crushingrocks.controllers.BotyMcBotface;
+import de.acagamics.crushingrocks.logic.GameMode;
+import de.acagamics.crushingrocks.logic.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.simulation.Tournament;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
@@ -57,7 +58,7 @@ public class TournamentState extends MenuState implements ISelfUpdating {
 
 		drawables.add(new Background(100,  0.2f, new Map(new Random(), new ArrayList<Player>())));
 
-		bots = ResourceManager.getInstance().loadContorller(IPlayerController.class).stream().filter(c->!c.getPackageName().equals("de.acagamics.crushingrocks.controller.sample")).collect(Collectors.toList());
+		bots = ResourceManager.getInstance().loadContorller(IPlayerController.class).stream().filter(c->!c.getPackageName().equals(BotyMcBotface.class.getPackageName())).collect(Collectors.toList());
 
 		drawables.add(new TextBox(new Vec2f(200, 50), "Tournament Selection").setFont(ResourceManager.getInstance().loadProperties(DesignProperties.class).getSubtitleFont()).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
@@ -79,9 +80,15 @@ public class TournamentState extends MenuState implements ISelfUpdating {
 				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.LOWER);
 		clickable.add(startbutton);
 
-		clickable.add(new Button(new Vec2f(175, -120), Button.BUTTON_TYPE.NORMAL, "Save .csv",
+		Button save = new Button(new Vec2f(175, -120), Button.BUTTON_TYPE.NORMAL, "Save .csv",
 				this::saveCSV ).setKeyCode(KeyCode.ENTER)
-				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.LOWER));
+				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.LOWER);
+		clickable.add(save);
+
+		if(bots.isEmpty()){
+			startbutton.setEnabled(false);
+			save.setEnabled(false);
+		}
 
 		timeline = new Timeline();
 		KeyFrame frame = new KeyFrame(

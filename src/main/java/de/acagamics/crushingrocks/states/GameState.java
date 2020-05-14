@@ -1,20 +1,20 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.rendering.MapOverlayRendering;
-import de.acagamics.framework.types.GameStatistic;
 import de.acagamics.crushingrocks.logic.Game;
+import de.acagamics.crushingrocks.rendering.Background;
+import de.acagamics.crushingrocks.rendering.MapOverlayRendering;
+import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.crushingrocks.types.MatchSettings;
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.simulation.GameStatistic;
 import de.acagamics.framework.ui.StateManager;
-import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.framework.ui.elements.DynamicTextBox;
 import de.acagamics.framework.ui.elements.ImageElement;
 import de.acagamics.framework.ui.elements.RenderingLayer;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
-import de.acagamics.framework.ui.interfaces.UIState;
 import de.acagamics.framework.ui.interfaces.ISelfUpdating;
+import de.acagamics.framework.ui.interfaces.UIState;
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
@@ -38,13 +38,15 @@ public final class GameState extends UIState implements ISelfUpdating {
 	private Game game;
 	private MapOverlayRendering mapOverlayRenderer;
 	private RenderingLayer drawables;
-	
-	Timeline timeline;
+
+	private Timeline timeline;
 
 	private MatchSettings settings;
 	private Background background;
 
 	private List<KeyCode> input;
+
+	private boolean clean;
 
 
 	public GameState(StateManager manager, GraphicsContext context, MatchSettings settings, int speedMultiplier) {
@@ -116,9 +118,11 @@ public final class GameState extends UIState implements ISelfUpdating {
 		}
 		background.draw(context);
 
-		Affine transformation = background.getMapRendering().calcultateTransformation(context.getCanvas());
-		mapOverlayRenderer.draw(game, context, transformation);
-		drawables.draw(context);
+		if(!clean) {
+			Affine transformation = background.getMapRendering().calcultateTransformation(context.getCanvas());
+			mapOverlayRenderer.draw(game, context, transformation);
+			drawables.draw(context);
+		}
 	}
 
 	@Override
@@ -128,12 +132,14 @@ public final class GameState extends UIState implements ISelfUpdating {
 			if (keyEvent.getCode() == KeyCode.ESCAPE) {
 				manager.pop();
 			} else if (keyEvent.getEventType().equals(KeyEvent.KEY_TYPED)) {
-				if(keyEvent.getCharacter().equals("p")){
+				if(keyEvent.getCharacter().equals(" ")){
 					if (timeline.getStatus() == Status.RUNNING) {
 						timeline.stop();
 					} else {
 						timeline.play();
 					}
+				} else if(keyEvent.getCharacter().equals("c")){
+					clean = !clean;
 				}
 			} else if(keyEvent.getEventType().equals(KeyEvent.KEY_PRESSED)){
 				input.add(keyEvent.getCode());

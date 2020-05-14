@@ -1,16 +1,17 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.types.GameMode;
-import de.acagamics.crushingrocks.types.MatchSettings;
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.crushingrocks.controller.sample.EvilSanta;
+import de.acagamics.crushingrocks.controllers.EvilSanta;
+import de.acagamics.crushingrocks.logic.GameMode;
+import de.acagamics.crushingrocks.logic.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
+import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.SimulationSettings;
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.simulation.GameStatistic;
+import de.acagamics.framework.simulation.SimulationSettings;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
@@ -67,7 +68,7 @@ public class SimulationSelectionState extends MenuState {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
 				botSelectors[i] = new Selector(new Vec2f(0, 400.0f + i * 80), 200, 0, bots.size() - 1,
-						i2 -> bots.get(i2).getSimpleName()).setVerticalAlignment(ALIGNMENT.CENTER);
+						i2 -> GameStatistic.getName(bots.get(i2))).setVerticalAlignment(ALIGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}
 		}

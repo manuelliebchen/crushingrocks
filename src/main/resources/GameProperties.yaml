@@ -1,12 +1,11 @@
 matchFrameQuantity: 5000
-milliesPerThink: 32
 baseHP: 100
 baseAttack: 3
 baseRadius: 0.2
 unitRadius: 0.1
 maxUnitSpeed: 0.01
 speedUp: 0.002
-costExponent: 0.6
+costExponent: 1
 constMultipier: 1000
 numberOfMines: 7
 maxUnitsPerPlayer: 8
@@ -16,7 +15,7 @@ perMineIncome: 10
 mineCapturingPerFrame: 0.005
 mineRecapturingMultiplier: 2
 mineRadius: 0.15
-initialResources: 2500
+initialResources: 8000
 mapRadius: 1
 playerBasePosition:
  - [-1, 0]

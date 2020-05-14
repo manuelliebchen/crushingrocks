@@ -1,9 +1,9 @@
-package de.acagamics.crushingrocks.controller.sample;
+package de.acagamics.crushingrocks.controllers;
 
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.framework.types.Student;
+import de.acagamics.crushingrocks.logic.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.framework.interfaces.Student;
 
 /**
  * EvilSanta sample bot for the X-Mass challenge.

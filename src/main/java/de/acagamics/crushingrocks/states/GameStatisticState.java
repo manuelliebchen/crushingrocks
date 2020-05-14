@@ -3,15 +3,15 @@ package de.acagamics.crushingrocks.states;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
-import de.acagamics.framework.types.GameStatistic;
+import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.crushingrocks.types.MatchSettings;
-import de.acagamics.framework.types.Vec2f;
+import de.acagamics.framework.simulation.GameStatistic;
 import de.acagamics.framework.ui.StateManager;
 import de.acagamics.framework.ui.elements.Button;
-import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
+import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.MenuState;
 import javafx.scene.canvas.GraphicsContext;
@@ -47,7 +47,7 @@ public class GameStatisticState extends MenuState {
 		for(int i = 0; i < statistic.getPlayerAmount(); ++i) {
 			drawables.add(new TextBox(new Vec2f(-300, 350.0f + i * 50), String.valueOf(i+1) + ".").setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
-			drawables.add(new TextBox(new Vec2f(-100, 350.0f + i * 50), scores.get(i).getClass().getSimpleName()).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(-100, 350.0f + i * 50), GameStatistic.getName(scores.get(i).getClass())).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 		}
 	}

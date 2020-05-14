@@ -1,21 +1,22 @@
 package de.acagamics.crushingrocks.rendering;
 
+import de.acagamics.crushingrocks.logic.Base;
+import de.acagamics.crushingrocks.logic.GameProperties;
+import de.acagamics.crushingrocks.logic.Map;
+import de.acagamics.crushingrocks.logic.Unit;
+import de.acagamics.framework.geometry.Box2f;
+import de.acagamics.framework.geometry.Vec2f;
+import de.acagamics.framework.resources.ResourceManager;
+import de.acagamics.framework.ui.interfaces.GameObject;
+import de.acagamics.framework.ui.interfaces.IDrawable;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.transform.Affine;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
-import de.acagamics.crushingrocks.types.GameProperties;
-import de.acagamics.crushingrocks.types.RenderingProperties;
-import de.acagamics.crushingrocks.logic.*;
-import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.types.Box2f;
-import de.acagamics.framework.types.Vec2f;
-import de.acagamics.framework.ui.interfaces.IDrawable;
-import de.acagamics.framework.ui.interfaces.GameObject;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.transform.Affine;
 
 /**
  * @author Claudius Grimm (claudius@acagamics.de)

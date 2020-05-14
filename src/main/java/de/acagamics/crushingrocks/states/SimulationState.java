@@ -1,18 +1,21 @@
 package de.acagamics.crushingrocks.states;
 
-import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.crushingrocks.rendering.Background;
+import de.acagamics.crushingrocks.types.MatchSettings;
+import de.acagamics.framework.geometry.Vec2f;
+import de.acagamics.framework.interfaces.Student;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
+import de.acagamics.framework.simulation.GameStatistic;
+import de.acagamics.framework.simulation.SimulationSettings;
+import de.acagamics.framework.simulation.SimulationStatistic;
 import de.acagamics.framework.simulation.Simulator;
-import de.acagamics.framework.types.SimulationSettings;
-import de.acagamics.framework.types.SimulationStatistic;
-import de.acagamics.framework.types.Student;
-import de.acagamics.framework.types.Vec2f;
 import de.acagamics.framework.ui.StateManager;
-import de.acagamics.framework.ui.elements.*;
+import de.acagamics.framework.ui.elements.Button;
+import de.acagamics.framework.ui.elements.DynamicTextBox;
+import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.ISelfUpdating;
 import de.acagamics.framework.ui.interfaces.MenuState;
@@ -82,7 +85,7 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 			drawables.add(new TextBox(new Vec2f(-250, y), controller.getAnnotation(Student.class).author()).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
-			drawables.add(new TextBox(new Vec2f(0, y), controller.getSimpleName()).setTextAlignment(ALIGNMENT.LEFT)
+			drawables.add(new TextBox(new Vec2f(0, y), GameStatistic.getName(controller)).setTextAlignment(ALIGNMENT.LEFT)
 					.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 			drawables.add(new DynamicTextBox(new Vec2f(400, y),() ->
 					String.format("%7d", scroes.getVictories(controller))).setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));

@@ -1,15 +1,15 @@
-package de.acagamics.crushingrocks.controller.sample;
+package de.acagamics.crushingrocks.controllers;
 
-import java.util.Optional;
-
-import de.acagamics.crushingrocks.controller.IPlayerController;
-import de.acagamics.framework.types.Student;
+import de.acagamics.crushingrocks.logic.IPlayerController;
 import de.acagamics.crushingrocks.logic.Map;
 import de.acagamics.crushingrocks.logic.Mine;
 import de.acagamics.crushingrocks.logic.Player;
+import de.acagamics.framework.interfaces.Student;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
+
+import java.util.Optional;
 
 /**
  * Simplistic Human Keyboard Bot

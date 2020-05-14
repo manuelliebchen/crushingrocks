@@ -1,4 +1,4 @@
-package de.acagamics.crushingrocks.types;
+package de.acagamics.crushingrocks.logic;
 
 public enum GameMode {
     NORMAL, XMAS_CHALLENGE
