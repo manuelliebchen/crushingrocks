@@ -1,6 +1,7 @@
 package de.acagamics.crushingrocks.rendering;
 
 import de.acagamics.crushingrocks.logic.GameProperties;
+import de.acagamics.crushingrocks.logic.Player;
 import de.acagamics.framework.resources.ResourceManager;
 import javafx.scene.paint.Color;
 
@@ -44,8 +45,12 @@ public class RenderingProperties {
 		return backgroundColor;
 	}
 
-	public List<Color> getPlayerColors() {
-		return playerColors;
+	public Color getPlayerColors(Player p) {
+		return playerColors.get(p.getPlayerID());
+	}
+
+	public Color getPlayerColors(int p) {
+		return playerColors.get(p);
 	}
 
 	public float getOverlayLineWidth() {

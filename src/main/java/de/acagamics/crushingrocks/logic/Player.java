@@ -4,7 +4,6 @@ import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.interfaces.Student;
 import de.acagamics.framework.simulation.GameStatistic;
 import de.acagamics.framework.simulation.UnauthorizedAccessException;
-import javafx.scene.paint.Color;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +24,6 @@ public final class Player {
 	private int score;
 	private int creditPoints;
 
-	private Color color;
 	private int playerID;
 
 	private Base base;
@@ -41,10 +39,9 @@ public final class Player {
 	private int thinkCounter;
 
 
-	Player(IPlayerController controller, Color color, int playerID) {
+	Player(IPlayerController controller, int playerID) {
 		this.controller = controller;
 		this.student = this.controller.getClass().getAnnotation(Student.class);
-		this.color = color;
 		this.playerID = playerID;
 		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());
 		creditPoints = GameProperties.get().getInitialResources();
@@ -209,13 +206,6 @@ public final class Player {
 	 */
 	public Base getBase() {
 		return base;
-	}
-
-	/**
-	 * @return the color of the player.
-	 */
-	public Color getColor() {
-		return color;
 	}
 
 	/**

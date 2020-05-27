@@ -43,8 +43,6 @@ public final class Main {
 			return;
 		}
 
-		ResourceManager.getInstance().loadProperties(GameProperties.class);
-		ResourceManager.getInstance().loadProperties(RenderingProperties.class);
 
 		List<Class<?>> loaded = ResourceManager.getInstance().loadContorller(IPlayerController.class);
 		if(cliArg.isTournament()) {

@@ -49,7 +49,6 @@ public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawa
 		players = new ArrayList<>(playerController.size());
 		for (int i = 0; i < playerController.size(); ++i) {
 			players.add(new Player((IPlayerController) playerController.get(i),
-					ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(i),
 					i));
 		}
 
@@ -173,8 +172,8 @@ public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawa
 		for(Player p : players){
 			IPlayerController cont = p.getController();
 			if(cont instanceof IIllustrating){
-				context.setFill(ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(p.getPlayerID()));
-				context.setStroke(ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors().get(p.getPlayerID()));
+				context.setFill(ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors(p));
+				context.setStroke(ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors(p));
 				((IIllustrating) cont).draw(new Illustrator(context));
 			}
 		}

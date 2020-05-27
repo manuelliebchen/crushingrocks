@@ -1,6 +1,7 @@
 package de.acagamics.crushingrocks.rendering;
 
 import de.acagamics.crushingrocks.logic.*;
+import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import javafx.geometry.Point2D;
@@ -53,14 +54,14 @@ public final class MapOverlayRendering {
 
 		for (Base base : gameMap.getBases()) {
 			context.setStroke(renderingProperties.getHealthBackground());
-			Point2D position = base.getPosition().getPoint2D();
+			Point2D position = getPoint(base.getPosition());
 			position = transformation.transform(position);
 			float renderingRadius = gameProperties.getBaseRadius() * scalation;
 
 			context.strokeOval(position.getX() - renderingRadius,
 					position.getY() - renderingRadius, 2 * renderingRadius,
 					2 * renderingRadius);
-			context.setStroke(base.getOwner().getColor());
+			context.setStroke(renderingProperties.getPlayerColors(base.getOwner()));
 			context.strokeArc(position.getX() - renderingRadius,
 					position.getY() - renderingRadius, 2 * renderingRadius,
 					2 * renderingRadius,
@@ -81,12 +82,12 @@ public final class MapOverlayRendering {
 
 		for (Mine mine : gameMap.getMines()) {
 			float[] ownership = mine.getOwnership();
-			Point2D position = mine.getPosition().getPoint2D();
+			Point2D position = getPoint(mine.getPosition());
 			position = transformation.transform(position);
 			float renderingRadius = gameProperties.getMineRadius() * scalation;
 
 			for (int i = 0; i < ownership.length; ++i) {
-				context.setStroke(renderingProperties.getPlayerColors().get(i));
+				context.setStroke(renderingProperties.getPlayerColors(i));
 				context.strokeArc(position.getX() - renderingRadius,
 						position.getY() - renderingRadius, 2 * renderingRadius,
 						2 * renderingRadius,
@@ -107,11 +108,11 @@ public final class MapOverlayRendering {
 		}
 
 		for (Unit unit : gameMap.getAllUnits()) {
-			Point2D position = unit.getPosition().getPoint2D();
+			Point2D position = getPoint(unit.getPosition());
 			position = transformation.transform(position);
 			float renderingRadius = gameProperties.getUnitRadius() * scalation;
 
-			context.setStroke(renderingProperties.getPlayerColors().get(unit.getOwner().getPlayerID()));
+			context.setStroke(renderingProperties.getPlayerColors(unit.getOwner()));
 
 			context.strokeOval(position.getX() - renderingRadius,
 					position.getY() - renderingRadius, 2 * renderingRadius,
@@ -134,6 +135,10 @@ public final class MapOverlayRendering {
 		context.setLineWidth(renderingProperties.getOverlayLineWidth());
 		game.draw(context);
 		context.restore();
+	}
+
+	Point2D getPoint(Vec2f vec){
+		return new Point2D(vec.getX(), vec.getY());
 	}
 
 	String getRoman(int number ){

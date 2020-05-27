@@ -3,6 +3,7 @@ package de.acagamics.crushingrocks.states;
 import de.acagamics.crushingrocks.logic.Game;
 import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.crushingrocks.rendering.MapOverlayRendering;
+import de.acagamics.crushingrocks.rendering.RenderingProperties;
 import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.resources.ClientProperties;
@@ -60,16 +61,18 @@ public final class GameState extends UIState implements ISelfUpdating {
 		background = new Background(50, 0.2f, game.getMap());
 		mapOverlayRenderer = new MapOverlayRendering(game.getMap());
 
+		RenderingProperties renderingProperties = ResourceManager.getInstance().loadProperties(RenderingProperties.class);
+
 		drawables = new RenderingLayer();
 		drawables.add(new DynamicTextBox(new Vec2f(0, 30), () -> String.valueOf(game.getFramesLeft()))
 				.setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new DynamicTextBox(new Vec2f(100, 30), () -> String.valueOf(game.getPlayer(0).getCreditPoints()))
-				.setTextAlignment(ALIGNMENT.LEFT).setTextColor(game.getPlayer(0).getColor())
+				.setTextAlignment(ALIGNMENT.LEFT).setTextColor(renderingProperties.getPlayerColors(game.getPlayer(0)))
 				.setVerticalAlignment(ALIGNMENT.LEFT).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new ImageElement(new Vec2f(70, 30), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.LEFT)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new DynamicTextBox(new Vec2f(-100, 30), () -> String.valueOf(game.getPlayer(1).getCreditPoints()))
-				.setTextAlignment(ALIGNMENT.RIGHT).setTextColor(game.getPlayer(1).getColor())
+				.setTextAlignment(ALIGNMENT.RIGHT).setTextColor(renderingProperties.getPlayerColors(game.getPlayer(1)))
 				.setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add(new ImageElement(new Vec2f(-70, 30), "Ressource.png", 25).setVerticalAlignment(ALIGNMENT.RIGHT)
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
