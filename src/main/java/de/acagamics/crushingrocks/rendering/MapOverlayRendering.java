@@ -35,11 +35,10 @@ public final class MapOverlayRendering {
 
 	/**
 	 * Displays the map images etc.
-	 * @param game for drawing oferlay from bots
 	 * @param transformation The affine transformation to map coordinates
 	 * @param context Context to draw on.
 	 */
-	public void draw(Game game, GraphicsContext context, Affine transformation) {
+	public void draw(GraphicsContext context, Affine transformation) {
 
 		RenderingProperties renderingProperties = ResourceManager.getInstance()
 				.loadProperties(RenderingProperties.class);
@@ -129,12 +128,6 @@ public final class MapOverlayRendering {
 			context.setFill(designProperties.getForegroundColor());
 			context.fillText(unitText, position.getX(), position.getY());
 		}
-
-		context.save();
-		context.setTransform(transformation);
-		context.setLineWidth(renderingProperties.getOverlayLineWidth());
-		game.draw(context);
-		context.restore();
 	}
 
 	Point2D getPoint(Vec2f vec){

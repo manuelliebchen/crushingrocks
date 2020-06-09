@@ -19,7 +19,7 @@ import de.acagamics.framework.ui.elements.Selector;
 import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.IDrawable;
-import de.acagamics.framework.ui.interfaces.MenuState;
+import de.acagamics.framework.ui.interfaces.UIState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class SimulationSelectionState extends MenuState {
+public class SimulationSelectionState extends UIState {
 
 	private Selector[] botSelectors;
 	private List<Class<IPlayerController>> bots;

@@ -1,17 +1,8 @@
 package de.acagamics.crushingrocks.logic;
 
-import de.acagamics.crushingrocks.rendering.RenderingProperties;
 import de.acagamics.crushingrocks.types.MatchSettings;
-import de.acagamics.framework.geometry.Illustrator;
-import de.acagamics.framework.interfaces.IIllustrating;
-import de.acagamics.framework.resources.InputTracker;
-import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.simulation.GameStatistic;
 import de.acagamics.framework.simulation.Simulatable;
-import de.acagamics.framework.ui.interfaces.IDrawable;
-import javafx.event.EventHandler;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.InputEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +17,14 @@ import java.util.stream.Collectors;
  * @author Manuel Liebchen
  * 
  */
-public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawable {
+public final class Game implements Simulatable {
 	private List<Player> players;
 	private Map map;
 	private int framesLeft;
 
-	private InputTracker inputTracker;
-
 	private Random random;
+
+	private GameStatistic gameStatistic;
 
 	/**
 	 * Creates a new map with the given player controller and a map.
@@ -42,8 +33,6 @@ public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawa
 	 */
 	public Game(MatchSettings settings) {
 		GameMode gamemode = settings.getMode();
-
-		inputTracker = new InputTracker();
 
 		List<?> playerController = settings.getControllers();
 		players = new ArrayList<>(playerController.size());
@@ -91,6 +80,18 @@ public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawa
 		return null;
 	}
 
+	public List<IPlayerController> getPlayerControllers() {
+		return players.stream().map( Player::getController).collect(Collectors.toList());
+	}
+
+	public IPlayerController getPlayerControllers(int i) {
+		Player p = getPlayer(i);
+		if(p != null){
+			return p.getController();
+		}
+		return null;
+	}
+
 	/**
 	 * Returns the number of players. Note that the players may already be dead.
 	 * 
@@ -115,6 +116,9 @@ public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawa
 	 */
 	@Override
 	public GameStatistic tick() {
+		if(gameStatistic != null){
+			return gameStatistic;
+		}
 		framesLeft -= 1;
 		if (framesLeft <= 0) {
 			return generateStatistic();
@@ -132,13 +136,23 @@ public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawa
 
 		map.update();
 
-		inputTracker.updateTables();
 		for (Base base : map.getBases()) {
 			if (base.getHP() <= 0) {
-				return generateStatistic();
+				gameStatistic = generateStatistic();
+				return gameStatistic;
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public boolean isAlive() {
+		return gameStatistic == null;
+	}
+
+	@Override
+	public GameStatistic getStatistic() {
+		return gameStatistic;
 	}
 
 	private GameStatistic generateStatistic(){
@@ -154,28 +168,5 @@ public final class Game implements EventHandler<InputEvent>, Simulatable, IDrawa
 
 		List<IPlayerController> controllers = players.stream().map(Player::getController).collect(Collectors.toList());
 		return new GameStatistic(!hasWon && players.get(0).getScore() == players.get(1).getScore(), controllers);
-	}
-
-	@Override
-	public void handle(InputEvent event) {
-		for (Player player : players) {
-			IPlayerController controller = player.getController();
-			if (controller instanceof EventHandler) {
-				((EventHandler<InputEvent>) controller).handle(event);
-			}
-		}
-		inputTracker.handle(event);
-	}
-
-	@Override
-	public void draw(GraphicsContext context) {
-		for(Player p : players){
-			IPlayerController cont = p.getController();
-			if(cont instanceof IIllustrating){
-				context.setFill(ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors(p));
-				context.setStroke(ResourceManager.getInstance().loadProperties(RenderingProperties.class).getPlayerColors(p));
-				((IIllustrating) cont).draw(new Illustrator(context));
-			}
-		}
 	}
 }

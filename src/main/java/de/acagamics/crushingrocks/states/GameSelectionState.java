@@ -18,7 +18,7 @@ import de.acagamics.framework.ui.elements.Selector;
 import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
 import de.acagamics.framework.ui.interfaces.IDrawable;
-import de.acagamics.framework.ui.interfaces.MenuState;
+import de.acagamics.framework.ui.interfaces.UIState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GameSelectionState extends MenuState {
+public class GameSelectionState extends UIState {
 
 	Random random;
 

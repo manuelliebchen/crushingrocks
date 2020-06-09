@@ -11,7 +11,7 @@ import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
-import de.acagamics.framework.ui.interfaces.MenuState;
+import de.acagamics.framework.ui.interfaces.UIState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
@@ -22,7 +22,7 @@ import java.util.Random;
  * @author Max Klockmann (max@acagamics.de)
  *
  */
-public class CreditsState extends MenuState {
+public class CreditsState extends UIState {
 
 	/**
 	 * Creating new Credits State.

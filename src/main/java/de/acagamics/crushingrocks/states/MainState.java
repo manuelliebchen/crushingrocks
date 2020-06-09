@@ -12,7 +12,7 @@ import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.Button.BUTTON_TYPE;
 import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
-import de.acagamics.framework.ui.interfaces.MenuState;
+import de.acagamics.framework.ui.interfaces.UIState;
 import de.acagamics.framework.web.Version;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -25,7 +25,7 @@ import java.util.Random;
  * @author Gerd Schmidt (gerd.schmidt@acagamics.de)
  *
  */
-public class MainState extends MenuState {
+public class MainState extends UIState {
 
 	/**
 	 * Creating new MainMenu.

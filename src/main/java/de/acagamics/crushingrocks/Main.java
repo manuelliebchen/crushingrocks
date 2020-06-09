@@ -4,14 +4,11 @@ import de.acagamics.crushingrocks.controllers.BotyMcBotface;
 import de.acagamics.crushingrocks.logic.GameMode;
 import de.acagamics.crushingrocks.logic.GameProperties;
 import de.acagamics.crushingrocks.logic.IPlayerController;
-import de.acagamics.crushingrocks.rendering.RenderingProperties;
 import de.acagamics.crushingrocks.states.MainState;
 import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.ResourceManager;
-import de.acagamics.framework.simulation.SimulationSettings;
-import de.acagamics.framework.simulation.Simulator;
-import de.acagamics.framework.simulation.Tournament;
+import de.acagamics.framework.simulation.*;
 import de.acagamics.framework.ui.CliArguments;
 import de.acagamics.framework.ui.MainWindow;
 import org.apache.logging.log4j.LogManager;
@@ -43,9 +40,9 @@ public final class Main {
 			return;
 		}
 
-
-		List<Class<?>> loaded = ResourceManager.getInstance().loadContorller(IPlayerController.class);
+		ResourceManager.getInstance().loadProperties(GameProperties.class);
 		if(cliArg.isTournament()) {
+			List<Class<?>> loaded = ResourceManager.getInstance().loadContorller(IPlayerController.class);
 			List<Class<?>> selected = loaded.stream().filter(c->!c.getPackageName().equals(BotyMcBotface.class.getPackageName())).collect(Collectors.toList());
 			Tournament tournament = new Tournament(selected, (s, c1, c2) -> new MatchSettings(GameMode.NORMAL, s, Arrays.asList(c1,c2)), new Random().nextLong(), cliArg.numberOfTreads(), cliArg.numberOfGames());
 			tournament.run();
@@ -57,6 +54,7 @@ public final class Main {
 			return;
 		}
 		if(cliArg.isSimulation()) {
+			List<Class<?>> loaded = ResourceManager.getInstance().loadContorller(IPlayerController.class);
 			List<String> names = cliArg.selectedBots();
 			List<Class<?>> selected = new ArrayList<>(names.size());
 			for(String name : names) {
@@ -74,6 +72,32 @@ public final class Main {
 			}
 			return;
 		}
+		if(cliArg.isExam()) {
+			List<Class<?>> loaded = ResourceManager.getInstance().loadContorller(IPlayerController.class);
+			Class<?> bot = null;
+			Optional<Class<?>> opt =  loaded.stream().filter(c-> c.getName().equals(cliArg.selectedBots().get(0))).findAny();
+			if(opt.isPresent()) {
+				bot = opt.get();
+			} else {
+				if(cliArg.selectedBots().isEmpty()){
+					LOG.error("No Bot specified, use -b NAME");
+				} else {
+					LOG.error("Bot not found.");
+				}
+				return;
+			}
+			List<Class<?>> selected = Arrays.asList(BotyMcBotface.class, bot);
+			Simulator simulator = new Simulator(new SimulationSettings(cliArg.numberOfTreads(),cliArg.numberOfGames()),new MatchSettings(GameMode.NORMAL, new Random().nextLong(), selected));
+			simulator.run();
+			SimulationStatistic statistic = simulator.getStatistics();
+			if(statistic.getVictories(bot) < (cliArg.numberOfGames() * 0.8f)){
+				LOG.info("Der Bot: {}, hat die Prüfungszulassung nicht bestanden.", bot.getName());
+				System.exit(1);
+			}
+			LOG.info("Der Bot: {}, hat die Prüfungszulassung bestanden.", bot.getName());
+			return;
+		}
+
 
 		MainWindow.launch(MainState.class);
 	}

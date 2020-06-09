@@ -188,14 +188,16 @@ public final class Player {
 	/**
 	 * Get the creditPoints of this player.
 	 * 
-	 * @return score
+	 * @return the creditPoints
 	 */
 	public int getCreditPoints() {
 		return creditPoints;
 	}
 
 	/**
-	 * @return the score.
+	 * Returns the overall score.
+	 * This is only relevant for draws and is calculated by the sum of all positive incomes.
+	 * @return the overall score.
 	 */
 	public int getScore() {
 		return score;

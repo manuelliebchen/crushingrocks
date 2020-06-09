@@ -5,7 +5,6 @@ import de.acagamics.crushingrocks.rendering.Background;
 import de.acagamics.crushingrocks.types.MatchSettings;
 import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.interfaces.Student;
-import de.acagamics.framework.resources.ClientProperties;
 import de.acagamics.framework.resources.DesignProperties;
 import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.simulation.GameStatistic;
@@ -17,14 +16,9 @@ import de.acagamics.framework.ui.elements.Button;
 import de.acagamics.framework.ui.elements.DynamicTextBox;
 import de.acagamics.framework.ui.elements.TextBox;
 import de.acagamics.framework.ui.interfaces.ALIGNMENT;
-import de.acagamics.framework.ui.interfaces.ISelfUpdating;
-import de.acagamics.framework.ui.interfaces.MenuState;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import de.acagamics.framework.ui.interfaces.SelfUpdatingState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,10 +32,8 @@ import java.util.Random;
  * @author Claudius Grimm (claudius@acagamics.de)
  * @author Manuel Liebchen
  */
-public final class SimulationState extends MenuState implements ISelfUpdating {
+public final class SimulationState extends SelfUpdatingState {
 	private static final Logger LOG = LogManager.getLogger(SimulationState.class.getName());
-
-	private Timeline timeline;
 
 	private Simulator simulator;
 	private MatchSettings matchSettings;
@@ -91,17 +83,6 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 					String.format("%7d", scroes.getVictories(controller))).setVerticalAlignment(ALIGNMENT.CENTER).setHorizontalAlignment(ALIGNMENT.UPPER));
 
 		}
-
-		timeline = new Timeline();
-		KeyFrame frame = new KeyFrame(
-				Duration.millis((double) ResourceManager.getInstance().loadProperties(ClientProperties.class).getMilisPerFrame()), event ->
-				frame()
-		);
-
-		timeline.setCycleCount(Animation.INDEFINITE);
-		timeline.getKeyFrames().add(frame);
-		Thread runner = new Thread(simulator);
-		runner.start();
 	}
 
 	public void saveCSV(){
@@ -114,11 +95,8 @@ public final class SimulationState extends MenuState implements ISelfUpdating {
 
 	@Override
 	public void entered() {
-		timeline.play();
-	}
-
-	@Override
-	public void leaving() {
-		timeline.stop();
+		super.entered();
+		Thread runner = new Thread(simulator);
+		runner.start();
 	}
 }

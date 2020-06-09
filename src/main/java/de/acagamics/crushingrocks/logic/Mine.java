@@ -68,7 +68,7 @@ public final class Mine extends GameObject {
 	 * @return Player that owns this mine.
 	 */
 	public float[] getOwnership() {
-		return ownership;
+		return ownership.clone();
 	}
 	
 	void setOwnership(float[] ownership) {
