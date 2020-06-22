@@ -43,10 +43,6 @@ public final class Player {
 
 	private int thinkCounter;
 
-	private ByteArrayOutputStream baos;
-	private PrintStream ps;
-
-
 	Player(IPlayerController controller, int playerID) {
 		this.controller = controller;
 		this.student = this.controller.getClass().getAnnotation(Student.class);
@@ -54,7 +50,6 @@ public final class Player {
 		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());
 		creditPoints = GameProperties.get().getInitialResources();
 		this.lock = true;
-		baos = new
 	}
 
 	void setBase(Base base) {
