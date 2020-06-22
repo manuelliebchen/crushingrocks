@@ -44,7 +44,7 @@ public class MatchSettings implements Supplier<Simulatable> {
 			try {
 				controllers.add((IPlayerController) controllerClass.getDeclaredConstructor().newInstance());
 			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-				LOG.error(e);
+				LOG.error("while constructing bot", e);
 			}
 		}
 		return controllers;
