@@ -33,8 +33,8 @@ public final class Main {
 			return;
 		}
 
+		ClientProperties cliProp = ResourceManager.getInstance().loadProperties(ClientProperties.class);
 		if(cliArg.isVersion()) {
-			ClientProperties cliProp = ResourceManager.getInstance().loadProperties(ClientProperties.class);
 			System.out.println(cliProp.getTitle());
 			System.out.println(cliProp.getVersion());
 			return;

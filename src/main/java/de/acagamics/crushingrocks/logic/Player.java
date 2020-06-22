@@ -2,11 +2,16 @@ package de.acagamics.crushingrocks.logic;
 
 import de.acagamics.framework.geometry.Vec2f;
 import de.acagamics.framework.interfaces.Student;
+import de.acagamics.framework.resources.ClientProperties;
+import de.acagamics.framework.resources.ResourceManager;
 import de.acagamics.framework.simulation.GameStatistic;
 import de.acagamics.framework.simulation.UnauthorizedAccessException;
+import de.acagamics.framework.ui.CliArguments;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +43,9 @@ public final class Player {
 
 	private int thinkCounter;
 
+	private ByteArrayOutputStream baos;
+	private PrintStream ps;
+
 
 	Player(IPlayerController controller, int playerID) {
 		this.controller = controller;
@@ -46,6 +54,7 @@ public final class Player {
 		units = new ArrayList<>(GameProperties.get().getMaxUnitsPerPlayer());
 		creditPoints = GameProperties.get().getInitialResources();
 		this.lock = true;
+		baos = new
 	}
 
 	void setBase(Base base) {
@@ -60,13 +69,17 @@ public final class Player {
 		} else {
 			enemyInfos = players.get(0);
 		}
+		PrintStream ps = new PrintStream();
+
 
 		try {
 			this.lock = false;
 			controller.think(mapInfo, this, enemyInfos);
 			this.lock = true;
 		} catch (Exception e){
-			LOG.error(String.format( "%s threw unhandlet exception: ", this.toString()) , e);
+			if(!ResourceManager.getInstance().loadSingleton(CliArguments.class).isQuiet()) {
+				LOG.error(String.format("%s threw unhandlet exception: ", this.toString()), e);
+			}
 		}
 		thinkCounter += 1;
 	}
