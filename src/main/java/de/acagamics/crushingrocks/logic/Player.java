@@ -64,8 +64,6 @@ public final class Player {
 		} else {
 			enemyInfos = players.get(0);
 		}
-		PrintStream ps = new PrintStream();
-
 
 		try {
 			this.lock = false;
