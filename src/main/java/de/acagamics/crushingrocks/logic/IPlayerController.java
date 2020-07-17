@@ -1,10 +1,9 @@
 package de.acagamics.crushingrocks.logic;
 
 /**
- * Player controller interface from which all bots and human player controllers implement. 
- * @author Andreas Reich (andreas@acagamics.de)
- *
+ * Player controller interface from which all bots and human player controllers implement.
  */
+
 public interface IPlayerController {
 	
 	/**

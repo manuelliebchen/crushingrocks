@@ -7,9 +7,8 @@ import de.acagamics.framework.ui.interfaces.GameObject;
 
 /**
  * A Class for the Base of a Player.
- * 
- * @author Manuel Liebchen
  */
+
 public final class Base extends GameObject {
 	private Player owner;
 	private int hp;

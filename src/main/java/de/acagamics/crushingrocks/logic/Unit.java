@@ -8,9 +8,8 @@ import de.acagamics.framework.ui.interfaces.GameObject;
 
 /**
  * Unit of the Player to be controlled.
- * 
- * @author Manuel Liebchen
  */
+
 public final class Unit extends GameObject {
 
 	private Player owner;

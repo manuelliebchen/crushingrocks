@@ -11,12 +11,8 @@ import java.util.stream.Collectors;
 
 /**
  * MainClass for the GameSide. EntrancePoint for communication with ClientSide.
- * 
- * @author Jan-Cord Gerken (jancord@acagamics.de)
- * @author Andreas Reich (andreas@acagamics.de)
- * @author Manuel Liebchen
- * 
  */
+
 public final class Game implements Simulatable {
 	private List<Player> players;
 	private Map map;

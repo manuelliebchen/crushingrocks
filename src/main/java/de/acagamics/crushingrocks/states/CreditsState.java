@@ -18,10 +18,6 @@ import javafx.scene.input.KeyCode;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * @author Max Klockmann (max@acagamics.de)
- *
- */
 public class CreditsState extends UIState {
 
 	/**

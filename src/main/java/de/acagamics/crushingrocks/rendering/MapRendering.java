@@ -18,10 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-/**
- * @author Claudius Grimm (claudius@acagamics.de)
- * @author Manuel Liebchen
- */
 public final class MapRendering implements IDrawable {
 
 	private Map gameMap;

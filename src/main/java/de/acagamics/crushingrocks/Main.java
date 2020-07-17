@@ -19,9 +19,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * @author Max Klockmann (max@acagamics.de)
- */
 public final class Main {
 	private static final Logger LOG = LogManager.getLogger(Main.class.getName());
 

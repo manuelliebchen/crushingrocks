@@ -7,9 +7,8 @@ import de.acagamics.framework.interfaces.Student;
 
 /**
  * EvilSanta sample bot for the X-Mass challenge.
- * @author Manuel Liebchen
- *
  */
+
 @Student(author="Manuel Liebchen", matrikelnummer = -1, name = "Santa")
 public final class EvilSanta implements IPlayerController {
 	

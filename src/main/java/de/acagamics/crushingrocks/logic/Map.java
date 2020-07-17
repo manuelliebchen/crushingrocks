@@ -9,9 +9,6 @@ import java.util.stream.Collectors;
 
 /**
  * A map has a certain size and contains items like coins.
- * 
- * @author Jan-Cord Gerken (jancord@acagamics.de)
- *
  */
 public final class Map {
 

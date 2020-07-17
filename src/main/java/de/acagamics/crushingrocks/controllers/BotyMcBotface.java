@@ -13,9 +13,8 @@ import java.util.Random;
 
 /**
  * Simplistic sample bot.
- * @author Manuel Liebchen
- *
  */
+
 @Student(author = "Manuel Liebchen", matrikelnummer = -1, name = "BotyMcBotfaceName")
 public final class BotyMcBotface implements IPlayerController, IIllustrating {
 	Random random = new Random();

@@ -7,8 +7,8 @@ import java.util.List;
 
 /**
  * Class for various game relevant constants.
- * @author Manuel Liebchen
  */
+
 public final class GameProperties {
 
 

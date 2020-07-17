@@ -7,9 +7,8 @@ import de.acagamics.framework.interfaces.Student;
 
 /**
  * Simplistic sample bot.
- * @author Manuel Liebchen
- *
  */
+
 @Student(author = "Manuel Liebchen", matrikelnummer = -1, name = "Empty")
 public final class EmptyBotyMcBotface implements IPlayerController {
 	

@@ -11,10 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Affine;
 
-/**
- * @author Claudius Grimm (claudius@acagamics.de)
- * @author Manuel Liebchen
- */
 public final class MapOverlayRendering {
 
 	private Map gameMap;

@@ -28,10 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * @author Claudius Grimm (claudius@acagamics.de)
- * @author Manuel Liebchen
- */
 public final class SimulationState extends SelfUpdatingState {
 	private static final Logger LOG = LogManager.getLogger(SimulationState.class.getName());
 

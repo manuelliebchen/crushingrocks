@@ -13,10 +13,8 @@ import java.util.Optional;
 
 /**
  * Simplistic Human Keyboard Bot
- * 
- * @author Max
- *
  */
+
 @Student(author="Max", matrikelnummer = -1, name = "Human")
 public final class HumanBot implements IPlayerController, EventHandler<InputEvent> {
 

@@ -17,10 +17,8 @@ import java.util.List;
 
 /**
  * Player is the active entity in the game, controlled by PlayerControllers.
- * 
- * @author Jan-Cord Gerken (jancord@acagamics.de)
- *
  */
+
 public final class Player {
 	private static final Logger LOG = LogManager.getLogger(Player.class.getName());
 

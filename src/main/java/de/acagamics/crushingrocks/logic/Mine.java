@@ -9,9 +9,8 @@ import java.util.List;
 
 /**
  * Coins can be collected by Players for increasing their score.
- * @author Manuel Liebchen
- *
  */
+
 public final class Mine extends GameObject {
 	
 	private final int mineid;
