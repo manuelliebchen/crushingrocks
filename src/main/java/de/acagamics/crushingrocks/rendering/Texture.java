@@ -6,13 +6,20 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Texture {
-    Vec2f offset;
-    Image image;
-    float ratio;
-    float radius;
-    boolean flip;
+    private Vec2f offset;
+    private Image image;
+    private float ratio;
+    private float radius;
+    private boolean flip;
 
-    Texture(Vec2f offset, String file, float radius, boolean flip){
+    /**
+     * Texture with offset and size.
+     * @param offset The offset the upper left corner has to the center.
+     * @param file The file in der resources directory to be used.
+     * @param radius The size of the texture in the half of the width.
+     * @param flip Whether or not to filp the texture.
+     */
+     public Texture(Vec2f offset, String file, float radius, boolean flip){
         this.offset = offset;
         this.radius = radius;
         this.flip = flip;
@@ -20,7 +27,7 @@ public class Texture {
         ratio = (float) (image.getWidth() / image.getHeight() + 1) / 2;
     }
 
-    void draw(GraphicsContext context, Vec2f position) {
+    public void draw(GraphicsContext context, Vec2f position) {
         float flipFactor = flip ? 1 : -1;
         float renderWidth = radius
                 * ( 1 + position.getY() * 0.5f) * ratio;

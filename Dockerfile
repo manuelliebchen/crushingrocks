@@ -4,4 +4,4 @@ WORKDIR /usr/src/app
 COPY . .
 RUN gradle wrapper --parallel
 
-CMD [ "./gradlew", "build", "--parallel"]
+CMD [ "./gradlew", "run"]

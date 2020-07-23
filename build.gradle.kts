@@ -4,7 +4,7 @@ plugins {
 	
      id("org.openjfx.javafxplugin") version "0.0.8"
 
-//    application
+    application
 }
 
 repositories {
@@ -21,7 +21,7 @@ dependencies {
 javafx {
     version = "11"
     modules("javafx.controls", "javafx.fxml")
-    configuration = "compileOnly"
+//    configuration = "compileOnly"
 }
 
 java {
@@ -35,6 +35,6 @@ java {
     withSourcesJar()
 }
 
-//application{
-//    mainClassName = "de.acagamics.crushingrocks.Main"
-//}
+application{
+    mainClassName = "de.acagamics.crushingrocks.Main"
+}
