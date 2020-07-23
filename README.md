@@ -1,14 +1,12 @@
 # Crushing Rocks!
-The game where you crush the rocks.
+A little game called Crushing Rocks that was used as the 2020 Acagamics Programming Competition.
+![screen shot](screenshot.png)
 
 ## Installation
-This is how you setup this project under Linux.
-
 ```
-git clone git@git.acagamics.de:wettbewerb_new/wettbewerb1920.git
-cd wettbewerb1920
+git clone git@github.com:manuelliebchen/crushingrocks.git
+cd crushingrocks
 git submodule update --init --remote --recursive
 gradle wrapper
-./gradlew build
 ./gradlew run
 ```
