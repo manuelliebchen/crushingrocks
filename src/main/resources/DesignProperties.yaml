@@ -22,6 +22,10 @@ smallFont:
 
 foregroundColor: "#BD277C"
 backgroundColor: "#82BB0F"
+secondaryColor: "#800149"
+
+inactiveColor: "#808080"
+inactiveSecondColor: "#404040"
 
 buttonFont:
    file: "breathe_fire.otf"
