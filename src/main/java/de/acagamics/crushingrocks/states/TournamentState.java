@@ -59,12 +59,12 @@ public class TournamentState extends SelfUpdatingState {
 				.setHorizontalAlignment(ALIGNMENT.LOWER));
 
 		drawables.add(new TextBox(new Vec2f(-250, 300), "Threads:").setVerticalAlignment(ALIGNMENT.CENTER));
-		threadSelector = new Selector(new Vec2f(0, 300), 150, 1, 16, i -> i + "x")
+		threadSelector = new Selector(new Vec2f(0, 300), 150, Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16), i -> i + "x", false)
 				.setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(threadSelector);
 
 		drawables.add(new TextBox(new Vec2f(-250, 400), "Runs:").setVerticalAlignment(ALIGNMENT.CENTER));
-		runsSelector = new Selector(new Vec2f(0, 400), 150, 1, 6, i -> (int) Math.pow(10, i) + "x").setVerticalAlignment(ALIGNMENT.CENTER);
+		runsSelector = new Selector(new Vec2f(0, 400), 150, Arrays.asList(1,10,100,1000,10000), i -> i + "x", false).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(runsSelector);
 
 		startbutton = new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",

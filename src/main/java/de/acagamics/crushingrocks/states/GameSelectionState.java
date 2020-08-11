@@ -23,6 +23,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -50,8 +51,8 @@ public class GameSelectionState extends UIState {
 				.setHorizontalAlignment(ALIGNMENT.UPPER));
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(-350, 300), "Game Mode:").setVerticalAlignment(ALIGNMENT.CENTER));
-		modeSelector = new Selector(new Vec2f(0, 300), 200, 0, GameMode.values().length - 1,
-				i -> GameMode.values()[i].toString()).setVerticalAlignment(ALIGNMENT.CENTER);
+		modeSelector = new Selector(new Vec2f(0, 300), 200, Arrays.asList(GameMode.values()),
+				i -> i.toString(),true).setVerticalAlignment(ALIGNMENT.CENTER);
 		clickable.add(modeSelector);
 
 		Button startbutton = new Button(new Vec2f(-175, -120), BUTTON_TYPE.NORMAL, "Start",
@@ -68,8 +69,8 @@ public class GameSelectionState extends UIState {
 		if (!bots.isEmpty()) {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
-				botSelectors[i] = new Selector(new Vec2f(0, 400.0f + i * 100), 200, 0, bots.size() - 1,
-						i2 -> GameStatistic.getName(bots.get(i2))).setVerticalAlignment(ALIGNMENT.CENTER);
+				botSelectors[i] = new Selector(new Vec2f(0, 400.0f + i * 100), 200, bots,
+						i2 -> GameStatistic.getName((Class<IPlayerController>)i2), true).setVerticalAlignment(ALIGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}
 		} else {
@@ -77,7 +78,7 @@ public class GameSelectionState extends UIState {
 		}
 
 		drawables.add((IDrawable) new TextBox(new Vec2f(200, -200), "Speed Multiplier").setHorizontalAlignment(ALIGNMENT.LOWER));
-		speedSelectors = new Selector(new Vec2f(200, -120), 100, 1, 16, i -> i + "x")
+		speedSelectors = new Selector(new Vec2f(200, -120), 100, Arrays.asList(1,2,4,8,16), i -> i + "x",false)
 				.setHorizontalAlignment(ALIGNMENT.LOWER);
 		clickable.add(speedSelectors);
 
