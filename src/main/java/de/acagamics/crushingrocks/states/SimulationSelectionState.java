@@ -31,13 +31,13 @@ import java.util.stream.Collectors;
 
 public class SimulationSelectionState extends UIState {
 
-	private Selector[] botSelectors;
+	private Selector<Class<?>>[] botSelectors;
 	private List<Class<IPlayerController>> bots;
 
-	private Selector modeSelector;
+	private Selector<GameMode> modeSelector;
 
-	private Selector threadSelector;
-	private Selector runsSelector;
+	private Selector<Integer> threadSelector;
+	private Selector<Integer> runsSelector;
 
 	public SimulationSelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
@@ -92,14 +92,14 @@ public class SimulationSelectionState extends UIState {
 
 	private MatchSettings generateMatchSettings() {
 		List<Class<?>> names = new ArrayList<>(2);
-		if (GameMode.values()[modeSelector.getValue()] == GameMode.NORMAL) {
+		if (modeSelector.getValue() == GameMode.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
-				names.add(bots.get(botSelectors[i].getValue()));
+				names.add(botSelectors[i].getValue());
 			}
-		} else if (GameMode.values()[modeSelector.getValue()] == GameMode.XMAS_CHALLENGE) {
-			names.add(bots.get(botSelectors[0].getValue()));
+		} else if (modeSelector.getValue() == GameMode.XMAS_CHALLENGE) {
+			names.add(botSelectors[0].getValue());
 			names.add((Class<IPlayerController>) EvilSanta.class.asSubclass(IPlayerController.class));
 		}
-		return new MatchSettings(GameMode.values()[modeSelector.getValue()], new Random().nextLong(), names);
+		return new MatchSettings(modeSelector.getValue(), new Random().nextLong(), names);
 	}
 }

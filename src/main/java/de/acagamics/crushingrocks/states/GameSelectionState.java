@@ -31,12 +31,12 @@ public class GameSelectionState extends UIState {
 
 	Random random;
 
-	private Selector[] botSelectors;
+	private Selector<Class<?>>[] botSelectors;
 	private List<Class<?>> bots;
 
-	private Selector modeSelector;
+	private Selector<GameMode> modeSelector;
 
-	private Selector speedSelectors;
+	private Selector<Integer> speedSelectors;
 
 	public GameSelectionState(StateManager manager, GraphicsContext context) {
 		super(manager, context);
@@ -69,7 +69,7 @@ public class GameSelectionState extends UIState {
 		if (!bots.isEmpty()) {
 			botSelectors = new Selector[2];
 			for (int i = 0; i < botSelectors.length; ++i) {
-				botSelectors[i] = new Selector(new Vec2f(0, 400.0f + i * 100), 200, bots,
+				botSelectors[i] = new Selector<>(new Vec2f(0, 400.0f + i * 100), 200, bots,
 						i2 -> GameStatistic.getName((Class<IPlayerController>)i2), true).setVerticalAlignment(ALIGNMENT.CENTER);
 				clickable.add(botSelectors[i]);
 			}
@@ -86,14 +86,14 @@ public class GameSelectionState extends UIState {
 
 	private MatchSettings generateSettings() {
 		List<Class<?>> names = new ArrayList<>(2);
-		if (GameMode.values()[modeSelector.getValue()] == GameMode.NORMAL) {
+		if (modeSelector.getValue() == GameMode.NORMAL) {
 			for (int i = 0; i < 2; ++i) {
-				names.add(bots.get(botSelectors[i].getValue()));
+				names.add(botSelectors[i].getValue());
 			}
-		} else if (GameMode.values()[modeSelector.getValue()] == GameMode.XMAS_CHALLENGE) {
-			names.add(bots.get(botSelectors[0].getValue()));
+		} else if (modeSelector.getValue() == GameMode.XMAS_CHALLENGE) {
+			names.add(botSelectors[0].getValue());
 			names.add((Class<IPlayerController>) EvilSanta.class.asSubclass(IPlayerController.class));
 		}
-		return new MatchSettings(GameMode.values()[modeSelector.getValue()], random.nextLong(), names);
+		return new MatchSettings(modeSelector.getValue(), random.nextLong(), names);
 	}
 }

@@ -37,8 +37,8 @@ public class TournamentState extends SelfUpdatingState {
 
 	private List<Class<?>> bots;
 
-	private Selector threadSelector;
-	private Selector runsSelector;
+	private Selector<Integer> threadSelector;
+	private Selector<Integer> runsSelector;
 
 	private Button startbutton;
 
@@ -84,7 +84,7 @@ public class TournamentState extends SelfUpdatingState {
 	}
 
 	private void runTournament() {
-		tournament = new Tournament(bots, ( s, c1,  c2) -> new MatchSettings(GameMode.NORMAL, s, Arrays.asList(c1, c2)), new Random().nextLong(),threadSelector.getValue(), (int) Math.pow(10, runsSelector.getValue()));
+		tournament = new Tournament(bots, ( s, c1,  c2) -> new MatchSettings(GameMode.NORMAL, s, Arrays.asList(c1, c2)), new Random().nextLong(), threadSelector.getValue(), runsSelector.getValue());
 
 		drawables.add( new DynamicTextBox(new Vec2f(-150, 50), () -> String.format("Progress: %3d%%", tournament.getProgress())).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));
 		drawables.add( new DynamicTextBox(new Vec2f(-450, 50), () -> String.format("Time: %7.2f", tournament.getTimeElapsed())).setVerticalAlignment(ALIGNMENT.RIGHT).setHorizontalAlignment(ALIGNMENT.UPPER));

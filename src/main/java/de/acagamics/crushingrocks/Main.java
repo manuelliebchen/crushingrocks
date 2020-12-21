@@ -88,10 +88,10 @@ public final class Main {
 			simulator.run();
 			SimulationStatistic statistic = simulator.getStatistics();
 			if(statistic.getVictories(bot) < (cliArg.numberOfGames() * 0.8f)){
-				LOG.info("Der Bot: {}, hat die Prüfungszulassung nicht bestanden.", bot.getName());
+				LOG.info("Der Bot: {}, hat die Pruefungszulassung nicht bestanden.", bot.getName());
 				System.exit(1);
 			}
-			LOG.info("Der Bot: {}, hat die Prüfungszulassung bestanden.", bot.getName());
+			LOG.info("Der Bot: {}, hat die Pruefungszulassung bestanden.", bot.getName());
 			return;
 		}
 
